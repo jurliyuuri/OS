@@ -16,6 +16,12 @@ function init()
 	GLOB.image_data_1px = GLOB.ctx.createImageData(1,1);
 }
 
+// doubleplusungood hack
+function writeRectangle(x1, y1, x2, y2, r, g, b)
+{   
+	GLOB.ctx.fillStyle = "rgb(" + r + "," + g + "," + b + ")";             
+	GLOB.ctx.fillRect( x1, y1, x2-x1, y2-y1);
+}
 
 function writePixel(x, y, r, g, b)
 {                
@@ -27,15 +33,3 @@ function writePixel(x, y, r, g, b)
 }
 
 
-function chgCol()
-{
-  for ( var i = 0 ; i < 9 ; i++ )
-  {
-    var r = Math.floor(Math.random()*256);
-    var g = Math.floor(Math.random()*256);
-    var b = Math.floor(Math.random()*256);
-
-    GLOB.ctx.fillStyle = "rgb(" + r + "," + g + "," + b + ")";
-    GLOB.ctx.fillRect( 40*i, 0, 40, 240 );
-  }
-}
