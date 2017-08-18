@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>悠里世界OS</title>
+<script src="main.js"></script>
+</head>
+<body onload="init()">
+
+<canvas id="main" width="512" height="360" style="border: 10px solid #1a1a1a;"></canvas>
+<script>
+function demo()
+{
+	var t0 = performance.now();
+
+	for(var i=30; i<130; i++){
+		for(var j=30; j<130; j++){
+			writePixel(i,j,255,0,0);
+		}
+	}
+
+	for(var i=60; i<160; i++){
+		for(var j=60; j<160; j++){
+			writePixel(i,j,0,255,0);
+		}
+	}
+	
+	for(var i=90; i<190; i++){
+		for(var j=90; j<190; j++){
+			writePixel(i,j,0,0,255);
+		}
+	}
+
+	var t1 = performance.now();
+	console.log("took " + (t1 - t0) + " milliseconds.")
+}
+</script>
+<form>
+<input type="button" value="foo" onclick="demo()">
+</form>
+
+<div><img id="newImg"></div>
+
+</body>
+</html>
