@@ -12,9 +12,9 @@
 function demo()
 {
 	var t0 = performance.now();
-	writeRectangle(30, 30, 130, 130, 255,0,0);
-	writeRectangle(60, 60, 160, 160, 0,255,0);
-	writeRectangle(90, 90, 190, 190, 0,0,255);
+	writeRectangle(30, 30, 130, 130, 1);
+	writeRectangle(60, 60, 160, 160, 2);
+	writeRectangle(90, 90, 190, 190, 3);
 
 	var t1 = performance.now();
 	console.log("took " + (t1 - t0) + " milliseconds.")
