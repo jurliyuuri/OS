@@ -136,12 +136,18 @@ gen_table(["f01004","1efc09","0206f7"])
 <p>さてどうするか。とりあえず<b>v<sub>1</sub></b>を<sup>t</sup>(1,1,1)にして再合成してみるか？</p>
 <p>まあ、まずはWolfram Alphaの出力を直に色に変換してくれるスクリプトを書いて手間を減らそう。</p>
 <script>
+function normalize_sRGB(x)
+{
+	var k = Math.round(bar2(x));
+	if(k<0){k=0}
+	if(k>255){k=255;}
+	return k;
+}
+
 function convert_and_draw(A,B,C , D,E,F, G,H,I)
 {
 	var arrr = [A,B,C , D,E,F, G,H,I].map(function(x){
-		var k = Math.round(bar2(x));
-		if(k<0){k=0}
-		if(k>255){k=255;}
+		var k = normalize_sRGB(x);
 		return (k+256).toString(16).slice(1,3);
 	});
 	gen_table([arrr[0]+arrr[3]+arrr[6],arrr[1]+arrr[4]+arrr[7],arrr[2]+arrr[5]+arrr[8]]);	
