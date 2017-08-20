@@ -18,11 +18,18 @@ function linear2sRGB(c){
 	}
 }
 
+function normalize_sRGB(x)
+{
+	var k = Math.round(linear2sRGB(x));
+	if(k<0){k=0}
+	if(k>255){k=255;}
+	return k;
+}
 
 function jRGBlinear2sRGB(jrl, jgl, jbl)
 {
-	var sr = linear2sRGB((jrl * 530 + jgl *     72 + jbl *      3)/   605);
-	var sg = linear2sRGB((jrl * 961 + jgl * 155937 + jbl *    402)/157300);
-	var sb = linear2sRGB((jrl * 661 + jgl *   9936 + jbl * 146703)/157300);
+	var sr = normalize_sRGB((jrl * 530 + jgl *     72 + jbl *      3)/   605);
+	var sg = normalize_sRGB((jrl * 961 + jgl * 155937 + jbl *    402)/157300);
+	var sb = normalize_sRGB((jrl * 661 + jgl *   9936 + jbl * 146703)/157300);
 	return [Math.round(sr),sg,sb];
 }

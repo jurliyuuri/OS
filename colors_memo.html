@@ -4,6 +4,7 @@
 <title>色について</title>
 <meta charset="UTF-8">
 <script src="color_demo.js"></script>
+<script src="color_space.js"></script>
 <style>.t div{width:70px;height:30px; padding: 10px; font-family: monospace;}
 .small{font-size: 70%}
 .u td{padding: 0 10px;}
@@ -136,13 +137,7 @@ gen_table(["f01004","1efc09","0206f7"])
 <p>さてどうするか。とりあえず<b>v<sub>1</sub></b>を<sup>t</sup>(1,1,1)にして再合成してみるか？</p>
 <p>まあ、まずはWolfram Alphaの出力を直に色に変換してくれるスクリプトを書いて手間を減らそう。</p>
 <script>
-function normalize_sRGB(x)
-{
-	var k = Math.round(bar2(x));
-	if(k<0){k=0}
-	if(k>255){k=255;}
-	return k;
-}
+
 
 function convert_and_draw(A,B,C , D,E,F, G,H,I)
 {
