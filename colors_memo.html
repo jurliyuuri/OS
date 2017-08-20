@@ -191,6 +191,7 @@ convert_and_draw(7/8 , 123/1024 ,  5/1024,
 1/256 , 1/16 , 239/256)
 </script>
 <p>とすれば完全に一致する。</p>
+<div style="background-color: #eee">
 <p>とはいえこんなに精度を出す必要は全くなくて</p>
 <pre>
 (7/8 | 31/256 | 1/256
@@ -204,6 +205,7 @@ convert_and_draw(7/8 , 31/256 ,  1/256,
 </script>
 <p>程度で普通に十分という。</p>
 <p>まあ、実はそもそも二進近似する意味もあまりないわけで、だったら精度高い方がええやんということで以下高精度を使っていく。</p>
+</div>
 <p>シアン・マゼンタ・黄色は</p>
 <script>
 convert_and_draw(7/8 + 123/1024 ,  5/1024+7/8 , 123/1024 +  5/1024,
@@ -214,11 +216,11 @@ convert_and_draw(7/8 + 123/1024 ,  5/1024+7/8 , 123/1024 +  5/1024,
 <p>ということで<a href="http://www.color-hex.com/">やってみた</a></p>
 <table class="t">
 <tr><td></td><td>H</td><td>S</td><td>V</td></tr>
-<tr><td><div style="background-color:#f0120d">#f0120d</div></td><td>1°<td>95°<td>94°</tr>
+<tr><td><div style="background-color:#f0100d">#f0100d</div></td><td>1°<td>95°<td>94°</tr>
 <tr><td><div style="background-color:#feff49">#feff49</div></td><td>60°<td>71°<td>100°</tr>
-<tr><td><div style="background-color:#62fe47">#62fe47</div></td><td>111°<td>72°<td>100°</tr>
+<tr><td><div style="background-color:#61fe47">#61fe47</div></td><td>111°<td>72°<td>100°</tr>
 <tr><td><div style="background-color:#63feff">#63feff</div></td><td>180°<td>61°<td>100°</tr>
-<tr><td><div style="background-color:#0d06f7">#0d06f7</div></td><td>242°<td>98°<td>97°</tr>
+<tr><td><div style="background-color:#0f08f7">#0f08f7</div></td><td>242°<td>97°<td>97°</tr>
 <tr><td><div style="background-color:#f116f8">#f116f8</div></td><td>298°<td>91°<td>97°</tr>
 </table>
 <p>少なくとも色相環には綺麗に載ってくれるやん（くれるやん）（わーい）</p>
