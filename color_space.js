@@ -28,8 +28,8 @@ function normalize_sRGB(x)
 
 function jRGBlinear2sRGB(jrl, jgl, jbl)
 {
-	var sr = normalize_sRGB((jrl * 530 + jgl *     72 + jbl *      3)/   605);
-	var sg = normalize_sRGB((jrl * 961 + jgl * 155937 + jbl *    402)/157300);
-	var sb = normalize_sRGB((jrl * 661 + jgl *   9936 + jbl * 146703)/157300);
+	var sr = normalize_sRGB(jrl * 7/8 + jgl *     123/1024 + jbl *      5/1024);
+	var sg = normalize_sRGB(jrl * 11/2048 + jgl * 127/128 + jbl *    5/2048);
+	var sb = normalize_sRGB(jrl * 1/256 + jgl *   1/16 + jbl *  239/256);
 	return [sr,sg,sb];
 }
