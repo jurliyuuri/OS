@@ -15,7 +15,7 @@ function init()
 	GLOB.ctx = GLOB.cvs.getContext("2d");
 	GLOB.ctx.fillRect(0, 0, GLOB.screen_width, GLOB.screen_height);
 	GLOB.image_data_1px = GLOB.ctx.createImageData(1,1);
-	GLOB.sRGB_table = [null, [240, 16, 13], [97, 254, 71], [15, 8, 247]];
+	GLOB.sRGB_table = [null, jRGBlinear2sRGB(1,0,0), jRGBlinear2sRGB(0,1,0), jRGBlinear2sRGB(0,0,1)];
 }
 
 // doubleplusungood hack
