@@ -1,0 +1,265 @@
+<!doctype html>
+<html>
+<head>
+<title>色について</title>
+<meta charset="UTF-8">
+<script src="color_demo.js"></script>
+<script src="color_space.js"></script>
+<style>.t div{width:70px;height:30px; padding: 10px; font-family: monospace;}
+.small{font-size: 70%}
+.u td{padding: 0 10px;}
+</style>
+</head>
+<body>
+<h2>1. 基本色の設定</h2>
+<p>ごにょごにょすることで、以下の基本色を得た。</p>
+<p class="small">視覚の仕組み自体に大きな差はないので、RGBを用いて表現しようとすること自体は自然である。ただし、そのとき基本色として使われる色が完全に一致しているというのは不自然なので、ごにょごにょをした。</p>
+<table class="t">
+<tr>
+<td>現世:</td>
+<td><div style="background-color:#ff0000">#ff0000</div></td>
+<td><div style="background-color:#00ff00">#00ff00</div></td>
+<td><div style="background-color:#ffff00">#ffff00</div></td>
+<td><div style="background-color:#0000ff">#0000ff</div></td>
+<td><div style="background-color:#ff00ff">#ff00ff</div></td>
+<td><div style="background-color:#00ffff">#00ffff</div></td></tr>
+<tr>
+<td>悠里OS:</td>
+<td><div style="background-color:#f01004">#f01004</div></td>
+<td><div style="background-color:#1efc0a">#1efc0a</div></td>
+<td><div style="background-color:#f9f813">#f9f813</div></td>
+<td><div style="background-color:#0206f7">#0206f7</div></td>
+<td><div style="background-color:#fc0ae8">#fc0ae8 ???</div></td>
+<td><div style="background-color:#23fcfc">#23fcfc</div></td></tr>
+</table>
+<p>このうち、マゼンタ相当については現世のと明らかに色調が異なる。マゼンタという色自体が自然界であまり出てこないことも合わせて考え、マゼンタについては暫定値とする。</p>
+<p>赤もそれなりに差があるが、好意的な意見を得られたのでこのままとする。</p>
+
+<h2>2. ガンマ補正</h2>
+<p>1.で得たhex codeは、ガンマ補正という操作が行われた状態での値であるため、これにsRGBの逆変換を用いて本来の物理学的明るさ情報を復元する。</p>
+<script>
+var arr2=["f01004","1efc0a","0206f7","f9f813","23fcfc"]
+function foo(str){return [
+	parseInt(str.slice(0,2),16),
+	parseInt(str.slice(2,4),16),
+	parseInt(str.slice(4,6),16)];}
+function gen_table(arr){
+var str=`
+<table class="t u" style="font-family: monospace; text-align:right;">
+<thead>
+<tr><td style="text-align:center;">色</td><td>R_srgb</td><td>G_srgb</td><td>B_srgb</td><td>R_linear</td><td>G_linear</td><td>B_linear</td></tr>
+</thead>
+<tbody>`;
+for(var i=0; i<arr.length; i++){
+	var f = foo(arr[i]);
+	var t = [`<div style="background-color:#`+arr[i]+`">#`+arr[i]+`</div>`,f[0],f[1],f[2],bar(f[0]).toFixed(6),bar(f[1]).toFixed(6),bar(f[2]).toFixed(6)];
+	str += '<tr><td>' + t.join('</td><td>') + '</td></tr>';
+}
+
+str+="</tbody></table>";
+document.write(str);
+}
+gen_table(arr2);
+</script>
+<p>とりあえず、腕慣らしに黄色とシアンを単純な和でやってみよう。赤と緑の和は[241.57, 252.59, 13.62]である。緑と青の和は [30.85, 252.21, 247.35]、赤と青の和は[240.07, 20.01, 247.14]</p>
+<table class="t">
+<tr>
+<td><div style="background-color:#f2fd0e">#f2fd0e</div></td>
+<td><div style="background-color:#f014f7">#f014f7</div></td>
+<td><div style="background-color:#1ffcf7">#1ffcf7</div></td></tr>
+</table>
+<p>黄色がちょっと濁って見えるが、HSVは63°	94°	99°<a href="http://www.color-hex.com/color/f2fd0e">だそう</a>で、結局背景色が白いのが原因っぽさある。</p>
+<p>ということで、</p>
+<div style="background-color: black;">
+<table class="t">
+<tr><td colspan="4"><br><br><br><br></td></tr>
+<tr>
+<td><div></div></td>
+<td><div style="background-color:#f2fd0e">#f2fd0e</div></td>
+<td><div style="background-color:#f014f7">#f014f7</div></td>
+<td><div style="background-color:#1ffcf7">#1ffcf7</div></td></tr>
+<tr><td colspan="4"><br><br><br><br></td></tr>
+</table>
+</div>
+<p>まあそれっぽくなるなぁ</p>
+
+<p>さて、問題は白である。</p>
+<div class="t" style="background-color: #123456; height: 300px; width: 100px;">a
+	<div style="background-color:#fdfdfd; margin: auto;">#fdfdfd</div>
+	a
+	<div style="background-color:#f7fdfd; margin: auto;">#f7fdfd</div>
+	a
+	<div style="background-color:#fdf7fd; margin: auto;">#fdf7fd</div>
+</div>
+<p>わずかにずれるだけで白っぽくなくなるので、難しいところである。ということで、線形代数に頼る。</p>
+<p>現状は、変換行列AでjRGBベクトルがsRGBベクトルにできる。</p>
+<img src="matrix.png" height="110"/>
+<p>一方、求める特性はこうである。</p>
+<img src="matrix2.png" height="110"/>
+<p>要するに、固有値1で固有ベクトル <b>v<sub>1</sub></b>= <sup>t</sup>(1 1 1) であるような行列である。他に固有ベクトルとして <b>v<sub>2</sub></b>= <sup>t</sup>(p q r) [固有値x] と<b>v<sub>3</sub></b>= <sup>t</sup>(s t u) [固有値y]を持つと置く。B = (<b>v<sub>1</sub></b> <b>v<sub>2</sub></b> <b>v<sub>3</sub></b>)<sup>-1</sup>と置くと(<b>e<sub>1</sub></b> <b>e<sub>2</sub></b> <b>e<sub>3</sub></b>) = (<b>v<sub>1</sub></b> <b>v<sub>2</sub></b> <b>v<sub>3</sub></b>)Bである。</p>
+<p>ゆえに、A = A(<b>e<sub>1</sub></b> <b>e<sub>2</sub></b> <b>e<sub>3</sub></b>) = A(<b>v<sub>1</sub></b> <b>v<sub>2</sub></b> <b>v<sub>3</sub></b>)B = (<b>v<sub>1</sub></b> x<b>v<sub>2</sub></b> y<b>v<sub>3</sub></b>)B  = (<b>v<sub>1</sub></b> <b>v<sub>2</sub></b> <b>v<sub>3</sub></b>) diag(1,x,y) B = (<b>v<sub>1</sub></b> <b>v<sub>2</sub></b> <b>v<sub>3</sub></b>) diag(1,x,y) (<b>v<sub>1</sub></b> <b>v<sub>2</sub></b> <b>v<sub>3</sub></b>)<sup>-1</sup></p>
+<p>現状のを対角化したものが<a href="https://www.wolframalpha.com/input/?i=JordanDecomposition%5B%7B%7B0.871367,+0.012983,+0.000607%7D,+%7B0.005182,+0.973445,+0.001821%7D,+%7B0.001214,+0.003035,+0.930111%7D%7D%5D">こちら</a>になります</p>
+<img src="matrix3.png" width="330"/>
+<pre>
+M = S.J.S^(-1)
+where
+M = (0.871367 | 0.012983 | 0.000607
+0.005182 | 0.973445 | 0.001821
+0.001214 | 0.003035 | 0.930111)
+S = (0.125314 | 0.00104632 | -0.998587
+0.989536 | -0.0419881 | 0.0500506
+0.071515 | 0.999118 | 0.0178499)
+J = (0.974233 | 0 | 0
+0 | 0.929985 | 0
+0 | 0 | 0.870705)
+S^(-1) = (0.050927 | 1.00109 | 0.0420176
+0.0141312 | -0.0738991 | 0.997763
+-0.995009 | 0.125551 | 0.00631831)
+</pre>
+<p>固有値はともかく固有ベクトルがひどいなぁ。とりあえずSを{{1/8,0,-1},{1,-1/24,1/20},{1/15,1,1/60}}、Jを{{39/40,0,0},{0,93/100,0},{0,0,87/100}}と有理数近似して再合成<a href="https://www.wolframalpha.com/input/?i=%7B%7B1%2F8,0,-1%7D,%7B1,-1%2F24,1%2F20%7D,%7B1%2F15,1,1%2F60%7D%7D+%7B%7B39%2F40,0,0%7D,%7B0,93%2F100,0%7D,%7B0,0,87%2F100%7D%7D+inverse(%7B%7B1%2F8,0,-1%7D,%7B1,-1%2F24,1%2F20%7D,%7B1%2F15,1,1%2F60%7D%7D+)">すると</a>
+<pre>
+(674761/775000 | 252/19375 | 21/38750
+2539/484375 | 377511/387500 | 357/193750
+1663/1453125 | 276/96875 | 360421/387500)
+</pre>
+小数にして
+<pre>
+(0.8706593548387097 | 1.3006451612903225e-2 | 5.419354838709677e-4
+5.241806451612903e-3 | 0.9742219354838709 | 1.8425806451612904e-3
+1.1444301075268818e-3 | 2.849032258064516e-3 | 0.9301187096774194)
+</pre>
+<p>これを色にすると
+[240,16,4],[30,252,9],[2,6,247]なので、</p>
+<script>
+gen_table(["f01004","1efc09","0206f7"])
+</script>
+<p>となってちゃんと元に戻る。(Gの0a→09は許容誤差の十分範囲内）</p>
+<p>さてどうするか。とりあえず<b>v<sub>1</sub></b>を<sup>t</sup>(1,1,1)にして再合成してみるか？</p>
+<p>まあ、まずはWolfram Alphaの出力を直に色に変換してくれるスクリプトを書いて手間を減らそう。</p>
+<script>
+
+
+function convert_and_draw(A,B,C , D,E,F, G,H,I)
+{
+	var arrr = [A,B,C , D,E,F, G,H,I].map(function(x){
+		var k = normalize_sRGB(x);
+		return (k+256).toString(16).slice(1,3);
+	});
+	gen_table([arrr[0]+arrr[3]+arrr[6],arrr[1]+arrr[4]+arrr[7],arrr[2]+arrr[5]+arrr[8]]);	
+}</script>
+<p>書いた。</p>
+<script>
+convert_and_draw(674761/775000 , 252/19375 , 21/38750,
+2539/484375 , 377511/387500 , 357/193750,
+1663/1453125 , 276/96875 , 360421/387500);
+</script>
+<p>となって問題なし。さて<b>v<sub>1</sub></b>を<sup>t</sup>(1,1,1)にして再合成<a href="https://www.wolframalpha.com/input/?i=%7B%7B1,0,-1%7D,%7B1,-1%2F24,1%2F20%7D,%7B1,1,1%2F60%7D%7D+%7B%7B39%2F40,0,0%7D,%7B0,93%2F100,0%7D,%7B0,0,87%2F100%7D%7D+inverse(%7B%7B1,0,-1%7D,%7B1,-1%2F24,1%2F20%7D,%7B1,1,1%2F60%7D%7D+)">すると</a></p>
+<script>
+convert_and_draw(55047/62920 , 756/7865 , 63/15730,
+1557/314600 , 152337/157300 , 63/39325,
+87/28600 , 144/3575 , 13323/14300);
+</script>
+<p>となっていい感じになる。せっかくならJ[1][1]を1にしてみよう。<a href="https://www.wolframalpha.com/input/?i=%7B%7B1,0,-1%7D,%7B1,-1%2F24,1%2F20%7D,%7B1,1,1%2F60%7D%7D+%7B%7B1,0,0%7D,%7B0,93%2F100,0%7D,%7B0,0,87%2F100%7D%7D+inverse(%7B%7B1,0,-1%7D,%7B1,-1%2F24,1%2F20%7D,%7B1,1,1%2F60%7D%7D+)">結果は</a></p>
+<pre>
+(106/121 | 72/605 | 3/605
+961/157300 | 155937/157300 | 201/78650
+661/157300 | 2484/39325 | 146703/157300)
+</pre>
+<p>であり、</p>
+<script>
+convert_and_draw(106/121 , 72/605 , 3/605,
+961/157300 , 155937/157300 , 201/78650,
+661/157300 , 2484/39325 , 146703/157300)
+</script>
+<p>とても良い。緑がちと明るすぎる気がするが、赤が暗いので仕方がない。さて、分数では扱いづらいので2進数近似をすると</p>
+<div style="font-family: monospace">
+<script>[106/121 , 72/605 , 3/605,
+961/157300 , 155937/157300 , 201/78650,
+661/157300 , 2484/39325 , 146703/157300].map(function(x){
+	document.write(x.toString(2) + "<br>")
+	})
+</script>
+</div>
+<p>を適当な桁数で打ち切って、また<b>v<sub>1</sub></b>+<b>v<sub>2</sub></b>+<b>v<sub>3</sub></b>=<sup>t</sup>(1,1,1)でなければならないことを考えると
+<pre>
+(7/8 | 123/1024 | 5/1024
+11/2048 | 127/128 | 5/2048
+1/256 | 1/16 | 239/256)
+</pre>
+<script>
+convert_and_draw(7/8 , 123/1024 ,  5/1024,
+11/2048 , 127/128 , 5/2048,
+1/256 , 1/16 , 239/256)
+</script>
+<p>とすれば<s>完全に</s><b>だいたい</b>一致する。</p><!--
+<div style="background-color: #eee">
+<p>とはいえこんなに精度を出す必要は全くなくて</p>
+<pre>
+(7/8 | 31/256 | 1/256
+3/512 | 127/128 | 1/512
+1/256 | 1/16 | 239/256)
+</pre>
+<script>
+convert_and_draw(7/8 , 31/256 ,  1/256,
+3/512 , 127/128 , 1/512,
+1/256 , 1/16 , 239/256)
+</script>
+<p>程度で普通に十分という。</p>
+<p>まあ、実はそもそも二進近似する意味もあまりないわけで、だったら精度高い方がええやんということで以下高精度を使っていく。</p>
+</div>-->
+<p>シアン・マゼンタ・黄色は</p>
+<script>
+convert_and_draw(7/8 + 123/1024 ,  5/1024+7/8 , 123/1024 +  5/1024,
+11/2048 + 127/128 , 5/2048+11/2048 , 127/128 + 5/2048,
+1/256 + 1/16 , 239/256+1/256 , 1/16 + 239/256)
+</script>
+<p>まあ色としてはいいんじゃないの。問題は色相環にちゃんと載ってくれるかどうか。</p>
+<p>ということで<a href="http://www.color-hex.com/">やってみた</a></p>
+<table class="t">
+<tr><td></td><td>H</td><td>S</td><td>V</td></tr>
+<tr><td><div style="background-color:#f0100d">#f0100d</div></td><td>1°<td>95°<td>94°</tr>
+<tr><td><div style="background-color:#feff49">#feff49</div></td><td>60°<td>71°<td>100°</tr>
+<tr><td><div style="background-color:#61fe47">#61fe47</div></td><td>111°<td>72°<td>100°</tr>
+<tr><td><div style="background-color:#63feff">#63feff</div></td><td>180°<td>61°<td>100°</tr>
+<tr><td><div style="background-color:#0f08f7">#0f08f7</div></td><td>242°<td>97°<td>97°</tr>
+<tr><td><div style="background-color:#f116f8">#f116f8</div></td><td>298°<td>91°<td>97°</tr>
+</table>
+<p>少なくとも色相環には綺麗に載ってくれるやん（くれるやん）（わーい）</p>
+
+<h2>3. 結論</h2>
+<p><a href="https://www.amazon.co.jp/30%E6%97%A5%E3%81%A7%E3%81%A7%E3%81%8D%E3%82%8B-OS%E8%87%AA%E4%BD%9C%E5%85%A5%E9%96%80-%E5%B7%9D%E5%90%88-%E7%A7%80%E5%AE%9F/dp/4839919844">「30日でできる! OS自作入門」</a>に載っていた16の基本色と似た色で、悠里色空間で自然に表される色を探すと次のような感じになろう。</p>
+<p>明るい8色</p>
+<script>
+	function toHex(arr){
+		return (arr[0]+256).toString(16).slice(1,3) + (arr[1]+256).toString(16).slice(1,3) + (arr[2]+256).toString(16).slice(1,3);
+	}
+	gen_table([
+		toHex(jRGBlinear2sRGB(1,0,0)),
+		toHex(jRGBlinear2sRGB(1,1,0)),
+		toHex(jRGBlinear2sRGB(0,1,0)),
+		toHex(jRGBlinear2sRGB(0,1,1)),
+		toHex(jRGBlinear2sRGB(0,0,1)),
+		toHex(jRGBlinear2sRGB(1,0,1)),
+		toHex(jRGBlinear2sRGB(1,1,1)),
+		toHex(jRGBlinear2sRGB(0.5,0.5,0.5))
+	]);
+
+
+</script>
+<p>暗い8色</p>
+<script>
+	gen_table([
+		toHex(jRGBlinear2sRGB(0.25,0   ,0   )),
+		toHex(jRGBlinear2sRGB(0.25,0.25,0   )),
+		toHex(jRGBlinear2sRGB(0   ,0.25,0   )),
+		toHex(jRGBlinear2sRGB(0   ,0.25,0.25)),
+		toHex(jRGBlinear2sRGB(0   ,0   ,0.25)),
+		toHex(jRGBlinear2sRGB(0.25,0   ,0.25)),
+		toHex(jRGBlinear2sRGB(0   ,0   ,0   )),
+		toHex(jRGBlinear2sRGB(0.25,0.25,0.25))
+	]);
+
+
+</script>
+</body>
+</html>
