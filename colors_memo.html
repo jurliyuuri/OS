@@ -225,5 +225,41 @@ convert_and_draw(7/8 + 123/1024 ,  5/1024+7/8 , 123/1024 +  5/1024,
 <tr><td><div style="background-color:#f116f8">#f116f8</div></td><td>298°<td>91°<td>97°</tr>
 </table>
 <p>少なくとも色相環には綺麗に載ってくれるやん（くれるやん）（わーい）</p>
+
+<h2>3. 結論</h2>
+<p><a href="https://www.amazon.co.jp/30%E6%97%A5%E3%81%A7%E3%81%A7%E3%81%8D%E3%82%8B-OS%E8%87%AA%E4%BD%9C%E5%85%A5%E9%96%80-%E5%B7%9D%E5%90%88-%E7%A7%80%E5%AE%9F/dp/4839919844">「30日でできる! OS自作入門」</a>に載っていた16の基本色と似た色で、悠里色空間で自然に表される色を探すと次のような感じになろう。</p>
+<p>明るい8色</p>
+<script>
+	function toHex(arr){
+		return (arr[0]+256).toString(16).slice(1,3) + (arr[1]+256).toString(16).slice(1,3) + (arr[2]+256).toString(16).slice(1,3);
+	}
+	gen_table([
+		toHex(jRGBlinear2sRGB(1,0,0)),
+		toHex(jRGBlinear2sRGB(1,1,0)),
+		toHex(jRGBlinear2sRGB(0,1,0)),
+		toHex(jRGBlinear2sRGB(0,1,1)),
+		toHex(jRGBlinear2sRGB(0,0,1)),
+		toHex(jRGBlinear2sRGB(1,0,1)),
+		toHex(jRGBlinear2sRGB(1,1,1)),
+		toHex(jRGBlinear2sRGB(0.5,0.5,0.5))
+	]);
+
+
+</script>
+<p>暗い8色</p>
+<script>
+	gen_table([
+		toHex(jRGBlinear2sRGB(0.25,0   ,0   )),
+		toHex(jRGBlinear2sRGB(0.25,0.25,0   )),
+		toHex(jRGBlinear2sRGB(0   ,0.25,0   )),
+		toHex(jRGBlinear2sRGB(0   ,0.25,0.25)),
+		toHex(jRGBlinear2sRGB(0   ,0   ,0.25)),
+		toHex(jRGBlinear2sRGB(0.25,0   ,0.25)),
+		toHex(jRGBlinear2sRGB(0   ,0   ,0   )),
+		toHex(jRGBlinear2sRGB(0.25,0.25,0.25))
+	]);
+
+
+</script>
 </body>
 </html>
