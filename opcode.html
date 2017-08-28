@@ -18,5 +18,67 @@
 戻り値は単純型ならレジスタ (f0) でやり取り
 </pre>
 
+<p>さて、呼び出し規約も決まったことだし色々書いていきますかね。とりあえずフィボナッチ書こう。スタックを管理するのは（ダイスロール）f5ですな。まずはCっぽく。</p>
+<pre>
+int fib(int a)
+{
+	register int f0 = a;
+	register int f1 = 0; 
+	register int f2 = 1;
+	register int f3;
+	while(f0) {
+		f0--;
+		f3 = f1 + f2;
+		f1 = f2;
+		f2 = f3;
+	}
+	f0 = f1;
+	return f0;
+}
+</pre>
+<p>解説</p>
+<table>
+<tr><td>f0<td>5<td>4<td>4<td>3<td>3<td>2<td>2<td>1<td>1<td>0<td>0<td>5
+<tr><td>f1<td>0<td>0<td>1<td>1<td>1<td>1<td>2<td>2<td>3<td>3<td>5<td>
+<tr><td>f2<td>1<td>1<td>1<td>1<td>2<td>2<td>3<td>3<td>5<td>5<td>8<td>
+<tr><td>f3<td> <td>1<td> <td>2<td> <td>3<td> <td>5<td> <td>8<td> <td>
+</table>
+<p>x86風に書いてみる</p>
+<pre>
+	MOV f0 [ESP+4]
+	MOV f1 0
+	MOV f2 1
+a:	EQU f0 0
+	J_C b ;フラグを見てジャンプ
+	ADD f0 -1
+	MOV f3 f1
+	ADD f3 f2
+	MOV f1 f2
+	MOV f2 f3
+	JMP a
+b:	MOV f0 f1
+	JMP [ESP]
+	ADD ESP 4
+
+</pre>
+
+<p>リパに翻訳</p>
+<pre>
+	krz f0 [f5+4]
+	krz f1 0
+	krz f2 1
+is:	sie f0 0
+	J_C ka ; どうしよう
+	ata f0 -1
+	krz f3 f1
+	ata f3 f2
+	krz f1 f2
+	krz f2 f3
+	krz xx is
+ka:	krz f0 f1
+	krz xx [f5]
+	ata f5 4
+</pre>
+
 </body>
 </html>
