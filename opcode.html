@@ -4,6 +4,7 @@
 <title>オペコード</title>
 <meta charset="UTF-8">
 <style>
+.comment{color: green;}
 </style>
 </head>
 <body>
@@ -50,7 +51,7 @@ int fib(int a)
 	MOV f1 0
 	MOV f2 1
 a:	EQU f0 0
-	J_C b ;フラグを見てジャンプ
+	J_C b <span class="comment">;フラグを見てジャンプ</span>
 	ADD f0 -1
 	MOV f3 f1
 	ADD f3 f2
@@ -69,7 +70,7 @@ b:	MOV f0 f1
 	krz f1 0
 	krz f2 1
 is:	sie f0 0
-	J_C ka ; どうしよう
+	J_C ka <span class="comment">; どうしよう</span>
 	ata f0 -1
 	krz f3 f1
 	ata f3 f2
@@ -123,5 +124,28 @@ krz f2 f3
 </pre>
 <p>は当然「f0がf1よりも大きいならばフラグを立てる。さてそれはともかくf3をf2にコピーする」という別の意味の命令群になる。リパラオネ人がこの仕様に苦しむのは、まるで現世でC系統の言語を習い始めた人が<code>if(a = 0)</code>とか<code>if(a == 0||1)</code>とか書いてしまうようなものである。</p>
 
+
+<h2>5. 実践part2</h2>
+<p>ということで、4.に基づき前述のフィボナッチを修正していこう。</p>
+<pre>
+	krz f0 [f5+4]
+	krz f1 0
+	krz f2 1
+is:	fi f0 0 cloler <span class="comment">; ce loler</span> 
+	malkrz xx ka 
+	ata f0 -1
+	krz f3 f1
+	ata f3 f2
+	krz f1 f2
+	krz f2 f3
+	krz xx is
+ka:	krz f0 f1
+	krz xx [f5]
+	ata f5 4
+</pre>
+
+<p>よし、これで初めての関数である。やったー。</p>
+
+<p>しかし、<code>cloler</code>がやっぱりちょっと長い気がするなぁ（他が短すぎるだけともいう）</p>
 </body>
 </html>
