@@ -255,7 +255,44 @@ iska:	RET
 
 <p>CALLの実装書いてて気づいたけど、<a id="bgsd">前に<a href="#geasz">xxを1増やす</a>って書いたの嘘やん。</a>固定長でもないし1byteでもないもん。単純に「次の命令を指すところにxxが移動する」ですな。</p>
 
+<p>さて、ここまでやったところで翻訳。</p>
+<pre>
+fib2:	krz f0 [f5+4]
+	fi f0 2 xyloler
+	malkrz xx iska
+	krz f1 f0
+	ata f1 -1
+	ata f5 -4
+	krz [f5] f1
+	ata f5 -4
+	qskrz [f5] xx fib2
+	krz f1 [f5]
+	ata f5 4
+	krz f2 f0
+	ata f1 -1
+	ata f5 -4	
+	krz [f5] f2
+	ata f5 -4	
+	krz [f5] f1
+	ata f5 -4
+	qskrz [f5] xx fib2
+	krz f2 [f5+4]
+	ata f5 8
+	ata f2 f0
+	krz f0 f2
+iska:	krz xx [f5]
+	ata f5 4
+</pre>
+
 <h2>6. 課題</h2>
+<p>まず、5に出てきた新規設定をまとめる。</p>
+<ul>
+<li>ce lolerはcloler、xy lolerはxyloler</li>	
+<li>krz fi stの後にkrz st irをすることをqskrz fi st irと書けることにする。2で出てきた非再帰フィボナッチでも使うことのできる汎用性の高い命令。</li>	
+<li>CPUは<ruby><rb>針</rb><rt>プログラムカウンタ</rt></ruby>を持っていて、ひたすら「次の命令を指すところにxxを移動させる→針の指す命令を実行する→xxの指す位置に針を動かす」を繰り返す</li>
+</ul>
+<p>この2番目と3番目を組み合わせると、なんと関数呼び出しが実行できるのである。</p>
+<p>また、slackで出てきた課題について述べる。</p>
 <ul>
 <li>「オペランドの順番どうする？」
 </li><li>「[fistir]というx86由来の表記法をどうにかしたい」
