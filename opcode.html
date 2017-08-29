@@ -89,7 +89,7 @@ ka:	krz f0 f1
 <p>2で出てきた設定を（明示・暗黙共に）まとめる。</p>
 <ul>
 <li>スタックを管理するのはf5</li>
-<li>xxレジスタには「次に実行する命令のアドレス」が格納されている。CPUは<ruby><rb>針</rb><rt>プログラムカウンタ</rt></ruby>を持っていて、ひたすら「xxを1増やす→針の指す命令を実行する→xxの指す位置に針を動かす」を繰り返す、と。</li>
+<li>xxレジスタには「次に実行する命令のアドレス」が格納されている。CPUは<ruby><rb>針</rb><rt>プログラムカウンタ</rt></ruby>を持っていて、ひたすら「<a id="geasz"><s>xxを1増やす</s> <b><a href="#bgsd">嘘です。</a></b></a>→針の指す命令を実行する→xxの指す位置に針を動かす」を繰り返す、と。</li>
 <li>無条件ジャンプ・条件ジャンプは共に、内部構造としては「xxを上書きする命令」である。ただ、<code>krz</code>命令では代用できない（「フラグを見てkrzするか決める」という命令はないため）ので、別命令として作り<code>krz xx iska</code>もジャンプ命令に翻訳、という感じ？いや待て、『「フラグを見てkrzするか決める」という命令はない』など誰が言った？あってもええやん！（後世が投機実行の実装に苦しむ図）（でもオモロイやん採用）</li>
 <li>ということで「フラグを見て代入するかどうか決める」命令を考えよう</li>
 </ul>
@@ -198,6 +198,63 @@ fib2:	krz f0 [f5+4]
 	krz f0 f2
 iska:	RET
 </pre>
+
+<p>次に、関数呼び出しとスタック操作について整理しよう。</p>
+
+<div class="box">
+<p>スタックにiskaをプッシュする</p>
+<pre>
+	ata f5 -4	<span class="comment">; f5を持ち上げて</span>
+	krz [f5] iska	<span class="comment">; 積む</span>
+</pre>
+</div>
+
+<div class="box">
+<p>スタックをポップしてiskaに代入</p>
+<pre>
+	krz iska [f5]	<span class="comment">; スタックの値を代入</span>
+	ata f5 4	<span class="comment">; f5を下げる</span>
+</pre>
+</div>
+
+<div class="box">
+<p>return f0;</p>
+<pre>
+	krz xx [f5]	<span class="comment">; リターンアドレスに飛んで</span>
+	ata f5 4	<span class="comment">; スタックからリターンアドレスを削除</span>
+</pre>
+</div>
+
+<div class="box" style="border:1px solid red">
+<p>f0 = func();</p>
+<pre>
+	<span class="comment">; えっと、</span>
+	ata f5 -4	<span class="comment">; スタックにリターンアドレスを</span>
+	krz [f5] xx	<span class="comment">; 積む</span>
+	krz xx func	<span class="comment">; 関数のアドレスにジャンプ</span>
+	<span class="comment">; でいいのかな？</span>
+	<span class="comment">; いいえ。積んだときのxxはkrz xx funcを指しています。よってこれでは無限ループします</span>
+	<span class="comment">; さてどうしよう。</span>
+	<span class="comment">; 普通ならここで素直にCALLのニーモニックを作ればいいんだろうが、2003'd ferlesylの作者は全部をxxへの操作としたがる人だ</span>
+	<span class="comment">; そうだ、2つのkrzを1回で行う命令を作ればいいんだ</span>
+	<span class="comment">; 名前はqa stevypo krzの略でqskrzとでもすればいいか。</span>
+	<span class="comment">; krz fi stの後にkrz st irをすることをqskrz fi st irと書けることにすればよい。</span>
+	<span class="comment">; 実際処理としてよくありそうなやつだし。汎用性あるし採用していいでしょ</span>
+	<span class="comment">; ということで仕切り直し</span>
+</pre>
+</div>
+
+
+<div class="box">
+<p>f0 = func();</p>
+<pre>
+	ata f5 -4	<span class="comment">; スタックを準備</span>
+	qskrz [f5] xx func	<span class="comment">; リターンアドレスを積んで、同一命令で関数のアドレスにジャンプ</span>
+</pre>
+</div>
+
+<p>CALLの実装書いてて気づいたけど、<a id="bgsd">前に<a href="#geasz">xxを1増やす</a>って書いたの嘘やん。</a>固定長でもないし1byteでもないもん。単純に「次の命令を指すところにxxが移動する」ですな。</p>
+
 <h2>6. 課題</h2>
 <ul>
 <li>「オペランドの順番どうする？」
