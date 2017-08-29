@@ -176,6 +176,28 @@ int fib2(int a)
 }
 </pre>
 
+<p>まずはx86もどき混じりで翻訳。</p>
+
+<pre>
+fib2:	krz f0 [f5+4]
+	fi f0 2 xyloler
+	malkrz xx iska
+	krz f1 f0
+	ata f1 -1
+	PUSH f1
+	CALL fib2
+	POP f1 <span class="comment">;関数呼び出しでf1が破壊されるので修復</span>
+	krz f2 f0
+	ata f1 -1
+	PUSH f2
+	PUSH f1
+	CALL fib2
+	POP
+	POP f2
+	ata f2 f0
+	krz f0 f2
+iska:	RET
+</pre>
 <h2>6. 課題</h2>
 <ul>
 <li>「オペランドの順番どうする？」
