@@ -1,0 +1,379 @@
+jurliyuuri.slack.comの「#悠里os」チャンネル
+2017年8月29日の会話（UTC+9:00）
+
+jekto [9:00 PM] 
+「f1が7に等しいならばf3をf1に複製せよ」ってどう言おう。la lex mol mal krantairzarthを略してllmmkrzとかすると長すぎる気がしないでもない
+
+
+jekto [9:23 PM] 
+アセンブリの構文にどれほどリパを反映させたいか問題
+
+
+[9:23] 
+について
+
+
+sashimiwiki [9:24 PM] 
+あー
+
+
+jekto [9:25 PM] 
+例えばADD f0 f1は「f0にf1を足し合わせる」だが、
+
+
+[9:26] 
+リパならatakes f0'i f1's
+
+
+sashimiwiki [9:27 PM] 
+F'es daliu, krantairzarth「もし同じならコピーする」　fedkrzで如何か
+jekto
+「f1が7に等しいならばf3をf1に複製せよ」ってどう言おう。la lex mol mal krantairzarthを略してllmmkrzとかすると長すぎる気がしないでもない
+Posted in #悠里osToday at 9:00 PM
+
+
+jekto [9:28 PM] 
+それに絡む話。 (edited)
+
+
+[9:30] 
+krzとかataとかって動詞であって、都合の良いことに先頭に持って来れば命令文だし、その命令文の内容が実際にatakes f0'i f1'sであるわけだ。
+
+
+[9:30] 
+しかし、前に決めたsiekiって形容詞やん、という話。
+
+
+jekto [9:32 PM] 
+added this Plain Text snippet: こういうことを書きたい
+sie f1 7
+MOV_IF_FLAG f1 f3
+Add Comment
+
+
+
+sashimiwiki [9:32 PM] 
+あー
+
+
+jekto [9:32 PM] 
+1行目は「f1と7を等しくせよ」とかではないわけよ。「等しかったらフラグを立てろ」という命令なわけよ
+
+
+sashimiwiki [9:33 PM] 
+siekirgrisとかsiekirgresとかにすればええんじゃねえのと思ったけど、それじゃ違うのか
+
+
+jekto [9:34 PM] 
+（えーっとsieki-rg-えっと）
+
+
+sashimiwiki [9:35 PM] 
+-r-is, -r-es
+
+
+jekto [9:36 PM] 
+「等しくさせる」という動詞？
+
+
+sashimiwiki [9:36 PM] 
+「等しくなる」と「等しくさせる」
+
+
+jekto [9:37 PM] 
+なるほど。ならば今回は不適（「等しくさせる」ならともかく「以上にさせる」では命令として意味をなさない）
+
+
+[9:37] 
+私がやりたいのは、（文法書読んでる）
+
+
+[9:38] 
+f0 es f1ss le 多い?
+La lex mol mal atakes f2'i f3's.
+
+
+[9:39] 
+という理語（#「多い」は理語）に相当する処理。
+
+
+sashimiwiki [9:39 PM] 
+「それがあってf3をf2に足す」かあ
+
+
+jekto [9:40 PM] 
+辞書「la lex mol mal　それなら　そうなら　そうだったら」を鵜呑みした。不適なら直してくだされ
+
+
+sashimiwiki [9:41 PM] 
+Fi f0 es f1(ss?) le loler, atakes f2'i f3's.　ではダメかしら
+
+
+jekto [9:42 PM] 
+理語としてはそっちの方が綺麗なのか、ならそれをどう圧縮表記しようか
+
+
+sashimiwiki [9:43 PM] 
+(ot)la lex mol malは会話文で相手の発言を受けて使うものだなあ
+
+
+jekto [9:43 PM] 
+(ot)なるほどなぁ
+
+
+jekto [9:45 PM] 
+added and commented on this Plain Text snippet
+sie f1 7
+MOV_IF_FLAG f1 f3
+1 Comment
+この2行目をMOV f1 f3と同じ形にはしたくないのよね
+
+
+
+jekto [9:47 PM] 
+added and commented on this Plain Text snippet: 単純に、
+fi f0 f1ss le-loler
+ata f2'i f3's
+1 Comment
+とかすると、2行目が無条件命令ata f2'i f3'sと同形になってよろしくない
+
+
+
+sashimiwiki [9:52 PM] 
+うーん
+
+
+jekto [9:52 PM] 
+Fi f0 es f1(ss?) le loler, mal atakes f2'i f3's. ならどう？
+
+
+sashimiwiki [9:54 PM] 
+「f0がf1よりも大きいならば、f3をf2に足す」
+
+
+jekto [9:54 PM] 
+なるほど、ここにmalを入れるのは問題ないと。
+
+
+[9:54] 
+なら
+
+
+jekto [9:55 PM] 
+added this Plain Text snippet: これでどうじゃ
+fi f0 f1ss le-loler
+mal-ata f2'i f3's
+Add Comment
+
+
+
+sashimiwiki [9:56 PM] 
+ところで-ssが付いてるのはなんなんだろう
+
+
+jekto [9:56 PM] 
+Fqa es fqass le xorlnem.　これはそれらより素晴らしいです。
+から引っ張ってきた
+
+
+[9:56] 
+https://sites.google.com/site/3tvalineparine/pei-bu/lineparined-krancia
+sites.google.com
+リパライン語 文法書 - 【人工言語】リパライン語 (15kB)
+
+
+sashimiwiki [9:56 PM] 
+複数語尾やそれ
+
+
+jekto [9:56 PM] 
+あっ
+
+
+[9:57] 
+確かに
+
+
+sashimiwiki [9:57 PM] 
+うむ。。。
+
+
+jekto [9:57 PM] 
+頭が足りなかったつらい
+
+
+[9:57] 
+さて
+
+
+[9:58] 
+じゃあ
+
+
+jekto [9:58 PM] 
+added this Plain Text snippet: これでええかな
+fi f0 f1 le-loler
+mal-ata f2'i f3's
+Add Comment
+
+
+
+jekto [9:58 PM] 
+mal-ataの代わりにataって書いちゃってバグらせるリパラオネ人の顔が浮かぶ（ニッコリ）
+
+
+sashimiwiki [9:59 PM] 
+よさげ
+
+
+[9:59] 
+mal必要な理由を良く分からず書いてるわけもなさそうだがなあ(本当に？)
+
+
+jekto [10:02 PM] 
+if(a = 0)って書く初心者が現世に無限にいることを考えてみよう
+
+
+sashimiwiki [10:03 PM] 
+うーん
+
+
+jekto [10:04 PM] 
+ところでハイフンでええんかな（よくない）
+
+
+sashimiwiki [10:05 PM] 
+(良くない)
+
+
+jekto [10:07 PM] 
+1. mata
+2. m'ata
+3. malata
+4. m''ata
+
+
+sashimiwiki [10:08 PM] 
+カオスだ……
+
+
+jekto [10:08 PM] 
+さてどうしよう
+
+
+sashimiwiki [10:08 PM] 
+省略形は不自然になるのでダメ
+
+
+jekto [10:10 PM] 
+le-lolerの方も決めねばな、xut/xyn/sie/xon/macなんてなかったんや
+
+
+[10:10] 
+なお、今まで便宜上ataで説明してきたけど、基本的にmalがつく（誤解を招く表現）のはkrzのみです (edited)
+
+
+sashimiwiki [10:11 PM] 
+スネークケースとかそういう類で表記するべきだなあと感じた
+
+
+jekto [10:11 PM] 
+まあそうなりますわな
+
+
+[10:13] 
+さて「以上」「以下」「超過」「未満」「同じ」「異なる」についてle-loler相当を確定させねば
+
+
+sashimiwiki [10:15 PM] 
+それぞれに-enを付けて、le X-enでええやん(適当すぎ)
+
+
+jekto [10:16 PM] 
+もうleとenすら略してXだけ書けばいいのでは？（さらにてきとう）
+
+
+sashimiwiki [10:16 PM] 
+le lolerはllolerでええやん
+
+
+jekto [10:16 PM] 
+なるほど。残りをどうするか
+
+
+sashimiwiki [10:17 PM] 
+のこり？
+
+
+jekto [10:18 PM] 
+「f0がf1を超過するとき」はfi ~ llolerやな、それ以外のときのをササっと確定させてニーモニック表をひょんみょんせねば
+
+
+sashimiwiki [10:19 PM] 
+うーん
+
+
+jekto [10:23 PM] 
+(ot)あ、krantairzarthの格支配教えて (edited)
+
+
+sashimiwiki [10:23 PM] 
+xoenがすでにあるのだからすでにlXnにすればいいことが表されているな？
+
+
+[10:24] 
+(ot)-'sは -'iを -'c/-'lに
+
+
+jekto [10:27 PM] 
+(ot)あっatakesとkrzで格支配違うやんどうしよう、格語尾やっぱり書くべきか (edited)
+
+
+sashimiwiki [10:28 PM] 
+(ot)アセンブリで格語尾書くのか……？まあそっちの方が自然言語的だが……
+
+
+jekto [10:29 PM] 
+(ot)いやatakesって「-'sを-'iに」足すなんよ。アセンブリは命令文で書いてるから-'sはCPUなんよ。
+あっatakesesにすればOKか?
+
+
+sashimiwiki [10:30 PM] 
+(ot)-es/-isは他動詞・自動詞に変化させる意味は公式にはないので危ない
+
+
+jekto [10:30 PM] 
+(ot)atakesesは辞書に載ってたぞい
+
+
+[10:31] 
+「Lecu atakeses marfakhardz fon 0.1sty.　小麦粉を一キロ加えます。」
+
+
+sashimiwiki [10:31 PM] 
+ほうほう？
+
+
+[10:31] 
+ほんとだ！
+
+
+jekto [10:34 PM] 
+(ot)(ot)風呂
+
+
+sashimiwiki [10:35 PM] 
+(ot)私も
+
+
+new messages
+sashimiwiki [11:15 PM] 
+帰還
+
+
+sashimiwiki [11:30 PM] 
+(ot)リパライン語学的に動詞の取る格の表記は「格支配」ではなく「格組(み)」と呼ぶ
+
+
+jekto [11:35 PM] 
+(ot)そういえばそうだった
