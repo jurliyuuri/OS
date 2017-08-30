@@ -608,5 +608,144 @@ lus:
 </table>
 
 <p>さて、6.の最後で『ci指定擬似命令』なるものを導入した以上、基本的にニーモニックはリパライン語で-'i -'cの形となる動詞に由来すべきである。比較命令はともかく。</p>
+<ul>
+<li>まず、atakesは「-'sを-'iに加算」なので、atakes → atakeses「-'sは-'iを-'cに加算」に変更。</li>
+<li>次に、stusniは「(-'sは-'iと-'cを)(計算)かけたものである」なので、紆余曲折の結果latvaves「-'sは-'cに-'iを掛け合わせる」という用語をでっち上げることに。</li>
+<li>adalについてもadales「-'sは-'iというANDマスクを-'cにかぶせる」を作成。その勢いでdaliuales「-'sは-'iというXNORマスクを-'cにかぶせる」も。</li>
+<li>シフト命令に関しては、命令文にするために副詞を後ろに。結果dtoとdroとなる。</li>
+<li>qssも再命名、irzarst ileceonj「同時に移す」略してinjとなる。</li>
+<li>nacisもnacises「-'sは-'iを反転させる」、【電算】「-'sは-'iの全ビットを反転させる」を造語</li>
+</ul>
+
+<p>ということで、作業が終わった。除算は仕様すら決めていないので後で考えることにして、とりあえず新しくなった表を持ってこよう</p>
+<table border="1" bordercolor="#888" cellspacing="0" style="border-collapse:collapse;border-color:rgb(136,136,136);border-width:1px">
+<tbody>
+<tr>
+<td style="width:51px;height:18px">&nbsp;命令</td>
+<td style="width:126px;height:18px">&nbsp;語源</td>
+<td style="width:60px">&nbsp;x86</td>
+<td style="width:287px;height:18px">&nbsp;意味</td>
+</tr>
+<tr>
+<td style="width:71px;height:18px">&nbsp;krz</td>
+<td style="width:116px;height:18px">&nbsp;krantairzarth</td>
+<td style="width:60px">&nbsp;mov</td>
+<td style="width:287px;height:18px">&nbsp;複製</td>
+</tr>
+<tr>
+<td style="width:51px;height:18px">&nbsp;ata</td>
+<td style="width:116px;height:18px">&nbsp;atakeses</td>
+<td style="width:60px">&nbsp;add</td>
+<td style="width:287px;height:18px">&nbsp;加算</td>
+</tr>
+<tr>
+<td style="width:51px;height:18px">&nbsp;nta</td>
+<td style="width:116px;height:18px">&nbsp;ny atakeses</td>
+<td style="width:60px">&nbsp;sub</td>
+<td style="width:287px;height:18px">&nbsp;減算</td>
+</tr>
+<tr>
+<td style="width:51px;height:18px">&nbsp;lat</td>
+<td style="width:116px;height:18px">&nbsp;latvaves</td>
+<td style="width:60px">&nbsp;mul</td>
+<td style="width:287px;height:18px">&nbsp;乗算</td>
+</tr>
+<tr>
+<td style="width:51px;height:18px">&nbsp;(kak)</td>
+<td style="width:116px;height:18px">&nbsp;(kakites)</td>
+<td style="width:60px">&nbsp;div</td>
+<td style="width:287px;height:18px">&nbsp;除算</td>
+</tr>
+<tr>
+<td style="width:51px;height:18px">&nbsp;ada</td>
+<td style="width:116px;height:18px">&nbsp;adales</td>
+<td style="width:60px">&nbsp;and</td>
+<td style="width:287px;height:18px">&nbsp;ビット積</td>
+</tr>
+<tr>
+<td style="width:51px;height:18px">&nbsp;ekc</td>
+<td style="width:116px;height:18px">&nbsp;ekcan</td>
+<td style="width:60px">&nbsp;or</td>
+<td style="width:287px;height:18px">&nbsp;ビット和</td>
+</tr>
+<tr>
+<td style="width:51px;height:18px">&nbsp;nac</td>
+<td style="width:116px;height:18px">&nbsp;nacises</td>
+<td style="width:60px">&nbsp;not</td>
+<td style="width:287px;height:18px">&nbsp;ビット反転</td>
+</tr>
+<tr>
+<td style="width:51px;height:18px">&nbsp;dal</td>
+<td style="width:116px;height:18px">&nbsp;daliuales</td>
+<td style="width:60px">&nbsp;xnor</td>
+<td style="width:287px;height:18px">&nbsp;ビットxnor</td>
+</tr>
+<tr>
+<td style="width:51px;height:18px">&nbsp;dto</td>
+<td style="width:116px;height:18px"><span style="font-size:13.3333px">&nbsp;dusnij</span>&nbsp;tesnokonj</td>
+<td style="width:60px">&nbsp;shr</td>
+<td style="width:287px;height:18px">&nbsp;右シフト</td>
+</tr>
+<tr>
+<td style="width:51px;height:18px">&nbsp;dro</td>
+<td style="width:116px;height:18px">&nbsp;dusnij restutonj</td>
+<td style="width:60px">&nbsp;shl</td>
+<td style="width:287px;height:18px">&nbsp;左シフト</td>
+</tr>
+<tr>
+<td>&nbsp;malkrz</td>
+<td style="width:100px">&nbsp;mal krantairzarth</td>
+<td>
+</td>
+<td>&nbsp;フラグが立っているときのみ複製する
+</td>
+</tr>
+<tr>
+<td>&nbsp;fi ~ xtlo</td>
+<td>&nbsp;fi * es * xut loler</td>
+<td></td>
+<td>&nbsp;以下ならフラグを立てる</td>
+</tr>
+<tr>
+<td>&nbsp;fi ~ xylo</td>
+<td>&nbsp;fi * es * xy loler</td>
+<td></td>
+<td>&nbsp;未満ならフラグを立てる</td>
+</tr>
+<tr>
+<td>&nbsp;fi ~ clo</td>
+<td>&nbsp;fi * es * ce loler</td>
+<td></td>
+<td>&nbsp;同等ならフラグを立てる</td>
+</tr>
+<tr>
+<td>&nbsp;fi ~ xolo</td>
+<td>&nbsp;fi * es * xo loler</td>
+<td></td>
+<td>&nbsp;以上ならフラグを立てる</td>
+</tr>
+<tr>
+<td>&nbsp;fi ~ llo</td>
+<td>&nbsp;fi * es * le loler</td>
+<td></td>
+<td>&nbsp;超過ならフラグを立てる</td>
+</tr>
+<tr>
+<td style="width:51px;height:18px">&nbsp;fen</td>
+<td style="width:116px;height:18px">&nbsp;fav es niv e'i</td>
+<td style="width:60px">&nbsp;nop<br>
+</td>
+<td style="width:287px;height:18px">&nbsp;何もしない</td>
+</tr>
+<tr>
+<td style="width:51px;height:18px">&nbsp;inj<span>&nbsp;&nbsp;</span></td>
+<td style="width:116px;height:18px">&nbsp;irzarst ileceonj</td>
+<td style="width:60px">&nbsp;</td>
+<td style="width:287px;height:18px">&nbsp;二重移動 (第1オペランドの値を第2オペランドに代入しつつ第2オペランドの古い値を第3オペランドに代入)</td>
+</tr>
+</tbody>
+</table>
+
+<p>いぇーい。</p>
 </body>
 </html>
