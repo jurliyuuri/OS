@@ -475,5 +475,138 @@ lus:
 <p>そしてこれを<a href="https://docs.google.com/spreadsheets/d/1CmGt_wHdcunhyJv2pp58pwNQwhx4yoZ47rz7LmlvKV4/edit#gid=1597275252">spreadsheet</a>と<a href="https://sites.google.com/site/panqateel/alml">サイト</a>の両方に載せて来た。</p>
 
 <p>あ、あとqssとmalkrzを足してこよう。</p>
+
+
+<h2>9. 格組の統一</h2>
+<p>とりあえず、現状のニーモニック表を貼るとこうなる。</p>
+<table border="1" bordercolor="#888" cellspacing="0" style="border-collapse:collapse;border-color:rgb(136,136,136);border-width:1px">
+<tbody>
+<tr>
+<td style="width:51px;height:18px">&nbsp;命令</td>
+<td style="width:126px;height:18px">&nbsp;語源</td>
+<td style="width:60px">&nbsp;x86</td>
+<td style="width:287px;height:18px">&nbsp;意味</td>
+</tr>
+<tr>
+<td style="width:71px;height:18px">&nbsp;krz</td>
+<td style="width:116px;height:18px">&nbsp;krantairzarth</td>
+<td style="width:60px">&nbsp;mov</td>
+<td style="width:287px;height:18px">&nbsp;複製</td>
+</tr>
+<tr>
+<td style="width:51px;height:18px">&nbsp;ata</td>
+<td style="width:116px;height:18px">&nbsp;atakes</td>
+<td style="width:60px">&nbsp;add</td>
+<td style="width:287px;height:18px">&nbsp;加算</td>
+</tr>
+<tr>
+<td style="width:51px;height:18px">&nbsp;nta</td>
+<td style="width:116px;height:18px">&nbsp;ny atakes</td>
+<td style="width:60px">&nbsp;sub</td>
+<td style="width:287px;height:18px">&nbsp;減算</td>
+</tr>
+<tr>
+<td style="width:51px;height:18px">&nbsp;stu</td>
+<td style="width:116px;height:18px">&nbsp;stusni</td>
+<td style="width:60px">&nbsp;mul</td>
+<td style="width:287px;height:18px">&nbsp;乗算</td>
+</tr>
+<tr>
+<td style="width:51px;height:18px">&nbsp;kak</td>
+<td style="width:116px;height:18px">&nbsp;kakites</td>
+<td style="width:60px">&nbsp;div</td>
+<td style="width:287px;height:18px">&nbsp;除算</td>
+</tr>
+<tr>
+<td style="width:51px;height:18px">&nbsp;ada</td>
+<td style="width:116px;height:18px">&nbsp;adal</td>
+<td style="width:60px">&nbsp;and</td>
+<td style="width:287px;height:18px">&nbsp;ビット積</td>
+</tr>
+<tr>
+<td style="width:51px;height:18px">&nbsp;ekc</td>
+<td style="width:116px;height:18px">&nbsp;ekcan</td>
+<td style="width:60px">&nbsp;or</td>
+<td style="width:287px;height:18px">&nbsp;ビット和</td>
+</tr>
+<tr>
+<td style="width:51px;height:18px">&nbsp;nac</td>
+<td style="width:116px;height:18px">&nbsp;nacis</td>
+<td style="width:60px">&nbsp;not</td>
+<td style="width:287px;height:18px">&nbsp;ビット反転</td>
+</tr>
+<tr>
+<td style="width:51px;height:18px">&nbsp;dal</td>
+<td style="width:116px;height:18px">&nbsp;daliual</td>
+<td style="width:60px">&nbsp;xnor</td>
+<td style="width:287px;height:18px">&nbsp;ビットxnor</td>
+</tr>
+<tr>
+<td style="width:51px;height:18px">&nbsp;tod</td>
+<td style="width:116px;height:18px">&nbsp;tesnokon dusnij</td>
+<td style="width:60px">&nbsp;shr</td>
+<td style="width:287px;height:18px">&nbsp;右シフト</td>
+</tr>
+<tr>
+<td style="width:51px;height:18px">&nbsp;rod</td>
+<td style="width:116px;height:18px">&nbsp;restuton dusnij</td>
+<td style="width:60px">&nbsp;shl</td>
+<td style="width:287px;height:18px">&nbsp;左シフト</td>
+</tr>
+<tr>
+<td>&nbsp;malkrz</td>
+<td style="width:100px">&nbsp;mal krantairzarth</td>
+<td>
+</td>
+<td>&nbsp;フラグが立っているときのみ複製する
+</td>
+</tr>
+<tr>
+<td>&nbsp;fi ~ xtlo</td>
+<td>&nbsp;fi * es * xut loler</td>
+<td></td>
+<td>&nbsp;以下ならフラグを立てる</td>
+</tr>
+<tr>
+<td>&nbsp;fi ~ xylo</td>
+<td>&nbsp;fi * es * xy loler</td>
+<td></td>
+<td>&nbsp;未満ならフラグを立てる</td>
+</tr>
+<tr>
+<td>&nbsp;fi ~ clo</td>
+<td>&nbsp;fi * es * ce loler</td>
+<td></td>
+<td>&nbsp;同等ならフラグを立てる</td>
+</tr>
+<tr>
+<td>&nbsp;fi ~ xolo</td>
+<td>&nbsp;fi * es * xo loler</td>
+<td></td>
+<td>&nbsp;以上ならフラグを立てる</td>
+</tr>
+<tr>
+<td>&nbsp;fi ~ llo</td>
+<td>&nbsp;fi * es * le loler</td>
+<td></td>
+<td>&nbsp;超過ならフラグを立てる</td>
+</tr>
+<tr>
+<td style="width:51px;height:18px">&nbsp;fen</td>
+<td style="width:116px;height:18px">&nbsp;fav es niv e'i</td>
+<td style="width:60px">&nbsp;nop<br>
+</td>
+<td style="width:287px;height:18px">&nbsp;何もしない</td>
+</tr>
+<tr>
+<td style="width:51px;height:18px">&nbsp;qss<span>&nbsp; &nbsp;</span></td>
+<td style="width:116px;height:18px">&nbsp;qa'd stevypen snidost</td>
+<td style="width:60px">&nbsp;</td>
+<td style="width:287px;height:18px">&nbsp;二重移動 (第1オペランドの値を第2オペランドに代入しつつ第2オペランドの古い値を第3オペランドに代入)</td>
+</tr>
+</tbody>
+</table>
+
+<p>さて、6.の最後で『ci指定擬似命令』なるものを導入した以上、基本的にニーモニックはリパライン語で-'i -'cの形となる動詞に由来すべきである。比較命令はともかく。</p>
 </body>
 </html>
