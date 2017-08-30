@@ -464,6 +464,16 @@ lus:
 <p>書き忘れてた設定を思い出したので書いておく。nta fistir'c 即値'iはata fistir'c (-即値)'iに翻訳される。上記アセンブリでひたすら<code>ata</code>を使っているのはそういう理由である。</p>
 <p>また、符号付きと符号なしを明示的に区別しないほうが楽だよなーとも思っているが、問題は大小比較。今までのコードは正数と負数の比較をしていないのでどちらでもいいんだが、両方用意するとか決めるとかしないとなぁ。</p>
 
+<p>あと、notequalを除いて比較命令が出揃ったので掲載しよう。</p>
+<table>
+<tr><td>fi ~ xtlo</td><td>fi * es * xut loler</td><td>以下ならフラグを立てる</td></tr>
+<tr><td>fi ~ xylo</td><td>fi * es * xy loler</td><td>未満ならフラグを立てる</td></tr>
+<tr><td>fi ~ clo</td><td>fi * es * ce loler</td><td>同等ならフラグを立てる</td></tr>
+<tr><td>fi ~ xolo</td><td>fi * es * xo loler</td><td>以上ならフラグを立てる</td></tr>
+<tr><td>fi ~ llo</td><td>fi * es * le loler</td><td>超過ならフラグを立てる</td></tr>
+</table>
+<p>そしてこれを<a href="https://docs.google.com/spreadsheets/d/1CmGt_wHdcunhyJv2pp58pwNQwhx4yoZ47rz7LmlvKV4/edit#gid=1597275252">spreadsheet</a>と<a href="https://sites.google.com/site/panqateel/alml">サイト</a>の両方に載せて来た。</p>
 
+<p>あ、あとqssとmalkrzを足してこよう。</p>
 </body>
 </html>
