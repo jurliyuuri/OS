@@ -364,5 +364,100 @@ iska:	krz xx [f5]
 </pre>
 </div>
 
+<p>角かっこ記法・名前空間の衝突などまだ課題は残るが、とりあえずクイックソートでも書くか。まずはC</p>
+
+<pre>
+void quicksort(int* const a, int l, int r)
+{
+	register int* const f0 = a;
+	register int f1 = l; 
+	register int f2 = r;
+	register int f3;
+	if(f1 >= f2) {
+		goto fin;
+	}
+	f3 = f1;
+	f3++;
+	
+panqa:
+	if(f3 > r) {
+		goto fistir;
+	}
+	f2 = l;
+	f2 = f0[f2];
+	if(f0[f3] >= f2) {
+		goto iska;
+	}
+	f1++;
+	qss(f0[f3],f0[f1],f0[f3]);
+iska: 
+	f3++;
+	goto panqa;
+
+fistir:
+	f2 = l;
+	qss(f0[f1],f0[f2],f0[f1]);
+
+	int p = f1;
+	quicksort(a,l,p-1);
+	quicksort(a,p+1,r);
+fin:	
+	return;	
+}
+</pre>
+
+<p>うわぁ（うわぁ）。とりあえずハンドコンパイルせねば</p>
+
+<pre>
+::'c'i
+ycax:
+	krz f2 [f5+4] ; r
+	krz f1 [f5+8] ; l
+	krz f0 [f5+12] ; a
+	fi f1 f2 xolo
+	malkrz xx lus
+	krz f3 f1
+	ata f3 1
+panqa:
+	fi f3 [f5+4] llo
+	malkrz xx fistir
+	krz f2 [f5+8]
+	krz f2 [f0+f2]
+	fi f2 [f0+f3] xtlo
+	malkrz xx iska
+	ata f1 1
+	qss [f0+f3] [f0+f1] [f0+f3]
+iska:
+	ata f3 1
+	krz xx panqa
+fistir:
+	krz f2 [f5+8]
+	qss [f0+f1] [f0+f2] [f0+f1]
+
+	ata f5 -4
+	krz [f5] f1 ; push p
+	ata f5 -4
+	krz [f5] [f5+20] ; push a
+	ata f5 -4
+	krz [f5] [f5+20] ; push l
+	ata f5 -4
+	krz f1 [f5+12] ; f1 = p
+	ata f1 -1
+	krz [f5] f1 ; push p-1
+	ata f5 -4
+	qss [f5] xx ycax
+	ata f5 4 ; aはconstなのでスタックに残っているaを信用してよい
+	krz f1 [f5+8] ; f1 = p
+	ata f1 1
+	krz [f5] f1 ; push p+1
+	ata f5 -4
+	krz [f5] [f5+20] ; push r
+	ata f5 -4
+	qss [f5] xx ycax
+lus:
+	krz xx [f5]
+	ata f5 4
+</pre>
+<p>疲れた。うーん、<code>ata</code>が多いのが気に入らないなぁ</p>
 </body>
 </html>
