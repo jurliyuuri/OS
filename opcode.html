@@ -302,5 +302,67 @@ iska:	krz xx [f5]
 
 <p>待てよ？qskrz fi st irをCでいう「fi = st; st = ir;」ではなく「tmp = st; st = ir; fi = tmp;」であると再定義してやれば、上記のコードに一切の変更を与えずかつfiとirが同一であるときXCHGとして使えるのでは！？これは楽しいぞ。とりあえず命令名を変えなくては。Fafs氏に訊こう。</p>
 <img src="qskrz.png" height="100"/>
+<hr>
+<p>Fafs「qa'd stevypen snidost「二回移動」でqssでいかがでしょうか」</p>
+<p>なるほど。まあ片方が移動で片方がコピーなのだが、fi = irのときはswapだしまあよかろう。</p>
+
+<p>llolerについても反応を得た。「lloとでもすればいいのじゃろうなあ」とのこと。同意。</p>
+<p>語順についても反応を得た。リパラオネ人は-'i -'cを好むらしい。となると再設計か？めんどい。とは言え、バート人は-'c -'iを好むそうだ。じゃあ「設計者はバート人だったので無意識のうちにV -'c -'iでデザインしていたが、リパラオネ人に-'i -'cの方が自然だと言われた。とはいえ既存のコードを全部修正するのは面倒だったので『ci指定擬似命令』をアセンブリに組み込んだ」という設定にしよう。</p>
+
+
+<h2>7. 実践part3</h2>
+<p>とりあえず、仕様がそれなりに変わったので書き直す。</p>
+<div class="box">
+<p>非再帰フィボナッチ</p>
+<pre>
+::'c'i
+	krz f0 [f5+4]
+	krz f1 0
+	krz f2 1
+is:	fi f0 0 clo
+	malkrz xx ka 
+	ata f0 -1
+	krz f3 f1
+	ata f3 f2
+	qss f1 f2 f3
+	krz xx is
+ka:	krz f0 f1
+	krz xx [f5]
+	ata f5 4
+</pre>
+</div>
+
+<div class="box">
+<p>再帰フィボナッチ</p>
+<pre>
+::'c'i
+fib2:	krz f0 [f5+4]
+	fi f0 2 xylo
+	malkrz xx iska
+	krz f1 f0
+	ata f1 -1
+	ata f5 -4
+	krz [f5] f1
+	ata f5 -4
+	qss [f5] xx fib2
+	krz f1 [f5]
+	ata f5 4
+	krz f2 f0
+	ata f1 -1
+	ata f5 -4	
+	krz [f5] f2
+	ata f5 -4	
+	krz [f5] f1
+	ata f5 -4
+	qss [f5] xx fib2
+	krz f2 [f5+4]
+	ata f5 8
+	ata f2 f0
+	krz f0 f2
+iska:	krz xx [f5]
+	ata f5 4
+</pre>
+</div>
+
 </body>
 </html>
