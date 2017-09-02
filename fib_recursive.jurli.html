@@ -8,20 +8,20 @@ fib2:	krz f0 [f5+4]
 	fi f0 2 xylo
 	malkrz xx iska
 	krz f1 f0
-	ata f1 -1
-	ata f5 -4
+	nta f1 1
+	nta f5 4
 	krz [f5] f1
-	ata f5 -4
+	nta f5 4
 	inj [f5] xx fib2
 	krz f1 [f5]
 	ata f5 4
 	krz f2 f0
-	ata f1 -1
-	ata f5 -4	
+	nta f1 1
+	nta f5 4	
 	krz [f5] f2
-	ata f5 -4	
+	nta f5 4	
 	krz [f5] f1
-	ata f5 -4
+	nta f5 4
 	inj [f5] xx fib2
 	krz f2 [f5+4]
 	ata f5 8
