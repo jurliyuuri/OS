@@ -1,0 +1,32 @@
+<link rel="stylesheet" href="common.css">
+<script src="toggle_font.js"></script>
+<body onload="toggle(true)">
+<label><input type="checkbox" checked="checked" onchange="toggle(this.checked)">jietoden liparxeで表示</label>
+<pre class="jietoden">
+::'c'i
+fib2:	krz f0 [f5+4]
+	fi f0 2 xylo
+	malkrz xx iska
+	krz f1 f0
+	ata f1 -1
+	ata f5 -4
+	krz [f5] f1
+	ata f5 -4
+	inj [f5] xx fib2
+	krz f1 [f5]
+	ata f5 4
+	krz f2 f0
+	ata f1 -1
+	ata f5 -4	
+	krz [f5] f2
+	ata f5 -4	
+	krz [f5] f1
+	ata f5 -4
+	inj [f5] xx fib2
+	krz f2 [f5+4]
+	ata f5 8
+	ata f2 f0
+	krz f0 f2
+iska:	krz xx [f5]
+	ata f5 4
+</pre>
