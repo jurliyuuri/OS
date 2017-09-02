@@ -1,0 +1,156 @@
+<!doctype html>
+<html>
+<head>
+<title>設定一覧（暫定）</title>
+<meta charset="UTF-8">
+<style>
+</style>
+</head>
+<body>
+<h2>1. ニーモニック一覧</h2>
+<table border="1" bordercolor="#888" cellspacing="0" style="border-collapse:collapse;border-color:rgb(136,136,136);border-width:1px">
+<tbody>
+<tr>
+<td>&nbsp;命令</td>
+<td>&nbsp;語源</td>
+<td>&nbsp;x86</td>
+<td>&nbsp;意味</td>
+</tr>
+<tr>
+<td style="width:71px;height:18px">&nbsp;krz</td>
+<td style="width:116px;height:18px">&nbsp;krantairzarth</td>
+<td style="width:60px">&nbsp;mov</td>
+<td style="width:287px;height:18px">&nbsp;複製</td>
+</tr>
+<tr>
+<td>&nbsp;ata</td>
+<td>&nbsp;atakeses</td>
+<td>&nbsp;add</td>
+<td>&nbsp;加算</td>
+</tr>
+<tr>
+<td>&nbsp;nta</td>
+<td>&nbsp;ny atakeses</td>
+<td>&nbsp;sub</td>
+<td>&nbsp;減算</td>
+</tr>
+<tr>
+<td >&nbsp;lat</td>
+<td >&nbsp;latvaves</td>
+<td >&nbsp;mul</td>
+<td >&nbsp;乗算</td>
+</tr>
+<tr>
+<td>&nbsp;(kak)</td>
+<td>&nbsp;(kakites)</td>
+<td>&nbsp;div</td>
+<td>&nbsp;除算</td>
+</tr>
+<tr>
+<td>&nbsp;ada</td>
+<td>&nbsp;adales</td>
+<td >&nbsp;and</td>
+<td>&nbsp;ビット積</td>
+</tr>
+<tr>
+<td>&nbsp;ekc</td>
+<td>&nbsp;ekcan</td>
+<td>&nbsp;or</td>
+<td>&nbsp;ビット和</td>
+</tr>
+<tr>
+<td>&nbsp;nac</td>
+<td>&nbsp;nacises</td>
+<td>&nbsp;not</td>
+<td>&nbsp;ビット反転</td>
+</tr>
+<tr>
+<td>&nbsp;dal</td>
+<td>&nbsp;daliuales</td>
+<td>&nbsp;xnor</td>
+<td>&nbsp;ビットxnor</td>
+</tr>
+<tr>
+<td>&nbsp;dto</td>
+<td>&nbsp;dusnij&nbsp;tesnokonj</td>
+<td>&nbsp;shr</td>
+<td>&nbsp;右シフト</td>
+</tr>
+<tr>
+<td>&nbsp;dro</td>
+<td>&nbsp;dusnij restutonj</td>
+<td>&nbsp;shl</td>
+<td>&nbsp;左シフト</td>
+</tr>
+<tr>
+<td>&nbsp;malkrz</td>
+<td>&nbsp;mal krantairzarth</td>
+<td>
+</td>
+<td>&nbsp;フラグが立っているときのみ複製する
+</td>
+</tr>
+<tr>
+<td>&nbsp;fi ~ xtlo</td>
+<td>&nbsp;fi * es * xut loler</td>
+<td></td>
+<td>&nbsp;以下ならフラグを立てる</td>
+</tr>
+<tr>
+<td>&nbsp;fi ~ xylo</td>
+<td>&nbsp;fi * es * xy loler</td>
+<td></td>
+<td>&nbsp;未満ならフラグを立てる</td>
+</tr>
+<tr>
+<td>&nbsp;fi ~ clo</td>
+<td>&nbsp;fi * es * ce loler</td>
+<td></td>
+<td>&nbsp;同等ならフラグを立てる</td>
+</tr>
+<tr>
+<td>&nbsp;fi ~ xolo</td>
+<td>&nbsp;fi * es * xo loler</td>
+<td></td>
+<td>&nbsp;以上ならフラグを立てる</td>
+</tr>
+<tr>
+<td>&nbsp;fi ~ llo</td>
+<td>&nbsp;fi * es * le loler</td>
+<td></td>
+<td>&nbsp;超過ならフラグを立てる</td>
+</tr>
+<tr>
+<td>&nbsp;fen</td>
+<td>&nbsp;fav es niv e'i</td>
+<td>&nbsp;nop<br>
+</td>
+<td>&nbsp;何もしない</td>
+</tr>
+<tr>
+<td>&nbsp;inj<span>&nbsp;&nbsp;</span></td>
+<td>&nbsp;irzarst ileceonj</td>
+<td>&nbsp;</td>
+<td style="width:287px;height:18px">&nbsp;二重移動 (第1オペランドの値を第2オペランドに代入しつつ第2オペランドの古い値を第3オペランドに代入)</td>
+</tr>
+</tbody>
+</table>
+
+<h2>2. レジスタ一覧</h2>
+<p>レジスタはリパライン語でfirjalである。</p>
+<table border="1" bordercolor="#888" cellspacing="0" style="border-collapse:collapse;border-color:rgb(136,136,136);border-width:1px;">
+<thead>
+<tr><td>レジスタ名</td><td>役割</td>
+</tr>
+</thead>
+<tbody>
+<tr><td>f0</td><td rowspan="4">関数内でいじって良いレジスタ。単純型戻り値はf0で返す。</td>
+<tr><td>f1</td>
+<tr><td>f2</td>
+<tr><td>f3</td>
+<tr><td>f4</td><td>未設定</td>
+<tr><td>f5</td><td>主にスタックを扱うためのレジスタ。</td>
+<tr><td>f6</td><td>未設定</td>
+<tr><td>f7</td><td>未設定</td>
+<tr><td>xx</td><td>xeumon xelal「次に見るところ」の略。次に実行する命令のアドレスが格納されている。</td>
+</body>
