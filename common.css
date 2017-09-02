@@ -1,0 +1,11 @@
+@font-face{
+	font-family: "jietoden";
+	src: url(./jietoden_liparxe.woff);
+}
+
+.qq {
+	border-collapse:collapse;border-color:rgb(136,136,136);border-width:1px
+}
+
+.comment{color: green;}
+.box{border: 1px solid blue; padding: 10px; margin: 10px;}
