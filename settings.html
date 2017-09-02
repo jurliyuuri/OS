@@ -164,7 +164,7 @@
 <tr><td><code>[</code><u>レジスタ名</u><code> + </code><u>定数</u><code>]</code></td><td>構文未確定</td><td>レジスタに入っている番地に定数を足した番地のメモリを表す。</td></tr>
 <tr><td><code>[</code><u>レジスタ名</u><code> + </code><u>レジスタ名</u><code>]</code></td><td>構文未確定</td><td>2つのレジスタに入っている数値を足した番地のメモリを表す。</td></tr>
 <tr><td><u>ラベル名</u><code>:</code></td><td>構文未確定</td><td>ラベル名を定義する</td></tr></tbody>
-<tr><td><code>-</code><u>定数</u></td><td>構文未確定</td><td>負の整数。<a href="https://jurliyuuri.slack.com/archives/C6QL0DKV4/p1504358289000016">リパーシェフォントでのU+002Dはマイナスではなくハイフンである</a>ので、現状の構文は誤りである。</td>
+<tr style="color:#ddd"><td><code>-</code><u>定数</u></td><td>構文未確定</td><td>負の整数。<a style="color:#ddd" href="https://jurliyuuri.slack.com/archives/C6QL0DKV4/p1504358289000016">リパーシェフォントでのU+002Dはマイナスではなくハイフンである</a>ので、現状の構文は誤りである。<a id="dontuse" style="color:red">めんどいので現状では使用しないことに決めた</span></span></td>
 </table>
 
 <h2>4. 便利なイディオム</h2>
@@ -172,7 +172,7 @@
 <p>スタックにiskaをプッシュする</p>
 <pre>
 	::'c'i
-	ata f5 -4	<span class="comment">; f5を持ち上げて</span>
+	nta f5 4	<span class="comment">; f5を持ち上げて</span>
 	krz [f5] iska	<span class="comment">; 積む</span>
 </pre>
 </div>
@@ -199,7 +199,7 @@
 <p>関数funcを呼び出す</p>
 <pre>
 	::'c'i
-	ata f5 -4	<span class="comment">; スタックを準備</span>
+	nta f5 4	<span class="comment">; スタックを準備</span>
 	inj [f5] xx func	<span class="comment">; リターンアドレスを積んで、同一命令で関数のアドレスにジャンプ</span>
 </pre>
 </div>
