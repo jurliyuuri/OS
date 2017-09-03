@@ -1,0 +1,295 @@
+
+jekto [9:42 PM] 
+＠memo なるほどなぁ
+
+
+[9:45] 
+これのそれぞれの意味用法を知りたい。例えば現世の@は英語の"at"の意味の広さから色々使い道があるんだけど、それがどうなのか、とか。-がハイフンであってマイナスではないという話は既に聞いたが
+qafopwa
+あと*;はないけど[]~<>@$&\_があったはず
+Posted in #悠里osAug 31st at 1:32 AM
+
+
+qafopwa [10:17 PM] 
+@ はioの合字ですなあ
+
+
+jekto [10:18 PM] 
+ならアセンブリの角かっこの代わりにioが使えそうだな
+
+
+[10:18] 
+使えるのか？
+
+
+qafopwa [10:19 PM] 
+ところでなぜ角括弧を排他するんです？
+
+
+jekto [10:22 PM] 
+x86的だからなぁ
+
+
+qafopwa [10:23 PM] 
+あー、なるほど。今現在どういう意味範疇で使ってます？
+
+
+jekto [10:23 PM] 
+いや正直記号なんてなんでもいいんだけど
+
+
+[10:23] 
+http://jurliyuuri.com/OS/settings.html
+
+[10:24] 
+ここの「その他の構文（未確定）」にあるのが「現世っぽさを含みうる構文」。
+
+qafopwa [10:27 PM] 
+確かにio使えそう（本当ー？）
+
+jekto [10:28 PM] 
+んーちょっと怪しいか？怪しいなら怪しいでバートの語法に引きづられた設定にする手もあるが
+
+[10:31] 
+f1@'cを「f1に格納されている住所に」と読ませたい（無理がありそう）
+
+qafopwa [11:02 PM] 
+ioって後置詞だから'cいらないのでは
+
+jekto [11:03 PM] 
+アセンブラの文法が要求する
+
+
+[11:05] 
+krz [f5+20] [f5] は「f5の値に20足した値に相当する番地に入っているデータを、f5の値に相当する番地に複製する」という意味
+
+
+[11:07] 
+一方krz f1 f3は「f1の値をf3に複製する」の意
+
+
+[11:07] 
+つまり後者はkrantairzarth f1'i f3'c. という命令文に相当する。
+
+
+qafopwa [11:10 PM] 
+前者をkrz f5+20@ f5@ とはできないのかー。
+
+
+jekto [11:10 PM] 
+それでいいならそれでいい
+
+
+[11:10] 
+ソースコード上はkrz f5+20@ f5@と書くことになるでしょう
+
+
+[11:11] 
+一方、それをリパとして読み上げる時はf5 io 'cみたいな無理のある読み方にしないとなぁ、という
+
+
+[11:11] 
+まあそこまで厳密にリパと対応させる必要がない説はある
+
+
+qafopwa [11:12 PM] 
+〜の場所っていう連体形語尾なかったっけ？
+
+
+jekto [11:12 PM] 
+あったはず
+
+
+qafopwa [11:12 PM] 
+あ、でも動詞じゃないから駄目か
+
+
+jekto [11:13 PM] 
+jekto
+「f0が指す場所」、うーん
+Posted in #悠里osAug 30th at 1:35 PM
+
+
+[11:13] 
+ jekto
+f0alじゃダメなんだろうなぁ（f0するところ？）
+Posted in #悠里osAug 30th at 1:35 PM
+
+
+[11:13] 
+ sashimiwiki
+f0'st kinal
+Posted in #悠里osAug 30th at 1:36 PM
+
+[11:13] 
+ jekto
+まあ動詞が入りますわな、それだとタイプ数がかさむのでどうしたものか
+Posted in #悠里osAug 30th at 1:39 PM
+
+[11:13] 
+ sashimiwiki
+f0rkinal
+Posted in #悠里osAug 30th at 1:40 PM
+
+[11:13] 
+というやりとりが前にあった
+
+qafopwa [11:14 PM] 
+なるほど
+
+
+----- Today September 4th, 2017 -----
+jekto [3:13 AM] 
+@sashimiwiki 上のアットマークに関する議論読んで
+
+sashimiwiki [3:15 AM] 
+ioか。
+
+jekto [3:15 AM] 
+タイプ数という意味ではすごく合理的
+
+sashimiwiki [3:15 AM] 
+ioは後置詞で「～において」という意味を表すものだったね
+
+jekto [3:16 AM] 
+その意味用法から結構ずれている気はするけど、まあx86の角カッコに比べれば自然言語との関連性がつよいかも？
+
+sashimiwiki [3:17 AM] 
+実際に使う場合はどうなるの？
+
+jekto [3:17 AM] 
+jekto
+krz [f5+20] [f5] は「f5の値に20足した値に相当する番地に入っているデータを、f5の値に相当する番地に複製する」という意味
+Posted in #悠里osYesterday at 11:05 PM
+
+[3:17] 
+ qafopwa
+前者をkrz f5+20@ f5@ とはできないのかー。
+Posted in #悠里osYesterday at 11:10 PM
+
+[3:17] 
+ jekto
+ソースコード上はkrz f5+20@ f5@と書くことになるでしょう
+Posted in #悠里osYesterday at 11:10 PM
+
+sashimiwiki [3:19 AM] 
+ioが続くのは理語的には非文的だけど、アセンブリとしてはできるだけ自然言語に近づいてていい感じな気はするぞ
+
+jekto [3:20 AM] 
+じゃあ確定で
+
+jekto [3:29 AM] 
+あと他に案件は…そうだラベルだ
+
+sashimiwiki [3:29 AM] 
+ラベル、と
+
+jekto [3:29 AM] 
+jekto
+@sashimiwiki 「次は〜fistir〜fistir〜」みたいな表現を書いてラベルを表現することを思いついた
+Posted in #悠里osYesterday at 4:02 AM
+
+sashimiwiki [3:30 AM] 
+なんか電車内のアナウンスみたいやな
+
+jekto [3:30 AM] 
+それを意図した
+
+sashimiwiki [3:30 AM] 
+よくわからないんですがね
+
+jekto [3:30 AM] 
+「この次の文をfistirと呼ぶ」という擬似命令
+
+[3:31] 
+後置にしてla lexで処理してもいいかも
+
+sashimiwiki [3:31 AM] 
+あー、la lexの方がエモい
+
+jekto [3:32 AM] 
+added and commented on this Plain Text snippet
+krz f1 f3
+lalex fistir
+1 Comment
+こうか？
+
+sashimiwiki [3:33 AM] 
+よさそう
+
+jekto [3:33 AM] 
+タイプ数がかさみそうだがまあええか
+
+[3:34] 
+llxだとエモさが減りそう #とは (edited)
+
+sashimiwiki [3:34 AM] 
+あー敢えて出自を隠すのは言語的にエモさはある #とは
+
+
+jekto [3:37 AM] 
+llxかlalexかl'か (edited)
+
+
+sashimiwiki [3:37 AM] 
+最後の文字化けして見えない
+
+
+sashimiwiki [3:45 AM] 
+見えた
+
+
+jekto [3:46 AM] 
+l'だとタイプ数は減りそうだがどうするかなぁ
+
+
+sashimiwiki [3:46 AM] 
+ラベルの:代わりとしてのl'って感じか
+
+
+jekto [3:47 AM] 
+そゆこと
+
+
+sashimiwiki [3:47 AM] 
+良さそうな気はするが、疑似命令だったらllxのほうが統一的な気はする
+
+
+jekto [3:48 AM] 
+統一性があるべきなのかどうか、という（あえて差を出したほうが読みやすいかもしれないので）
+
+
+[3:48] 
+ラベルを目grepすることとか頻発するわけで、なら逆に紛れないほうがいいのかもなぁと思ったり
+
+
+sashimiwiki [3:48 AM] 
+あー確かに
+
+
+[3:49] 
+(ot)目grepって目トレスみたいだな(は？) (edited)
+
+
+jekto [3:49 AM] 
+https://twitter.com/y_s_k_/status/870575751740833793
+みそのフレンズ @y_s_k_
+sudo新一
+目grep警部
+TwitterJun 2nd at 6:40 PM
+
+
+sashimiwiki [3:50 AM] 
+笑った
+
+
+jekto [3:50 AM] 
+じゃあl'にするか
+
+
+[3:51] 
+よーし進捗だ
+
+
+sashimiwiki [3:51 AM] 
+やったぜ！
