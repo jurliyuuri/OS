@@ -8,7 +8,7 @@
 <body>
 <h1>オペコードなどについて考察する</h1>
 
-<p>以下のは雑記・考察ログです。仕様だけ知りたい人は<a href="settings.html">設定一覧</a>をお読みください。</p>
+<p>以下のは雑記・考察ログです。仕様だけ知りたい人は<a href="settings.html">設定一覧</a>をお読みください。ソースコードの例としては<a href="fib_non_recursive.jurli.html">非再帰フィボナッチ</a>と<a href="fib_recursive.jurli.html">再帰フィボナッチ</a>と<a href="./qsort.jurli.html">quicksort</a>があります。</p>
 
 <h2>1. 設定</h2>
 <s> <a href="https://docs.google.com/spreadsheets/d/1AUex8DDU9n5r-q27MD-6_aW5en-vmXZ55ptzm91yV74/edit#gid=0">Google SpreadSheetで作業中</a></s><b>OBSOLETE:: 2017/08/29 23:40時点で既に部分的に無効</b>
@@ -791,6 +791,8 @@ lus:
 <p>なお、ここで<code>@</code>で転写されている記号はリパライン語では「ioの合字記号」に対応する。Fafs falira sashimiの「<a href="pointer_and_label.txt">理語的には非文的だけど、アセンブリとしてはできるだけ自然言語に近づいてていい感じな気はする</a>」という発言が決定打となり、採用されることとなった。</p>
 <p>ラベル名については、リパライン語に既にあるla lexを使うのが「<a href="pointer_and_label.txt">エモい</a>」とのことだったので採用することとした。問題はla lexをどう表現するかで、「llxのほうが統一的」という意見が出たものの、統一性がないほうがかえってラベルを追いやすいということで<code>l'</code>が採用された。</p>
 <p>なお、la lexは前の文を指すので、x86とは違ってラベルは文の後ろから指定する。となると関数を表すためにラベルを導入したときにラベル定義が関数定義の2行目に出てきてしまいよろしくない。ということで逆向きを表すny la lexも導入することにした。<code>nl'</code>を提案したものの、「ny la lexの詩語での省略形がny l' l'/nyll/であるから<code>nll</code>のほうが想起されやすい」ということなので<code>nll</code>に決まった。</p>
+
+<p>とりあえず<a href="settings.html">設定一覧</a>と<a href="fib_non_recursive.jurli.html">非再帰フィボナッチ</a>と<a href="fib_recursive.jurli.html">再帰フィボナッチ</a>と<a href="./qsort.jurli.html">quicksort</a>を改定。</p>
 
 </body>
 </html>

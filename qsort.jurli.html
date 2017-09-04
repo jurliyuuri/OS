@@ -4,51 +4,51 @@
 <label><input type="checkbox" checked="checked" onchange="toggle(this.checked)">jietoden liparxeで表示</label>
 <pre class="jietoden">
 ::'c'i
-ycax:
-	krz f2 [f5+4]
-	krz f1 [f5+8]
-	krz f0 [f5+12]
+	nll ycax
+	krz f2 f5+4@
+	krz f1 f5+8@
+	krz f0 f5+12@
 	fi f1 f2 xolo
 	malkrz xx lus
 	krz f3 f1
 	ata f3 1
-panqa:
-	fi f3 [f5+4] llo
+	fi f3 f5+4@ llo
+	l' panqa
 	malkrz xx fistir
-	krz f2 [f5+8]
-	krz f2 [f0+f2]
-	fi f2 [f0+f3] xtlo
+	krz f2 f5+8@
+	krz f2 f0+f2@
+	fi f2 f0+f3@ xtlo
 	malkrz xx iska
 	ata f1 1
-	inj [f0+f3] [f0+f1] [f0+f3]
-iska:
+	inj f0+f3@ f0+f1@ f0+f3@
 	ata f3 1
+	l' iska
 	krz xx panqa
-fistir:
-	krz f2 [f5+8]
-	inj [f0+f1] [f0+f2] [f0+f1]
+	krz f2 f5+8@
+	l' fistir
+	inj f0+f1@ f0+f2@ f0+f1@
 
 	nta f5 4
-	krz [f5] f1
+	krz f5@ f1
 	nta f5 4
-	krz [f5] [f5+20]
+	krz f5@ f5+20@
 	nta f5 4
-	krz [f5] [f5+20]
+	krz f5@ f5+20@
 	nta f5 4
-	krz f1 [f5+12]
+	krz f1 f5+12@
 	nta f1 1
-	krz [f5] f1
+	krz f5@ f1
 	nta f5 4
-	inj [f5] xx ycax
+	inj f5@ xx ycax
 	ata f5 4
-	krz f1 [f5+8]
+	krz f1 f5+8@
 	ata f1 1
-	krz [f5] f1
+	krz f5@ f1
 	nta f5 4
-	krz [f5] [f5+20]
+	krz f5@ f5+20@
 	nta f5 4
-	inj [f5] xx ycax
-lus:
-	krz xx [f5]
+	inj f5@ xx ycax
+	krz xx f5@
+	l' lus
 	ata f5 4
 </pre>
