@@ -8,7 +8,7 @@
 <body>
 <h1>オペコードなどについて考察する</h1>
 
-<p>以下のは雑記・考察ログです。仕様だけ知りたい人は<a href="settings.html">設定一覧</a>をお読みください。</p>
+<p>以下のは雑記・考察ログです。仕様だけ知りたい人は<a href="settings.html">設定一覧</a>をお読みください。ソースコードの例としては<a href="fib_non_recursive.jurli.html">非再帰フィボナッチ</a>と<a href="fib_recursive.jurli.html">再帰フィボナッチ</a>と<a href="./qsort.jurli.html">quicksort</a>があります。</p>
 
 <h2>1. 設定</h2>
 <s> <a href="https://docs.google.com/spreadsheets/d/1AUex8DDU9n5r-q27MD-6_aW5en-vmXZ55ptzm91yV74/edit#gid=0">Google SpreadSheetで作業中</a></s><b>OBSOLETE:: 2017/08/29 23:40時点で既に部分的に無効</b>
@@ -779,5 +779,20 @@ lus:
 
 <h3>10-6. 課題解決案</h3>
 <p><a href="#nta">nta fistir'c 即値'iはata fistir'c (-即値)'iに翻訳される</a>という設定を過去に作ったが、負値の書式がまだ決まらんので<a href="https://twitter.com/sosoBOTpi/status/904028605277102080">アセンブリ言語としてはnta fistir'c 即値'iを許容することとした</a>。ということでソースコードを編集だ。あと、めんどいので<a href="settings.html#dontuse">現状では負数のリテラルは使用しないことに決めた</a>。</p>
+
+<h2>11. 進捗</h2>
+<p>S.YやFafs falira sashimiと<a href="pointer_and_label.txt">対談</a>して進捗が出た。</p>
+<table border="1" cellpadding="5">
+<thead><tr><td>旧構文</td><td>新構文</td><td>役割</td></tr></thead>
+<tbody><tr><td><u>ラベル名</u><code>:</code></td><td><code>l' </code><u>ラベル名</u>（後ろから修飾）<br><code>nll </code><u>ラベル名</u>（前から修飾）<br></td><td>ラベル名を定義する</td></tr>
+<tr><td><code>[</code><u>レジスタ名</u><code>]</code></td><td><u>レジスタ名</u><code>@</code></td><td>レジスタに入っている番地のメモリを表す。</td></tr><tr><td><code>[</code><u>レジスタ名</u><code> + </code><u>定数</u><code>]</code></td><td><u>レジスタ名</u><code> + </code><u>定数</u><code>@</code></td><td>レジスタに入っている番地に定数を足した番地のメモリを表す。</td></tr>
+<tr><td><code>[</code><u>レジスタ名</u><code> + </code><u>レジスタ名</u><code>]</code></td><td><u>レジスタ名</u><code> + </code><u>レジスタ名</u><code>@</code></td><td>2つのレジスタに入っている数値を足した番地のメモリを表す。</td></tr>
+</tbody></table>
+<p>なお、ここで<code>@</code>で転写されている記号はリパライン語では「ioの合字記号」に対応する。Fafs falira sashimiの「<a href="pointer_and_label.txt">理語的には非文的だけど、アセンブリとしてはできるだけ自然言語に近づいてていい感じな気はする</a>」という発言が決定打となり、採用されることとなった。</p>
+<p>ラベル名については、リパライン語に既にあるla lexを使うのが「<a href="pointer_and_label.txt">エモい</a>」とのことだったので採用することとした。問題はla lexをどう表現するかで、「llxのほうが統一的」という意見が出たものの、統一性がないほうがかえってラベルを追いやすいということで<code>l'</code>が採用された。</p>
+<p>なお、la lexは前の文を指すので、x86とは違ってラベルは文の後ろから指定する。となると関数を表すためにラベルを導入したときにラベル定義が関数定義の2行目に出てきてしまいよろしくない。ということで逆向きを表すny la lexも導入することにした。<code>nl'</code>を提案したものの、「ny la lexの詩語での省略形がny l' l'/nyll/であるから<code>nll</code>のほうが想起されやすい」ということなので<code>nll</code>に決まった。</p>
+
+<p>とりあえず<a href="settings.html">設定一覧</a>と<a href="fib_non_recursive.jurli.html">非再帰フィボナッチ</a>と<a href="fib_recursive.jurli.html">再帰フィボナッチ</a>と<a href="./qsort.jurli.html">quicksort</a>を改定。</p>
+
 </body>
 </html>
