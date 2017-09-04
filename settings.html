@@ -6,9 +6,11 @@
 <link rel="stylesheet" href="common.css">
 </head>
 <body>
+<p>以下では仕様について書いていきます。雑記・考察ログを見たい人は<a href="opcode.html">「オペコードなどについて考察する」</a>をお読みください。ソースコードの例としては<a href="fib_non_recursive.jurli.html">非再帰フィボナッチ</a>と<a href="fib_recursive.jurli.html">再帰フィボナッチ</a>と<a href="./qsort.jurli.html">quicksort</a>があります。</p>
+
 <h2>0. 呼び出し規約</h2>
 <ul>
-<li>スタックの掃除をするのは呼び出し側。ただし、リターンアドレスの分は呼び出され側で処理。</li>
+<li>スタックの掃除をするのは、リターンアドレスの分も含めて呼び出し側。</li>
 <li>いじって良いレジスタは4個 (f0 ~ f3)</li>
 <li>引数は前からスタックに積み、引数を積み終わった後にリターンアドレスを積む</li>
 <li>戻り値は単純型ならレジスタ (f0) でやり取り</li>
@@ -195,12 +197,14 @@
 </pre>
 </div>
 
+<p>なお、スタックの伸長方向はアドレスの減少する向きである。</p>
+
 <div class="box">
 <p>returnする</p>
 <pre>
 	'c'i
-	krz xx f5@	<span class="comment">; リターンアドレスに飛んで</span>
-	ata f5 4	<span class="comment">; スタックからリターンアドレスを削除</span>
+	krz xx f5@	<span class="comment">; リターンアドレスに飛ぶ</span>
+	        	<span class="comment">; スタックからリターンアドレスを削除するのは呼び出し側の仕事</span>
 </pre>
 </div>
 
@@ -210,6 +214,7 @@
 	'c'i
 	nta f5 4	<span class="comment">; スタックを準備</span>
 	inj f5@ xx func	<span class="comment">; リターンアドレスを積んで、同一命令で関数のアドレスにジャンプ</span>
+	ata f5 4	<span class="comment">; スタックからリターンアドレスを削除する</span>
 </pre>
 </div>
 
