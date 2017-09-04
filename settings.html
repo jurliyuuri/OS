@@ -6,6 +6,15 @@
 <link rel="stylesheet" href="common.css">
 </head>
 <body>
+<h2>0. 呼び出し規約</h2>
+<ul>
+<li>スタックの掃除をするのは呼び出し側。ただし、リターンアドレスの分は呼び出され側で処理。</li>
+<li>いじって良いレジスタは4個 (f0 ~ f3)</li>
+<li>引数は前からスタックに積み、引数を積み終わった後にリターンアドレスを積む</li>
+<li>戻り値は単純型ならレジスタ (f0) でやり取り</li>
+</li>
+</ul>
+
 <h2>1. ニーモニック一覧</h2>
 <table class="qq" border="1" bordercolor="#888" cellspacing="0">
 <tbody>
