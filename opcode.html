@@ -798,7 +798,8 @@ lus:
 <h3>11-2. part2</h3>
 <p><code>::'c'i</code>を<code>'c'i</code>に改定することにした。ということでサンプルと設定集の修正をした。これで一応確定。あと、インデントが要らない気がしてきたので削除。</p>
 
-<h2>12. バグ修正</h2>
+<h2>12. 修正</h2>
+<h3>12-1. バグ修正</h3>
 <p>関数からreturnするときの処理に<a href="https://twitter.com/sosoBOTpi/status/904765453272195072">バグがある</a>ことが発覚した。問題箇所を以下に掲載する。</p>
 <div class="box" style="border-color: red">
 <p>returnする</p>
@@ -813,9 +814,26 @@ lus:
 
 <p>それに従い、<a href="fib_non_recursive.jurli.html">非再帰フィボナッチ</a>をとりあえず修正した。ついでに手動でウォークスルーを行い、おそらくバグっていないであろうことを確認した。</p>
 
-<p>その他の課題：ラベル名とレジスタ名の衝突</p>
+<p><a href="fib_recursive.jurli.html">再帰フィボナッチ</a>も修正した。しかし、修正最中に、呼び出し規約の新たな変更案が思いついたのである。</p>
+<p>現状を見てみよう。</p>
+<div class="box">
+<p>関数funcを呼び出す</p>
+<pre>
+	'c'i
+	nta f5 4	<span class="comment">; スタックを準備</span>
+	inj f5@ xx func	<span class="comment">; リターンアドレスを積んで、同一命令で関数のアドレスにジャンプ</span>
+	ata f5 4	<span class="comment">; スタックからリターンアドレスを削除する</span>
+</pre>
+</div>
 
+<p>この<code>nta f5 4</code>と<code>ata f5 4</code>のペア、無駄では？<code>inj f5-4@ xx func</code>と書きたい。</p>
+<p>ただ、まだマイナスがないので改定するにしてもまた今度である。</p>
+
+<p>さて、<a href="./qsort.jurli.html">quicksort</a>も改定した。ウォークスルーはしていないが、多分合っていると信じたい。</p>
+
+<h3>12-2. その他</h3>
 <p>スタックの伸長方向はアドレスの減少する向きであることを記載した。</p>
+<p>その他の課題：ラベル名とレジスタ名の衝突</p>
 
 </body>
 </html>
