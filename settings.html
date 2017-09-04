@@ -159,7 +159,7 @@
 <tr><td>構文</td><td></td><td>役割</td></tr>
 </thead>
 <tbody>
-<tr><td><code>::'c'i</code></td><td style="width:100px;">構文未確定</td><td style="max-width:300px;">第一オペランドが-'c格、第二オペランドが-'i格として解釈される。現世の表現で言うと、GNU as的 <code>mov src, dest</code>の語順でなくMASM的 <code>mov dest, src</code>の語順になる。<strong>ただし、比較演算子はひっくり返らない。</strong></td></tr>
+<tr><td><code>'c'i</code></td><td style="width:100px;">構文未確定</td><td style="max-width:300px;">第一オペランドが-'c格、第二オペランドが-'i格として解釈される。現世の表現で言うと、GNU as的 <code>mov src, dest</code>の語順でなくMASM的 <code>mov dest, src</code>の語順になる。<strong>ただし、比較演算子はひっくり返らない。</strong></td></tr>
 <tr><td><u>レジスタ名</u><code>@</code></td><td>構文確定</td><td>レジスタに入っている番地のメモリを表す。</td></tr>
 <tr><td><u>レジスタ名</u><code> + </code><u>定数</u><code>@</code></td><td>構文確定</td><td>レジスタに入っている番地に定数を足した番地のメモリを表す。</td></tr>
 <tr><td><u>レジスタ名</u><code> + </code><u>レジスタ名</u><code>@</code></td><td>構文確定</td><td>2つのレジスタに入っている数値を足した番地のメモリを表す。</td></tr>
@@ -171,7 +171,7 @@
 <div class="box">
 <p>スタックにiskaをプッシュする</p>
 <pre>
-	::'c'i
+	'c'i
 	nta f5 4	<span class="comment">; f5を持ち上げて</span>
 	krz f5@ iska	<span class="comment">; 積む</span>
 </pre>
@@ -180,7 +180,7 @@
 <div class="box">
 <p>スタックをポップしてiskaに代入</p>
 <pre>
-	::'c'i
+	'c'i
 	krz iska f5@	<span class="comment">; スタックの値を代入</span>
 	ata f5 4	<span class="comment">; f5を下げる</span>
 </pre>
@@ -189,7 +189,7 @@
 <div class="box">
 <p>returnする</p>
 <pre>
-	::'c'i
+	'c'i
 	krz xx f5@	<span class="comment">; リターンアドレスに飛んで</span>
 	ata f5 4	<span class="comment">; スタックからリターンアドレスを削除</span>
 </pre>
@@ -198,7 +198,7 @@
 <div class="box">
 <p>関数funcを呼び出す</p>
 <pre>
-	::'c'i
+	'c'i
 	nta f5 4	<span class="comment">; スタックを準備</span>
 	inj f5@ xx func	<span class="comment">; リターンアドレスを積んで、同一命令で関数のアドレスにジャンプ</span>
 </pre>
@@ -207,7 +207,7 @@
 <div class="box">
 <p>aとbを交換</p>
 <pre>
-	::'c'i
+	'c'i
 	inj a b a
 </pre>
 </div>
