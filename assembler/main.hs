@@ -8,8 +8,8 @@ type Memory = M.Map Word32 Word32
 data CPU = CPU{ f0 :: Word32, f1 :: Word32, f2 :: Word32, f3 :: Word32, f5 :: Word32, nx :: Word32, xx :: Word32, flag :: Bool, memory :: Memory} deriving (Show, Eq, Ord)
 data Register = F0 | F1 | F2 | F3 | F5 | XX deriving (Show, Eq, Ord)
 data Lvalue = R Register | RPlusNum Register Word32 | RPlusR Register Register deriving (Show, Eq, Ord)
-data Rvalue = L Lvalue | Pure Word32 deriving (Show, Eq, Ord)
-data Instruction = Krz Rvalue Lvalue | Ata Rvalue Lvalue | Nta Rvalue Lvalue | MalKrz Rvalue Lvalue | Fi Rvalue Lvalue Cond | Inj Rvalue Lvalue Lvalue deriving (Show, Eq, Ord)  
+data Rvalue = L Lvalue | Pure Word32 | Lab Label deriving (Show, Eq, Ord)
+data Instruction = Krz Rvalue Lvalue | Ata Rvalue Lvalue | Nta Rvalue Lvalue | MalKrz Rvalue Lvalue | Fi Rvalue Rvalue Cond | Inj Rvalue Lvalue Lvalue deriving (Show, Eq, Ord)  
 data Cond = Xtlo | Xylo | Clo | Xolo | Llo deriving (Show, Eq, Ord)
 type Label = String
 
@@ -19,6 +19,14 @@ rl "ata" = Just Ata
 rl "nta" = Just Nta
 rl "malkrz" = Just MalKrz
 rl _ = Nothing
+
+parseCond :: String -> Maybe Cond
+parseCond "xtlo" = Just Xtlo
+parseCond "xylo" = Just Xylo
+parseCond "clo"  = Just Clo
+parseCond "xolo" = Just Xolo
+parseCond "llo"  = Just Llo
+parseCond _ = Nothing
 
 
 main = do
@@ -56,7 +64,27 @@ toI (str :x:y:zs)
   c <- lift $ if isCI then parseL x else parseL y
   rest <- toI zs
   return $ ((fromJust $ rl str) i c,[]) : rest
-  
+toI ("fi":x:y:z:bs)
+ | isJust $ parseCond z = do
+  a <- lift $ parseR x
+  b <- lift $ parseR y
+  rest <- toI bs
+  return $ (Fi a b (fromJust $ parseCond z),[]) : rest
+toI ("inj":x:y:z:bs) = do
+ isCI <- get
+ a <- lift $ if isCI then parseR z else parseR x
+ b <- lift $ parseL y
+ c <- lift $ if isCI then parseL x else parseL z
+ rest <- toI bs
+ return $ (Inj a b c,[]) : rest
+toI ("nll":x:ys) = do
+ rest <- toI ys
+ return $ case rest of
+  [] -> []
+  ((a,b):xs) -> (a,toLabel x:b):xs
+ 
+toLabel :: String -> Label
+toLabel = id
 
 parseR :: String -> Either Error Rvalue
 parseR = undefined 
