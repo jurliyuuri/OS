@@ -5,9 +5,9 @@ module Parse
 import Types
 import Control.Monad.State
 import Data.Char
-import Control.Monad.State
 import Data.Maybe
 
+fullParse :: [Char] -> [(Instruction, [Label])]
 fullParse = toInstructions . beautify . words . map toLower
 
 
@@ -15,6 +15,9 @@ rl :: String -> Maybe(Rvalue -> Lvalue -> Instruction)
 rl "krz" = Just Krz
 rl "ata" = Just Ata
 rl "nta" = Just Nta
+rl "ada" = Just Ada
+rl "ekc" = Just Ekc
+rl "dal" = Just Dal
 rl "malkrz" = Just MalKrz
 rl _ = Nothing
 
