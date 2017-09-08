@@ -28,10 +28,10 @@ parseCond "xolo" = Just Xolo
 parseCond "llo"  = Just Llo
 parseCond _ = Nothing
 
-
+main :: IO ()
 main = do
  let ts = beautify . words $ map toLower program
- undefined
+ print $ toInstructions ts
 
 beautify :: [String] -> [String]
 beautify (x:"+":y:zs) = beautify $ (x ++ "+" ++ y) : zs
@@ -50,6 +50,8 @@ toInstructions strs = case toI strs `evalStateT` False of
 normalize :: [(Maybe a, [b])] -> [(a,[b])]
 normalize [] = []
 normalize ((Nothing,ls):(a,bs):ys) = normalize $ (a,ls++bs) : ys
+normalize [(Nothing,_)] = error "l' must be preceded by an instruction"
+normalize ((Just a,ls):ys) = (a,ls) : normalize ys
 
 type Error = String
 
@@ -90,6 +92,7 @@ toI ("nll":x:ys) = do
 toI ("l'":x:ys) = do
  rest <- toI ys
  return $ (Nothing,[toLabel x]):rest
+toI xs = error $ "Unparsable command sequence " ++ show xs
  
 toLabel :: String -> Label
 toLabel = id
@@ -103,12 +106,21 @@ parseRegister "f5" = Right F5
 parseRegister "xx" = Right XX
 parseRegister _ = Left "no register"
 
-parseR :: String -> Either Error Rvalue
-parseR = undefined 
+-- data Rvalue = L Lvalue | Pure Word32 | Lab Label deriving (Show, Eq, Ord)
 
+parseR :: String -> Either Error Rvalue
+parseR str
+ | isRight (parseL str) = return $ L (fromRight(parseL str))
+ | all (`elem` "1234567890") str = return $ Pure $ read str
+ | all isAlphaNum str = return $ Lab str
+ | otherwise = Left $ "cannot parse `" ++ str ++ "` as a valid data"
+
+isRight :: Either t1 t -> Bool
 isRight (Right _) = True
 isRight _ = False
+fromRight :: Either t t1 -> t1
 fromRight (Right a) = a
+fromRight (Left _) = error "fromRight failed"
 
 parseL :: String -> Either Error Lvalue
 parseL s@[_,_] = Re <$> parseRegister s
@@ -122,6 +134,7 @@ parseL (a:b:'+':xs@(_:_)) = do
  guard (last xs == '@')
  let num = read(init xs)
  return $ RPlusNum re num
+parseL xs = Left $ "cannot parse `" ++ xs ++ "` as a valid place to put data"
 
 
 program :: String
