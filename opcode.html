@@ -859,7 +859,9 @@ lus:
 
 <p><a href="https://www.amazon.co.jp/dp/4798044784">ハロー“Hello,World"OSと標準ライブラリのシゴトとしくみ</a>を読んだところ、<code>[ESP-4]</code>を実現するためにx86は普通に0xfffffffcを足していた。ということで4294967292を足せばいいでしょう。やったぜ。</p>
 
-<p>ということで呼び出し規約改定しまーす。リターンアドレスはf5-4に積まれる設定にします</p>
+<p>ということで呼び出し規約改定しまーす。リターンアドレスはf5-4に積まれる設定にします。</p>
+
+<p>とりあえず<a href="fib_non_recursive.jurli.html">非再帰フィボナッチ</a>と<a href="fib_recursive.jurli.html">再帰フィボナッチ</a>を修正。さらに<a href="./qsort.jurli.html">quicksort</a>も直した。なんかスタックバグってた気がしたのでウォークスルーした。なお設定に凡ミス（f5は第一引数ではなく最終引数）があったので直した。</p>
 
 </body>
 </html>
