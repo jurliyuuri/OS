@@ -45,13 +45,13 @@ beautify [] = return []
 toInstructions :: [String] -> Either Error [(Instruction, [Label])]
 toInstructions strs = do
   ils <- toI strs `evalStateT` False
-  return . reverse . normalize . reverse $ ils
+  fmap reverse . normalize . reverse $ ils
 
-normalize :: [(Maybe a, [b])] -> [(a,[b])]
-normalize [] = []
+normalize :: [(Maybe a, [b])] -> Either Error [(a,[b])]
+normalize [] = return []
 normalize ((Nothing,ls):(a,bs):ys) = normalize $ (a,ls++bs) : ys
-normalize [(Nothing,_)] = error "l' must be preceded by an instruction"
-normalize ((Just a,ls):ys) = (a,ls) : normalize ys
+normalize [(Nothing,_)] = Left "l' must be preceded by an instruction"
+normalize ((Just a,ls):ys) = ((a,ls) :) <$> normalize ys
 
 type Error = String
 
@@ -92,7 +92,7 @@ toI ("nll":x:ys) = do
 toI ("l'":x:ys) = do
  rest <- toI ys
  return $ (Nothing,[toLabel x]):rest
-toI xs = error $ "Unparsable command sequence " ++ show xs
+toI xs = lift $ Left $ "Unparsable command sequence " ++ show xs
  
 toLabel :: String -> Label
 toLabel = id
