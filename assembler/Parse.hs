@@ -11,7 +11,7 @@ import Control.Monad
 fullParse :: [Char] -> Either Error [(Instruction, [Label])]
 fullParse =
  (return . toInstructions) <=< 
- (return . beautify) <=<
+ beautify <=<
  (return . words) <=<
  (return . map toLower)
 
@@ -35,14 +35,14 @@ parseCond "llo"  = Just Llo
 parseCond _ = Nothing
 
 
-beautify :: [String] -> [String]
+beautify :: [String] -> Either Error [String]
 beautify (x:"+":y:zs) = beautify $ (x ++ "+" ++ y) : zs
 beautify (x:"@":ys) = beautify $ (x++"@") : ys
-beautify [_,"+"] = error "Unexpected + at the end of input"
-beautify ("+":_) = error "Unexpected + at the beginning of input"
-beautify ("@":_) = error "Unexpected @ at the beginning of input"
-beautify (x:xs) = x:(beautify xs)
-beautify [] = []
+beautify [_,"+"] = Left "Unexpected + at the end of input"
+beautify ("+":_) = Left "Unexpected + at the beginning of input"
+beautify ("@":_) = Left "Unexpected @ at the beginning of input"
+beautify (x:xs) = (x:) <$> beautify xs
+beautify [] = return []
 
 toInstructions :: [String] -> [(Instruction, [Label])]
 toInstructions strs = case toI strs `evalStateT` False of
