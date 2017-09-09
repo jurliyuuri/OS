@@ -6,9 +6,14 @@ import Types
 import Control.Monad.State
 import Data.Char
 import Data.Maybe
+import Control.Monad
 
-fullParse :: [Char] -> [(Instruction, [Label])]
-fullParse = toInstructions . beautify . words . map toLower
+fullParse :: [Char] -> Either Error [(Instruction, [Label])]
+fullParse =
+ (return . toInstructions) <=< 
+ (return . beautify) <=<
+ (return . words) <=<
+ (return . map toLower)
 
 
 rl :: String -> Maybe(Rvalue -> Lvalue -> Instruction)
