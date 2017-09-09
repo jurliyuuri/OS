@@ -6,9 +6,12 @@ import Types
 import Control.Monad.State
 import Data.Char
 import Data.Maybe
+import Control.Monad
 
-fullParse :: [Char] -> [(Instruction, [Label])]
-fullParse = toInstructions . beautify . words . map toLower
+fullParse :: [Char] -> Either Error [(Instruction, [Label])]
+fullParse str = do
+  let ts = words $ map toLower str
+  toInstructions <=< beautify $ ts
 
 
 rl :: String -> Maybe(Rvalue -> Lvalue -> Instruction)
@@ -30,19 +33,19 @@ parseCond "llo"  = Just Llo
 parseCond _ = Nothing
 
 
-beautify :: [String] -> [String]
+beautify :: [String] -> Either Error [String]
 beautify (x:"+":y:zs) = beautify $ (x ++ "+" ++ y) : zs
 beautify (x:"@":ys) = beautify $ (x++"@") : ys
-beautify [_,"+"] = error "Unexpected + at the end of input"
-beautify ("+":_) = error "Unexpected + at the beginning of input"
-beautify ("@":_) = error "Unexpected @ at the beginning of input"
-beautify (x:xs) = x:(beautify xs)
-beautify [] = []
+beautify [_,"+"] = Left "Unexpected + at the end of input"
+beautify ("+":_) = Left "Unexpected + at the beginning of input"
+beautify ("@":_) = Left "Unexpected @ at the beginning of input"
+beautify (x:xs) = (x:) <$> beautify xs
+beautify [] = return []
 
-toInstructions :: [String] -> [(Instruction, [Label])]
-toInstructions strs = case toI strs `evalStateT` False of
- Left err -> error err
- Right ils -> reverse . normalize . reverse $ ils
+toInstructions :: [String] -> Either Error [(Instruction, [Label])]
+toInstructions strs = do
+  ils <- toI strs `evalStateT` False
+  return . reverse . normalize . reverse $ ils
 
 normalize :: [(Maybe a, [b])] -> [(a,[b])]
 normalize [] = []
@@ -125,9 +128,9 @@ parseL [a,b,'+',c,d,'@']
  | isRight (parseRegister [c,d]) = 
   let re2 = fromRight (parseRegister [c,d]) in
    do{ re <- parseRegister [a,b]; return $ RPlusR re re2}
-parseL (a:b:'+':xs@(_:_)) = do
+parseL (a:b:'+':xs@(_:_))
+ | last xs == '@' && all (`elem` "1234567890") (init xs) = do
  re <- parseRegister [a,b]
- guard (last xs == '@')
  let num = read(init xs)
  return $ RPlusNum re num
 parseL xs = Left $ "cannot parse `" ++ xs ++ "` as a valid place to put data"
