@@ -7,6 +7,7 @@ module Types
 ,Instruction(..)
 ,Cond(..)
 ,Label
+,Word32
 ) where
 import qualified Data.Map as M
 import Data.Word
