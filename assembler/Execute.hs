@@ -2,7 +2,7 @@ module Execute
 (initialCPU
 ) where
 import Types
-import qualified Data.Map as M
+import Memory
 
 initialF5 :: Word32
 initialF5 = 0x6d7aa0f8
@@ -11,7 +11,7 @@ outermostRetAddress :: Word32
 outermostRetAddress = 0xbda574b8
 
 initialMemory :: Memory
-initialMemory = M.fromList [(initialF5, outermostRetAddress)]
+initialMemory = writeM initialF5 outermostRetAddress `execState` emptyM
 
 initialCPU :: CPU
 initialCPU = CPU{
