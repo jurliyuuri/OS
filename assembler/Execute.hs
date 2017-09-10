@@ -11,7 +11,7 @@ outermostRetAddress :: Word32
 outermostRetAddress = 0xbda574b8
 
 initialMemory :: Memory
-initialMemory = M.fromList [(initialF5-4, outermostRetAddress)]
+initialMemory = M.fromList [(initialF5, outermostRetAddress)]
 
 initialCPU :: CPU
 initialCPU = CPU{

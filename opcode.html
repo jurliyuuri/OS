@@ -939,5 +939,43 @@ lus:
 </table>
 </div>
 
+<h2>17. やっぱ直す</h2>
+
+<p>4294967292は流石にクソでしょ。revertします。</p>
+<p>それに応じてインタプリタのメモリ構成も修正。</p>
+
+<div class="box">
+<p>レジスタ</p>
+<table>
+<thead>
+<tr><td>レジスタ名</td><td>内容</td></tr>
+</thead>
+<tbody>
+<tr><td>f0</td><td>なんか</td></tr>
+<tr><td>f1</td><td>なんか</td></tr>
+<tr><td>f2</td><td>なんか</td></tr>
+<tr><td>f3</td><td>なんか</td></tr>
+<tr><td>f5</td><td>1836753144</td></tr>
+</tbody>
+</table>
+<p>メモリ</p>
+<table>
+<thead>
+<tr><td>番地</td><td>内容</td></tr>
+</thead>
+<tbody>
+<tr><td>1836753132</td><td>なんか</td></tr>
+<tr><td>1836753136</td><td>なんか</td></tr>
+<tr><td>1836753140</td><td>なんか</td></tr>
+<tr><td>1836753144</td><td>3181737144</td></tr>
+<tr><td>1836753148</td><td>なんか</td></tr>
+<tr><td>1836753152</td><td>なんか</td></tr>
+<tr><td>1836753156</td><td>なんか</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>はいオーケー。ファイクレオネは救われた。万歳万歳。</p>
+
 </body>
 </html>
