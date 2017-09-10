@@ -1,2 +1,6 @@
 private/
 a.out
+main-c
+main-hs
+*.hi
+*.o
