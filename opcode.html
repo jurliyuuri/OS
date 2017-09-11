@@ -991,5 +991,42 @@ lus:
 <p>まあ、わざわざアドレスが振ってあるってことはアドレス単位の書き込みもしたくなるよなぁ。とはいえ必要になった時に考えればいいとは思うが。</p>
 
 <p>とりあえず、<code>Data.Map.Map Word32 Word8</code>に変更する。んで普通は4byte読み出す。</p>
+
+<h3>18-2. nxとxx</h3>
+
+<p>【再掲】さて、nxとxxはどうしよう。本来ならopcodeが決まっているのでnxとxxが定義できるはずなのだが、まだ決まっていないのである。</p>
+
+<p>えーと、「『次の命令を指すところにxxを移動させる→nxの指す命令を実行する→xxの指す位置にnxを動かす』を繰り返す」という挙動である。しかし今は『次の命令』が分からんのでなぁ、という。</p>
+
+<p>とりあえず、思いついた案。Haskellで<code>Data.Map.Map Word32 (Word32, Instruction)</code>と<code>Data.Map.Map Label Word32</code>を用意して、第一mapのvalueのfstが『次の命令』、とすればよかろう。</p>
+
+<div class="box">
+<p>第一map</p>
+<table>
+<thead>
+<tr><td>k</td><td>value's fst</td><td>value's snd</td></tr>
+</thead>
+<tbody>
+<tr><td>1234</td><td>1236</td><td>Krz (L (RPlusNum F5 4)) (Re F0)</td></tr>
+<tr><td>1236</td><td>1239</td><td>Krz (Pure 0) (Re F1)</td></tr>
+<tr><td>1239</td><td>1242</td><td>Krz (Pure 1) (Re F2)</td></tr>
+<tr><td>1242</td><td>1244</td><td>Fi (L (Re F0)) (Pure 0) Clo</td></tr>
+<tr><td>1244</td><td>1245</td><td>MalKrz (Lab "ka") (Re XX)</td></tr>
+<tr><td>1245</td><td>1246</td><td>Nta (Pure 1) (Re F0)</td></tr>
+<tr><td>1246</td><td>1247</td><td>Krz (L (Re F1)) (Re F3)</td></tr>
+</tbody>
+</table>
+<p>第二map</p>
+<table>
+<thead>
+<tr><td>k</td><td>value</td></tr>
+</thead>
+<tbody>
+<tr><td>Lab "is"</td><td>1242</td></tr>
+</tbody>
+</table>
+</div>
+
+
 </body>
 </html>
