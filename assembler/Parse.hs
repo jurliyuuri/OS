@@ -53,7 +53,6 @@ normalize ((Nothing,ls):(a,bs):ys) = normalize $ (a,ls++bs) : ys
 normalize [(Nothing,_)] = Left "l' must be preceded by an instruction"
 normalize ((Just a,ls):ys) = ((a,ls) :) <$> normalize ys
 
-type Error = String
 
 -- isCI :: Bool
 toI :: [String] -> StateT Bool (Either Error) [(Maybe Instruction, [Label])]
