@@ -4,7 +4,7 @@ import TentativeLoad
 import Types
 
 --fullExecute :: String -> 
-fullExecute :: String -> Either ParseError (Either RuntimeError CPU)
+fullExecute :: String -> Either ParseError (Either RuntimeError Hardware)
 fullExecute str = execute <$> (toTentativeLoad <$> fullParse str)
 
 main :: IO ()
