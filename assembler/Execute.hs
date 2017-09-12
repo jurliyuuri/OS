@@ -83,6 +83,8 @@ executeInstruction (Nta r l) = templ (-) r l
 executeInstruction (Ada r l) = templ (.&.) r l
 executeInstruction (Ekc r l) = templ (.|.) r l
 executeInstruction (Dal r l) = templ (\x y -> complement $ x `xor` y) r l
+executeInstruction (Dto r l) = templ (\x y -> x `shift` (negate $ fromIntegral y)) r l
+executeInstruction (Dro r l) = templ (\x y -> x `shift` fromIntegral y) r l
 executeInstruction (MalKrz r l) = do
  fl <- getFlag
  when fl $ executeInstruction (Krz r l)

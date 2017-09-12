@@ -2,6 +2,7 @@ import Parse
 import Execute
 import TentativeLoad
 import System.IO(stderr, hPrint)
+import Data.Word
 
 --fullExecute :: String -> 
 fullExecute :: String -> IO () --Either ParseError (Either RuntimeError Hardware)
@@ -33,4 +34,11 @@ program2 :: String
 program2 = push12AndCall "fib2" ++ "'c'i  nll fib2  krz f0 f5+4@  fi f0 2 xylo  malkrz xx iska  krz f1 f0  nta f1 1  nta f5 4  krz f5@ f1  nta f5 4  inj f5@ xx fib2  ata f5 4  krz f1 f5@  krz f2 f0  nta f1 1  krz f5@ f2  nta f5 4  krz f5@ f1  nta f5 4  inj f5@ xx fib2  ata f5 4  krz f2 f5+4@  ata f5 8  ata f0 f2  krz xx f5@  l' iska"
 
 program3 :: String
-program3 = "'c'i  nll ycax  krz f2 f5+4@  krz f1 f5+8@  krz f0 f5+12@  fi f1 f2 xolo  malkrz xx lus  krz f3 f1  ata f3 1  fi f3 f5+4@ llo  l' panqa  malkrz xx fistir  krz f2 f5+8@  krz f2 f0+f2@  fi f2 f0+f3@ xtlo  malkrz xx iska  ata f1 1  inj f0+f3@ f0+f1@ f0+f3@  ata f3 1  l' iska  krz xx panqa  krz f2 f5+8@  l' fistir  inj f0+f1@ f0+f2@ f0+f1@    nta f5 4  krz f5@ f1  nta f5 4  krz f5@ f5+20@  nta f5 4  krz f5@ f5+20@  nta f5 4  krz f1 f5+12@  nta f1 1  krz f5@ f1  nta f5 4  inj f5@ xx ycax  ata f5 8  krz f1 f5+8@  ata f1 1  krz f5@ f1  nta f5 4  krz f5@ f5+20@  nta f5 4  inj f5@ xx ycax  ata f5 4  krz xx f5@  l' lus"
+program3 = let arr = [3,1,4,1,5,9,2,6,5,3,5,8,9,7,9]; addr = 2782070968 in "'c'i   krz f1 2782070968   " 
+ ++ (arr >>= \x -> " krz f1@ "++show x++"   ata f1 4")
+ ++ push addr ++ push 0 ++ push (fromIntegral (length arr) - 1)
+ ++ " nta f5 4    inj f5@ xx ycax  ata f5 4    ata f5 12    krz xx f5@  "
+ ++ "'c'i  nll ycax  krz f2 f5+4@  krz f1 f5+8@  krz f0 f5+12@  fi f1 f2 xolo  malkrz xx lus  krz f3 f1  ata f3 1  fi f3 f5+4@ llo  l' panqa  malkrz xx fistir  krz f2 f5+8@  krz f2 f0+f2@  fi f2 f0+f3@ xtlo  malkrz xx iska  ata f1 1  inj f0+f3@ f0+f1@ f0+f3@  ata f3 1  l' iska  krz xx panqa  krz f2 f5+8@  l' fistir  inj f0+f1@ f0+f2@ f0+f1@    nta f5 4  krz f5@ f1  nta f5 4  krz f5@ f5+20@  nta f5 4  krz f5@ f5+20@  nta f5 4  krz f1 f5+12@  nta f1 1  krz f5@ f1  nta f5 4  inj f5@ xx ycax  ata f5 8  krz f1 f5+8@  ata f1 1  krz f5@ f1  nta f5 4  krz f5@ f5+20@  nta f5 4  inj f5@ xx ycax  ata f5 20  krz xx f5@  l' lus"
+push :: Word32 -> String
+push a = " nta f5 4   krz f5@ " ++ show a
+
