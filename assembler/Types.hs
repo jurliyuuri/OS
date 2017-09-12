@@ -8,7 +8,8 @@ module Types
 ,Label
 ,Word32
 ,ParseError(..)
-,RuntimeError
+,RuntimeError(..)
+,toFunc
 ) where
 import Data.Word
 import Memory
@@ -22,3 +23,10 @@ type Label = String
 
 newtype ParseError = ParseError String deriving(Show, Eq, Ord)
 newtype RuntimeError = RuntimeError String deriving(Show, Eq, Ord)
+
+toFunc :: (Ord a) => Cond -> (a -> a -> Bool)
+toFunc Xtlo = (<=)
+toFunc Xylo = (<)
+toFunc Clo = (==)
+toFunc Xolo = (>=)
+toFunc Llo = (>)

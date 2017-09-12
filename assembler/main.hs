@@ -1,7 +1,6 @@
 import Parse
 import Execute
 import TentativeLoad
-import Types
 import System.IO(stderr, hPrint)
 
 --fullExecute :: String -> 
