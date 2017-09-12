@@ -16,7 +16,9 @@ import qualified Data.Map as M
 type Error = RuntimeError
 
 error' :: String -> VIO a
-error' = lift . lift . lift . Left . RuntimeError 
+error' str = do
+ (cpu, mem) <- get
+ lift . lift . lift . Left . RuntimeError $ str ++ "\nCPU: " ++ show cpu ++ "\nMemory: " ++ show mem
 
 
 data CPU = CPU{ f0 :: Word32, f1 :: Word32, f2 :: Word32, f3 :: Word32, f5 :: Word32, nx :: Word32, xx :: Word32, flag :: Bool} deriving (Show, Eq, Ord)
@@ -150,7 +152,7 @@ updateXXAndGetInstruction = do
  case M.lookup currentNX tat of
   Nothing -> 
    if currentNX == outermostRetAddress then return TERMINATE
-    else error' $ "nx has an invalid address" ++ show currentNX
+    else error' $ "nx has an invalid address " ++ show currentNX
   Just (newXX, instruction) -> do
    (cpu, mem) <- get
    put (cpu{xx = newXX}, mem)
