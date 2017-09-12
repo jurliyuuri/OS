@@ -9,6 +9,7 @@ import Memory
 import TentativeLoad
 import Control.Monad.State
 import Control.Monad.Reader
+import Control.Monad.Writer
 import qualified Data.Map as M
 
 type Error = RuntimeError
@@ -17,10 +18,10 @@ data CPU = CPU{ f0 :: Word32, f1 :: Word32, f2 :: Word32, f3 :: Word32, f5 :: Wo
 
 type Hardware = (CPU, Memory)
 
-type VIO a = ReaderT TentativeLoad (StateT Hardware (Either Error)) a
+type VIO a = WriterT [String] (ReaderT TentativeLoad (StateT Hardware (Either Error))) a
 
 execute :: TentativeLoad -> Either RuntimeError Hardware
-execute program = (`execStateT` initialHardware initialAddress) $ (`runReaderT` program) execute'
+execute program = (`execStateT` initialHardware initialAddress) $ (`runReaderT` program) $ runWriterT execute'
 
 execute' :: VIO ()
 execute' = do

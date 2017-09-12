@@ -2,10 +2,15 @@ import Parse
 import Execute
 import TentativeLoad
 import Types
+import System.IO(stderr, hPrint)
 
 --fullExecute :: String -> 
-fullExecute :: String -> Either ParseError (Either RuntimeError Hardware)
-fullExecute str = execute <$> (toTentativeLoad <$> fullParse str)
+fullExecute :: String -> IO () --Either ParseError (Either RuntimeError Hardware)
+fullExecute str = fullParse str >>>= \p -> execute (toTentativeLoad p) >>>= print
+
+(>>>=) :: (Show a) => Either a b -> (b -> IO ()) -> IO () 
+Right b >>>= action = action b
+Left a >>>= _ = hPrint stderr a
 
 main :: IO ()
 main = do
