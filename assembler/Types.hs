@@ -1,6 +1,5 @@
 module Types
 (Memory
-,CPU(..)
 ,Register(..)
 ,Lvalue(..)
 ,Rvalue(..)
@@ -13,7 +12,6 @@ import qualified Data.Map as M
 import Data.Word
 import Memory
 
-data CPU = CPU{ f0 :: Word32, f1 :: Word32, f2 :: Word32, f3 :: Word32, f5 :: Word32, nx :: Word32, xx :: Word32, flag :: Bool, memory :: Memory} deriving (Show, Eq, Ord)
 data Register = F0 | F1 | F2 | F3 | F5 | XX deriving (Show, Eq, Ord)
 data Lvalue = Re Register | RPlusNum Register Word32 | RPlusR Register Register deriving (Show, Eq, Ord)
 data Rvalue = L Lvalue | Pure Word32 | Lab Label deriving (Show, Eq, Ord)

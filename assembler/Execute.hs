@@ -4,6 +4,7 @@ module Execute
 import Types
 import Memory
 import TentativeLoad
+data CPU = CPU{ f0 :: Word32, f1 :: Word32, f2 :: Word32, f3 :: Word32, f5 :: Word32, nx :: Word32, xx :: Word32, flag :: Bool, memory :: Memory} deriving (Show, Eq, Ord)
 
 initialF5 :: Word32
 initialF5 = 0x6d7aa0f8
