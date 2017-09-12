@@ -110,7 +110,7 @@ parseRegister _ = Left "no register"
 parseR :: String -> Either Error Rvalue
 parseR str
  | isRight (parseL str) = return $ L (fromRight(parseL str))
- | all (`elem` "1234567890") str = return $ Pure $ read str
+ | all isDigit str = return $ Pure $ read str
  | all isAlphaNum str = return $ Lab str
  | otherwise = Left $ "cannot parse `" ++ str ++ "` as a valid data"
 
@@ -129,7 +129,7 @@ parseL [a,b,'+',c,d,'@']
   let re2 = fromRight (parseRegister [c,d]) in
    do{ re <- parseRegister [a,b]; return $ RPlusR re re2}
 parseL (a:b:'+':xs@(_:_))
- | last xs == '@' && all (`elem` "1234567890") (init xs) = do
+ | last xs == '@' && all isDigit (init xs) = do
  re <- parseRegister [a,b]
  let num = read(init xs)
  return $ RPlusNum re num
