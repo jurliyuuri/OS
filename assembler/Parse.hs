@@ -12,7 +12,7 @@ type Error = ParseError
 left :: String -> Either ParseError b
 left = Left . ParseError
 
-fullParse :: [Char] -> Either Error [(Instruction, [Label])]
+fullParse :: String -> Either Error [(Instruction, [Label])]
 fullParse str = do
   let ts = words $ map toLower str
   toInstructions <=< beautify $ ts

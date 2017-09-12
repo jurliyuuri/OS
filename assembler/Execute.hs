@@ -17,12 +17,12 @@ data CPU = CPU{ f0 :: Word32, f1 :: Word32, f2 :: Word32, f3 :: Word32, f5 :: Wo
 type VIO a = ReaderT TentativeLoad (StateT CPU (Either Error)) a
 
 execute :: TentativeLoad -> Either RuntimeError CPU
-execute program = (`execStateT` (initialCPU initialAddress)) $ (`runReaderT` program) $ execute'
+execute program = (`execStateT` initialCPU initialAddress) $ (`runReaderT` program) execute'
 
 execute' :: VIO ()
 execute' = do
  instruction <- updateXXAndGetInstruction
- if (instruction == TERMINATE) then finalize else do
+ if instruction == TERMINATE then finalize else do
   executeInstruction instruction
   updateNX
   execute'
@@ -30,9 +30,8 @@ execute' = do
 finalize :: VIO ()
 finalize = do
  a <- getRegister F5
- if (a /= initialF5) 
-  then error $ "f5 register was not preserved after the call. It should be in " ++ show initialF5 ++ " but is actually in " ++ show a
-  else return ()
+ when (a /= initialF5) $
+  error $ "f5 register was not preserved after the call. It should be in " ++ show initialF5 ++ " but is actually in " ++ show a
 
 getTat :: VIO (M.Map Word32 (Word32, Instruction))
 getTat = tentativeAddressTable <$> ask

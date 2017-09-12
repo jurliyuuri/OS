@@ -26,7 +26,7 @@ compose :: (Word8, Word8, Word8, Word8) -> Word32
 compose (a,b,c,d) = f a 24 + f b 16 + f c 8 + f d 0
  where
   f :: Word8 -> Int -> Word32
-  f t i = ((fromIntegral t)::Word32) `shift` i
+  f t i = (fromIntegral t::Word32) `shift` i
 
 data Memory = Memory {unM :: M.Map Word32 Word8, garbages :: [(Word32,Word8)]} deriving(Show, Eq, Ord)
 
