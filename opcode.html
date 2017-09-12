@@ -1044,5 +1044,8 @@ lus:
 <p>ん？しかし<a href="https://twitter.com/sosoBOTpi/status/907550774707634177">garbagesの欄があるのが奇妙だ</a>。初期化されていないメモリを読んだ時にのみこういうことは起きるはずなのだが。アドレスを見る限りf5周りのようだ。</p>
 
 <p><a href="https://twitter.com/sosoBOTpi/status/907567223962615808">原因究明に成功</a>。<code>krz</code>をHaskellのconst関数で実装していたので、メモリから「読んで」それを捨てる、という実装になってしまっていた。なるほど。</p>
+
+<h2>19. 諸々</h2>
+<p>インタプリタでは既に実装してあるので、'i'cを仕様にした。</p>
 </body>
 </html>
