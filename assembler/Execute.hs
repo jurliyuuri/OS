@@ -1,6 +1,7 @@
 module Execute
 (initialCPU
 ,execute
+,CPU()
 ) where
 import Types
 import Memory

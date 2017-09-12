@@ -37,7 +37,6 @@ emptyM = Memory M.empty []
 writeM :: Word32 -> Word32 -> State Memory ()
 writeM addr dat = do
  let (a,b,c,d) = decompose dat
- Memory m gs <- get
  writeByte  addr    a
  writeByte (addr+1) b
  writeByte (addr+2) c

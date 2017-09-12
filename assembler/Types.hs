@@ -10,7 +10,6 @@ module Types
 ,ParseError(..)
 ,RuntimeError
 ) where
-import qualified Data.Map as M
 import Data.Word
 import Memory
 

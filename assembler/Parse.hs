@@ -6,10 +6,10 @@ import Types
 import Control.Monad.State
 import Data.Char
 import Data.Maybe
-import Control.Monad
 
 type Error = ParseError
 
+left :: String -> Either ParseError b
 left = Left . ParseError
 
 fullParse :: [Char] -> Either Error [(Instruction, [Label])]

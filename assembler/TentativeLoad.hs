@@ -5,12 +5,8 @@ module TentativeLoad
 ) where
 
 import Types
-import Control.Monad.State
-import Data.Char
-import Data.Maybe
-import Control.Monad
 import qualified Data.Map as M
-import System.Random
+import System.Random hiding (next)
 
 data TentativeLoad = TentativeLoad {
  tentativeAddressTable :: M.Map Word32 (Word32, Instruction), 
