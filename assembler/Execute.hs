@@ -73,7 +73,9 @@ setRegister XX v = modify $ \(cpu, m) -> (cpu{xx = v},m)
 
 executeInstruction :: Instruction -> VIO ()
 executeInstruction TERMINATE = error $ "cannot happen"
-executeInstruction (Krz r l) = templ (\_ a -> a) r l
+executeInstruction (Krz r l) = do 
+ val1 <- getValueFromR r
+ setValueToL l val1 -- cannot use templ here, as templ will *read* from l (and later discards)
 executeInstruction (Ata r l) = templ (+) r l
 executeInstruction (Nta r l) = templ (-) r l
 executeInstruction (Ada r l) = templ (.&.) r l
