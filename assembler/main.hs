@@ -19,6 +19,10 @@ main = do
  print $ toTentativeLoad <$> fullParse program2
  putStrLn "\nparsing qsort:"
  print $ toTentativeLoad <$> fullParse program3
+ putStrLn "\nrunning fib_non_recursive:"
+ fullExecute program
+ putStrLn "\nrunning fib_recursive:"
+ fullExecute program2
 
 push12AndCall name = "'c'i    nta f5 4    krz f5@ 12    nta f5 4    inj f5@ xx "++name++"     ata f5 8    krz xx f5@  "
 
