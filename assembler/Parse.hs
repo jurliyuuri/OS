@@ -8,6 +8,10 @@ import Data.Char
 import Data.Maybe
 import Control.Monad
 
+type Error = ParseError
+
+left = Left . ParseError
+
 fullParse :: [Char] -> Either Error [(Instruction, [Label])]
 fullParse str = do
   let ts = words $ map toLower str
@@ -36,9 +40,9 @@ parseCond _ = Nothing
 beautify :: [String] -> Either Error [String]
 beautify (x:"+":y:zs) = beautify $ (x ++ "+" ++ y) : zs
 beautify (x:"@":ys) = beautify $ (x++"@") : ys
-beautify [_,"+"] = Left "Unexpected + at the end of input"
-beautify ("+":_) = Left "Unexpected + at the beginning of input"
-beautify ("@":_) = Left "Unexpected @ at the beginning of input"
+beautify [_,"+"] = left "Unexpected + at the end of input"
+beautify ("+":_) = left "Unexpected + at the beginning of input"
+beautify ("@":_) = left "Unexpected @ at the beginning of input"
 beautify (x:xs) = (x:) <$> beautify xs
 beautify [] = return []
 
@@ -50,7 +54,7 @@ toInstructions strs = do
 normalize :: [(Maybe a, [b])] -> Either Error [(a,[b])]
 normalize [] = return []
 normalize ((Nothing,ls):(a,bs):ys) = normalize $ (a,ls++bs) : ys
-normalize [(Nothing,_)] = Left "l' must be preceded by an instruction"
+normalize [(Nothing,_)] = left "l' must be preceded by an instruction"
 normalize ((Just a,ls):ys) = ((a,ls) :) <$> normalize ys
 
 
@@ -85,13 +89,13 @@ toI ("inj":x:y:z:bs) = do
 toI ("nll":x:ys) = do
  rest <- toI ys
  case rest of
-  [] -> lift $ Left "nll must be followed by an instruction"
+  [] -> lift $ left "nll must be followed by an instruction"
   ((Just a,b):xs) -> return $ (Just a,toLabel x:b):xs
-  ((Nothing,_):_) -> lift $ Left "nll must not be followed by l'"
+  ((Nothing,_):_) -> lift $ left "nll must not be followed by l'"
 toI ("l'":x:ys) = do
  rest <- toI ys
  return $ (Nothing,[toLabel x]):rest
-toI xs = lift $ Left $ "Unparsable command sequence " ++ show xs
+toI xs = lift $ left $ "Unparsable command sequence " ++ show xs
  
 toLabel :: String -> Label
 toLabel = id
@@ -103,7 +107,7 @@ parseRegister "f2" = Right F2
 parseRegister "f3" = Right F3
 parseRegister "f5" = Right F5
 parseRegister "xx" = Right XX
-parseRegister _ = Left "no register"
+parseRegister _ = left "no register"
 
 
 parseR :: String -> Either Error Rvalue
@@ -111,7 +115,7 @@ parseR str
  | isRight (parseL str) = return $ L (fromRight(parseL str))
  | all isDigit str = return $ Pure $ read str
  | all isAlphaNum str = return $ Lab str
- | otherwise = Left $ "cannot parse `" ++ str ++ "` as a valid data"
+ | otherwise = left $ "cannot parse `" ++ str ++ "` as a valid data"
 
 isRight :: Either t1 t -> Bool
 isRight (Right _) = True
@@ -132,6 +136,6 @@ parseL (a:b:'+':xs@(_:_))
  re <- parseRegister [a,b]
  let num = read(init xs)
  return $ RPlusNum re num
-parseL xs = Left $ "cannot parse `" ++ xs ++ "` as a valid place to put data"
+parseL xs = left $ "cannot parse `" ++ xs ++ "` as a valid place to put data"
 
 

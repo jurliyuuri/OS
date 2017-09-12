@@ -9,6 +9,8 @@ import Control.Monad.State
 import Control.Monad.Reader
 import qualified Data.Map as M
 
+type Error = RuntimeError
+
 data CPU = CPU{ f0 :: Word32, f1 :: Word32, f2 :: Word32, f3 :: Word32, f5 :: Word32, nx :: Word32, xx :: Word32, flag :: Bool, memory :: Memory} deriving (Show, Eq, Ord)
 
 type VIO a = ReaderT TentativeLoad (StateT CPU (Either Error)) a
