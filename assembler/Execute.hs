@@ -15,13 +15,16 @@ data CPU = CPU{ f0 :: Word32, f1 :: Word32, f2 :: Word32, f3 :: Word32, f5 :: Wo
 
 type VIO a = ReaderT TentativeLoad (StateT CPU (Either Error)) a
 
-execute :: VIO ()
-execute = do
+execute :: TentativeLoad -> Either RuntimeError CPU
+execute program = (`execStateT` (initialCPU initialAddress)) $ (`runReaderT` program) $ execute'
+
+execute' :: VIO ()
+execute' = do
  instruction <- updateXXAndGetInstruction
  if (instruction == TERMINATE) then finalize else do
   executeInstruction instruction
   updateNX
-  execute
+  execute'
 
 finalize :: VIO ()
 finalize = do
@@ -75,8 +78,8 @@ outermostRetAddress = 0xbda574b8
 initialMemory :: Memory
 initialMemory = writeM initialF5 outermostRetAddress `execState` emptyM
 
-initialCPU :: Word32 -> Word32 -> CPU
-initialCPU initNX initXX = CPU{
+initialCPU :: Word32 -> CPU
+initialCPU initNX = CPU{
  f0 = 0x82ebfc85, -- garbage
  f1 = 0xfc73c497, -- garbage
  f2 = 0x9cf84b9d, -- garbage
@@ -85,6 +88,6 @@ initialCPU initNX initXX = CPU{
  flag = False,
  memory = initialMemory,
  nx = initNX,
- xx = initXX
+ xx = 0xba3decfd -- garbage
  }
  
