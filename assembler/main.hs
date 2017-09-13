@@ -37,6 +37,6 @@ foo :: IO ()
 foo = do
  main' "fib_non_recursive"
  main' "fib_recursive"
+ main' "tarai"
  parse' "buggy_quicksort"
- parse' "buggy_tarai"
 
