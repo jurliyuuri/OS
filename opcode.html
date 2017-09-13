@@ -1106,5 +1106,12 @@ l' iska
 </div>
 
 <p>たらい関数の不可解なバグの原因が判明。<a href="https://twitter.com/sosoBOTpi/status/907799715369988097">nta 4 f5の書き忘れ</a>。しかしそれを直したところでx>yのときには動かないのである。悲しいなぁ。</p>
+
+<p>色々いじくりまわして原因が判明。<a href="https://twitter.com/sosoBOTpi/status/907864962285969408">-1がunsignedだから4294967295になって無限ループ</a>。<a href="https://twitter.com/sosoBOTpi/status/907869241143001089">比較の時だけはsignedとunsigned両方作らなきゃいけないのを一回意識したことがあったけどその後忘れてしまっていた。</a></p>
+
+<h2>20. 比較指定子の改良</h2>
+<p>ということで、比較指定子を改良しなきゃですな。</p>
+<p>話した結果、今までの比較指定子はsigned用に使うことにして、<a href="https://jurliyuuri.slack.com/archives/C698QT6DQ/p1505288787000085">unsignedな比較は比較指定子の後ろにnys（ny snakxazで「非負の」の略）をくっつけることにした</a>。あと、<a href="https://jurliyuuri.slack.com/archives/C6Q71RE4V/p1505210415000149">fi f1 f2 niv</a>で<code>!=</code>を表すのが<a href="https://jurliyuuri.slack.com/archives/C6Q71RE4V/p1505287317000073">採用された</a>。ということで書いていきましょう</p>
+<p>
 </body>
 </html>
