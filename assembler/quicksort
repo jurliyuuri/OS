@@ -1,11 +1,28 @@
-<link rel="stylesheet" href="common.css">
-<script src="toggle_font.js"></script>
-<body onload="toggle(true)">
-<label><input type="checkbox" checked="checked" onchange="toggle(this.checked)">jietoden liparxeで表示</label>
+'c'i
+krz f1 2782070968
+krz f1@ 6   ata f1 4
+krz f1@ 2   ata f1 4
+krz f1@ 8   ata f1 4
+krz f1@ 3   ata f1 4
+krz f1@ 1   ata f1 4
+krz f1@ 8   ata f1 4
+krz f1@ 5   ata f1 4
+krz f1@ 3   ata f1 4
+krz f1@ 0   ata f1 4
+krz f1@ 7   ata f1 4
+krz f1@ 1   ata f1 4
+krz f1@ 7   ata f1 4
+krz f1@ 9   ata f1 4
+krz f1@ 5   ata f1 4
+krz f1@ 8   ata f1 4
 
-<p>BUGGY</p>
+nta f5 4   krz f5@ 2782070968
+nta f5 4   krz f5@ 0
+nta f5 4   krz f5@ 14
+nta f5 4   inj f5@ xx ycax  ata f5 16
+krz xx f5@   
 
-<pre class="jietoden">
+
 'c'i
 nll ycax
 krz f2 f5+4@
@@ -35,4 +52,3 @@ nta f5 4   inj f5@ xx ycax  ata f5 8
 nta f5 4   krz f5@ f5+20@  
 nta f5 4   inj f5@ xx ycax  ata f5 20  
 krz xx f5@   l' lus
-</pre>
