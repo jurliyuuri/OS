@@ -14,8 +14,12 @@ left = Left . ParseError
 
 fullParse :: String -> Either Error [(Instruction, [Label])]
 fullParse str = do
-  let ts = words $ map toLower str
-  toInstructions <=< beautify $ ts
+ let ts = words $ concatMap plusAt $ map toLower str
+ toInstructions <=< beautify $ ts
+  where
+   plusAt '@' = " @ "
+   plusAt '+' = " + "
+   plusAt a   = [a]
 
 
 rl :: String -> Maybe(Rvalue -> Lvalue -> Instruction)
