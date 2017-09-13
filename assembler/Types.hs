@@ -24,10 +24,18 @@ type Label = String
 newtype ParseError = ParseError String deriving(Show, Eq, Ord)
 newtype RuntimeError = RuntimeError String deriving(Show, Eq, Ord)
 
-toFunc :: (Ord a) => Cond -> (a -> a -> Bool)
+toFunc :: Cond -> (Word32 -> Word32 -> Bool)
 toFunc Xtlonys = (<=)
 toFunc Xylonys = (<)
 toFunc Clo = (==)
 toFunc Xolonys = (>=)
 toFunc Llonys = (>)
 toFunc Niv = (/=)
+toFunc Xtlo = lif (<=)
+toFunc Xylo = lif (<) 
+toFunc Xolo = lif (>=)
+toFunc Llo  = lif (>) 
+
+lif :: (Word32 -> Word32 -> t) -> Word32 -> Word32 -> t
+lif f = \a b -> f (a+0x80000000) (b+0x80000000)
+
