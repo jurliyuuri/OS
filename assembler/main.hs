@@ -3,6 +3,7 @@ import Execute
 import TentativeLoad
 import System.IO(stderr, hPrint)
 import Data.Word
+import System.Environment(getArgs)
 
 --fullExecute :: String -> 
 fullExecute :: String -> IO () --Either ParseError (Either RuntimeError Hardware)
@@ -14,6 +15,19 @@ Left a >>>= _ = hPrint stderr a
 
 main :: IO ()
 main = do
+ args <- getArgs
+ case args of 
+  [] -> foo
+  (x:_) -> main' x
+
+main' :: FilePath -> IO ()
+main' filepath = do
+ str <- readFile filepath
+ putStrLn $ "\nrunning " ++ filepath ++ ":\n"
+ fullExecute str
+
+foo :: IO ()
+foo = do
  putStrLn "\nparsing fib_non_recursive:"
  print $ toTentativeLoad <$> fullParse program
  putStrLn "\nparsing fib_recursive:"
