@@ -64,7 +64,7 @@ normalize ((Just a,ls):ys) = ((a,ls) :) <$> normalize ys
 toI :: [String] -> StateT Bool (Either Error) [(Maybe Instruction, [Label])]
 toI [] = return []
 toI ("'c'i" : xs) = put True >> toI xs
-toI ("'i'c" : xs) = put True >> toI xs
+toI ("'i'c" : xs) = put False >> toI xs
 toI ("fen" : xs) = do
  rest <- toI xs
  return $ (Just$Krz (L (Re F0)) (Re F0),[]) : rest
