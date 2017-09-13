@@ -14,7 +14,7 @@ left = Left . ParseError
 
 fullParse :: String -> Either Error [(Instruction, [Label])]
 fullParse str = do
- let ts = words $ concatMap plusAt $ map toLower str
+ let ts = words $ concatMap (plusAt . toLower) str
  toInstructions <=< beautify $ ts
   where
    plusAt '@' = " @ "

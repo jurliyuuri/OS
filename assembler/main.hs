@@ -4,8 +4,7 @@ import TentativeLoad
 import System.IO(stderr, hPrint)
 import System.Environment(getArgs)
 
---fullExecute :: String -> 
-fullExecute :: String -> IO () --Either ParseError (Either RuntimeError Hardware)
+fullExecute :: String -> IO ()
 fullExecute str = fullParse str >>>= \p -> execute (toTentativeLoad p) >>>= print
 
 (>>>=) :: (Show a) => Either a b -> (b -> IO ()) -> IO () 

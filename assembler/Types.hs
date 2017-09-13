@@ -37,5 +37,5 @@ toFunc Xolo = lif (>=)
 toFunc Llo  = lif (>) 
 
 lif :: (Word32 -> Word32 -> t) -> Word32 -> Word32 -> t
-lif f = \a b -> f (a+0x80000000) (b+0x80000000)
+lif f a b = f (a+0x80000000) (b+0x80000000)
 

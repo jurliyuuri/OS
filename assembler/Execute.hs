@@ -74,7 +74,7 @@ setRegister XX v = modify $ \(cpu, m) -> (cpu{xx = v},m)
 
 
 executeInstruction :: Instruction -> VIO ()
-executeInstruction TERMINATE = error $ "cannot happen"
+executeInstruction TERMINATE = error "cannot happen"
 executeInstruction (Krz r l) = do 
  val1 <- getValueFromR r
  setValueToL l val1 -- cannot use templ here, as templ will *read* from l (and later discards)
@@ -83,7 +83,7 @@ executeInstruction (Nta r l) = templ (-) r l
 executeInstruction (Ada r l) = templ (.&.) r l
 executeInstruction (Ekc r l) = templ (.|.) r l
 executeInstruction (Dal r l) = templ (\x y -> complement $ x `xor` y) r l
-executeInstruction (Dto r l) = templ (\x y -> x `shift` (negate $ fromIntegral y)) r l
+executeInstruction (Dto r l) = templ (\x y -> x `shift` negate (fromIntegral y)) r l
 executeInstruction (Dro r l) = templ (\x y -> x `shift` fromIntegral y) r l
 executeInstruction (MalKrz r l) = do
  fl <- getFlag
@@ -108,7 +108,7 @@ liftMemOp :: State Memory a -> VIO a
 liftMemOp memOp = do
  (cpu, mem) <- get
  let (a, newMem) = memOp `runState` mem
- put $ (cpu, newMem)
+ put (cpu, newMem)
  return a
 
 -- data Lvalue = Re Register | RPlusNum Register Word32 | RPlusR Register Register
