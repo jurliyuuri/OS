@@ -40,6 +40,11 @@ parseCond "xylo" = Just Xylo
 parseCond "clo"  = Just Clo
 parseCond "xolo" = Just Xolo
 parseCond "llo"  = Just Llo
+parseCond "niv"  = Just Niv
+parseCond "xtlonys" = Just Xtlonys
+parseCond "xylonys" = Just Xylonys
+parseCond "xolonys" = Just Xolonys
+parseCond "llonys"  = Just Llonys
 parseCond _ = Nothing
 
 

@@ -27,10 +27,10 @@
 <td>&nbsp;意味</td>
 </tr>
 <tr>
-<td style="width:71px;height:18px">&nbsp;krz</td>
+<td style="width:101px;height:18px">&nbsp;krz</td>
 <td style="width:116px;height:18px">&nbsp;krantairzarth</td>
 <td style="width:60px">&nbsp;mov</td>
-<td style="width:287px;height:18px">&nbsp;複製</td>
+<td style="width:307px;height:18px">&nbsp;複製</td>
 </tr>
 <tr>
 <td>&nbsp;ata</td>
@@ -104,13 +104,13 @@
 <td>&nbsp;fi ~ xtlo</td>
 <td>&nbsp;fi * es * xut loler</td>
 <td></td>
-<td>&nbsp;以下ならフラグを立てる</td>
+<td>&nbsp;以下ならフラグを立てる（符号付き比較）</td>
 </tr>
 <tr>
 <td>&nbsp;fi ~ xylo</td>
 <td>&nbsp;fi * es * xy loler</td>
 <td></td>
-<td>&nbsp;未満ならフラグを立てる</td>
+<td>&nbsp;未満ならフラグを立てる（符号付き比較）</td>
 </tr>
 <tr>
 <td>&nbsp;fi ~ clo</td>
@@ -122,13 +122,43 @@
 <td>&nbsp;fi ~ xolo</td>
 <td>&nbsp;fi * es * xo loler</td>
 <td></td>
-<td>&nbsp;以上ならフラグを立てる</td>
+<td>&nbsp;以上ならフラグを立てる（符号付き比較）</td>
 </tr>
 <tr>
 <td>&nbsp;fi ~ llo</td>
 <td>&nbsp;fi * es * le loler</td>
 <td></td>
-<td>&nbsp;超過ならフラグを立てる</td>
+<td>&nbsp;超過ならフラグを立てる（符号付き比較）</td>
+</tr>
+<tr>
+<td>&nbsp;fi ~ niv</td>
+<td>&nbsp;fi * es * niv</td>
+<td></td>
+<td>&nbsp;等しくないならフラグを立てる</td>
+</tr>
+<tr>
+<td>&nbsp;fi ~ xtlonys</td>
+<td>&nbsp;fi * es * xut loler</td>
+<td></td>
+<td>&nbsp;以下ならフラグを立てる（符号無し比較）</td>
+</tr>
+<tr>
+<td>&nbsp;fi ~ xylonys</td>
+<td>&nbsp;fi * es * xy loler</td>
+<td></td>
+<td>&nbsp;未満ならフラグを立てる（符号無し比較）</td>
+</tr>
+<tr>
+<td>&nbsp;fi ~ xolonys</td>
+<td>&nbsp;fi * es * xo loler</td>
+<td></td>
+<td>&nbsp;以上ならフラグを立てる（符号無し比較）</td>
+</tr>
+<tr>
+<td>&nbsp;fi ~ llonys</td>
+<td>&nbsp;fi * es * le loler</td>
+<td></td>
+<td>&nbsp;超過ならフラグを立てる（符号無し比較）</td>
 </tr>
 <tr>
 <td>&nbsp;fen</td>
@@ -176,7 +206,7 @@
 <tr><td><u>レジスタ名</u><code> + </code><u>定数</u><code>@</code></td><td>構文確定</td><td>レジスタに入っている番地に定数を足した番地のメモリを表す。</td></tr>
 <tr><td><u>レジスタ名</u><code> + </code><u>レジスタ名</u><code>@</code></td><td>構文確定</td><td>2つのレジスタに入っている数値を足した番地のメモリを表す。</td></tr>
 <tr><td style="width:250px;"><code>l' </code><u>ラベル名</u>（後ろから修飾）<br><code>nll </code><u>ラベル名</u>（前から修飾）<br></td><td>構文確定</td><td>ラベル名を定義する</td></tr></tbody>
-<tr style="color:#ddd"><td><code>-</code><u>定数</u></td><td>構文未確定</td><td>負の整数。<a style="color:#ddd" href="https://jurliyuuri.slack.com/archives/C6QL0DKV4/p1504358289000016">リパーシェフォントでのU+002Dはマイナスではなくハイフンである</a>ので、現状の構文は誤りである。<a id="dontuse" style="color:red">めんどいので現状では使用しないことに決めた</span></span></td>
+<!--<tr style="color:#ddd"><td><code>-</code><u>定数</u></td><td>構文未確定</td><td>負の整数。<a style="color:#ddd" href="https://jurliyuuri.slack.com/archives/C6QL0DKV4/p1504358289000016">リパーシェフォントでのU+002Dはマイナスではなくハイフンである</a>ので、現状の構文は誤りである。<a id="dontuse" style="color:red">めんどいので現状では使用しないことに決めた</span></span></td>-->
 </table>
 
 <h2>4. 便利なイディオム</h2>
