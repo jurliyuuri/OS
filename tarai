@@ -1,0 +1,46 @@
+'c'i
+nta f5 4   krz f5@ 5
+nta f5 4   krz f5@ 6
+nta f5 4   krz f5@ 0
+'i'c 
+inj tarai xx f5@   
+ata 12 f5    
+krz f5@ xx
+
+'i'c
+nll tarai
+krz f5+4@ f2
+krz f5+8@ f1
+krz f5+12@ f0
+fi f0 f1 llo
+malkrz fistir xx
+krz f1 f0
+krz f5@ xx
+
+nll fistir
+nta 4 f5   krz f0 f5@
+nta 4 f5   krz f1 f5@
+nta 4 f5   krz f2 f5@
+
+nta 4 f5   krz f0 f5@   nta 1 f5@
+nta 4 f5   krz f1 f5@
+nta 4 f5   krz f2 f5@
+nta 4 f5   inj tarai xx f5@   ata 16 f5
+nta 4 f5   krz f0 f5@
+
+nta 4 f5   krz f5+12@ f5@   nta 1 f5@
+nta 4 f5   krz f5+12@ f5@
+nta 4 f5   krz f5+24@ f5@
+nta 4 f5   inj tarai xx f5@   ata 16 f5
+nta 4 f5   krz f0 f5@
+
+nta 4 f5   krz f5+12@ f5@   nta 1 f5@
+nta 4 f5   krz f5+24@ f5@
+nta 4 f5   krz f5+24@ f5@
+nta 4 f5   inj tarai xx f5@   ata 16 f5
+nta 4 f5   krz f0 f5@
+
+nta 4 f5   inj tarai xx f5@   ata 16 f5
+
+ata 12 f5
+krz f5@ xx
