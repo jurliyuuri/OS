@@ -2,10 +2,8 @@
 nta f5 4   krz f5@ 5
 nta f5 4   krz f5@ 6
 nta f5 4   krz f5@ 0
-'i'c 
-inj tarai xx f5@   
-ata 12 f5    
-krz f5@ xx
+nta f5 4   inj f5@ xx tarai   ata f5 16
+krz xx f5@
 
 'i'c
 nll tarai
