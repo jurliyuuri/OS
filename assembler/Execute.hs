@@ -29,13 +29,14 @@ type Hardware = (CPU, Memory)
 
 type VIO a = WriterT [String] (ReaderT TentativeLoad (StateT Hardware (ExceptT Error Identity))) a
 
-execute :: TentativeLoad -> Either RuntimeError Hardware
+execute :: TentativeLoad -> Either RuntimeError ([String], Hardware)
 execute program 
  = runIdentity
  . runExceptT
- . (`execStateT` initialHardware initialAddress) 
+ . (`runStateT` initialHardware initialAddress) 
  . (`runReaderT` program) 
- . runWriterT $ execute'
+ . execWriterT 
+ $ execute'
 
 execute' :: VIO ()
 execute' = do
