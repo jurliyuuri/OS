@@ -10,6 +10,8 @@ import TentativeLoad
 import Control.Monad.State
 import Control.Monad.Reader
 import Control.Monad.Writer
+import Control.Monad.Except
+import Control.Monad.Identity
 import Data.Bits
 import qualified Data.Map as M
 
@@ -18,17 +20,22 @@ type Error = RuntimeError
 error' :: String -> VIO a
 error' str = do
  (cpu, mem) <- get
- lift . lift . lift . Left . RuntimeError $ str ++ "\nCPU: " ++ show cpu ++ "\nMemory: " ++ show mem
+ lift . lift . lift . ExceptT . Identity . Left . RuntimeError $ str ++ "\nCPU: " ++ show cpu ++ "\nMemory: " ++ show mem
 
 
 data CPU = CPU{ f0 :: Word32, f1 :: Word32, f2 :: Word32, f3 :: Word32, f5 :: Word32, nx :: Word32, xx :: Word32, flag :: Bool} deriving (Show, Eq, Ord)
 
 type Hardware = (CPU, Memory)
 
-type VIO a = WriterT [String] (ReaderT TentativeLoad (StateT Hardware (Either Error))) a
+type VIO a = WriterT [String] (ReaderT TentativeLoad (StateT Hardware (ExceptT Error Identity))) a
 
 execute :: TentativeLoad -> Either RuntimeError Hardware
-execute program = (`execStateT` initialHardware initialAddress) $ (`runReaderT` program) $ runWriterT execute'
+execute program 
+ = runIdentity
+ . runExceptT
+ . (`execStateT` initialHardware initialAddress) 
+ . (`runReaderT` program) 
+ . runWriterT $ execute'
 
 execute' :: VIO ()
 execute' = do
