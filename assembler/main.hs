@@ -5,7 +5,11 @@ import System.IO(stderr, hPrint)
 import System.Environment(getArgs)
 
 fullExecute :: String -> IO ()
-fullExecute str = fullParse str >>>= \p -> execute (toTentativeLoad p) >>>= print
+fullExecute str = fullParse str >>>= \p -> 
+ let (erh, logs) = execute (toTentativeLoad p) in do
+  erh >>>= print
+  putStr "Logs: "
+  print logs
 
 (>>>=) :: (Show a) => Either a b -> (b -> IO ()) -> IO () 
 Right b >>>= action = action b
@@ -37,5 +41,5 @@ foo = do
  main' "fib_non_recursive"
  main' "fib_recursive"
  main' "tarai"
- parse' "buggy_quicksort"
+ main' "quicksort"
 

@@ -20,22 +20,24 @@ type Error = RuntimeError
 error' :: String -> VIO a
 error' str = do
  (cpu, mem) <- get
- lift . lift . lift . ExceptT . Identity . Left . RuntimeError $ str ++ "\nCPU: " ++ show cpu ++ "\nMemory: " ++ show mem
+ lift . lift . throwError . RuntimeError $ str ++ "\nCPU: " ++ show cpu ++ "\nMemory: " ++ show mem
+
 
 
 data CPU = CPU{ f0 :: Word32, f1 :: Word32, f2 :: Word32, f3 :: Word32, f5 :: Word32, nx :: Word32, xx :: Word32, flag :: Bool} deriving (Show, Eq, Ord)
 
 type Hardware = (CPU, Memory)
+type Logs = [String]
 
-type VIO a = WriterT [String] (ReaderT TentativeLoad (StateT Hardware (ExceptT Error Identity))) a
+type VIO a = ReaderT TentativeLoad (StateT Hardware (ExceptT Error (WriterT Logs (Identity)))) a
 
-execute :: TentativeLoad -> Either RuntimeError ([String], Hardware)
+execute :: TentativeLoad -> (Either RuntimeError Hardware, Logs)
 execute program 
  = runIdentity
+ . runWriterT 
  . runExceptT
- . (`runStateT` initialHardware initialAddress) 
+ . (`execStateT` initialHardware initialAddress) 
  . (`runReaderT` program) 
- . execWriterT 
  $ execute'
 
 execute' :: VIO ()
