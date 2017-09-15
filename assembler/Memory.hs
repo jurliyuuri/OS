@@ -7,7 +7,6 @@ module Memory
 ,writeByte
 ,unM
 ,runState,execState,evalState
-,to32
 ) where
 import qualified Data.Map as M
 import Data.Word
