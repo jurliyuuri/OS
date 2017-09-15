@@ -1170,5 +1170,10 @@ l' iska
 <blockquote class="twitter-tweet" data-lang="ja"><p lang="ja" dir="ltr">とはいえ現実世界に住まいしものが少しずつ悠里OSに馴染むための過渡期において、コードにコメントが書けるのは相当急務な気もしてきた。むしろ最初は一行一行にコメント残したい。レジスタの値とかではなくそもそも、xoloってなんだっけ？とか言っていちいちドキュメントに戻る手間が省ける。</p>&mdash; ゔぁねろぺ (@Vane11ope) <a href="https://twitter.com/Vane11ope/status/908583527926480896">2017年9月15日</a></blockquote>
 <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 <p>ということで、<a href="https://twitter.com/sosoBOTpi/status/908583834962223109">現世での独自拡張として</a>セミコロンでのコメントアウト機能を<a href="https://twitter.com/sosoBOTpi/status/908584985329754112">5分で</a>実装した。</p>
+
+<h3>22-4. メモリダンプの改良</h3>
+<p>メモリダンプを改良していきましょう。とりあえず印字用の関数をね</p>
+
+<p>まず、<code>Data.Map.Map Word32 Word8</code>を<code>Data.Map.Map Word32 (Maybe Word32)</code>に変換する関数を作成。</p>
 </body>
 </html>

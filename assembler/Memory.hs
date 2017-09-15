@@ -7,6 +7,7 @@ module Memory
 ,writeByte
 ,unM
 ,runState,execState,evalState
+,to32
 ) where
 import qualified Data.Map as M
 import Data.Word
@@ -32,6 +33,32 @@ data Memory = Memory {unM :: M.Map Word32 Word8, garbages :: [(Word32,Word8)]} d
 
 emptyM :: Memory
 emptyM = Memory M.empty []
+
+type Foo = (Maybe Word8, Maybe Word8, Maybe Word8, Maybe Word8)
+
+to32 :: M.Map Word32 Word8 -> M.Map Word32 (Maybe Word32)
+to32 = fmap baz . M.fromListWith foo . map bar . M.toList
+ where
+  bar :: (Word32, Word8) -> (Word32, Foo)
+  bar (w32, w8)
+   | w32 `mod` 4 == 0 = (w32', (Just w8, Nothing, Nothing, Nothing))
+   | w32 `mod` 4 == 1 = (w32', (Nothing, Just w8, Nothing, Nothing))
+   | w32 `mod` 4 == 2 = (w32', (Nothing, Nothing, Just w8, Nothing))
+   | otherwise        = (w32', (Nothing, Nothing, Nothing, Just w8))
+   where w32' = (w32 `div` 4)*4
+  foo :: Foo -> Foo -> Foo
+  foo (a,b,c,d) (w,x,y,z) = (m a w, m b x, m c y, m d z)
+  m :: Maybe a -> Maybe a -> Maybe a
+  m Nothing b = b
+  m a _ = a
+  baz :: Foo -> Maybe Word32
+  baz (a,b,c,d) = do
+   w <- a
+   x <- b
+   y <- c
+   z <- d
+   return $ compose (w,x,y,z)
+
 
 
 writeM :: Word32 -> Word32 -> State Memory ()
