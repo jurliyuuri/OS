@@ -8,7 +8,7 @@
 <body class="cool">
 <h1>オペコードなどについて考察する</h1>
 
-<p>以下のは雑記・考察ログです。<strong style="font-size: 120%">すでに絶滅した過去の仕様などが数多く含まれています。</strong>最新の仕様だけ知りたい人は<a href="settings.html">設定一覧</a>をお読みください。ソースコードの例としては<a href="fib_non_recursive.jurli.html">非再帰フィボナッチ</a>と<a href="fib_recursive.jurli.html">再帰フィボナッチ</a>と<a href="./qsort.jurli.html">quicksort</a>があります。</p>
+<p>以下のは雑記・考察ログです。<strong style="font-size: 120%">すでに絶滅した過去の仕様などが数多く含まれています。</strong>最新の仕様だけ知りたい人は<a href="settings.html">設定一覧</a>をお読みください。専門用語の一覧は<a href="https://sites.google.com/site/panqateel/yougo">用語集</a>に掲載されています。ソースコードの例としては<a href="fib_non_recursive.jurli.html">非再帰フィボナッチ</a>と<a href="fib_recursive.jurli.html">再帰フィボナッチ</a>と<a href="./qsort.jurli.html">quicksort</a>があります。</p>
 
 <h2>1. 設定</h2>
 <s> <a href="https://docs.google.com/spreadsheets/d/1AUex8DDU9n5r-q27MD-6_aW5en-vmXZ55ptzm91yV74/edit#gid=0">Google SpreadSheetで作業中</a></s><b>OBSOLETE:: 2017/08/29 23:40時点で既に部分的に無効</b>
@@ -1137,6 +1137,7 @@ l' iska
 <p>そういえば、除算ってそういえばゼロ割問題もあるやん（あるやん）</p>
 
 <h2>22. デバッグ環境と外部関数</h2>
+<h3>22-1.</h3>
 <p><a href="https://twitter.com/sosoBOTpi/status/908556126832156673">とりあえず、</a></p>
 <ul>
 	<li>ステップ実行</li>
@@ -1145,5 +1146,24 @@ l' iska
 	<li>呼ぶと色々な情報を吐いてくれる組み込み関数</li>
 </ul>
 <p>をやっていきましょう。さて何から作ろうかな。組み込み関数でも作るか。</p>
+<p>現状、「0xbda574b8に飛んだときに明示的にTERMINATEする」という一種の組み込み関数があるわけだ。さて組み込み関数にはどこのアドレスを割り当てようか。とりあえず現状で使っているアドレスの一覧をば</p>
+<div class="box" style="font-family: monospace;">
+
+
+	<table>
+		<tr><td>アドレス</td><td>役割</td>
+		<tr><td>0x1482e8d4</td><td>プログラムがロードされる位置</td></tr>
+		<tr><td>0x6d7aa0f8</td><td>スタックポインタの初期位置</td></tr>
+		<tr><td>0xa0000000 - 0xaffffffc</td><td>自由に関数がいじっていい領域</td></tr>
+		<tr><td>0xbda574b8</td><td>ここにreturnすると処理が正常終了する</td></tr>
+	</table>		
+</div>
+<p>ふむふむ。じゃあとりあえず0xbdaqqqqqあたりに組み込み関数とかは配置することにしておきましょうかね。まあ単純にラベルとして定義しておいてジャンプしたときにインタプリタが特別に扱えば良い。</p>
+
+<h3>22-2.</h3>
+<p><a href="https://twitter.com/Vane11ope/status/908561109744893956">ステップ実行ともうちょい読みやすいメモリダンプ</a>の方が欲しいと言われた。なるほど。</p>
+<p>ステップ実行するからにはinteractiveなプログラムにしなきゃいけないが、さてさてinteractiveってどう訳そうか。</p>
+<p>聞いたら<a href="https://twitter.com/sashimiwiki/status/908572537109356545">xarzni'arプログラム</a>というのを提案された。<a href="https://twitter.com/sashimiwiki/status/908573053218562048">宗教的なカウンセラー</a>だそうだ。めっちゃええやん。<span style="font-size: 80%;">現世の情報界隈って宗教的な諸々がほぼ採用されていない（だからこそ「宗教」という語が「vim vs. Emacs」「2-space vs. 4-space indent」とかのことを指せる）ので、対比としても面白いよね</span></p>
+<p>ということで、用語集に追加して、さらに用語集へのリンクをこのページにも貼った。</p>
 </body>
 </html>
