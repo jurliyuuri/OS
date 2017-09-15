@@ -4,6 +4,9 @@ import TentativeLoad
 import System.IO(stderr, hPrint)
 import System.Environment(getArgs)
 
+semicolonExtension :: String -> String
+semicolonExtension = unlines . map (takeWhile (/=';')) . lines
+
 fullExecute :: String -> IO ()
 fullExecute str = fullParse str >>>= \p -> 
  let (erh, logs) = execute (toTentativeLoad p) in do
@@ -25,13 +28,13 @@ main = do
 main' :: FilePath -> IO ()
 main' filepath = do
  parse' filepath
- str <- readFile filepath
+ str <- semicolonExtension <$> readFile filepath
  putStrLn $ "\nrunning " ++ filepath ++ ":\n"
  fullExecute str
 
 parse' :: FilePath -> IO ()
 parse' filepath = do
- str <- readFile filepath
+ str <- semicolonExtension <$> readFile filepath
  putStrLn $ "\nparsing " ++ filepath ++ ":\n"
  print $ toTentativeLoad <$> fullParse str
 
