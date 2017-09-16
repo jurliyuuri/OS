@@ -202,7 +202,7 @@
 </thead>
 <tbody>
 <tr><td><code>'c'i</code></td><td style="width:100px;">構文確定</td><td style="max-width:300px;">第一オペランドが-'c格、第二オペランドが-'i格として解釈される。現世の表現で言うと、GNU as的 <code>mov src, dest</code>の語順でなくMASM的 <code>mov dest, src</code>の語順になる。<strong>ただし、比較演算子はひっくり返らない。</strong></td></tr>
-<tr><td><code>'i'c</code></td><td style="width:100px;">構文確定</td><td style="max-width:300px;">第一オペランドが-'i格、第二オペランドが-'c格として解釈される、デフォルトの語順に設定する。現世の表現で言うと、MASM的 <code>mov dest, src</code>の語順でなくGNU as的 <code>mov src, dest</code>の語順になる。<strong>ただし、比較演算子はひっくり返らない。</strong></td></tr>
+<tr><td><code>'i'c</code></td><td style="width:100px;">構文確定</td><td style="max-width:300px;">第一オペランドが-'i格、第二オペランドが-'c格として解釈される（これがデフォルトの語順である）ように設定する。現世の表現で言うと、MASM的 <code>mov dest, src</code>の語順でなくGNU as的 <code>mov src, dest</code>の語順になる。<strong>ただし、比較演算子はひっくり返らない。</strong></td></tr>
 <tr><td><u>レジスタ名</u><code>@</code></td><td>構文確定</td><td>レジスタに入っている番地のメモリを表す。</td></tr>
 <tr><td><u>レジスタ名</u><code> + </code><u>定数</u><code>@</code></td><td>構文確定</td><td>レジスタに入っている番地に定数を足した番地のメモリを表す。</td></tr>
 <tr><td><u>レジスタ名</u><code> + </code><u>レジスタ名</u><code>@</code></td><td>構文確定</td><td>2つのレジスタに入っている数値を足した番地のメモリを表す。</td></tr>
