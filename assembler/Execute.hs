@@ -4,6 +4,7 @@ module Execute
 ,unwrapWith
 ,CPU()
 ,Hardware
+,execOne
 ) where
 import Types
 import Memory

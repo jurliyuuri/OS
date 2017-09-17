@@ -10,9 +10,9 @@ semicolonExtension = unlines . map (takeWhile (/=';')) . lines
 fullExecute :: String -> IO ()
 fullExecute str = fullParse str >>>= \p -> 
  let (boolerh, logs) = execute (toTentativeLoad p) in do
-  boolerh >>>= \(False, erh) -> print erh
   putStr "Logs: "
   print logs
+  boolerh >>>= \(False, hardware) -> print hardware
 
 (>>>=) :: (Show a) => Either a b -> (b -> IO ()) -> IO () 
 Right b >>>= action = action b
@@ -34,8 +34,22 @@ interactive (filepath:_) = do
  putStrLn $ "\npreparing step-by-step execution for " ++ filepath ++ ":\n"
  fullParse str >>>= \p -> do
   let loaded = toTentativeLoad p
-  hPutStrLn stderr "Under construction"
-  undefined
+  bar (initialHardware initialAddress, loaded)
+
+bar :: (Hardware, TentativeLoad) -> IO ()
+bar (hw, program) = do
+ putStrLn "Press Enter to continue"
+ _ <- getLine
+ let (boolerh, logs) = unwrapWith (hw, program) (execOne(return True)) in do
+  putStr "Logs: "
+  print logs
+  boolerh >>>= \(isTerminated, newHW) -> do
+   print newHW
+   if isTerminated 
+    then putStrLn "Execution correctly terminated."
+    else bar (newHW, program)
+
+
 
 main' :: FilePath -> IO ()
 main' filepath = do
