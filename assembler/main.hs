@@ -28,8 +28,14 @@ main = do
    | otherwise -> main' x
 
 interactive :: [String] -> IO ()
-interactive _ = do
- hPutStrLn stderr "Under construction"
+interactive [] = hPutStrLn stderr "Give filepath."
+interactive (filepath:_) = do
+ str <- semicolonExtension <$> readFile filepath
+ putStrLn $ "\npreparing step-by-step execution for " ++ filepath ++ ":\n"
+ fullParse str >>>= \p -> do
+  let loaded = toTentativeLoad p
+  hPutStrLn stderr "Under construction"
+  undefined
 
 main' :: FilePath -> IO ()
 main' filepath = do
