@@ -1,7 +1,7 @@
 import Parse
 import Execute
 import TentativeLoad
-import System.IO(stderr, hPrint)
+import System.IO(stderr, hPrint, hPutStr, hPutStrLn)
 import System.Environment(getArgs)
 
 semicolonExtension :: String -> String
@@ -23,7 +23,13 @@ main = do
  args <- getArgs
  case args of 
   [] -> foo
-  (x:_) -> main' x
+  a@(x:_)
+   | "-x" `elem` a -> interactive $ filter (/= "-x") a
+   | otherwise -> main' x
+
+interactive :: [String] -> IO ()
+interactive _ = do
+ hPutStrLn stderr "Under construction"
 
 main' :: FilePath -> IO ()
 main' filepath = do
