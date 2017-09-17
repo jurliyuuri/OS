@@ -43,10 +43,10 @@ unwrapWith (initHW, program) = runIdentity
  . (`runReaderT` program) 
 
 
-execute' :: VIO ()
+execute' :: VIO Bool
 execute' = fix execOne
 
-execOne :: VIO () -> VIO ()
+execOne :: VIO Bool -> VIO Bool
 execOne f = do
  instruction <- updateXXAndGetInstruction
  if instruction == TERMINATE then finalize else do
@@ -54,12 +54,12 @@ execOne f = do
   updateNX
   f
 
-finalize :: VIO ()
+finalize :: VIO Bool
 finalize = do
  a <- getRegister F5
  if a /= initialF5
   then error' $ "f5 register was not preserved after the call. It should be in " ++ show initialF5 ++ " but is actually in " ++ show a
-  else return ()
+  else return False
 
 getTat :: VIO (M.Map Word32 (Word32, Instruction))
 getTat = tentativeAddressTable <$> ask
