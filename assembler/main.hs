@@ -9,8 +9,8 @@ semicolonExtension = unlines . map (takeWhile (/=';')) . lines
 
 fullExecute :: String -> IO ()
 fullExecute str = fullParse str >>>= \p -> 
- let (erh, logs) = execute (toTentativeLoad p) in do
-  erh >>>= print
+ let (boolerh, logs) = execute (toTentativeLoad p) in do
+  boolerh >>>= \(False, erh) -> print erh
   putStr "Logs: "
   print logs
 

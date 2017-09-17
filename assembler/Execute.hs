@@ -32,14 +32,14 @@ type Logs = [String]
 
 type VIO a = ReaderT TentativeLoad (StateT Hardware (ExceptT Error (WriterT Logs (Identity)))) a
 
-execute :: TentativeLoad -> (Either RuntimeError Hardware, Logs)
+execute :: TentativeLoad -> (Either RuntimeError (Bool, Hardware), Logs)
 execute program = unwrapWith (initialHardware initialAddress, program) execute'
 
-unwrapWith :: (Hardware, TentativeLoad) -> VIO a -> (Either Error Hardware, Logs)
+unwrapWith :: (Hardware, TentativeLoad) -> VIO Bool -> (Either Error (Bool, Hardware), Logs)
 unwrapWith (initHW, program) = runIdentity
  . runWriterT 
  . runExceptT
- . (`execStateT` initHW) 
+ . (`runStateT` initHW) 
  . (`runReaderT` program) 
 
 
