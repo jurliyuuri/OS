@@ -1,0 +1,186 @@
+'c'i
+krz f0 2684354560
+krz f2 2701131776
+
+nll programStartIsHere
+nta f5 4
+krz f5@ 0
+nta f5 4
+krz f5@ 108
+nta f5 4
+krz f5@ 110
+nta f5 4
+krz f5@ 114
+nta f5 4
+krz f5@ 114
+nta f5 4
+krz f5@ 114
+nta f5 4
+krz f5@ 97
+nta f5 4
+krz f5@ 97
+nta f5 4
+krz f5@ 97
+nta f5 4
+krz f5@ 97
+nta f5 4
+krz f5@ 97
+nta f5 4
+krz f5@ 116
+nta f5 4
+krz f5@ 97
+nta f5 4
+krz f5@ 97
+nta f5 4
+krz f5@ 97
+nta f5 4
+krz f5@ 97
+nta f5 4
+krz f5@ 97
+nta f5 4
+krz f5@ 97
+nta f5 4
+krz f5@ 97
+nta f5 4
+krz f5@ 97
+nta f5 4
+krz f5@ 97
+nta f5 4
+krz f5@ 97
+nta f5 4
+krz f5@ 97
+nta f5 4
+krz f5@ 116
+nta f5 4
+krz f5@ 97
+nta f5 4
+krz f5@ 97
+nta f5 4
+krz f5@ 97
+nta f5 4
+krz f5@ 97
+nta f5 4
+krz f5@ 97
+nta f5 4
+krz f5@ 97
+nta f5 4
+krz f5@ 97
+nta f5 4
+krz f5@ 97
+nta f5 4
+krz f5@ 116
+nta f5 4
+krz f5@ 109
+nta f5 4
+krz f5@ 97
+nta f5 4
+krz f5@ 97
+nta f5 4
+krz f5@ 97
+nta f5 4
+krz f5@ 97
+nta f5 4
+krz f5@ 97
+nta f5 4
+krz f5@ 97
+nta f5 4
+krz f5@ 97
+nta f5 4
+krz f5@ 97
+nta f5 4
+krz f5@ 97
+nta f5 4
+l' programEndIsHere
+
+krz f1 0
+nll memreset
+krz f0+f1@ 0
+ata f1 4
+fi f1 1024 xylo
+malkrz xx memreset
+
+krz xx main
+
+nll inc
+ata f0@ 1
+fi f0@ 256 xylo
+malkrz xx main
+nta f0@ 256
+krz xx main
+
+nll dec
+fi f0@ 0 clo
+malkrz f0@ 256
+nta f0@ 1
+krz xx main
+
+nll right
+ata f0 4
+krz xx main
+
+nll left
+fi f0 2684354560 clo
+malkrz xx main
+nta f0 4
+krz xx main
+
+nll output
+krz f2@ f0@
+ata f2 4
+krz xx main
+
+nll loop
+fi f0@ 0 niv
+malkrz xx main
+krz f1 1
+nll loopm
+ata f5 4
+fi f5@ 109 clo malkrz xx loops
+fi f5@ 108 clo malkrz xx loope
+fi f5@ 0   clo malkrz xx iska
+krz xx loopm
+nll loops
+ata f1 1
+krz xx loopm
+nll loope
+nta f1 1
+fi f1 0 clo malkrz xx loopiska
+krz xx loopm
+nll loopiska
+krz xx main
+
+nll lend
+fi f0@ 0 clo
+malkrz xx main
+krz f1 1
+nll lendm
+nta f5 4
+fi f5@ 109 clo malkrz xx lends
+fi f5@ 108 clo malkrz xx lende
+fi f5@ 0   clo malkrz xx iska
+krz xx lendm
+nll lends
+nta f1 1
+fi f1 0 clo malkrz xx lendiska
+krz xx lendm
+nll lende
+ata f1 1
+krz xx lendm
+nll lendiska
+krz xx main
+
+nll main
+ata f5 4
+fi f5@ 97  clo malkrz xx inc
+fi f5@ 110 clo malkrz xx dec
+fi f5@ 116 clo malkrz xx right
+fi f5@ 114 clo malkrz xx left
+fi f5@ 107 clo malkrz xx output
+fi f5@ 109 clo malkrz xx loop
+fi f5@ 108 clo malkrz xx lend
+fi f5@ 0   clo malkrz xx iska
+krz xx main
+
+nll iska
+ata f5 4
+krz xx f5@
