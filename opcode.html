@@ -1193,5 +1193,29 @@ l' iska
 
 <h3>22-7. Q&amp;A</h3>
 <p>Ritchanさん (<a href="https://twitter.com/aios_ciao">@aios_ciao</a>)から質問が結構来たので<a href="https://togetter.com/li/1151279">Togetter</a>にまとめた。ありがたい。後で仕様書書く時に役立てよう。</p>
+
+
+<h3>22-8. 進捗出します</h3>
+<p>とりあえず<code>-x</code>オプションを追加。</p>
+<p>さて、今無限再帰しているのを1個ずつ実行していきたいと。なんかこういうのって不動点コンビネータとかいうの使うと綺麗に書けるんじゃなかったっけ。知らんけど。</p>
+
+<p>書けた。なるほど、不動点コンビネータってこうやって使うのね</p>
+
+<p>さて、型パズルの時間だ。何をどうすればいい？とりあえず、「<code>-x</code>オプションで起動、コマンドでファイルを読み込んでそれをステップ実行」と「<code>-x</code>オプションをつけてファイルパスを指定した状態で起動、それをステップ実行」の2択か。まあロードコマンド作るのがめんどいので後者で。ファイルが提供されていなかったらstderrにメッセージ吐いて終了。</p>
+
+<p>さて、どうすればいいか。ファイルを読んでロードした時点で<code>toTentativeLoad</code>しているから<code>TentativeLoad</code>型の値を持っている。</p>
+
+<p>モナドの連鎖を理解するのが難しいので、ラッパを剥がすだけの関数unwrapWithを定義。これは<code>(Hardware, TentativeLoad) -> VIO a -> (Either Error Hardware, Logs)</code>という型を持っている。</p>
+<p>えーと、<code>execOne (return ())</code>して、<code>Hardware</code>を回収して、あれ<code>Logs</code>を送り込む方法がないぞ。あ、そうか、先頭でtellとかしてやらなきゃいかんのか</p>
+<p>んーでもこれ仕様でよくない？ステップ実行なんだから前に書いたログはもう一回書かれない方がいいだろ</p>
+
+<p>さて、次の問題としては、<code>TERMINATE</code>したのかどうかを判別する方法。現状だとともに<code>return ()</code>なんよね</p>
+
+<p>まあBoolを返すようにすればいいか。<code>True</code>ならステップ実行を継続、<code>False</code>なら完全終了。</p>
+
+<p>とりあえずExecute.hs側だけ変えると…あれ、型エラーが起きない。なるほど、もともと<code>()</code>だったやつを握りつぶしているからか。</p>
+
+<p>ということでそれをちゃんと返すようにして、fullExecuteの方もいじる。</p>
+
 </body>
 </html>

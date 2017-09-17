@@ -1,8 +1,10 @@
 module Execute
 (initialHardware
 ,execute
+,unwrapWith
 ,CPU()
 ,Hardware
+,execOne
 ) where
 import Types
 import Memory
@@ -31,28 +33,34 @@ type Logs = [String]
 
 type VIO a = ReaderT TentativeLoad (StateT Hardware (ExceptT Error (WriterT Logs (Identity)))) a
 
-execute :: TentativeLoad -> (Either RuntimeError Hardware, Logs)
-execute program 
- = runIdentity
+execute :: TentativeLoad -> (Either RuntimeError (Bool, Hardware), Logs)
+execute program = unwrapWith (initialHardware initialAddress, program) execute'
+
+unwrapWith :: (Hardware, TentativeLoad) -> VIO Bool -> (Either Error (Bool, Hardware), Logs)
+unwrapWith (initHW, program) = runIdentity
  . runWriterT 
  . runExceptT
- . (`execStateT` initialHardware initialAddress) 
+ . (`runStateT` initHW) 
  . (`runReaderT` program) 
- $ execute'
 
-execute' :: VIO ()
-execute' = do
+
+execute' :: VIO Bool
+execute' = fix execOne
+
+execOne :: VIO Bool -> VIO Bool
+execOne f = do
  instruction <- updateXXAndGetInstruction
  if instruction == TERMINATE then finalize else do
   executeInstruction instruction
   updateNX
-  execute'
+  f
 
-finalize :: VIO ()
+finalize :: VIO Bool
 finalize = do
  a <- getRegister F5
- when (a /= initialF5) $
-  error' $ "f5 register was not preserved after the call. It should be in " ++ show initialF5 ++ " but is actually in " ++ show a
+ if a /= initialF5
+  then error' $ "f5 register was not preserved after the call. It should be in " ++ show initialF5 ++ " but is actually in " ++ show a
+  else return False
 
 getTat :: VIO (M.Map Word32 (Word32, Instruction))
 getTat = tentativeAddressTable <$> ask

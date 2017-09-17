@@ -1,7 +1,7 @@
 import Parse
 import Execute
 import TentativeLoad
-import System.IO(stderr, hPrint)
+import System.IO(stderr, hPrint, hPutStr, hPutStrLn)
 import System.Environment(getArgs)
 
 semicolonExtension :: String -> String
@@ -9,10 +9,10 @@ semicolonExtension = unlines . map (takeWhile (/=';')) . lines
 
 fullExecute :: String -> IO ()
 fullExecute str = fullParse str >>>= \p -> 
- let (erh, logs) = execute (toTentativeLoad p) in do
-  erh >>>= print
+ let (boolerh, logs) = execute (toTentativeLoad p) in do
   putStr "Logs: "
   print logs
+  boolerh >>>= \(False, hardware) -> print hardware
 
 (>>>=) :: (Show a) => Either a b -> (b -> IO ()) -> IO () 
 Right b >>>= action = action b
@@ -23,7 +23,33 @@ main = do
  args <- getArgs
  case args of 
   [] -> foo
-  (x:_) -> main' x
+  a@(x:_)
+   | "-x" `elem` a -> interactive $ filter (/= "-x") a
+   | otherwise -> main' x
+
+interactive :: [String] -> IO ()
+interactive [] = hPutStrLn stderr "Give filepath."
+interactive (filepath:_) = do
+ str <- semicolonExtension <$> readFile filepath
+ putStrLn $ "\npreparing step-by-step execution for " ++ filepath ++ ":\n"
+ fullParse str >>>= \p -> do
+  let loaded = toTentativeLoad p
+  bar (initialHardware initialAddress, loaded)
+
+bar :: (Hardware, TentativeLoad) -> IO ()
+bar (hw, program) = do
+ putStrLn "Press Enter to continue"
+ _ <- getLine
+ let (boolerh, logs) = unwrapWith (hw, program) (execOne(return True)) in do
+  putStr "Logs: "
+  print logs
+  boolerh >>>= \(isContinuing, newHW) -> do
+   print newHW
+   if isContinuing 
+    then bar (newHW, program)
+    else putStrLn "Execution correctly terminated."
+
+
 
 main' :: FilePath -> IO ()
 main' filepath = do
