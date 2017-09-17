@@ -43,11 +43,11 @@ bar (hw, program) = do
  let (boolerh, logs) = unwrapWith (hw, program) (execOne(return True)) in do
   putStr "Logs: "
   print logs
-  boolerh >>>= \(isTerminated, newHW) -> do
+  boolerh >>>= \(isContinuing, newHW) -> do
    print newHW
-   if isTerminated 
-    then putStrLn "Execution correctly terminated."
-    else bar (newHW, program)
+   if isContinuing 
+    then bar (newHW, program)
+    else putStrLn "Execution correctly terminated."
 
 
 
