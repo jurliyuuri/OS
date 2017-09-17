@@ -41,12 +41,15 @@ execute program
  $ execute'
 
 execute' :: VIO ()
-execute' = do
+execute' = fix execOne
+
+execOne :: VIO () -> VIO ()
+execOne f = do
  instruction <- updateXXAndGetInstruction
  if instruction == TERMINATE then finalize else do
   executeInstruction instruction
   updateNX
-  execute'
+  f
 
 finalize :: VIO ()
 finalize = do
