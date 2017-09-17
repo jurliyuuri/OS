@@ -1,6 +1,7 @@
 module Execute
 (initialHardware
 ,execute
+,unwrapWith
 ,CPU()
 ,Hardware
 ) where
@@ -32,13 +33,15 @@ type Logs = [String]
 type VIO a = ReaderT TentativeLoad (StateT Hardware (ExceptT Error (WriterT Logs (Identity)))) a
 
 execute :: TentativeLoad -> (Either RuntimeError Hardware, Logs)
-execute program 
- = runIdentity
+execute program = unwrapWith (initialHardware initialAddress, program) execute'
+
+unwrapWith :: (Hardware, TentativeLoad) -> VIO a -> (Either Error Hardware, Logs)
+unwrapWith (initHW, program) = runIdentity
  . runWriterT 
  . runExceptT
- . (`execStateT` initialHardware initialAddress) 
+ . (`execStateT` initHW) 
  . (`runReaderT` program) 
- $ execute'
+
 
 execute' :: VIO ()
 execute' = fix execOne
@@ -54,8 +57,9 @@ execOne f = do
 finalize :: VIO ()
 finalize = do
  a <- getRegister F5
- when (a /= initialF5) $
-  error' $ "f5 register was not preserved after the call. It should be in " ++ show initialF5 ++ " but is actually in " ++ show a
+ if a /= initialF5
+  then error' $ "f5 register was not preserved after the call. It should be in " ++ show initialF5 ++ " but is actually in " ++ show a
+  else return ()
 
 getTat :: VIO (M.Map Word32 (Word32, Instruction))
 getTat = tentativeAddressTable <$> ask

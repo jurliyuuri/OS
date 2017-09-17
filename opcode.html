@@ -1203,7 +1203,15 @@ l' iska
 
 <p>さて、型パズルの時間だ。何をどうすればいい？とりあえず、「<code>-x</code>オプションで起動、コマンドでファイルを読み込んでそれをステップ実行」と「<code>-x</code>オプションをつけてファイルパスを指定した状態で起動、それをステップ実行」の2択か。まあロードコマンド作るのがめんどいので後者で。ファイルが提供されていなかったらstderrにメッセージ吐いて終了。</p>
 
-<p>さて、どうすればいいか。ファイルを読んでロードした時点で<code>toTentativeLoad</code>しているから<code>TentativeLoad</code>型の値を持っている。
+<p>さて、どうすればいいか。ファイルを読んでロードした時点で<code>toTentativeLoad</code>しているから<code>TentativeLoad</code>型の値を持っている。</p>
+
+<p>モナドの連鎖を理解するのが難しいので、ラッパを剥がすだけの関数unwrapWithを定義。これは<code>(Hardware, TentativeLoad) -> VIO a -> (Either Error Hardware, Logs)</code>という型を持っている。</p>
+<p>えーと、<code>execOne (return ())</code>して、<code>Hardware</code>を回収して、あれ<code>Logs</code>を送り込む方法がないぞ。あ、そうか、先頭でtellとかしてやらなきゃいかんのか</p>
+<p>んーでもこれ仕様でよくない？ステップ実行なんだから前に書いたログはもう一回書かれない方がいいだろ</p>
+
+<p>さて、次の問題としては、<code>TERMINATE</code>したのかどうかを判別する方法。現状だとともに<code>return ()</code>なんよね</p>
+
+<p>まあBoolを返すようにすればいいか。<code>True</code>ならステップ実行を継続、<code>False</code>なら完全終了。</p>
 
 </body>
 </html>
