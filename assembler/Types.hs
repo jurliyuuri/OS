@@ -5,14 +5,16 @@ module Types
 ,Rvalue(..)
 ,Instruction(..)
 ,Cond(..)
-,Label(..)
+,Label(), unLabel
 ,Word32
 ,ParseError(..)
 ,RuntimeError(..)
 ,toFunc
+,toLabel'
 ) where
 import Data.Word
 import Memory
+import Data.Char
 
 data Register = F0 | F1 | F2 | F3 | F5 | XX deriving (Show, Eq, Ord)
 data Lvalue = Re Register | RPlusNum Register Word32 | RPlusR Register Register deriving (Show, Eq, Ord)
@@ -38,4 +40,10 @@ toFunc Llo  = lif (>)
 
 lif :: (Word32 -> Word32 -> t) -> Word32 -> Word32 -> t
 lif f a b = f (a+0x80000000) (b+0x80000000)
+
+toLabel' :: String -> Maybe Label
+toLabel' str
+ | all isDigit str = Nothing
+ | all isAlphaNum str = Just(Label str)
+ | otherwise = Nothing
 
