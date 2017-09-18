@@ -108,8 +108,6 @@ toI ("l'":x:ys) = do
  return $ (Nothing,[toLabel x]):rest
 toI xs = lift $ left $ "Unparsable command sequence " ++ show xs
  
-toLabel :: String -> Label
-toLabel = Label
 
 parseRegister :: String -> Either Error Register
 parseRegister "f0" = Right F0
