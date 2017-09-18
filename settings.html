@@ -8,6 +8,14 @@
 <body class="cool">
 <p>以下では仕様について書いていきます。雑記・考察ログを見たい人は<a href="opcode.html">「オペコードなどについて考察する」</a>をお読みください。専門用語の一覧は<a href="https://sites.google.com/site/panqateel/yougo">用語集</a>に掲載されています。ソースコードの例としては<a href="fib_non_recursive.jurli.html">非再帰フィボナッチ</a>と<a href="fib_recursive.jurli.html">再帰フィボナッチ</a>と<a href="./qsort.jurli.html">quicksort</a>があります。</p>
 
+<h2>-1. はじめに</h2>
+<ul>
+<li>基本的に32bitのデータを扱う。整数演算は基本的にmod 4294967296で扱われる。比較演算子での「符号無し比較」は0を最低、4294967295を最高とした比較で、「符号付き比較」は両オペランドの左端ビットをそれぞれ反転させてから行う比較である。</li>
+<li>各アドレスに格納されているのは8bitである。基本的に4の倍数番地にのみアクセスすることになるが、アクセスした番地が4の倍数でなくともエラーは出ない。</li>
+<li>メモリ上の配置はビッグエンディアンである。「0x1234番地に0x7ea01fe9が載っている」と言う時、実際には0x1234に0x7e、0x1235に0xa0、0x1236に0x1f、0x1237に0xe9が載っていることとする。</li>
+<li>連続する空白、Tab、改行、コメントは1文字の空白として扱われる。</li>
+</ul>
+
 <h2>0. 呼び出し規約</h2>
 <ul>
 <li>スタックの掃除をするのは、リターンアドレスの分も含めて呼び出し側。</li>
@@ -85,13 +93,19 @@
 <td>&nbsp;dto</td>
 <td>&nbsp;dusnij&nbsp;tesnokonj</td>
 <td>&nbsp;shr</td>
-<td>&nbsp;右シフト</td>
+<td>&nbsp;論理右シフト</td>
 </tr>
 <tr>
 <td>&nbsp;dro</td>
 <td>&nbsp;dusnij restutonj</td>
 <td>&nbsp;shl</td>
 <td>&nbsp;左シフト</td>
+</tr>
+<tr style="font-size: 80%">
+<td >&nbsp;</td>
+<td >&nbsp;</td>
+<td >&nbsp;</td>
+<td >&nbsp;算術右シフト</td>
 </tr>
 <tr>
 <td>&nbsp;malkrz</td>
@@ -206,7 +220,8 @@
 <tr><td><u>レジスタ名</u><code>@</code></td><td>構文確定</td><td>レジスタに入っている番地のメモリを表す。</td></tr>
 <tr><td><u>レジスタ名</u><code> + </code><u>定数</u><code>@</code></td><td>構文確定</td><td>レジスタに入っている番地に定数を足した番地のメモリを表す。</td></tr>
 <tr><td><u>レジスタ名</u><code> + </code><u>レジスタ名</u><code>@</code></td><td>構文確定</td><td>2つのレジスタに入っている数値を足した番地のメモリを表す。</td></tr>
-<tr><td style="width:250px;"><code>l' </code><u>ラベル名</u>（後ろから修飾）<br><code>nll </code><u>ラベル名</u>（前から修飾）<br></td><td>構文確定</td><td>ラベル名を定義する</td></tr></tbody>
+<tr><td style="width:250px;"><code>l' </code><u>ラベル名</u>（後ろから修飾）</td><td>構文確定</td><td>直前の命令に対してラベル名を定義する</td></tr></tbody>
+<tr><td style="width:250px;"><code>nll </code><u>ラベル名</u>（前から修飾）<br></td><td>構文確定</td><td>直後の命令に対してラベル名を定義する</td></tr></tbody>
 <!--<tr style="color:#ddd"><td><code>-</code><u>定数</u></td><td>構文未確定</td><td>負の整数。<a style="color:#ddd" href="https://jurliyuuri.slack.com/archives/C6QL0DKV4/p1504358289000016">リパーシェフォントでのU+002Dはマイナスではなくハイフンである</a>ので、現状の構文は誤りである。<a id="dontuse" style="color:red">めんどいので現状では使用しないことに決めた</span></span></td>-->
 </table>
 
@@ -258,9 +273,5 @@
 </pre>
 </div>
 
-<h2>5. その他の仕様</h2>
-<ul>
-<li>メモリ上の配置はビッグエンディアンである。「0x1234番地に0x7ea01fe9が載っている」と言う時、実際には0x1234に0x7e、0x1235に0xa0、0x1236に0x1f、0x1237に0xe9が載っていることとする。</li>
-</ul>
 
 </body>
