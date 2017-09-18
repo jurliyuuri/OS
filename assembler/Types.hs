@@ -5,7 +5,7 @@ module Types
 ,Rvalue(..)
 ,Instruction(..)
 ,Cond(..)
-,Label(..)
+,Label(), unLabel
 ,Word32
 ,ParseError(..)
 ,RuntimeError(..)
