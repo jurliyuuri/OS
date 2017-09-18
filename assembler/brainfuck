@@ -2,7 +2,7 @@
 krz f0 2684354560
 krz f2 2701131776
 
-nll programStartIsHere
+nll programstartshere
 nta f5 4
 krz f5@ 0
 nta f5 4
@@ -90,7 +90,7 @@ krz f5@ 97
 nta f5 4
 krz f5@ 97
 nta f5 4
-l' programEndIsHere
+l' programendshere
 
 krz f1 0
 nll memreset
