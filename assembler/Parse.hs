@@ -109,7 +109,7 @@ toI ("l'":x:ys) = do
 toI xs = lift $ left $ "Unparsable command sequence " ++ show xs
  
 toLabel :: String -> Label
-toLabel = id
+toLabel = Label
 
 parseRegister :: String -> Either Error Register
 parseRegister "f0" = Right F0
@@ -125,7 +125,7 @@ parseR :: String -> Either Error Rvalue
 parseR str
  | isRight (parseL str) = return $ L (fromRight(parseL str))
  | all isDigit str = return $ Pure $ read str
- | all isAlphaNum str = return $ Lab str
+ | all isAlphaNum str = return $ Lab (toLabel str)
  | otherwise = left $ "cannot parse `" ++ str ++ "` as a valid data"
 
 isRight :: Either t1 t -> Bool

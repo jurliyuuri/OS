@@ -144,7 +144,7 @@ getValueFromR (Pure word32) = return word32
 getValueFromR (Lab label) = do
  lt <- labelTable <$> ask
  case M.lookup label lt of
-  Nothing -> error' $ "Undefined label `" ++ label ++ "`"
+  Nothing -> error' $ "Undefined label `" ++ unLabel label ++ "`"
   Just addr -> return addr
 getValueFromR (L (Re register)) = getRegister register
 getValueFromR (L (RPlusNum register offset)) = do
