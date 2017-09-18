@@ -101,11 +101,15 @@ toI ("nll":x:ys) = do
  rest <- toI ys
  case rest of
   [] -> lift $ left "nll must be followed by an instruction"
-  ((Just a,b):xs) -> return $ (Just a,toLabel x:b):xs
+  ((Just a,b):xs) -> case toLabel' x of 
+   Nothing -> lift $ left $ "`" ++ x ++ "` cannot be used as a valid label"
+   Just label -> return $ (Just a,label:b):xs
   ((Nothing,_):_) -> lift $ left "nll must not be followed by l'"
 toI ("l'":x:ys) = do
  rest <- toI ys
- return $ (Nothing,[toLabel x]):rest
+ case toLabel' x of
+  Nothing -> lift $ left $ "`" ++ x ++ "` cannot be used as a valid label"
+  Just label -> return $ (Nothing,[label]):rest
 toI xs = lift $ left $ "Unparsable command sequence " ++ show xs
  
 
@@ -123,7 +127,7 @@ parseR :: String -> Either Error Rvalue
 parseR str
  | isRight (parseL str) = return $ L (fromRight(parseL str))
  | all isDigit str = return $ Pure $ read str
- | all isAlphaNum str = return $ Lab (toLabel str)
+ | isJust (toLabel' str) = return $ Lab (fromJust(toLabel' str))
  | otherwise = left $ "cannot parse `" ++ str ++ "` as a valid data"
 
 isRight :: Either t1 t -> Bool

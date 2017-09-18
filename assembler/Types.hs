@@ -10,7 +10,6 @@ module Types
 ,ParseError(..)
 ,RuntimeError(..)
 ,toFunc
-,toLabel
 ,toLabel'
 ) where
 import Data.Word
@@ -48,5 +47,3 @@ toLabel' str
  | all isAlphaNum str = Just(Label str)
  | otherwise = Nothing
 
-toLabel :: String -> Label
-toLabel = Label
