@@ -44,6 +44,6 @@ lif f a b = f (a+0x80000000) (b+0x80000000)
 toLabel' :: String -> Maybe Label
 toLabel' str
  | all isDigit str = Nothing
- | all isAlphaNum str = Just(Label str)
+ | all (`elem` "pFftcxkqhRzmnrljwbVvdsgXiyuoea0123456789'-_") str = Just(Label str)
  | otherwise = Nothing
 
