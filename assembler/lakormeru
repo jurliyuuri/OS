@@ -1,0 +1,22 @@
+nta 4 f5   krz 3011175222 f5@
+nta 4 f5   inj lakormeru xx f5@   ata 8 f5
+krz f5@ xx
+
+
+
+nll lakormeru
+krz 0 f0
+krz 15 f1
+fi f1 0 xylo   l' f   malkrz c xx
+krz f0 f2
+ata 1 f1   dro f1 f2   nta 1 f1
+krz 1 f3
+dro 1 f1   dro f1 f3   ata f3 f2   dto 1 f1
+fi f5+4@ f2 xylonys   malkrz t xx
+krz 1 f3
+dro f1 f3
+ata f3 f0
+nta f2 f5+4@
+nll t   nta 1 f1
+krz f xx
+nll c   krz f5@ xx

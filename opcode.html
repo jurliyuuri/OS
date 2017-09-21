@@ -8,7 +8,7 @@
 <body class="cool">
 <h1>オペコードなどについて考察する</h1>
 
-<p>以下のは雑記・考察ログです。<strong style="font-size: 120%">すでに絶滅した過去の仕様などが数多く含まれています。</strong>最新の仕様だけ知りたい人は<a href="settings.html">設定一覧</a>をお読みください。専門用語の一覧は<a href="https://sites.google.com/site/panqateel/yougo">用語集</a>に掲載されています。ソースコードの例としては<a href="fib_non_recursive.jurli.html">非再帰フィボナッチ</a>と<a href="fib_recursive.jurli.html">再帰フィボナッチ</a>と<a href="./qsort.jurli.html">quicksort</a>があります。</p>
+<p>以下のは雑記・考察ログです。<strong style="font-size: 120%">すでに絶滅した過去の仕様などが数多く含まれています。</strong>最新の仕様だけ知りたい人は<a href="settings.html">設定一覧</a>をお読みください。専門用語の一覧は<a href="https://sites.google.com/site/panqateel/yougo">用語集</a>に掲載されています。ソースコードの例としては<a href="fib_non_recursive.jurli.html">非再帰フィボナッチ</a>と<a href="fib_recursive.jurli.html">再帰フィボナッチ</a>と<a href="./qsort.jurli.html">quicksort</a>と<a href="lakormeru.jurli.html">開平</a>があります。</p>
 
 <h2>1. 設定</h2>
 <s> <a href="https://docs.google.com/spreadsheets/d/1AUex8DDU9n5r-q27MD-6_aW5en-vmXZ55ptzm91yV74/edit#gid=0">Google SpreadSheetで作業中</a></s><b>OBSOLETE:: 2017/08/29 23:40時点で既に部分的に無効</b>
@@ -1248,6 +1248,16 @@ l' iska
 <p>ということで<code>isAlphaNum</code>を変更します</p>
 
 <p>そしてそれを<a href="settings.html">settings.html</a>の方にも書いた。ついでに+と@の前後のスペースは任意であることも書いた。</p>
+
+<h2>25. 開平法とデバッグ</h2>
+<h3>25-1. 開平法</h3>
+<p>開平法を書こう。ライブラリとして使えそうだし。</p>
+<p>ラベルにFとfを両方使ったらバグった。なるほど、toLowerのせいか。直さねば。</p>
+<p>そして、同一のラベルが複数あったらエラーにしなきゃいけないのを忘れていたことにも気づいた。</p>
+<p>さて、一時しのぎにラベル名を<code>c</code>にしたがまだ動かない。なぜだ。</p>
+<p>原因判明。<code>xylonys</code>を<code>xylo</code>と書いていた。直したら動いた。</p>
+
+<p>とりあえず<a href="lakormeru.jurli.html">HTMLにして</a>リンクを掲載。</p>
 
 </body>
 </html>
