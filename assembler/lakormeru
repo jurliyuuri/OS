@@ -9,14 +9,9 @@ krz 0 f0
 krz 15 f1
 fi f1 0 xylo   l' f   malkrz c xx
 krz f0 f2
-ata 1 f1
-dro f1 f2
-nta 1 f1
-dro 1 f1
+ata 1 f1   dro f1 f2   nta 1 f1
 krz 1 f3
-dro f1 f3
-ata f3 f2
-dto 1 f1
+dro 1 f1   dro f1 f3   ata f3 f2   dto 1 f1
 fi f5+4@ f2 xylonys   malkrz t xx
 krz 1 f3
 dro f1 f3
