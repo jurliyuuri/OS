@@ -8,8 +8,8 @@ semicolonExtension :: String -> String
 semicolonExtension = unlines . map (takeWhile (/=';')) . lines
 
 fullExecute :: String -> IO ()
-fullExecute str = fullParse str >>>= \p -> 
- let (boolerh, logs) = execute (toTentativeLoad p) in do
+fullExecute str = fullParse str >>>= \p -> toTentativeLoad p >>>= \loaded -> 
+ let (boolerh, logs) = execute loaded in do
   putStr "Logs: "
   print logs
   boolerh >>>= \(False, hardware) -> print hardware
@@ -32,8 +32,7 @@ interactive [] = hPutStrLn stderr "Give filepath."
 interactive (filepath:_) = do
  str <- semicolonExtension <$> readFile filepath
  putStrLn $ "\npreparing step-by-step execution for " ++ filepath ++ ":\n"
- fullParse str >>>= \p -> do
-  let loaded = toTentativeLoad p
+ fullParse str >>>= \p -> toTentativeLoad p >>>= \loaded -> 
   bar (initialHardware initialAddress, loaded)
 
 bar :: (Hardware, TentativeLoad) -> IO ()
