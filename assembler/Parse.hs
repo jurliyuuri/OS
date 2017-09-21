@@ -4,7 +4,7 @@ module Parse
 
 import Types
 import Control.Monad.State
-import Data.Char
+import Data.Char(isDigit)
 import Data.Maybe
 
 type Error = ParseError
@@ -14,7 +14,7 @@ left = Left . ParseError
 
 fullParse :: String -> Either Error [(Instruction, [Label])]
 fullParse str = do
- let ts = words $ concatMap (plusAt . toLower) str
+ let ts = words $ concatMap plusAt str
  toInstructions <=< beautify $ ts
   where
    plusAt '@' = " @ "
