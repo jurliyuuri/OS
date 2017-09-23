@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="common.css">
 </head>
 <body class="cool">
-<p>以下では仕様について書いていきます。雑記・考察ログを見たい人は<a href="opcode.html">「オペコードなどについて考察する」</a>をお読みください。専門用語の一覧は<a href="https://sites.google.com/site/panqateel/yougo">用語集</a>に掲載されています。ソースコードの例としては<a href="fib_non_recursive.jurli.html">非再帰フィボナッチ</a>と<a href="fib_recursive.jurli.html">再帰フィボナッチ</a>と<a href="./qsort.jurli.html">quicksort</a>と<a href="lakormeru.jurli.html">開平</a>があります。</p>
+<p>以下では仕様について書いていきます。雑記・考察ログを見たい人は<a href="opcode.html">「オペコードなどについて考察する」</a>をお読みください。専門用語の一覧は<a href="https://sites.google.com/site/panqateel/yougo">用語集</a>に掲載されています。インタプリタで実装されている追加仕様などについては<a href="assembler/interpreter_settings.html">インタプリタの追加設定一覧（暫定）</a>を参照ください。ソースコードの例としては<a href="fib_non_recursive.jurli.html">非再帰フィボナッチ</a>と<a href="fib_recursive.jurli.html">再帰フィボナッチ</a>と<a href="./qsort.jurli.html">quicksort</a>と<a href="lakormeru.jurli.html">開平</a>があります。</p>
 
 <h2>-1. はじめに</h2>
 <ul>
@@ -15,7 +15,8 @@
 <li>メモリ上の配置はビッグエンディアンである。「0x1234番地に0x7ea01fe9が載っている」と言う時、実際には0x1234に0x7e、0x1235に0xa0、0x1236に0x1f、0x1237に0xe9が載っていることとする。</li>
 <li>連続する空白、Tab、改行、コメントは1文字の空白として扱われる。</li>
 <li>ラベル名を構成できる文字は、<code>pFftcxkqhRzmnrljwbVvdsgXiyuoea0123456789'-_</code>である。ただし、既存のレジスタ名として利用されている名前や、全て数字のみで構成されているものは、有効なラベル名として用いることができない。</li>
-<li><code>+</code>と<code>@</code>は前後に空白が入っていようがいまいが解釈が変わらない。ただし、コーディング規約としては<code>+</code>の前後には空白を入れず、<code>@</code>の前には空白を入れないのが好ましい。</li>
+<li>同一ファイル内に同一名の複数のラベルがあったら当然エラーである。</li>
+<li><code>+</code>と<code>@</code>は前後に空白が入っていようがいまいが解釈は変わらない。ただし、コーディング規約としては<code>+</code>の前後には空白を入れず、<code>@</code>の前には空白を入れないのが好ましい。</li>
 </ul>
 
 <h2>0. 呼び出し規約</h2>
@@ -226,6 +227,11 @@
 <tr><td style="width:250px;"><code>nll </code><u>ラベル名</u>（前から修飾）<br></td><td>構文確定</td><td>直後の命令に対してラベル名を定義する</td></tr></tbody>
 <!--<tr style="color:#ddd"><td><code>-</code><u>定数</u></td><td>構文未確定</td><td>負の整数。<a style="color:#ddd" href="https://jurliyuuri.slack.com/archives/C6QL0DKV4/p1504358289000016">リパーシェフォントでのU+002Dはマイナスではなくハイフンである</a>ので、現状の構文は誤りである。<a id="dontuse" style="color:red">めんどいので現状では使用しないことに決めた</span></span></td>-->
 </table>
+<ul>
+	<li><code>+</code>がファイル末尾に来たり、<code>+</code>や<code>@</code>がファイルの先頭に来たりするのは構文エラーである。</li>
+	<li><code>l' </code><u>ラベル名</u>の直前には命令文がなくてはならず、また直前に<code>nll</code>があってはならない。一つの命令文の後ろに複数の<code>l'</code>を置くのは許容され、その場合両方のラベルが命令文を指す。</li>
+	<li><code>nll </code><u>ラベル名</u>の直後には命令文がなくてはならず、また直後に<code>l'</code>があってはならない。一つの命令文の前に複数の<code>nll</code>を置くのは許容され、その場合両方のラベルが命令文を指す。</li>
+</ul>
 
 <h2>4. 便利なイディオム</h2>
 <div class="box">
