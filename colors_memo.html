@@ -93,13 +93,13 @@ gen_table(arr2);
 </div>
 <p>わずかにずれるだけで白っぽくなくなるので、難しいところである。ということで、線形代数に頼る。</p>
 <p>現状は、変換行列AでjRGBベクトルがsRGBベクトルにできる。</p>
-<img src="matrix.png" height="110"/>
+<img src="img/matrix.png" height="110"/>
 <p>一方、求める特性はこうである。</p>
-<img src="matrix2.png" height="110"/>
+<img src="img/matrix2.png" height="110"/>
 <p>要するに、固有値1で固有ベクトル <b>v<sub>1</sub></b>= <sup>t</sup>(1 1 1) であるような行列である。他に固有ベクトルとして <b>v<sub>2</sub></b>= <sup>t</sup>(p q r) [固有値x] と<b>v<sub>3</sub></b>= <sup>t</sup>(s t u) [固有値y]を持つと置く。B = (<b>v<sub>1</sub></b> <b>v<sub>2</sub></b> <b>v<sub>3</sub></b>)<sup>-1</sup>と置くと(<b>e<sub>1</sub></b> <b>e<sub>2</sub></b> <b>e<sub>3</sub></b>) = (<b>v<sub>1</sub></b> <b>v<sub>2</sub></b> <b>v<sub>3</sub></b>)Bである。</p>
 <p>ゆえに、A = A(<b>e<sub>1</sub></b> <b>e<sub>2</sub></b> <b>e<sub>3</sub></b>) = A(<b>v<sub>1</sub></b> <b>v<sub>2</sub></b> <b>v<sub>3</sub></b>)B = (<b>v<sub>1</sub></b> x<b>v<sub>2</sub></b> y<b>v<sub>3</sub></b>)B  = (<b>v<sub>1</sub></b> <b>v<sub>2</sub></b> <b>v<sub>3</sub></b>) diag(1,x,y) B = (<b>v<sub>1</sub></b> <b>v<sub>2</sub></b> <b>v<sub>3</sub></b>) diag(1,x,y) (<b>v<sub>1</sub></b> <b>v<sub>2</sub></b> <b>v<sub>3</sub></b>)<sup>-1</sup></p>
 <p>現状のを対角化したものが<a href="https://www.wolframalpha.com/input/?i=JordanDecomposition%5B%7B%7B0.871367,+0.012983,+0.000607%7D,+%7B0.005182,+0.973445,+0.001821%7D,+%7B0.001214,+0.003035,+0.930111%7D%7D%5D">こちら</a>になります</p>
-<img src="matrix3.png" width="330"/>
+<img src="img/matrix3.png" width="330"/>
 <pre>
 M = S.J.S^(-1)
 where

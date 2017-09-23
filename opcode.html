@@ -96,7 +96,7 @@ ka:	krz f0 f1
 </ul>
 
 <h2>4. Fafs falira sashimiと打ち合わせ</h2>
-<p>「フラグを見て代入するかどうか決める」命令をどうすべきか迷ったので、<a href="redefine_comparison.txt">打ち合わせを行った</a>。その結果、比較演算子系統のニーモニックが全部作り直しになった。</p>
+<p>「フラグを見て代入するかどうか決める」命令をどうすべきか迷ったので、<a href="conversations/redefine_comparison.txt">打ち合わせを行った</a>。その結果、比較演算子系統のニーモニックが全部作り直しになった。</p>
 
 <h3>4-1. 結果</h3>
 <div class="box">
@@ -302,7 +302,7 @@ iska:	krz xx [f5]
 </li></ul>
 
 <p>待てよ？qskrz fi st irをCでいう「fi = st; st = ir;」ではなく「tmp = st; st = ir; fi = tmp;」であると再定義してやれば、上記のコードに一切の変更を与えずかつfiとirが同一であるときXCHGとして使えるのでは！？これは楽しいぞ。とりあえず命令名を変えなくては。Fafs氏に訊こう。</p>
-<img src="qskrz.png" height="100"/>
+<img src="img/qskrz.png" height="100"/>
 <hr>
 <p>Fafs「qa'd stevypen snidost「二回移動」でqssでいかがでしょうか」</p>
 <p>なるほど。まあ片方が移動で片方がコピーなのだが、fi = irのときはswapだしまあよかろう。</p>
@@ -782,15 +782,15 @@ lus:
 
 <h2>11. 進捗</h2>
 <h3>11-1. part1</h3>
-<p>S.YやFafs falira sashimiと<a href="pointer_and_label.txt">対談</a>して進捗が出た。</p>
+<p>S.YやFafs falira sashimiと<a href="conversations/pointer_and_label.txt">対談</a>して進捗が出た。</p>
 <table border="1" cellpadding="5">
 <thead><tr><td>旧構文</td><td>新構文</td><td>役割</td></tr></thead>
 <tbody><tr><td><u>ラベル名</u><code>:</code></td><td><code>l' </code><u>ラベル名</u>（後ろから修飾）<br><code>nll </code><u>ラベル名</u>（前から修飾）<br></td><td>ラベル名を定義する</td></tr>
 <tr><td><code>[</code><u>レジスタ名</u><code>]</code></td><td><u>レジスタ名</u><code>@</code></td><td>レジスタに入っている番地のメモリを表す。</td></tr><tr><td><code>[</code><u>レジスタ名</u><code> + </code><u>定数</u><code>]</code></td><td><u>レジスタ名</u><code> + </code><u>定数</u><code>@</code></td><td>レジスタに入っている番地に定数を足した番地のメモリを表す。</td></tr>
 <tr><td><code>[</code><u>レジスタ名</u><code> + </code><u>レジスタ名</u><code>]</code></td><td><u>レジスタ名</u><code> + </code><u>レジスタ名</u><code>@</code></td><td>2つのレジスタに入っている数値を足した番地のメモリを表す。</td></tr>
 </tbody></table>
-<p>なお、ここで<code>@</code>で転写されている記号はリパライン語では「ioの合字記号」に対応する。Fafs falira sashimiの「<a href="pointer_and_label.txt">理語的には非文的だけど、アセンブリとしてはできるだけ自然言語に近づいてていい感じな気はする</a>」という発言が決定打となり、採用されることとなった。</p>
-<p>ラベル名については、リパライン語に既にあるla lexを使うのが「<a href="pointer_and_label.txt">エモい</a>」とのことだったので採用することとした。問題はla lexをどう表現するかで、「llxのほうが統一的」という意見が出たものの、統一性がないほうがかえってラベルを追いやすいということで<code>l'</code>が採用された。</p>
+<p>なお、ここで<code>@</code>で転写されている記号はリパライン語では「ioの合字記号」に対応する。Fafs falira sashimiの「<a href="conversations/pointer_and_label.txt">理語的には非文的だけど、アセンブリとしてはできるだけ自然言語に近づいてていい感じな気はする</a>」という発言が決定打となり、採用されることとなった。</p>
+<p>ラベル名については、リパライン語に既にあるla lexを使うのが「<a href="conversations/pointer_and_label.txt">エモい</a>」とのことだったので採用することとした。問題はla lexをどう表現するかで、「llxのほうが統一的」という意見が出たものの、統一性がないほうがかえってラベルを追いやすいということで<code>l'</code>が採用された。</p>
 <p>なお、la lexは前の文を指すので、x86とは違ってラベルは文の後ろから指定する。となると関数を表すためにラベルを導入したときにラベル定義が関数定義の2行目に出てきてしまいよろしくない。ということで逆向きを表すny la lexも導入することにした。<code>nl'</code>を提案したものの、「ny la lexの詩語での省略形がny l' l'/nyll/であるから<code>nll</code>のほうが想起されやすい」ということなので<code>nll</code>に決まった。</p>
 
 <p>とりあえず<a href="settings.html">設定一覧</a>と<a href="fib_non_recursive.jurli.html">非再帰フィボナッチ</a>と<a href="fib_recursive.jurli.html">再帰フィボナッチ</a>と<a href="./qsort.jurli.html">quicksort</a>を改定。</p>
@@ -835,7 +835,7 @@ lus:
 <p>スタックの伸長方向はアドレスの減少する向きであることを記載した。この仕様、もともと何も考えずにダイスロールで決めた仕様だったけど、よく考えてみると<code>[f5+20]</code>とかのことを考えるとこっちの方が自然だよなぁ</p>
 
 <h2>13. 課題</h2>
-<p><a href="unambiguously_parsable.txt">現状の仕様だと、ラベル名と命令名が衝突しても弊害が発生しないが、ラベル名とレジスタ名の衝突は起きうる。将来的に命令が増えても互換性は保たれるが、レジスタが増えるとそうはいかなくなる</a>という課題がありますな。さてどうしよう。</p>
+<p><a href="conversations/unambiguously_parsable.txt">現状の仕様だと、ラベル名と命令名が衝突しても弊害が発生しないが、ラベル名とレジスタ名の衝突は起きうる。将来的に命令が増えても互換性は保たれるが、レジスタが増えるとそうはいかなくなる</a>という課題がありますな。さてどうしよう。</p>
 <ol>
 	<li>バージョン情報を先頭に指定して、それに応じて読み換える</li>
 	<li>ラベル名をなんか修飾する（←でも構文もう変えないって宣言したやん）</li>
@@ -1300,5 +1300,11 @@ l' iska
 </ul>
 
 <p>寝ます</p>
+
+<h2>28. ログ追加とファイル整理</h2>
+
+<p>「<a href="conversations/jurli_spirit.txt">『こうすると現世っぽくなってしまうからあえて逆にしよう』というような考えは、かえって現世を意識してしまっていることになるので、悠里創作においては好まれません</a>」という話は大事だと思うので、ログを追加した。</p>
+<p>あと、過去にまとめていたログもconversations/の下に移した。</p>
+<p>ついでに画像をimg/の下に移した。</p>
 </body>
 </html>
