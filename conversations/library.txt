@@ -1,0 +1,205 @@
+UTC+09:00
+----- Yesterday September 22nd, 2017 -----
+jekto_vatimeliju [2:30 PM] 
+@sashimiwiki 「ライブラリ」ってどう訳そう？ (edited)
+
+
+sashimiwiki [2:43 PM] 
+「定義リスト」みたいなのの省略ではダメかね
+vatimeliju jekto
+@sashimiwiki 「ライブラリ」ってどう訳そう？
+Posted in #アセンブリ言語Yesterday at 2:30 PM
+
+
+jekto_vatimeliju [2:46 PM] 
+んー、ちょっと具体性に欠ける気がしないでもないが（「汎用cersva集」とかどうでしょう）
+
+
+sashimiwiki [2:46 PM] 
+でもライブラリに変数定義って書くでしょ？（もしかして書かない）
+
+
+jekto_vatimeliju [2:47 PM] 
+あー確かに。定義リストも悪くはないかもな (edited)
+
+
+sashimiwiki [2:48 PM] 
+どうなんだろう、他のプロの意見も聞きたい。
+
+
+jekto_vatimeliju [2:48 PM] 
+じゃあ後回しで
+
+
+
+lemon [3:33 PM] 
+辞書とか？
+(若しレシピ本のような語があるのであれば意味がよく合致したと思った(反語))
+
+
+sashimiwiki [3:33 PM] 
+非常に面白い
+
+
+jekto_vatimeliju [9:01 PM] 
+あー辞書
+
+
+jekto_vatimeliju [10:05 PM] 
+レシピ本の方が楽しそうだな
+
+
+[10:05] 
+えーと料理がjujoj
+
+
+sashimiwiki [10:08 PM] 
+なんでしょうか
+
+
+jekto_vatimeliju [10:08 PM] 
+単純に「料理の本」でいいかね？
+
+
+[10:08] 
+「料理の仕方の本」かな
+
+[10:11] 
+「料理の本」ならjujoja'd akrantierl、「料理の仕方の本」ならjujojesele'd akrantierlか？
+
+[10:12] 
+（akrantierlとkranteerlの使い分けがようわからんが、まあライブラリは読む方がメインだしakrantierlにした） (edited)
+
+fabon [10:12 PM] 
+うーん、微妙に長いなあ
+
+jekto_vatimeliju [10:12 PM] 
+まあ略されそうだが
+
+sashimiwiki [10:12 PM] 
+別にjujojel'd akrantierlでもええんやで
+
+jekto_vatimeliju [10:13 PM] 
+あれ、そうなん？
+
+sashimiwiki [10:13 PM] 
+あ、間違ってるわけではないぜよ
+
+jekto_vatimeliju [10:14 PM] 
+名詞から動詞派生名詞作れるのか…
+
+[10:16] 
+さて、略されそうな気がするが、リパラオネ人はどういう略し方を好むんだろう (edited)
+
+sashimiwiki [10:16 PM] 
+動詞連体形派生名詞とはいうけど名詞に凄い勢いでくっ付いてるからな。
+1 reply 12 hours ago View thread
+
+sashimiwiki [10:17 PM] 
+juakとか音節を取ったり、頭字語としてJAとか、それを文字化してjera
+vatimeliju jekto
+さて、略されそうな気がするが、リパラオネ人はどういう略し方を好むんだろう
+Posted in #アセンブリ言語Yesterday at 10:16 PM
+
+jekto_vatimeliju [10:18 PM] 
+juak、パイグ人が好きそう
+
+sashimiwiki [10:18 PM] 
+リパラオネ人としてはjeraだが、どっちもつかえばええやん？(？)
+
+jekto_vatimeliju [10:20 PM] 
+よく見たらパイグ語にjua-ってないやん（ないやん）（でも日本語のティ的立ち位置なら取れるかも）
+
+sashimiwiki [10:21 PM] 
+㌿
+
+jekto_vatimeliju [10:22 PM] 
+uakになりそうかjakになりそうかは @qafopwa に聞くとしよう
+
+sashimiwiki [10:22 PM] 
+それは良いとして、結局どうするんですか
+
+jekto_vatimeliju [10:24 PM] 
+どうしよう
+
+sashimiwiki [10:25 PM] 
+jeraにしましょう。
+
+
+jekto_vatimeliju [10:25 PM] 
+じゃあそれで
+
+
+[10:26] 
+パイグで別の呼び方をされている可能性については保留（いやほらさ、和製英語的なやつあったらたのしいやん）
+
+
+sashimiwiki [10:26 PM] 
+まあ、せやな
+
+
+jekto_vatimeliju [10:28 PM] 
+現世の例としてはCUI
+
+
+lemon [10:28 PM] 
+いぇーあ
+
+
+sashimiwiki [10:28 PM] 
+CUIってそうなの
+
+
+jekto_vatimeliju [10:28 PM] 
+せやで
+
+
+[10:29] 
+https://twitter.com/curekoshimizu/status/910349273853775872
+小清水さん @curekoshimizu
+GUIに対してCUIって言ったら、何それ？って中国人とウクライナ人に言われた。一般的な言い方じゃないのかなCUI
+TwitterSep 20th at 12:45 PM
+
+
+sashimiwiki [10:29 PM] 
+CLIなのかな
+
+
+jekto_vatimeliju [10:29 PM] 
+https://twitter.com/curekoshimizu/status/910350386237775872
+小清水さん @curekoshimizu
+US google で CUI ググっても上位に全然 CUI 出てこないな…。JPだとめっちゃでてくるのに
+TwitterSep 20th at 12:50 PM
+
+
+[10:29] 
+そうCLI
+
+
+sashimiwiki [10:30 PM] 
+#今日の㌿―
+
+
+[10:31] 
+(ot)ライブラリ関連の用語(リンカ)とか、ライブラリに対する動詞が自然に料理っぽくなりそうな気がして凄い面白くなりそう
+
+
+jekto_vatimeliju [10:32 PM] 
+確かに
+
+
+[10:32] 
+じゃあそこらへんも今のうちに決めておくか
+
+
+sashimiwiki [10:35 PM] 
+風呂行ってくるのでそれまで欲しいのを列挙してみてくれ
+
+
+jekto_vatimeliju [10:36 PM] 
+なるほど
+
+
+jekto_vatimeliju [10:52 PM] 
+https://sites.google.com/site/panqateel/yougo
+JAを用語集に追加した
