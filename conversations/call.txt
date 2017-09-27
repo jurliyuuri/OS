@@ -1,0 +1,381 @@
+UTC+09:00
+----- Sunday, September 24th -----
+Nobuyuki Tokuchi [3:12 AM] 
+関数を呼ぶ場合の「呼ぶ」って理語だと何になるんだろ．
+
+
+jekto_vatimeliju [3:18 AM] 
+考えなきゃだなぁ
+
+
+[3:18] 
+とりあえずバート人は辞書を引いてみます
+
+
+[3:23] 
+そもそも「プログラミング言語の関数」は理語では「指令」なので、引数・戻り値みたいな呼び方はしないかもなみたいなことは思った
+
+
+jekto_vatimeliju [3:41 AM] 
+https://twitter.com/sosoBOTpi/status/911661151464808449
+.sozysozbot.@hsjoihs @sosoBOTpi
+すでに作ってあったけど収録から漏れていた用語を追加。 #悠里OS
+https://sites.google.com/site/panqateel/yougo
+TwitterSep 24th at 3:38 AM
+
+
+jekto_vatimeliju [3:46 AM] 
+さて考えるか
+
+
+[3:47] 
+cersvaが「指令；公官庁から発せられる命令」だからなぁ
+
+
+[3:48] 
+https://twitter.com/sosoBOTpi/status/911663004625678336
+https://twitter.com/sashimiwiki/status/911663417458487296
+.sozysozbot.@hsjoihs @sosoBOTpi
+#今日のお題 「関数呼び出し」のリパライン語訳
+TwitterSep 24th at 3:46 AM
+ Fafs＝மொழி படித்தார் @sashimiwiki
+なんかお題が出ているが眠いし寝る
+TwitterSep 24th at 3:47 AM
+
+
+[3:51] 
+公官庁から発せられる命令を読んで実行するのは誰だ？役人か。
+
+
+[3:52] 
+あ、そういえばライブラリって理語で「レシピ本」だよな。じゃあ「『平方根』という料理を作る」みたいなメタファーが発生するのかな
+
+
+[3:53] 
+それならjujojesとかかもしれないけど…関数呼び出しの概念の方がライブラリより当然先だからなぁ
+
+
+lemon [8:29 AM] 
+cersvaなら令状かなぁ＼料理を作らなければぴすてぃる／
+
+
+
+jekto_vatimeliju [2:46 PM] 
+さてどうしような
+
+
+lemon [2:53 PM] 
+よき案の無き事、いとわろし
+
+
+jekto_vatimeliju [2:53 PM] 
+@sashimiwiki が小説執筆から帰ってくるのを待つのもアレだからなぁ (edited)
+
+
+[2:54] 
+私はとりあえず呼び出し規約の整理とかしてるけど
+
+
+
+----- Yesterday September 25th, 2017 -----
+jekto_vatimeliju [9:01 PM] 
+「関数呼び出し」決めていきましょう
+https://jurliyuuri.slack.com/archives/C6ZL45L86/p1506338822000113
+
+
+sashimiwiki [9:05 PM] 
+㌿―
+
+
+
+[9:07] 
+関数呼び出しってなんだろう(分かってるけど再確認しましょう)
+
+
+jekto_vatimeliju [9:07 PM] 
+関数を呼び出すことです（説明になっていない）
+
+
+[9:08] 
+関数を別のところから実行することだな
+
+
+sashimiwiki [9:08 PM] 
+そもそも関数とは？
+
+
+[9:08] 
+別のところとは？
+
+
+jekto_vatimeliju [9:08 PM] 
+cersva
+
+
+sashimiwiki [9:08 PM] 
+実行するとは？
+
+
+jekto_vatimeliju [9:09 PM] 
+"a subroutine is a sequence of program instructions that perform a specific task, packaged as a unit. This unit can then be used in programs wherever that particular task should be performed."
+"A subroutine is often coded so that it can be started (called) several times and from several places during one execution of the program, including from other subroutines, and then branch back (return) to the next instruction after the call, once the subroutine's task is done."
+
+
+[9:10] 
+"Maurice Wilkes, David Wheeler, and Stanley Gill are credited with the invention of this concept, which they termed a closed subroutine,[2][3] contrasted with an open subroutine or macro.[4]"
+https://en.wikipedia.org/wiki/Subroutine より (edited)
+
+
+Nobuyuki Tokuchi [9:10 PM] 
+英語ちゅらい
+
+
+sashimiwiki [9:10 PM] 
+サブルーチンか。
+
+
+Nobuyuki Tokuchi [9:11 PM] 
+Google先生に投げ込むか．
+ 8 replies Last reply 1 day ago View thread
+
+
+jekto_vatimeliju [9:20 PM] 
+とりあえず、用語集の「関数」を「関数；サブルーチン」に変更
+https://sites.google.com/site/panqateel/yougo (edited)
+
+sashimiwiki [9:20 PM] 
+関数に対する語法ってライブラリのそれと同じ感じになるかな
+
+[9:20] 
+調理的な
+
+jekto_vatimeliju [9:20 PM] 
+vatimeliju jekto
+あ、そういえばライブラリって理語で「レシピ本」だよな。じゃあ「『平方根』という料理を作る」みたいなメタファーが発生するのかな
+Posted in #generalSep 24th at 3:52 AM
+
+
+[9:21] 
+ vatimeliju jekto
+それならjujojesとかかもしれないけど…関数呼び出しの概念の方がライブラリより当然先だからなぁ
+Posted in #generalSep 24th at 3:53 AM
+
+
+[9:21] 
+と思った
+
+
+sashimiwiki [9:21 PM] 
+理語にはfenxeって動詞があるんだけど、どうかしら
+
+
+jekto_vatimeliju [9:22 PM] 
+「食事を運ぶ；食事を提供する」か
+
+
+sashimiwiki [9:23 PM] 
+cersva fenxeoとか
+
+
+jekto_vatimeliju [9:25 PM] 
+fenxeで「呼び出す」か
+
+
+[9:27] 
+微妙な気はちょっとしたが、callという単語も十分微妙だし、問題はそんなになさそう（となると、もともとサブルーチンを料理に喩える文化があったからこそライブラリはレシピ本になったということになるが）
+
+
+sashimiwiki [9:28 PM] 
+良いのかな
+
+
+jekto_vatimeliju [9:29 PM] 
+もうちょい考察はしてみようとは思う
+
+
+[9:29] 
+cersvaって非プログラミングの文脈だとどういうメタファーを持つんだろう
+
+
+[9:30] 
+「指令書」？
+
+
+sashimiwiki [9:30 PM] 
+政府の指令
+
+
+[9:30] 
+命令、勅令
+
+
+jekto_vatimeliju [9:30 PM] 
+vatimeliju jekto
+公官庁から発せられる命令を読んで実行するのは誰だ？役人か。
+Posted in #generalSep 24th at 3:51 AM
+
+
+sashimiwiki [9:32 PM] 
+あったな
+
+
+jekto_vatimeliju [9:32 PM] 
+こっち方面のメタファーも考えたいんよね
+
+
+[9:33] 
+「指令」が直接「料理」に繋がるメタファーが謎なので
+
+
+[9:33] 
+(ot)今思いついた案：別言語からの翻訳借用
+
+
+fabon [9:34 PM] 
+北朝鮮の無慈悲なチャーハンを思い出した
+1 reply 1 day ago View thread
+
+
+jekto_vatimeliju [9:34 PM] 
+(ot)あーでも[2015:faint jer:VEF:食べ物を前に動かす]か
+
+sashimiwiki [9:34 PM] 
+なんで、jerが対格じゃねえんだ(どうでもいい)
+vatimeliju jekto
+(ot)あーでも[2015:faint jer:VEF:食べ物を前に動かす]か
+Posted in #generalYesterday at 9:34 PM
+ 
+
+jekto_vatimeliju [9:43 PM] 
+さて
+
+sashimiwiki [9:48 PM] 
+さて
+
+jekto_vatimeliju [9:49 PM] 
+案件が
+・関数呼び出しをどう呼ぶか
+・指令が料理に化けたのはどのタイミングか
+の2つに分裂しましたな (edited)
+
+lemon [9:51 PM] 
+ここである研究者が料理の分量計算のために高い実行費用をはたいて勝手に2003fを使用していた案件を提唱(クソ雑(スルーしてええよ
+
+jekto_vatimeliju [9:52 PM] 
+レバノン料理がピトー管に詰まったことにより自動操縦と料理が同一視された（ :fistir: ）
+
+[9:56] 
+さて
+
+sashimiwiki [9:57 PM] 
+は？（は？）
+
+jekto_vatimeliju [9:57 PM] 
+さて
+
+[9:57] 
+大喜利はともかくやっていきましょう
+
+sashimiwiki [9:58 PM] 
+「レバノン料理がピトー管に詰まったことにより対気速度と料理が同一視された」が正しい(黙れ)
+
+
+
+jekto_vatimeliju [9:58 PM] 
+さてさて
+
+
+sashimiwiki [10:01 PM] 
+さーて
+
+
+jekto_vatimeliju [10:03 PM] 
+vatimeliju jekto
+案件が
+・関数呼び出しをどう呼ぶか
+・指令が料理に化けたのはどのタイミングか
+の2つに分裂しましたな
+Posted in #generalYesterday at 9:49 PM
+
+
+sashimiwiki [10:04 PM] 
+指令と料理の関係とは
+
+
+Nobuyuki Tokuchi [10:06 PM] 
+料理長？
+
+
+[10:06] 
+コック？
+
+
+jekto_vatimeliju [10:06 PM] 
+んー、というかどこから「料理」というメタファーが発生したのかを考えねばだよなぁ
+
+
+[10:07] 
+la fenxeで「飲食店の注文」か。
+
+
+Nobuyuki Tokuchi [10:07 PM] 
+うーん，例えば機密をバレないように話すとか．
+
+
+jekto_vatimeliju [10:07 PM] 
+tank案件だ
+
+
+Nobuyuki Tokuchi [10:08 PM] 
+料理もアセンブリも「材料」を「組み合わせて」作成するもんだし．
+
+
+jekto_vatimeliju [10:08 PM] 
+アセンブリは現世用語だしなぁ
+
+Nobuyuki Tokuchi [10:09 PM] 
+アセンブリというか命令語
+
+
+jekto_vatimeliju [10:09 PM] 
+まあ確かに
+
+
+[10:09] 
+「材料組み合わせる」は使えそうかもな
+
+
+sashimiwiki [10:09 PM] 
+というか、ライブラリをプログラマー間でレシピ帳と言うことでそれまで混乱していた語法が自然に整理されたという考えも可能では
+
+
+jekto_vatimeliju [10:10 PM] 
+あーなるほどな
+
+
+[10:10] 
+それ面白いな
+
+
+sashimiwiki [10:10 PM] 
+それまで混乱状態だったけど、これで段々遊びで言っていたものが共通語に変わっていったわけね
+
+
+jekto_vatimeliju [10:10 PM] 
+なるほど、よさそう
+
+
+Nobuyuki Tokuchi [10:10 PM] 
+ジャーゴンが共通語的にか
+
+
+sashimiwiki [10:12 PM] 
+やったー
+
+
+jekto_vatimeliju [10:50 PM] 
+登録しときます
+
+
+[10:54] 
+登録しました
