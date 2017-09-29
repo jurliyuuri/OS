@@ -77,6 +77,10 @@ toI ("'i'c" : xs) = put False >> toI xs
 toI ("fen" : xs) = do
  rest <- toI xs
  return $ (Just$Krz (L (Re F0)) (Re F0),[]) : rest
+toI ("nac":x:xs) = do
+ a <- lift $ parseL x
+ rest <- toI xs
+ return $ (Just$Dal (Pure 0) a,[]): rest
 toI (str :x:y:zs)
  | isJust $ rl str = do
   isCI <- get
