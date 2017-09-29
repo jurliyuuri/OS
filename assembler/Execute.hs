@@ -162,15 +162,22 @@ updateNX = do
  (cpu, mem) <- get
  put (cpu{nx = currentXX},mem)
 
+ret :: Instruction
+ret = Krz (L(RPlusNum F5 0)) (Re XX)
+
 -- xx = nextAddressOf(nx); return getInstructionFrom(nx);
 updateXXAndGetInstruction :: VIO Instruction
 updateXXAndGetInstruction = do
  currentNX <- nx <$> getCPU
  tat <- getTat
  case M.lookup currentNX tat of
-  Nothing -> 
-   if currentNX == outermostRetAddress then return TERMINATE
-    else error' $ "nx has an invalid address " ++ show currentNX
+  Nothing
+   | currentNX == outermostRetAddress -> return TERMINATE
+   | currentNX == debugOutputAddress -> do
+    val <- getValueFromR (L (RPlusNum F5 4))
+    tell [show val]
+    return ret
+   | otherwise -> error' $ "nx has an invalid address " ++ show currentNX
   Just (newXX, instruction) -> do
    (cpu, mem) <- get
    put (cpu{xx = newXX}, mem)
@@ -182,6 +189,9 @@ initialF5 = 0x6d7aa0f8
 
 outermostRetAddress :: Word32
 outermostRetAddress = 0xbda574b8
+
+debugOutputAddress :: Word32
+debugOutputAddress = 0xba5fb6b0
 
 initialMemory :: Memory
 initialMemory = writeM initialF5 outermostRetAddress `execState` emptyM
