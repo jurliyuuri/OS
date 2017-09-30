@@ -59,7 +59,7 @@ beautify [] = return []
 
 toInstructions :: [String] -> Either Error [(Instruction, [Label])]
 toInstructions strs = do
-  ils <- toI strs `evalStateT` (P False)
+  ils <- toI strs `evalStateT` (P False [])
   fmap reverse . normalize . reverse $ ils
 
 normalize :: [(Maybe a, [b])] -> Either Error [(a,[b])]
@@ -68,12 +68,13 @@ normalize ((Nothing,ls):(a,bs):ys) = normalize $ (a,ls++bs) : ys
 normalize [(Nothing,_)] = left "l' must be preceded by an instruction"
 normalize ((Just a,ls):ys) = ((a,ls) :) <$> normalize ys
 
-data ParserStat = P {isCI :: Bool}
+type KueInfo = ()
+data ParserStat = P {isCI :: Bool, kueList :: [KueInfo]} deriving (Show, Eq, Ord)
 
 toI :: [String] -> StateT ParserStat (Either Error) [(Maybe Instruction, [Label])]
 toI [] = return []
-toI ("'c'i" : xs) = put (P True) >> toI xs
-toI ("'i'c" : xs) = put (P False) >> toI xs
+toI ("'c'i" : xs) = modify (\x -> x{isCI=True}) >> toI xs
+toI ("'i'c" : xs) = modify (\x -> x{isCI=False}) >> toI xs
 toI ("fen" : xs) = do
  rest <- toI xs
  return $ (Just$Krz (L (Re F0)) (Re F0),[]) : rest
