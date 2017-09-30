@@ -63,7 +63,7 @@ beautify [] = return []
 
 toInstructions :: [String] -> Either Error ([(Instruction, [Label])],[KueInfo])
 toInstructions strs = do
-  (ils, P{kueList=kl}) <- toI strs `runStateT` (P False [])
+  (ils, P{kueList=kl}) <- toI strs `runStateT` P False []
   ils' <- fmap reverse . normalize . reverse $ ils
   return (ils', kl)
 
