@@ -63,7 +63,7 @@ beautify [] = return []
 
 toInstructions :: [String] -> Either Error ([(Instruction, [Label])],[KueInfo])
 toInstructions strs = do
-  (ils, P{kueList=kl}) <- toI strs `runStateT` P False []
+  (ils, P{kueList=kl}) <- toI strs `runStateT` P{isCI=False, kueList=[], xokList=[]}
   ils' <- fmap reverse . normalize . reverse $ ils
   return (ils', kl)
 
@@ -74,7 +74,7 @@ normalize [(Nothing,_)] = left "l' must be preceded by an instruction"
 normalize ((Just a,ls):ys) = ((a,ls) :) <$> normalize ys
 
 type KueInfo = Label
-data ParserStat = P {isCI :: Bool, kueList :: [KueInfo]} deriving (Show, Eq, Ord)
+data ParserStat = P {isCI :: Bool, kueList :: [Label], xokList :: [Label]} deriving (Show, Eq, Ord)
 
 toI :: [String] -> StateT ParserStat (Either Error) [(Maybe Instruction, [Label])]
 toI [] = return []
@@ -122,6 +122,9 @@ toI ("l'":x:ys) = do
 toI ("kue":x:ys) = do
  label <- getLabelFrom x
  modify (\u -> u{kueList = label:kueList u}) >> toI ys
+toI ("xok":x:ys) = do
+ label <- getLabelFrom x
+ modify (\u -> u{xokList = label:xokList u}) >> toI ys
 toI xs = lift $ left $ "Unparsable command sequence " ++ show xs
  
 getLabelFrom :: String -> StateT ParserStat (Either Error) Label
