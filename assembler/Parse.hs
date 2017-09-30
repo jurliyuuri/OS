@@ -106,21 +106,23 @@ toI ("nll":x:ys) = do
  rest <- toI ys
  case rest of
   [] -> lift $ left "nll must be followed by an instruction"
-  ((Just a,b):xs) -> case toLabel' x of 
-   Nothing -> lift $ left $ "`" ++ x ++ "` cannot be used as a valid label"
-   Just label -> return $ (Just a,label:b):xs
+  ((Just a,b):xs) -> do
+   label <- getLabelFrom x
+   return $ (Just a,label:b):xs
   ((Nothing,_):_) -> lift $ left "nll must not be followed by l'"
 toI ("l'":x:ys) = do
  rest <- toI ys
- case toLabel' x of
-  Nothing -> lift $ left $ "`" ++ x ++ "` cannot be used as a valid label"
-  Just label -> return $ (Nothing,[label]):rest
+ label <- getLabelFrom x
+ return $ (Nothing,[label]):rest
 toI ("kue":x:ys) = do
- case toLabel' x of
-  Nothing -> lift $ left $ "`" ++ x ++ "` cannot be used as a valid label"
-  Just label -> modify (\u -> u{kueList = label:kueList u}) >> toI ys
+ label <- getLabelFrom x
+ modify (\u -> u{kueList = label:kueList u}) >> toI ys
 toI xs = lift $ left $ "Unparsable command sequence " ++ show xs
  
+getLabelFrom :: String -> StateT ParserStat (Either Error) Label
+getLabelFrom x = case toLabel' x of
+ Nothing -> lift $ left $ "`" ++ x ++ "` cannot be used as a valid label"
+ Just label -> return label
 
 parseRegister :: String -> Either Error Register
 parseRegister "f0" = Right F0
