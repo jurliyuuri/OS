@@ -1,5 +1,6 @@
 module Parse
 (fullParse
+,fullParse'
 ) where
 
 import Types
@@ -13,7 +14,10 @@ left :: String -> Either ParseError b
 left = Left . ParseError
 
 fullParse :: String -> Either Error [(Instruction, [Label])]
-fullParse str = do
+fullParse = fmap fst . fullParse'
+
+fullParse' :: String -> Either Error ([(Instruction, [Label])],[KueInfo])
+fullParse' str = do
  let ts = words $ concatMap plusAt str
  toInstructions <=< beautify $ ts
   where
@@ -57,10 +61,11 @@ beautify ("@":_) = left "Unexpected @ at the beginning of input"
 beautify (x:xs) = (x:) <$> beautify xs
 beautify [] = return []
 
-toInstructions :: [String] -> Either Error [(Instruction, [Label])]
+toInstructions :: [String] -> Either Error ([(Instruction, [Label])],[KueInfo])
 toInstructions strs = do
-  ils <- toI strs `evalStateT` (P False [])
-  fmap reverse . normalize . reverse $ ils
+  (ils, P{kueList=kl}) <- toI strs `runStateT` (P False [])
+  ils' <- fmap reverse . normalize . reverse $ ils
+  return (ils', kl)
 
 normalize :: [(Maybe a, [b])] -> Either Error [(a,[b])]
 normalize [] = return []
