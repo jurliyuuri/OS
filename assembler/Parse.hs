@@ -59,7 +59,7 @@ beautify [] = return []
 
 toInstructions :: [String] -> Either Error [(Instruction, [Label])]
 toInstructions strs = do
-  ils <- toI strs `evalStateT` False
+  ils <- toI strs `evalStateT` (P False)
   fmap reverse . normalize . reverse $ ils
 
 normalize :: [(Maybe a, [b])] -> Either Error [(a,[b])]
@@ -68,12 +68,12 @@ normalize ((Nothing,ls):(a,bs):ys) = normalize $ (a,ls++bs) : ys
 normalize [(Nothing,_)] = left "l' must be preceded by an instruction"
 normalize ((Just a,ls):ys) = ((a,ls) :) <$> normalize ys
 
+data ParserStat = P {isCI :: Bool}
 
--- isCI :: Bool
-toI :: [String] -> StateT Bool (Either Error) [(Maybe Instruction, [Label])]
+toI :: [String] -> StateT ParserStat (Either Error) [(Maybe Instruction, [Label])]
 toI [] = return []
-toI ("'c'i" : xs) = put True >> toI xs
-toI ("'i'c" : xs) = put False >> toI xs
+toI ("'c'i" : xs) = put (P True) >> toI xs
+toI ("'i'c" : xs) = put (P False) >> toI xs
 toI ("fen" : xs) = do
  rest <- toI xs
  return $ (Just$Krz (L (Re F0)) (Re F0),[]) : rest
@@ -83,9 +83,9 @@ toI ("nac":x:xs) = do
  return $ (Just$Dal (Pure 0) a,[]): rest
 toI (str :x:y:zs)
  | isJust $ rl str = do
-  isCI <- get
-  i <- lift $ if isCI then parseR y else parseR x
-  c <- lift $ if isCI then parseL x else parseL y
+  isCI_ <- isCI <$> get
+  i <- lift $ if isCI_ then parseR y else parseR x
+  c <- lift $ if isCI_ then parseL x else parseL y
   rest <- toI zs
   return $ (Just$(fromJust $ rl str) i c,[]) : rest
 toI ("fi":x:y:z:bs)
@@ -95,10 +95,10 @@ toI ("fi":x:y:z:bs)
   rest <- toI bs
   return $ (Just$Fi a b (fromJust $ parseCond z),[]) : rest
 toI ("inj":x:y:z:bs) = do
- isCI <- get
- a <- lift $ if isCI then parseR z else parseR x
+ isCI_ <- isCI <$> get
+ a <- lift $ if isCI_ then parseR z else parseR x
  b <- lift $ parseL y
- c <- lift $ if isCI then parseL x else parseL z
+ c <- lift $ if isCI_ then parseL x else parseL z
  rest <- toI bs
  return $ (Just$Inj a b c,[]) : rest
 toI ("nll":x:ys) = do
