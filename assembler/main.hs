@@ -3,6 +3,8 @@ import Execute
 import TentativeLoad
 import System.IO(stderr, hPrint, hPutStr, hPutStrLn)
 import System.Environment(getArgs)
+import Control.Monad
+import Data.List
 
 semicolonExtension :: String -> String
 semicolonExtension = unlines . map (takeWhile (/=';')) . lines
@@ -13,6 +15,11 @@ fullExecute str = fullParse str >>>= \p -> toTentativeLoad p >>>= \loaded ->
   putStr "Logs: "
   print logs
   boolerh >>>= \(False, hardware) -> print hardware
+
+fullExecute' :: [String] -> IO ()
+fullExecute' strs = do
+ let ps = map fullParse' strs
+ undefined
 
 (>>>=) :: (Show a) => Either a b -> (b -> IO ()) -> IO () 
 Right b >>>= action = action b
@@ -49,6 +56,12 @@ bar (hw, program) = do
     else putStrLn "Execution correctly terminated."
 
 
+main'' :: [FilePath] -> IO ()
+main'' paths = do
+ mapM_ parse' paths
+ strs <- forM paths (fmap semicolonExtension . readFile)
+ putStrLn $ "\nrunning " ++ intercalate ", " paths ++ ":\n"
+ fullExecute' strs
 
 main' :: FilePath -> IO ()
 main' filepath = do
