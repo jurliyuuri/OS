@@ -68,7 +68,7 @@ normalize ((Nothing,ls):(a,bs):ys) = normalize $ (a,ls++bs) : ys
 normalize [(Nothing,_)] = left "l' must be preceded by an instruction"
 normalize ((Just a,ls):ys) = ((a,ls) :) <$> normalize ys
 
-type KueInfo = ()
+type KueInfo = Label
 data ParserStat = P {isCI :: Bool, kueList :: [KueInfo]} deriving (Show, Eq, Ord)
 
 toI :: [String] -> StateT ParserStat (Either Error) [(Maybe Instruction, [Label])]
@@ -115,6 +115,10 @@ toI ("l'":x:ys) = do
  case toLabel' x of
   Nothing -> lift $ left $ "`" ++ x ++ "` cannot be used as a valid label"
   Just label -> return $ (Nothing,[label]):rest
+toI ("kue":x:ys) = do
+ case toLabel' x of
+  Nothing -> lift $ left $ "`" ++ x ++ "` cannot be used as a valid label"
+  Just label -> modify (\u -> u{kueList = label:kueList u}) >> toI ys
 toI xs = lift $ left $ "Unparsable command sequence " ++ show xs
  
 
