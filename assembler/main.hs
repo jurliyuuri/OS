@@ -6,6 +6,7 @@ import System.IO(stderr, hPrint, hPutStr, hPutStrLn)
 import System.Environment(getArgs)
 import Control.Monad
 import Data.List
+import Linker
 
 semicolonExtension :: String -> String
 semicolonExtension = unlines . map (takeWhile (/=';')) . lines

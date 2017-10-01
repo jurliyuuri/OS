@@ -2,6 +2,7 @@
 module Parse
 (fullParse
 ,fullParse'
+,ParsedFile
 ) where
 
 import Types
@@ -10,6 +11,7 @@ import Data.Char(isDigit)
 import Data.Maybe
 
 type Error = ParseError
+type ParsedFile = ([(Instruction, [Label])],([KueInfo],[Label]))
 
 left :: String -> Either ParseError b
 left = Left . ParseError
@@ -17,7 +19,7 @@ left = Left . ParseError
 fullParse :: String -> Either Error [(Instruction, [Label])]
 fullParse = fmap fst . fullParse'
 
-fullParse' :: String -> Either Error ([(Instruction, [Label])],([KueInfo],[Label]))
+fullParse' :: String -> Either Error ParsedFile
 fullParse' str = do
  let ts = words $ concatMap plusAt str
  toInstructions <=< beautify $ ts
@@ -62,7 +64,7 @@ beautify ("@":_) = left "Unexpected @ at the beginning of input"
 beautify (x:xs) = (x:) <$> beautify xs
 beautify [] = return []
 
-toInstructions :: [String] -> Either Error ([(Instruction, [Label])],([KueInfo],[Label]))
+toInstructions :: [String] -> Either Error ParsedFile
 toInstructions strs = do
   (ils, P{kueList=kl,xokList=xl}) <- toI strs `runStateT` P{isCI=False, kueList=[], xokList=[]}
   ils' <- fmap reverse . normalize . reverse $ ils

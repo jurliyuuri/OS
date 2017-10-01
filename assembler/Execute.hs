@@ -15,6 +15,7 @@ import Control.Monad.Reader
 import Control.Monad.Writer
 import Control.Monad.Except
 import Data.Bits
+import Linker
 import qualified Data.Map as M
 
 type Error = RuntimeError
@@ -31,12 +32,12 @@ data CPU = CPU{ f0 :: Word32, f1 :: Word32, f2 :: Word32, f3 :: Word32, f5 :: Wo
 type Hardware = (CPU, Memory)
 type Logs = [String]
 
-type VIO a = ReaderT TentativeLoad (StateT Hardware (ExceptT Error (Writer Logs))) a
+type VIO a = ReaderT Program (StateT Hardware (ExceptT Error (Writer Logs))) a
 
-execute :: TentativeLoad -> (Either RuntimeError (Bool, Hardware), Logs)
+execute :: Program -> (Either RuntimeError (Bool, Hardware), Logs)
 execute program = unwrapWith (initialHardware initialAddress, program) execute'
 
-unwrapWith :: (Hardware, TentativeLoad) -> VIO Bool -> (Either Error (Bool, Hardware), Logs)
+unwrapWith :: (Hardware, Program) -> VIO Bool -> (Either Error (Bool, Hardware), Logs)
 unwrapWith (initHW, program) = runWriter 
  . runExceptT
  . (`runStateT` initHW) 
