@@ -17,7 +17,7 @@ left = Left . ParseError
 fullParse :: String -> Either Error [(Instruction, [Label])]
 fullParse = fmap fst . fullParse'
 
-fullParse' :: String -> Either Error ([(Instruction, [Label])],[KueInfo])
+fullParse' :: String -> Either Error ([(Instruction, [Label])],([KueInfo],[Label]))
 fullParse' str = do
  let ts = words $ concatMap plusAt str
  toInstructions <=< beautify $ ts
@@ -62,11 +62,11 @@ beautify ("@":_) = left "Unexpected @ at the beginning of input"
 beautify (x:xs) = (x:) <$> beautify xs
 beautify [] = return []
 
-toInstructions :: [String] -> Either Error ([(Instruction, [Label])],[KueInfo])
+toInstructions :: [String] -> Either Error ([(Instruction, [Label])],([KueInfo],[Label]))
 toInstructions strs = do
-  (ils, P{kueList=kl}) <- toI strs `runStateT` P{isCI=False, kueList=[], xokList=[]}
+  (ils, P{kueList=kl,xokList=xl}) <- toI strs `runStateT` P{isCI=False, kueList=[], xokList=[]}
   ils' <- fmap reverse . normalize . reverse $ ils
-  return (ils', kl)
+  return (ils', (kl, xl))
 
 normalize :: [(Maybe a, [b])] -> Either Error [(a,[b])]
 normalize [] = return []
