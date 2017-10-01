@@ -19,9 +19,11 @@ fullExecute str = fullParse str >>>= \p -> toTentativeLoad p >>>= \loaded ->
   boolerh >>>= \(False, hardware) -> print hardware
 
 fullExecute' :: [String] -> IO ()
-fullExecute' strs = do
- let ps = map fullParse' strs
- undefined
+fullExecute' strs = mapM fullParse' strs >>>= \ps -> linker ps >>>= \program ->
+ let (boolerh, logs) = execute program in do
+  putStr "Logs: "
+  print logs
+  boolerh >>>= \(False, hardware) -> print hardware
 
 (>>>=) :: (Show a) => Either a b -> (b -> IO ()) -> IO () 
 Right b >>>= action = action b
