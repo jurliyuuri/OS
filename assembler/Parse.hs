@@ -1,3 +1,4 @@
+{-# OPTIONS -Wall -fno-warn-unused-do-bind #-}
 module Parse
 (fullParse
 ,fullParse'

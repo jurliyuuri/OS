@@ -1,3 +1,4 @@
+{-# OPTIONS -Wall -fno-warn-unused-do-bind #-}
 import Parse
 import Execute
 import TentativeLoad
