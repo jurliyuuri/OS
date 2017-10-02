@@ -12,11 +12,9 @@ import Control.Monad.Reader
 import Control.Monad.Writer
 import Control.Monad.Except
 import Data.Bits
-import qualified Data.Map as M
 
 import Types
 import Memory
-import TentativeLoad
 import Linker
 
 
@@ -64,8 +62,6 @@ finalize = do
   then error' $ "f5 register was not preserved after the call. It should be in " ++ show initialF5 ++ " but is actually in " ++ show a
   else return False
 
-getTat :: VIO (M.Map Word32 (Word32, Instruction))
-getTat = tentativeAddressTable <$> ask
 
 getCPU :: VIO CPU
 getCPU = fst <$> get
@@ -146,8 +142,8 @@ setValueToL (RPlusR r1 r2) dat = do
 getValueFromR :: Rvalue -> VIO Word32
 getValueFromR (Pure word32) = return word32
 getValueFromR (Lab label) = do
- lt <- labelTable <$> ask
- case M.lookup label lt of
+ program <- ask
+ case resolveLabel' program label of
   Nothing -> error' $ "Undefined label `" ++ unLabel label ++ "`"
   Just addr -> return addr
 getValueFromR (L (Re register)) = getRegister register
@@ -173,8 +169,8 @@ ret = Krz (L(RPlusNum F5 0)) (Re XX)
 updateXXAndGetInstruction :: VIO Instruction
 updateXXAndGetInstruction = do
  currentNX <- nx <$> getCPU
- tat <- getTat
- case M.lookup currentNX tat of
+ program <- ask
+ case readNX program currentNX of
   Nothing
    | currentNX == outermostRetAddress -> return TERMINATE
    | currentNX == debugOutputAddress -> do
