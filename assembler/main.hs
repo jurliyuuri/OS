@@ -29,7 +29,7 @@ main :: IO ()
 main = do
  args <- getArgs
  case args of 
-  [] -> foo
+  [] -> demo
   a
    | "-x" `elem` a -> interactive $ filter (/= "-x") a
    | otherwise -> main'' a
@@ -39,10 +39,10 @@ interactive [] = hPutStrLn stderr "Give filepath."
 interactive paths = do
  strs <- forM paths (fmap semicolonExtension . readFile)
  putStrLn $ "\npreparing step-by-step execution for " ++ intercalate ", " paths ++ ":\n"
- strs `getProgramAndApply` \program -> bar (initialHardware initialAddress, program)
+ strs `getProgramAndApply` \program -> stepByStep (initialHardware initialAddress, program)
 
-bar :: (Hardware, Program) -> IO ()
-bar (hw, program) = do
+stepByStep :: (Hardware, Program) -> IO ()
+stepByStep (hw, program) = do
  putStrLn "Press Enter to continue"
  _ <- getLine
  let (boolerh, logs) = unwrapWith (hw, program) (execOne(return True)) in do
@@ -51,7 +51,7 @@ bar (hw, program) = do
   boolerh >>>= \(isContinuing, newHW) -> do
    print newHW
    if isContinuing 
-    then bar (newHW, program)
+    then stepByStep (newHW, program)
     else putStrLn "Execution correctly terminated."
 
 
@@ -72,8 +72,8 @@ parse' filepath = do
  print $ toTentativeLoad <$> fullParse str
 
 
-foo :: IO ()
-foo = do
+demo :: IO ()
+demo = do
  main' "fib_non_recursive"
  main' "fib_recursive"
  main' "tarai"
