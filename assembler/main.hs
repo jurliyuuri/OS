@@ -69,7 +69,7 @@ parse' :: FilePath -> IO ()
 parse' filepath = do
  str <- semicolonExtension <$> readFile filepath
  putStrLn $ "\nparsing " ++ filepath ++ ":\n"
- print $ toTentativeLoad <$> fullParse str
+ print $ fullParse' str
 
 
 demo :: IO ()
