@@ -10,6 +10,7 @@ module Types
 ,Word32
 ,ParseError(..)
 ,RuntimeError(..)
+,LinkError(..)
 ,toFunc
 ,toLabel'
 ) where
@@ -27,6 +28,7 @@ newtype Label = Label{unLabel :: String} deriving(Show, Eq, Ord)
 
 newtype ParseError = ParseError String deriving(Show, Eq, Ord)
 newtype RuntimeError = RuntimeError String deriving(Show, Eq, Ord)
+newtype LinkError = LinkError String deriving(Show, Eq, Ord)
 
 toFunc :: Cond -> (Word32 -> Word32 -> Bool)
 toFunc Xtlonys = (<=)

@@ -15,7 +15,7 @@ data Program = Program TentativeLoad
 
 
 -- type ParsedFile = ([(Instruction, [Label])],([KueInfo],[Label]))
-linker :: [ParsedFile] -> Either String Program
+linker :: [ParsedFile] -> Either LinkError Program
 linker [(ils, ([], []))] = Program <$> toTentativeLoad initialAddress ils
 linker _ = error "Linking multiple files is not yet implemented"
 

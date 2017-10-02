@@ -1426,6 +1426,11 @@ l' iska
 <h3>33-4. 334</h3>
 <p>な阪関無</p>
 
+<h2>34. リンカの実装</h2>
+<p>やっていきましょう。</p>
+<h3>34-1. エラー</h3>
+<p>TentativeLoadの関数を<code>Either String TentativeLoad</code>じゃなくて<code>Either LoadError TentativeLoad</code>にしようかと思ったが、唯一存在するエラーが<code>"duplicating label(s): " ++ intercalate ", " (map unLabel labels)</code>なので、これは<code>LinkError</code>でいいでしょう。</p>
+
 <hr>
 <h2>xxx. To do</h2>
 <h3>xxx-2. 入門書</h3>
