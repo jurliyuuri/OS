@@ -1,7 +1,6 @@
 {-# OPTIONS -Wall -fno-warn-unused-do-bind #-}
 import Parse
 import Execute
-import TentativeLoad
 import System.IO(stderr, hPrint, hPutStr, hPutStrLn)
 import System.Environment(getArgs)
 import Control.Monad

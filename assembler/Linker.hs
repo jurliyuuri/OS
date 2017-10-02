@@ -2,6 +2,7 @@
 module Linker
 (linker
 ,Program
+,initialAddress
 ) where
 import Types
 import Parse
