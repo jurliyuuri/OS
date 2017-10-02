@@ -12,11 +12,7 @@ semicolonExtension :: String -> String
 semicolonExtension = unlines . map (takeWhile (/=';')) . lines
 
 fullExecute :: String -> IO ()
-fullExecute str = fullParse str >>>= \p -> toTentativeLoad p >>>= \loaded -> 
- let (boolerh, logs) = execute loaded in do
-  putStr "Logs: "
-  print logs
-  boolerh >>>= \(False, hardware) -> print hardware
+fullExecute str = fullExecute' [str]
 
 fullExecute' :: [String] -> IO ()
 fullExecute' strs = mapM fullParse' strs >>>= \ps -> linker ps >>>= \program ->
