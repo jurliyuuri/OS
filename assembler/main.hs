@@ -1,18 +1,25 @@
+{-# OPTIONS -Wall -fno-warn-unused-do-bind #-}
 import Parse
 import Execute
 import TentativeLoad
 import System.IO(stderr, hPrint, hPutStr, hPutStrLn)
 import System.Environment(getArgs)
+import Control.Monad
+import Data.List
+import Linker
 
 semicolonExtension :: String -> String
 semicolonExtension = unlines . map (takeWhile (/=';')) . lines
 
-fullExecute :: String -> IO ()
-fullExecute str = fullParse str >>>= \p -> toTentativeLoad p >>>= \loaded -> 
- let (boolerh, logs) = execute loaded in do
+fullExecute' :: [String] -> IO ()
+fullExecute' strs = strs `getProgramAndApply` \program ->
+ let (boolerh, logs) = execute program in do
   putStr "Logs: "
   print logs
   boolerh >>>= \(False, hardware) -> print hardware
+
+getProgramAndApply :: [String] -> (Program -> IO ()) -> IO ()
+strs `getProgramAndApply` f = mapM fullParse' strs >>>= \ps -> linker ps >>>= f 
 
 (>>>=) :: (Show a) => Either a b -> (b -> IO ()) -> IO () 
 Right b >>>= action = action b
@@ -23,19 +30,18 @@ main = do
  args <- getArgs
  case args of 
   [] -> foo
-  a@(x:_)
+  a
    | "-x" `elem` a -> interactive $ filter (/= "-x") a
-   | otherwise -> main' x
+   | otherwise -> main'' a
 
 interactive :: [String] -> IO ()
 interactive [] = hPutStrLn stderr "Give filepath."
-interactive (filepath:_) = do
- str <- semicolonExtension <$> readFile filepath
- putStrLn $ "\npreparing step-by-step execution for " ++ filepath ++ ":\n"
- fullParse str >>>= \p -> toTentativeLoad p >>>= \loaded -> 
-  bar (initialHardware initialAddress, loaded)
+interactive paths = do
+ strs <- forM paths (fmap semicolonExtension . readFile)
+ putStrLn $ "\npreparing step-by-step execution for " ++ intercalate ", " paths ++ ":\n"
+ strs `getProgramAndApply` \program -> bar (initialHardware initialAddress, program)
 
-bar :: (Hardware, TentativeLoad) -> IO ()
+bar :: (Hardware, Program) -> IO ()
 bar (hw, program) = do
  putStrLn "Press Enter to continue"
  _ <- getLine
@@ -49,13 +55,15 @@ bar (hw, program) = do
     else putStrLn "Execution correctly terminated."
 
 
+main'' :: [FilePath] -> IO ()
+main'' paths = do
+ mapM_ parse' paths
+ strs <- forM paths (fmap semicolonExtension . readFile)
+ putStrLn $ "\nrunning " ++ intercalate ", " paths ++ ":\n"
+ fullExecute' strs
 
 main' :: FilePath -> IO ()
-main' filepath = do
- parse' filepath
- str <- semicolonExtension <$> readFile filepath
- putStrLn $ "\nrunning " ++ filepath ++ ":\n"
- fullExecute str
+main' filepath = main'' [filepath]
 
 parse' :: FilePath -> IO ()
 parse' filepath = do

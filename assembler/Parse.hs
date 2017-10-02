@@ -1,5 +1,8 @@
+{-# OPTIONS -Wall -fno-warn-unused-do-bind #-}
 module Parse
 (fullParse
+,fullParse'
+,ParsedFile
 ) where
 
 import Types
@@ -8,12 +11,16 @@ import Data.Char(isDigit)
 import Data.Maybe
 
 type Error = ParseError
+type ParsedFile = ([(Instruction, [Label])],([KueInfo],[Label]))
 
 left :: String -> Either ParseError b
 left = Left . ParseError
 
 fullParse :: String -> Either Error [(Instruction, [Label])]
-fullParse str = do
+fullParse = fmap fst . fullParse'
+
+fullParse' :: String -> Either Error ParsedFile
+fullParse' str = do
  let ts = words $ concatMap plusAt str
  toInstructions <=< beautify $ ts
   where
@@ -57,10 +64,11 @@ beautify ("@":_) = left "Unexpected @ at the beginning of input"
 beautify (x:xs) = (x:) <$> beautify xs
 beautify [] = return []
 
-toInstructions :: [String] -> Either Error [(Instruction, [Label])]
+toInstructions :: [String] -> Either Error ParsedFile
 toInstructions strs = do
-  ils <- toI strs `evalStateT` False
-  fmap reverse . normalize . reverse $ ils
+  (ils, P{kueList=kl,xokList=xl}) <- toI strs `runStateT` P{isCI=False, kueList=[], xokList=[]}
+  ils' <- fmap reverse . normalize . reverse $ ils
+  return (ils', (kl, xl))
 
 normalize :: [(Maybe a, [b])] -> Either Error [(a,[b])]
 normalize [] = return []
@@ -68,12 +76,13 @@ normalize ((Nothing,ls):(a,bs):ys) = normalize $ (a,ls++bs) : ys
 normalize [(Nothing,_)] = left "l' must be preceded by an instruction"
 normalize ((Just a,ls):ys) = ((a,ls) :) <$> normalize ys
 
+type KueInfo = Label
+data ParserStat = P {isCI :: Bool, kueList :: [Label], xokList :: [Label]} deriving (Show, Eq, Ord)
 
--- isCI :: Bool
-toI :: [String] -> StateT Bool (Either Error) [(Maybe Instruction, [Label])]
+toI :: [String] -> StateT ParserStat (Either Error) [(Maybe Instruction, [Label])]
 toI [] = return []
-toI ("'c'i" : xs) = put True >> toI xs
-toI ("'i'c" : xs) = put False >> toI xs
+toI ("'c'i" : xs) = modify (\x -> x{isCI=True}) >> toI xs
+toI ("'i'c" : xs) = modify (\x -> x{isCI=False}) >> toI xs
 toI ("fen" : xs) = do
  rest <- toI xs
  return $ (Just$Krz (L (Re F0)) (Re F0),[]) : rest
@@ -83,9 +92,9 @@ toI ("nac":x:xs) = do
  return $ (Just$Dal (Pure 0) a,[]): rest
 toI (str :x:y:zs)
  | isJust $ rl str = do
-  isCI <- get
-  i <- lift $ if isCI then parseR y else parseR x
-  c <- lift $ if isCI then parseL x else parseL y
+  isCI_ <- isCI <$> get
+  i <- lift $ if isCI_ then parseR y else parseR x
+  c <- lift $ if isCI_ then parseL x else parseL y
   rest <- toI zs
   return $ (Just$(fromJust $ rl str) i c,[]) : rest
 toI ("fi":x:y:z:bs)
@@ -95,27 +104,36 @@ toI ("fi":x:y:z:bs)
   rest <- toI bs
   return $ (Just$Fi a b (fromJust $ parseCond z),[]) : rest
 toI ("inj":x:y:z:bs) = do
- isCI <- get
- a <- lift $ if isCI then parseR z else parseR x
+ isCI_ <- isCI <$> get
+ a <- lift $ if isCI_ then parseR z else parseR x
  b <- lift $ parseL y
- c <- lift $ if isCI then parseL x else parseL z
+ c <- lift $ if isCI_ then parseL x else parseL z
  rest <- toI bs
  return $ (Just$Inj a b c,[]) : rest
 toI ("nll":x:ys) = do
  rest <- toI ys
  case rest of
   [] -> lift $ left "nll must be followed by an instruction"
-  ((Just a,b):xs) -> case toLabel' x of 
-   Nothing -> lift $ left $ "`" ++ x ++ "` cannot be used as a valid label"
-   Just label -> return $ (Just a,label:b):xs
+  ((Just a,b):xs) -> do
+   label <- getLabelFrom x
+   return $ (Just a,label:b):xs
   ((Nothing,_):_) -> lift $ left "nll must not be followed by l'"
 toI ("l'":x:ys) = do
  rest <- toI ys
- case toLabel' x of
-  Nothing -> lift $ left $ "`" ++ x ++ "` cannot be used as a valid label"
-  Just label -> return $ (Nothing,[label]):rest
+ label <- getLabelFrom x
+ return $ (Nothing,[label]):rest
+toI ("kue":x:ys) = do
+ label <- getLabelFrom x
+ modify (\u -> u{kueList = label:kueList u}) >> toI ys
+toI ("xok":x:ys) = do
+ label <- getLabelFrom x
+ modify (\u -> u{xokList = label:xokList u}) >> toI ys
 toI xs = lift $ left $ "Unparsable command sequence " ++ show xs
  
+getLabelFrom :: String -> StateT ParserStat (Either Error) Label
+getLabelFrom x = case toLabel' x of
+ Nothing -> lift $ left $ "`" ++ x ++ "` cannot be used as a valid label"
+ Just label -> return label
 
 parseRegister :: String -> Either Error Register
 parseRegister "f0" = Right F0
