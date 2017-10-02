@@ -4,11 +4,11 @@ module Parse
 ,fullParse'
 ,ParsedFile
 ) where
-
-import Types
 import Control.Monad.State
 import Data.Char(isDigit)
 import Data.Maybe
+
+import Types
 
 type Error = ParseError
 type ParsedFile = ([(Instruction, [Label])],([KueInfo],[Label]))

@@ -7,16 +7,18 @@ module Execute
 ,Hardware
 ,execOne
 ) where
-import Types
-import Memory
-import TentativeLoad
 import Control.Monad.State
 import Control.Monad.Reader
 import Control.Monad.Writer
 import Control.Monad.Except
 import Data.Bits
-import Linker
 import qualified Data.Map as M
+
+import Types
+import Memory
+import TentativeLoad
+import Linker
+
 
 type Error = RuntimeError
 

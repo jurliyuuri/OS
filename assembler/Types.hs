@@ -14,8 +14,9 @@ module Types
 ,toLabel'
 ) where
 import Data.Word
-import Memory
 import Data.Char
+
+import Memory
 
 data Register = F0 | F1 | F2 | F3 | F5 | XX deriving (Show, Eq, Ord)
 data Lvalue = Re Register | RPlusNum Register Word32 | RPlusR Register Register deriving (Show, Eq, Ord)

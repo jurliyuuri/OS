@@ -4,11 +4,11 @@ module TentativeLoad
 ,TentativeLoad(..)
 ,initialAddress
 ) where
-
-import Types
 import qualified Data.Map as M
 import System.Random hiding (next)
 import Data.List
+
+import Types
 
 type Error = String
 
