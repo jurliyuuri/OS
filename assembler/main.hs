@@ -11,9 +11,6 @@ import Linker
 semicolonExtension :: String -> String
 semicolonExtension = unlines . map (takeWhile (/=';')) . lines
 
-fullExecute :: String -> IO ()
-fullExecute str = fullExecute' [str]
-
 fullExecute' :: [String] -> IO ()
 fullExecute' strs = mapM fullParse' strs >>>= \ps -> linker ps >>>= \program ->
  let (boolerh, logs) = execute program in do
@@ -30,9 +27,9 @@ main = do
  args <- getArgs
  case args of 
   [] -> foo
-  a@(x:_)
+  a
    | "-x" `elem` a -> interactive $ filter (/= "-x") a
-   | otherwise -> main' x
+   | otherwise -> main'' a
 
 interactive :: [String] -> IO ()
 interactive [] = hPutStrLn stderr "Give filepath."
@@ -64,11 +61,7 @@ main'' paths = do
  fullExecute' strs
 
 main' :: FilePath -> IO ()
-main' filepath = do
- parse' filepath
- str <- semicolonExtension <$> readFile filepath
- putStrLn $ "\nrunning " ++ filepath ++ ":\n"
- fullExecute str
+main' filepath = main'' [filepath]
 
 parse' :: FilePath -> IO ()
 parse' filepath = do
