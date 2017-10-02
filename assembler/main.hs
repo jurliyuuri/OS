@@ -36,11 +36,10 @@ main = do
 
 interactive :: [String] -> IO ()
 interactive [] = hPutStrLn stderr "Give filepath."
-interactive (filepath:_) = do
- str <- semicolonExtension <$> readFile filepath
- putStrLn $ "\npreparing step-by-step execution for " ++ filepath ++ ":\n"
- fullParse str >>>= \p -> toTentativeLoad p >>>= \loaded -> 
-  bar (initialHardware initialAddress, loaded)
+interactive paths = do
+ strs <- forM paths (fmap semicolonExtension . readFile)
+ putStrLn $ "\npreparing step-by-step execution for " ++ intercalate ", " paths ++ ":\n"
+ strs `getProgramAndApply` \program -> bar (initialHardware initialAddress, program)
 
 bar :: (Hardware, Program) -> IO ()
 bar (hw, program) = do
