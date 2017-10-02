@@ -2,7 +2,6 @@
 module TentativeLoad
 (toTentativeLoad
 ,TentativeLoad(..)
-,initialAddress
 ) where
 import qualified Data.Map as M
 import System.Random hiding (next)
@@ -20,8 +19,8 @@ data TentativeLoad = TentativeLoad {
 detectDuplicate :: (Ord a) => [a] -> [a]
 detectDuplicate = map head . filter ((>1) . length) . group . sort
 
-toTentativeLoad :: [(Instruction, [Label])] -> Either Error TentativeLoad
-toTentativeLoad arr = do
+toTentativeLoad :: Word32 -> [(Instruction, [Label])] -> Either Error TentativeLoad
+toTentativeLoad initAddress arr = do
  let list = concatMap (\(bs,d) -> zip bs $ repeat d) raw2
  case detectDuplicate (map fst list) of
   [] -> return TentativeLoad {tentativeAddressTable = M.fromList raw1, labelTable = M.fromList list}
@@ -29,14 +28,13 @@ toTentativeLoad arr = do
  
  where 
   (raw1, raw2) = unzip $ zipWith3 f ts (tail ts) arr
-  ts = tentativeAddressList
+  ts = tentativeAddressList initAddress
   f :: Word32 -> Word32 -> (Instruction, [Label]) -> 
        ((Word32,(Word32, Instruction)),([Label],Word32))
   f addr next (ins, ls) = ((addr,(next,ins)),(ls,addr))
 
-initialAddress :: Word32
-initialAddress = 0x1482e8d4 -- just a random value with no meaning
 
-tentativeAddressList :: [Word32]
-tentativeAddressList = scanl (+) initialAddress rands
+
+tentativeAddressList :: Word32 -> [Word32]
+tentativeAddressList initAddress = scanl (+) initAddress rands
  where rands = randomRs (1,4) $ mkStdGen 0x90b1d666 -- random-like
