@@ -23,7 +23,7 @@ toTentativeLoad initAddress arr = do
  let list = concatMap (\(bs,d) -> zip bs $ repeat d) raw2
  case detectDuplicate (map fst list) of
   [] -> return TentativeLoad {tentativeAddressTable = M.fromList raw1, labelTable = M.fromList list}
-  labels -> Left $ LinkError $ "duplicating label(s): " ++ intercalate ", " (map unLabel labels)
+  labels -> Left $ LinkError $ "duplicating local label(s): " ++ intercalate ", " (map unLabel labels)
  
  where 
   (raw1, raw2) = unzip $ zipWith3 f ts (tail ts) arr
