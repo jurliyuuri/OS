@@ -14,14 +14,24 @@ import qualified Data.Map as M
 data Program = Program TentativeLoad
 
 linker' :: [ParsedFile] -> Either String Program'
-linker' pfs = do
- let foo = zipWith f pfs [1..]
- undefined
+linker' pfs = case fromListNoDup $ zipWith f pfs [1..] of
+ Left _ -> Left "multiple files lack `kue`"
+ Right dat -> case M.lookup 0 dat of 
+  Nothing -> Left "all files have `kue`"
+  _ -> linker2 dat
 
-f :: ParsedFile -> Int -> (Int, ParsedFile)
+linker2 :: M.Map Word32 ParsedFile -> c
+linker2 dat = let k = M.mapWithKey g dat in undefined
+
+g :: Word32 -> ParsedFile -> (Either LinkError TentativeLoad, ([Label], [Label]))
+g n (ils, (kues, xoks)) = (toTentativeLoad (initialAddress + n*maxSize) ils, (kues, xoks))
+
+f :: ParsedFile -> Word32 -> (Word32, ParsedFile)
 f a@(ils, ([], xoks)) n = (0, a) -- no kue means main
 f a n = (n, a)
 
+maxSize :: Word32
+maxSize = 65536
 
 
 data Program' = Program' {loads :: [TentativeLoad]}
