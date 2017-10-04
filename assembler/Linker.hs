@@ -3,7 +3,7 @@ module Linker
 (linker
 ,Program
 ,initialAddress
-,resolveLabel'
+,resolveLabel
 ,readNX
 ,linker'
 ) where
@@ -11,8 +11,8 @@ import Types
 import Parse
 import TentativeLoad
 import qualified Data.Map as M
+-- type ParsedFile = ([(Instruction, [Label])],([KueInfo],[Label]))
 
-data Program = Program TentativeLoad
 
 linker' :: [ParsedFile] -> Either LinkError Program'
 linker' pfs = case fromListNoDup $ zipWith assignInts pfs [1..] of
@@ -39,16 +39,18 @@ maxSize = 65536
 
 data Program' = Program' {loads :: [TentativeLoad]}
 
--- type ParsedFile = ([(Instruction, [Label])],([KueInfo],[Label]))
+initialAddress :: Word32
+initialAddress = 0x1482e8d4 -- just a random value with no meaning
+
+---- old code
+data Program = Program TentativeLoad
+
 linker :: [ParsedFile] -> Either LinkError Program
 linker [(ils, ([], []))] = Program <$> toTentativeLoad initialAddress ils
 linker _ = error "Linking multiple files is not yet implemented"
 
-initialAddress :: Word32
-initialAddress = 0x1482e8d4 -- just a random value with no meaning
-
-resolveLabel' :: Program -> Label -> Maybe Word32
-resolveLabel' (Program ttl) label = let lt = labelTable ttl in M.lookup label lt
+resolveLabel :: Program -> Label -> Maybe Word32
+resolveLabel (Program ttl) label = let lt = labelTable ttl in M.lookup label lt
 
 readNX :: Program -> Word32 -> Maybe (Word32, Instruction)
 readNX (Program ttl) currentNX = M.lookup currentNX (tentativeAddressTable ttl)
