@@ -40,7 +40,7 @@ maxSize = 65536
 data Program' = Program' {loads :: [TentativeLoad]}
 
 initialAddress :: Word32
-initialAddress = 0x1482e8d4 -- just a random value with no meaning
+initialAddress = 0x14830000 -- just a random value with no meaning
 
 ---- old code
 data Program = Program TentativeLoad
