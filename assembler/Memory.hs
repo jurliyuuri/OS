@@ -79,13 +79,13 @@ instance Show Memory where
 
 type Foo = (Maybe Word8, Maybe Word8, Maybe Word8, Maybe Word8)
 
-toStr :: M.Map Word32 (Maybe Word32) -> String
+toStr :: M.Map Word32 (Either Foo Word32) -> String
 toStr = unlines . map foobar . M.toList
  where
-  foobar (a,b) = ('\t':) $ show a ++ ": " ++ case b of {Just q -> show q; Nothing -> "*"}
+  foobar (a,b) = ('\t':) $ show a ++ ": " ++ case b of {Right q -> show q; Left a -> "*"}
 
-to32 :: M.Map Word32 Word8 -> M.Map Word32 (Maybe Word32)
-to32 = fmap baz . M.fromListWith foo . map bar . M.toList
+to32 :: M.Map Word32 Word8 -> M.Map Word32 (Either Foo Word32)
+to32 = fmap baz' . M.fromListWith foo . map bar . M.toList
  where
   bar :: (Word32, Word8) -> (Word32, Foo)
   bar (w32, w8)
@@ -99,6 +99,8 @@ to32 = fmap baz . M.fromListWith foo . map bar . M.toList
   m :: Maybe a -> Maybe a -> Maybe a
   m Nothing b = b
   m a _ = a
+  baz' :: Foo -> Either Foo Word32
+  baz' a = case baz a of{Nothing -> Left a; Just b -> Right b}
   baz :: Foo -> Maybe Word32
   baz (a,b,c,d) = do
    w <- a
