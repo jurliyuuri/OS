@@ -13,6 +13,18 @@ import qualified Data.Map as M
 
 data Program = Program TentativeLoad
 
+linker' :: [ParsedFile] -> Either String Program'
+linker' pfs = do
+ let foo = zipWith f pfs [1..]
+ undefined
+
+f :: ParsedFile -> Int -> (Int, ParsedFile)
+f a@(ils, ([], xoks)) n = (0, a) -- no kue means main
+f a n = (n, a)
+
+
+
+data Program' = Program' {loads :: [TentativeLoad]}
 
 -- type ParsedFile = ([(Instruction, [Label])],([KueInfo],[Label]))
 linker :: [ParsedFile] -> Either LinkError Program
