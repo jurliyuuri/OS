@@ -25,11 +25,16 @@ linker' pfs = case fromListNoDup $ zipWith assignInts pfs [1..] of
   Nothing -> Left $ LinkError "all files have `kue`"
   _ -> do
    loadeds' <- M.traverseWithKey loadWithInt dat
-   sanitize loadeds'
+   sanitizeKue loadeds'
 
-sanitize :: M.Map PageId (TentativeLoad, ([Label], [Label])) -> Either LinkError Program'
-sanitize foo = do
- return $ Program' foo
+sanitizeKue :: M.Map PageId (TentativeLoad, ([Label], [Label])) -> Either LinkError Program'
+sanitizeKue foo = do
+ let pidKues = M.toList $ fmap (\(_,(ks,_)) -> ks) foo
+ let kuePid = concatMap (\(a,bs) -> zip bs $ repeat a) $ pidKues
+ case fromListNoDup kuePid of
+  Right dat -> return $ Program' foo dat
+  Left labels -> Left $ LinkError $
+   "conflict: different files export the same label(s) `" ++ intercalate ", " (map unLabel labels) ++ "“"
 
 loadWithInt :: PageId -> ParsedFile -> Either LinkError (TentativeLoad, ([Label], [Label]))
 loadWithInt n (ils, (kues, xoks)) = do
@@ -51,19 +56,28 @@ assignInts a@(_, ([], _)) _ = (0, a) -- no kue means main
 assignInts a n = (n, a)
 
 readNX' :: Program' -> Word32 -> Maybe (Word32, Instruction)
-readNX' (Program' pages) currentNX = do
+readNX' (Program'{loads=pages}) currentNX = do
  (ttl, _) <- M.lookup (toPageId currentNX) pages
  M.lookup currentNX (tentativeAddressTable ttl)
 
 resolveLabel' :: Word32 -> Program' -> Label -> Maybe Word32
-resolveLabel' currentNX (Program' pages) label = do
- (ttl, _) <- M.lookup (toPageId currentNX) pages -- open the page
- undefined
+resolveLabel' currentNX (Program'{loads=pages, kueTable=kt}) label = do
+ (ttl, (_, xoks)) <- M.lookup (toPageId currentNX) pages -- open the page
+ case M.lookup label (labelTable ttl) of -- first, search locally
+  Just a -> return a
+  Nothing
+   | label `notElem` xoks -> Nothing
+   | otherwise -> do
+    pageId <- M.lookup label kt -- ask kueTable for the page
+    (ttl', _) <- M.lookup pageId pages -- open the page
+    M.lookup label (labelTable ttl')
 
 toPageId :: Word32 -> PageId
 toPageId addr = fromIntegral $ (addr - initialAddress) `div` maxSize
 
-data Program' = Program' {loads :: M.Map PageId (TentativeLoad, ([Label], [Label]))}
+data Program' = Program' {
+ loads :: M.Map PageId (TentativeLoad, ([Label], [Label])), 
+ kueTable :: M.Map Label PageId}
 
 initialAddress :: Word32
 initialAddress = 0x14830000 -- just a random value with no meaning
