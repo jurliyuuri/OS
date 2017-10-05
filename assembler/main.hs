@@ -76,6 +76,7 @@ demo :: IO ()
 demo = do
  main' "fib_non_recursive"
  main' "fib_recursive"
+ main'' ["fib_lib", "fib_main"]
  main' "tarai"
  main' "quicksort"
 
