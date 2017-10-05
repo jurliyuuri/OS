@@ -143,7 +143,8 @@ getValueFromR :: Rvalue -> VIO Word32
 getValueFromR (Pure word32) = return word32
 getValueFromR (Lab label) = do
  program <- ask
- case resolveLabel' program label of
+ currentNX <- nx <$> getCPU
+ case resolveLabel currentNX program label of
   Nothing -> error' $ "Undefined label `" ++ unLabel label ++ "`"
   Just addr -> return addr
 getValueFromR (L (Re register)) = getRegister register

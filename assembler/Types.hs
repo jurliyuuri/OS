@@ -10,11 +10,15 @@ module Types
 ,Word32
 ,ParseError(..)
 ,RuntimeError(..)
+,LinkError(..)
 ,toFunc
 ,toLabel'
+,fromListNoDup
 ) where
 import Data.Word
 import Data.Char
+import qualified Data.Map as M
+import Data.List
 
 import Memory
 
@@ -27,6 +31,7 @@ newtype Label = Label{unLabel :: String} deriving(Show, Eq, Ord)
 
 newtype ParseError = ParseError String deriving(Show, Eq, Ord)
 newtype RuntimeError = RuntimeError String deriving(Show, Eq, Ord)
+newtype LinkError = LinkError String deriving(Show, Eq, Ord)
 
 toFunc :: Cond -> (Word32 -> Word32 -> Bool)
 toFunc Xtlonys = (<=)
@@ -50,3 +55,9 @@ toLabel' str
  | all (`elem` "pFftcxkqhRzmnrljwbVvdsgXiyuoea0123456789'-_") str = Just(Label str)
  | otherwise = Nothing
 
+fromListNoDup :: Ord k => [(k, a)] -> Either [k] (M.Map k a)
+fromListNoDup list = case detectDuplicate (map fst list) of
+ [] -> return $ M.fromList list
+ dups -> Left dups
+ where
+  detectDuplicate = map head . filter ((>1) . length) . group . sort
