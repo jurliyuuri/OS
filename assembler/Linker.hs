@@ -82,15 +82,13 @@ data Program' = Program' {
 initialAddress :: Word32
 initialAddress = 0x14830000 -- just a random value with no meaning
 
----- old code
-data Program = Program TentativeLoad
+type Program = Program'
 
 linker :: [ParsedFile] -> Either LinkError Program
-linker [(ils, ([], []))] = Program <$> toTentativeLoad initialAddress ils
-linker _ = error "Linking multiple files is not yet implemented"
+linker = linker'
 
 resolveLabel :: Word32 -> Program -> Label -> Maybe Word32
-resolveLabel currentNX (Program ttl) label = let lt = labelTable ttl in M.lookup label lt
+resolveLabel = resolveLabel'
 
 readNX :: Program -> Word32 -> Maybe (Word32, Instruction)
-readNX (Program ttl) currentNX = M.lookup currentNX (tentativeAddressTable ttl)
+readNX = readNX'
