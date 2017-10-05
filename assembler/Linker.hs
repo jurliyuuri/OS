@@ -39,10 +39,11 @@ loadWithInt n (ils, (kues, xoks)) = do
  unless (null xokConflicts) $ Left $ LinkError $ 
    "conflict: cannot import label(s) `" ++ intercalate ", " (map unLabel xokConflicts) ++ 
    "` that is already defined in the file"
- let kueWithoutEvidence = filter (not . \k -> k `elem` xoks || k `M.member` labelTable loaded) kues
+ -- kues must come from internal label table 
+ let kueWithoutEvidence = filter (`M.notMember` labelTable loaded) kues
  unless (null kueWithoutEvidence) $ Left $ LinkError $
   "cannot export label(s) `" ++ intercalate ", " (map unLabel kueWithoutEvidence) ++
-  "` that cannot be referenced"
+  "` that is not defined in the file"
  return (loaded, (kues, xoks))
 
 assignInts :: ParsedFile -> PageId -> (PageId, ParsedFile)
