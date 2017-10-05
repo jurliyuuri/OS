@@ -8,12 +8,15 @@ module Memory
 ,writeByte
 ,unM
 ,runState,execState,evalState
+,RightAlign(..)
 ) where
 import qualified Data.Map as M
 import Data.Word
 import Control.Monad.State
 import System.Random
 import Data.Bits
+import Data.List
+import Data.Maybe(fromJust)
 
 
 decompose :: Word32 -> (Word8, Word8, Word8, Word8)
@@ -79,13 +82,14 @@ instance Show Memory where
 
 type Foo = (Maybe Word8, Maybe Word8, Maybe Word8, Maybe Word8)
 
-toStr :: M.Map Word32 (Maybe Word32) -> String
+toStr :: M.Map Word32 (Either Foo Word32) -> String
 toStr = unlines . map foobar . M.toList
  where
-  foobar (a,b) = ('\t':) $ show a ++ ": " ++ case b of {Just q -> show q; Nothing -> "*"}
-
-to32 :: M.Map Word32 Word8 -> M.Map Word32 (Maybe Word32)
-to32 = fmap baz . M.fromListWith foo . map bar . M.toList
+  foobar (a,b) = ('\t':) $ rightAlign a ++ ": " ++ case b of 
+   Right q -> rightAlign q
+   Left (v,w,x,y) -> unwords $ map rightAlign [v,w,x,y]
+to32 :: M.Map Word32 Word8 -> M.Map Word32 (Either Foo Word32)
+to32 = fmap baz' . M.fromListWith foo . map bar . M.toList
  where
   bar :: (Word32, Word8) -> (Word32, Foo)
   bar (w32, w8)
@@ -99,6 +103,8 @@ to32 = fmap baz . M.fromListWith foo . map bar . M.toList
   m :: Maybe a -> Maybe a -> Maybe a
   m Nothing b = b
   m a _ = a
+  baz' :: Foo -> Either Foo Word32
+  baz' a = case baz a of{Nothing -> Left a; Just b -> Right b}
   baz :: Foo -> Maybe Word32
   baz (a,b,c,d) = do
    w <- a
@@ -107,3 +113,29 @@ to32 = fmap baz . M.fromListWith foo . map bar . M.toList
    z <- d
    return $ compose (w,x,y,z)
 
+class RightAlign a where
+ rightAlign :: a -> String
+ maxLength :: a -> Int
+
+instance RightAlign Word8 where
+ rightAlign = rightAlign'
+ maxLength = maxLength'
+
+instance RightAlign Word32 where
+ rightAlign = rightAlign'
+ maxLength = maxLength'
+
+instance (RightAlign a) => RightAlign (Maybe a) where
+ rightAlign a@Nothing = replicate (maxLength (fromJust a) - 1) ' ' ++ "*"
+ rightAlign (Just a) = rightAlign a
+ maxLength a = maxLength (fromJust a)
+
+
+rightAlign' :: (Bounded a, Show a) => a -> String
+rightAlign' a = replicate (maxLength' a - length b) ' ' ++ b
+ where
+  b = show a
+
+maxLength' :: (Bounded a, Show a) => a -> Int
+maxLength' a = max (f minBound) (f maxBound)
+ where f q = length $ show (q `asTypeOf` a)
