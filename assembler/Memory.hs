@@ -85,11 +85,9 @@ type Foo = (Maybe Word8, Maybe Word8, Maybe Word8, Maybe Word8)
 toStr :: M.Map Word32 (Either Foo Word32) -> String
 toStr = unlines . map foobar . M.toList
  where
-  foobar (a,b) = ('\t':) $ show a ++ ": " ++ case b of 
-   Right q -> show q
-   Left (v,w,x,y) -> intercalate "_" $ map barfoo [v,w,x,y]
-  barfoo Nothing = "*"
-  barfoo (Just a) = show a
+  foobar (a,b) = ('\t':) $ rightAlign a ++ ": " ++ case b of 
+   Right q -> rightAlign q
+   Left (v,w,x,y) -> unwords $ map rightAlign [v,w,x,y]
 to32 :: M.Map Word32 Word8 -> M.Map Word32 (Either Foo Word32)
 to32 = fmap baz' . M.fromListWith foo . map bar . M.toList
  where
