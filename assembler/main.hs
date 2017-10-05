@@ -73,10 +73,11 @@ parse' filepath = do
 
 
 demo :: IO ()
-demo = do
- main' "fib_non_recursive"
- main' "fib_recursive"
- main'' ["fib_lib", "fib_main"]
- main' "tarai"
- main' "quicksort"
+demo = mapM_ main'' [
+ ["fib_non_recursive"]
+ ,["fib_recursive"]
+ ,["fib_lib", "fib_main"]
+ ,["tarai"]
+ ,["quicksort"]
+ ]
 
