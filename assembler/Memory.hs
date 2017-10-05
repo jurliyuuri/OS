@@ -8,6 +8,7 @@ module Memory
 ,writeByte
 ,unM
 ,runState,execState,evalState
+,RightAlign(..)
 ) where
 import qualified Data.Map as M
 import Data.Word
@@ -15,6 +16,7 @@ import Control.Monad.State
 import System.Random
 import Data.Bits
 import Data.List
+import Data.Maybe(fromJust)
 
 
 decompose :: Word32 -> (Word8, Word8, Word8, Word8)
@@ -113,3 +115,29 @@ to32 = fmap baz' . M.fromListWith foo . map bar . M.toList
    z <- d
    return $ compose (w,x,y,z)
 
+class RightAlign a where
+ rightAlign :: a -> String
+ maxLength :: a -> Int
+
+instance RightAlign Word8 where
+ rightAlign = rightAlign'
+ maxLength = maxLength'
+
+instance RightAlign Word32 where
+ rightAlign = rightAlign'
+ maxLength = maxLength'
+
+instance (RightAlign a) => RightAlign (Maybe a) where
+ rightAlign a@Nothing = replicate (maxLength (fromJust a) - 1) ' ' ++ "*"
+ rightAlign (Just a) = rightAlign a
+ maxLength a = maxLength (fromJust a)
+
+
+rightAlign' :: (Bounded a, Show a) => a -> String
+rightAlign' a = replicate (maxLength' a - length b) ' ' ++ b
+ where
+  b = show a
+
+maxLength' :: (Bounded a, Show a) => a -> Int
+maxLength' a = max (f minBound) (f maxBound)
+ where f q = length $ show (q `asTypeOf` a)
