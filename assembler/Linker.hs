@@ -33,8 +33,6 @@ assignInts :: ParsedFile -> Int -> (Int, ParsedFile)
 assignInts a@(ils, ([], xoks)) n = (0, a) -- no kue means main
 assignInts a n = (n, a)
 
-maxSize :: Word32
-maxSize = 65536
 
 
 data Program' = Program' {loads :: [TentativeLoad]}

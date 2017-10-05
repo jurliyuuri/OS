@@ -2,13 +2,17 @@
 module TentativeLoad
 (toTentativeLoad
 ,TentativeLoad(..)
+,maxSize
 ) where
 import qualified Data.Map as M
 import System.Random hiding (next)
 import Data.List
+import Control.Monad
 
 import Types
 
+maxSize :: Word32
+maxSize = 65536
 
 data TentativeLoad = TentativeLoad {
  tentativeAddressTable :: M.Map Word32 (Word32, Instruction), 
@@ -19,6 +23,10 @@ data TentativeLoad = TentativeLoad {
 toTentativeLoad :: Word32 -> [(Instruction, [Label])] -> Either LinkError TentativeLoad
 toTentativeLoad initAddress arr = do
  let list = concatMap (\(bs,d) -> zip bs $ repeat d) raw2
+ unless (null arr) $ 
+  let (_, (finalAddress, _)) = last raw1 in 
+   when (finalAddress >= initAddress + maxSize) $
+    Left $ LinkError $ "size limit of a single file was exceeded"
  case fromListNoDup list of
   Right ltable -> return TentativeLoad {tentativeAddressTable = M.fromList raw1, labelTable = ltable}
   Left labels -> Left $ LinkError $ "duplicating local label(s): " ++ intercalate ", " (map unLabel labels)
