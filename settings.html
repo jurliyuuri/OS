@@ -30,6 +30,7 @@
 
 <h2>1. ニーモニック一覧</h2>
 <p>細かい仕様が確定しておらず<a href="https://github.com/jurliyuuri/OS/tree/master/assembler">インタプリタ</a>でまだ実行できない命令についてはフォントサイズを小さくしている。</p>
+<h3>1-1. 移動命令</h3>
 <table class="qq" border="1" bordercolor="#888" cellspacing="0">
 <tbody>
 <tr>
@@ -45,10 +46,43 @@
 <td style="width:307px;height:18px">&nbsp;複製</td>
 </tr>
 <tr>
-<td>&nbsp;ata</td>
-<td>&nbsp;atakeses</td>
-<td>&nbsp;add</td>
-<td>&nbsp;加算</td>
+<td>&nbsp;malkrz</td>
+<td>&nbsp;mal krantairzarth</td>
+<td>
+</td>
+<td>&nbsp;フラグが立っているときのみ複製する
+</td>
+</tr>
+
+<tr>
+<td>&nbsp;fen</td>
+<td>&nbsp;fav es niv e'i</td>
+<td>&nbsp;nop<br>
+</td>
+<td>&nbsp;何もしない。krz f0 f0と等価。</td>
+</tr>
+<tr>
+<td>&nbsp;inj<span>&nbsp;&nbsp;</span></td>
+<td>&nbsp;irzarst ileceonj</td>
+<td>&nbsp;</td>
+<td style="width:287px;height:18px">&nbsp;二重移動 (第1オペランドの値を第2オペランドに代入しつつ第2オペランドの古い値を第3オペランドに代入。'c'i指定があるときは第3オペランドと第1オペランドの役割が逆転する。)</td>
+</tr>
+</tbody>
+</table>
+<h3>1-2. 算術命令</h3>
+<table class="qq" border="1" bordercolor="#888" cellspacing="0">
+<tbody>
+<tr>
+<td>&nbsp;命令</td>
+<td>&nbsp;語源</td>
+<td>&nbsp;x86</td>
+<td>&nbsp;意味</td>
+</tr>
+<tr>
+<td style="width:101px;height:18px">&nbsp;ata</td>
+<td style="width:116px;height:18px">&nbsp;atakeses</td>
+<td style="width:60px">&nbsp;add</td>
+<td style="width:307px;height:18px">&nbsp;加算</td>
 </tr>
 <tr>
 <td>&nbsp;nta</td>
@@ -110,13 +144,17 @@
 <td >&nbsp;</td>
 <td >&nbsp;算術右シフト</td>
 </tr>
+</tbody>
+</table>
+<h3>1-3. 比較命令</h3>
+<p>fiの後に値を二つ取り、その二つの大小に応じてフラグを設定する命令。<code>'c'i</code>擬似命令や<code>'i'c</code>擬似命令の影響を受けない。</p>
+<table class="qq" border="1" bordercolor="#888" cellspacing="0">
+<tbody>
 <tr>
-<td>&nbsp;malkrz</td>
-<td>&nbsp;mal krantairzarth</td>
-<td>
-</td>
-<td>&nbsp;フラグが立っているときのみ複製する
-</td>
+<td>&nbsp;命令</td>
+<td>&nbsp;語源</td>
+<td>&nbsp;x86</td>
+<td>&nbsp;意味</td>
 </tr>
 <tr>
 <td>&nbsp;fi ~ xtlo</td>
@@ -177,19 +215,6 @@
 <td>&nbsp;fi * es * le loler (ny&nbsp;snakxaz)</td>
 <td></td>
 <td>&nbsp;超過ならフラグを立てる（符号無し比較）</td>
-</tr>
-<tr>
-<td>&nbsp;fen</td>
-<td>&nbsp;fav es niv e'i</td>
-<td>&nbsp;nop<br>
-</td>
-<td>&nbsp;何もしない。krz f0 f0と等価。</td>
-</tr>
-<tr>
-<td>&nbsp;inj<span>&nbsp;&nbsp;</span></td>
-<td>&nbsp;irzarst ileceonj</td>
-<td>&nbsp;</td>
-<td style="width:287px;height:18px">&nbsp;二重移動 (第1オペランドの値を第2オペランドに代入しつつ第2オペランドの古い値を第3オペランドに代入。'c'i指定があるときは第3オペランドと第1オペランドの役割が逆転する。)</td>
 </tr>
 </tbody>
 </table>
