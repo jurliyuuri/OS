@@ -37,6 +37,7 @@ rl "ada" = Just Ada
 rl "ekc" = Just Ekc
 rl "dal" = Just Dal
 rl "dto" = Just Dto
+rl "dtosna" = Just Dtosna
 rl "dro" = Just Dro
 rl "malkrz" = Just MalKrz
 rl _ = Nothing

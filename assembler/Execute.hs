@@ -12,6 +12,7 @@ import Control.Monad.Reader
 import Control.Monad.Writer
 import Control.Monad.Except
 import Data.Bits
+import Data.Int
 
 import Types
 import Memory
@@ -88,6 +89,9 @@ setRegister F3 v = modify $ \(cpu, m) -> (cpu{f3 = v},m)
 setRegister F5 v = modify $ \(cpu, m) -> (cpu{f5 = v},m)
 setRegister XX v = modify $ \(cpu, m) -> (cpu{xx = v},m)
 
+dtosna :: Word32 -> Word32 -> Word32
+dtosna x y = fromIntegral $ x' `shift` negate (fromIntegral y)
+ where x' = fromIntegral x :: Int32 
 
 executeInstruction :: Instruction -> VIO ()
 executeInstruction TERMINATE = error "cannot happen"
@@ -100,6 +104,7 @@ executeInstruction (Ada r l) = templ (.&.) r l
 executeInstruction (Ekc r l) = templ (.|.) r l
 executeInstruction (Dal r l) = templ (\x y -> complement $ x `xor` y) r l
 executeInstruction (Dto r l) = templ (\x y -> x `shift` negate (fromIntegral y)) r l
+executeInstruction (Dtosna r l) = templ dtosna r l
 executeInstruction (Dro r l) = templ (\x y -> x `shift` fromIntegral y) r l
 executeInstruction (MalKrz r l) = do
  fl <- getFlag
