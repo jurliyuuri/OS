@@ -23,7 +23,7 @@ type Error = RuntimeError
 error' :: String -> VIO a
 error' str = do
  (cpu, mem) <- get
- lift . lift . throwError . RuntimeError $ str ++ "\nCPU: " ++ show cpu ++ "\nMemory: " ++ show mem
+ lift . lift . throwError . RuntimeError str $ "CPU: " ++ show cpu ++ "\nMemory: " ++ show mem
 
 
 

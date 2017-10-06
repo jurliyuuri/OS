@@ -11,6 +11,7 @@ module Types
 ,ParseError(..)
 ,RuntimeError(..)
 ,LinkError(..)
+,NormalMessage(..)
 ,toFunc
 ,toLabel'
 ,fromListNoDup
@@ -29,9 +30,10 @@ data Instruction = TERMINATE | Krz Rvalue Lvalue | Ata Rvalue Lvalue | Nta Rvalu
 data Cond = Xtlo | Xylo | Clo | Xolo | Llo | Niv | Xtlonys | Xylonys | Xolonys | Llonys deriving (Show, Eq, Ord)
 newtype Label = Label{unLabel :: String} deriving(Show, Eq, Ord)
 
-newtype ParseError = ParseError String deriving(Show, Eq, Ord)
-newtype RuntimeError = RuntimeError String deriving(Show, Eq, Ord)
-newtype LinkError = LinkError String deriving(Show, Eq, Ord)
+newtype ParseError = ParseError String deriving(Eq, Ord)
+data RuntimeError = RuntimeError String String deriving(Eq, Ord)
+newtype LinkError = LinkError String deriving(Eq, Ord)
+newtype NormalMessage = NormalMessage String deriving(Eq, Ord)
 
 toFunc :: Cond -> (Word32 -> Word32 -> Bool)
 toFunc Xtlonys = (<=)
