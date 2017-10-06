@@ -40,17 +40,17 @@
 <td>&nbsp;意味</td>
 </tr>
 <tr>
-<td style="width:101px;height:18px">&nbsp;krz</td>
+<td style="width:65px;height:18px">&nbsp;krz</td>
 <td style="width:116px;height:18px">&nbsp;krantairzarth</td>
-<td style="width:60px">&nbsp;mov</td>
-<td style="width:307px;height:18px">&nbsp;複製</td>
+<td style="width:50px">&nbsp;mov</td>
+<td style="width:407px;height:18px">&nbsp;複製（第1オペランドの値を第2オペランドに代入。'c'i指定があるときは第3オペランドと第1オペランドの役割が逆転する。）</td>
 </tr>
 <tr>
 <td>&nbsp;malkrz</td>
 <td>&nbsp;mal krantairzarth</td>
 <td>
 </td>
-<td>&nbsp;フラグが立っているときのみ複製する
+<td>&nbsp;フラグが立っているときのみkrzを行う
 </td>
 </tr>
 
@@ -59,7 +59,7 @@
 <td>&nbsp;fav es niv e'i</td>
 <td>&nbsp;nop<br>
 </td>
-<td>&nbsp;何もしない。krz f0 f0と等価。</td>
+<td>&nbsp;何もしない。krz f0 f0と等価。オペランドを取らない。</td>
 </tr>
 <tr>
 <td>&nbsp;inj<span>&nbsp;&nbsp;</span></td>
@@ -71,6 +71,7 @@
 </table>
 <h3>1-2. 算術命令</h3>
 <p>基本的にオペランドを2つ取り、第二オペランド（書き込み可能である必要がある）に対して第一オペランドの値を用いた算術演算を行う。例えば、<code>nta 4 f5</code>であれば、「レジスタf5の値を読み取り、そこから4を引いた値をレジスタf5に書き込む」という意味である。<code>'c'i</code>擬似命令がある場合は第一オペランドと第二オペランドの役割が入れ替わる。</p>
+<p><code>nac</code>だけはオペランドを1つのみ取る。</p>
 <table class="qq" border="1" bordercolor="#888" cellspacing="0">
 <tbody>
 <tr>
@@ -148,7 +149,7 @@
 </tbody>
 </table>
 <h3>1-3. 比較命令</h3>
-<p>fiの後に値を二つ取り、その二つの大小に応じてフラグを設定する命令。<code>'c'i</code>擬似命令や<code>'i'c</code>擬似命令の影響を受けない。</p>
+<p><code>fi</code>の後に値を二つ取り、その二つの大小に応じてフラグを設定する命令。<code>'c'i</code>擬似命令や<code>'i'c</code>擬似命令の影響を受けない。</p>
 <table class="qq" border="1" bordercolor="#888" cellspacing="0">
 <tbody>
 <tr>
