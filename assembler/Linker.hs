@@ -30,7 +30,7 @@ linker' pfs = case fromListNoDup $ zipWith assignInts pfs [1..] of
 sanitizeKue :: M.Map PageId (TentativeLoad, ([Label], [Label])) -> Either LinkError Program'
 sanitizeKue foo = do
  let pidKues = M.toList $ fmap (\(_,(ks,_)) -> ks) foo
- let kuePid = concatMap (\(a,bs) -> zip bs $ repeat a) $ pidKues
+ let kuePid = concatMap (\(a,bs) -> zip bs $ repeat a) pidKues
  case fromListNoDup kuePid of
   Right dat -> return $ Program' foo dat
   Left labels -> Left $ LinkError $
@@ -38,7 +38,7 @@ sanitizeKue foo = do
 
 loadWithInt :: PageId -> ParsedFile -> Either LinkError (TentativeLoad, ([Label], [Label]))
 loadWithInt n (ils, (kues, xoks)) = do
- loaded <- toTentativeLoad (initialAddress + (fromIntegral n)*maxSize) ils
+ loaded <- toTentativeLoad (initialAddress + fromIntegral n * maxSize) ils
  -- xoks must not conflict with internal label table
  let xokConflicts = filter (`M.member` labelTable loaded) xoks
  unless (null xokConflicts) $ Left $ LinkError $ 
@@ -56,12 +56,12 @@ assignInts a@(_, ([], _)) _ = (0, a) -- no kue means main
 assignInts a n = (n, a)
 
 readNX' :: Program' -> Word32 -> Maybe (Word32, Instruction)
-readNX' (Program'{loads=pages}) currentNX = do
+readNX' Program'{loads=pages} currentNX = do
  (ttl, _) <- M.lookup (toPageId currentNX) pages
  M.lookup currentNX (tentativeAddressTable ttl)
 
 resolveLabel' :: Word32 -> Program' -> Label -> Maybe Word32
-resolveLabel' currentNX (Program'{loads=pages, kueTable=kt}) label = do
+resolveLabel' currentNX Program'{loads=pages, kueTable=kt} label = do
  (ttl, (_, xoks)) <- M.lookup (toPageId currentNX) pages -- open the page
  case M.lookup label (labelTable ttl) of -- first, search locally
   Just a -> return a

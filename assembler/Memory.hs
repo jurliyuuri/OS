@@ -15,7 +15,6 @@ import Data.Word
 import Control.Monad.State
 import System.Random
 import Data.Bits
-import Data.List
 import Data.Maybe(fromJust)
 
 
