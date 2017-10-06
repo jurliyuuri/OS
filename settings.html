@@ -70,6 +70,7 @@
 </tbody>
 </table>
 <h3>1-2. 算術命令</h3>
+<p>基本的にオペランドを2つ取り、第二オペランド（書き込み可能である必要がある）に対して第一オペランドの値を用いた算術演算を行う。例えば、<code>nta 4 f5</code>であれば、「レジスタf5の値を読み取り、そこから4を引いた値をレジスタf5に書き込む」という意味である。<code>'c'i</code>擬似命令がある場合は第一オペランドと第二オペランドの役割が入れ替わる。</p>
 <table class="qq" border="1" bordercolor="#888" cellspacing="0">
 <tbody>
 <tr>
@@ -93,13 +94,13 @@
 <tr style="font-size: 80%">
 <td >&nbsp;lat</td>
 <td >&nbsp;latvaves</td>
-<td >&nbsp;mul</td>
+<td >&nbsp;(mul)</td>
 <td >&nbsp;乗算</td>
 </tr>
 <tr style="font-size: 80%">
 <td>&nbsp;(kak)</td>
 <td>&nbsp;(kakites)</td>
-<td>&nbsp;div</td>
+<td>&nbsp;(div)</td>
 <td>&nbsp;除算</td>
 </tr>
 <tr>
@@ -141,7 +142,7 @@
 <tr>
 <td >&nbsp;dtosna</td>
 <td >&nbsp;dusnij&nbsp;tesnokonj (snakxazasyk)</td>
-<td >&nbsp;</td>
+<td >&nbsp;sar</td>
 <td >&nbsp;算術右シフト</td>
 </tr>
 </tbody>
