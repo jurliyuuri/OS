@@ -13,6 +13,9 @@ import Types
 semicolonExtension :: String -> String
 semicolonExtension = unlines . map (takeWhile (/=';')) . lines
 
+fullExecute :: String -> IO ()
+fullExecute = fullExecute' . return
+
 fullExecute' :: [String] -> IO ()
 fullExecute' strs = strs `getProgramAndApply` \program ->
  let (boolerh, logs) = execute program in do

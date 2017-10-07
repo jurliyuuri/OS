@@ -111,7 +111,7 @@ executeInstruction (Lat r ll lh) = do
  v1 <- getValueFromR r
  v2 <- getValueFromR (L ll)
  let prod = (fromIntegral v1::Word64) * (fromIntegral v2::Word64)
- let higher = fromIntegral $ prod `shift` 32 :: Word32
+ let higher = fromIntegral $ prod `shift` (-32) :: Word32
  let lower = fromIntegral prod :: Word32
  setValueToL lh higher
  setValueToL ll lower
