@@ -12,6 +12,7 @@ import Control.Monad.Reader
 import Control.Monad.Writer
 import Control.Monad.Except
 import Data.Bits
+import Data.Word
 import Data.Int
 
 import Types
@@ -106,6 +107,14 @@ executeInstruction (Dal r l) = templ (\x y -> complement $ x `xor` y) r l
 executeInstruction (Dto r l) = templ (\x y -> x `shift` negate (fromIntegral y)) r l
 executeInstruction (Dtosna r l) = templ dtosna r l
 executeInstruction (Dro r l) = templ (\x y -> x `shift` fromIntegral y) r l
+executeInstruction (Lat r ll lh) = do
+ v1 <- getValueFromR r
+ v2 <- getValueFromR (L ll)
+ let prod = (fromIntegral v1::Word64) * (fromIntegral v2::Word64)
+ let higher = fromIntegral $ prod `shift` 32 :: Word32
+ let lower = fromIntegral prod :: Word32
+ setValueToL lh higher
+ setValueToL ll lower
 executeInstruction (MalKrz r l) = do
  fl <- getFlag
  when fl $ executeInstruction (Krz r l)
