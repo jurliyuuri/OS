@@ -115,6 +115,14 @@ executeInstruction (Lat r ll lh) = do
  let lower = fromIntegral prod :: Word32
  setValueToL lh higher
  setValueToL ll lower
+executeInstruction (Latsna r ll lh) = do
+ v1 <- getValueFromR r
+ v2 <- getValueFromR (L ll)
+ let prod = (fromIntegral (fromIntegral v1::Int32)::Word64) * (fromIntegral (fromIntegral v2::Int32)::Word64)
+ let higher = fromIntegral $ prod `shift` (-32) :: Word32
+ let lower = fromIntegral prod :: Word32
+ setValueToL lh higher
+ setValueToL ll lower
 executeInstruction (MalKrz r l) = do
  fl <- getFlag
  when fl $ executeInstruction (Krz r l)

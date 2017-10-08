@@ -108,6 +108,13 @@ toI ("lat":x:y:z:bs) = do
  lh <- lift $ if isCI_ then parseL y else parseL z
  rest <- toI bs
  return $ (Just$Lat r ll lh,[]) : rest
+toI ("latsna":x:y:z:bs) = do  
+ isCI_ <- isCI <$> get
+ r  <- lift $ if isCI_ then parseR z else parseR x
+ ll <- lift $ if isCI_ then parseL x else parseL y 
+ lh <- lift $ if isCI_ then parseL y else parseL z
+ rest <- toI bs
+ return $ (Just$Latsna r ll lh,[]) : rest
 toI ("fi":x:y:z:bs)
  | isJust $ parseCond z = do
   a <- lift $ parseR x
