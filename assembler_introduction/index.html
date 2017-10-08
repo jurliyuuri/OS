@@ -8,18 +8,53 @@
 .ny_jurli{
 	background-color: #ffeeee;
 	font-size:90%;
+	padding: 0 10px;
 }
 </style>
+<script>
+function hide_ny_jurli()
+{
+	var elems = document.getElementsByClassName("ny_jurli");
+	for(var i=0;i<elems.length;i++){
+		elems[i].style.display = "none";
+	}
+}
+</script>
 </head>
 <body class="cool">
 <h1>2003lk入門</h1>
 <p>ようこそ！ここでは2003lkの解説をしていきます。2003lkを学ぶと、連邦情報処理研究所が開発している『革命的計算機』（故イェスカ同志の御言葉）、2003'd ferlesyl (2003f) に様々な計算を正確に・高速にさせることができるようになります。プログラミング（lerlo）の前提知識は要求しないような書き方になっているはずなので、よろしくお願いします。</p>
-<p class="ny_jurli">ここの部分のように、背景色が赤くなっている部分は、真理設定でないことを意味します。基本的にこの文書（理語バージョン）はファイクレオネでもそのまま通るような、真理設定にできるだけ近くなるような書き方をしていきますが、一部（実行環境のインストール方法など）どうしても非真理設定になるものがあるので、このような対応を取ります。</p>
+<div class="ny_jurli">
+	<p>ここの部分のように、背景色が赤くなっている部分は、真理設定でないことを意味します。基本的にこの文書（理語バージョン）はファイクレオネでもそのまま通るような、真理設定にできるだけ近くなるような書き方をしていきますが、一部（実行環境のインストール方法など）どうしても非真理設定になるものがあるので、このような対応を取ります。→<input type="button" value="非真理設定を隠す" onclick="hide_ny_jurli()">をクリックすると非真理設定が非表示になります。ページを再読み込みすると戻ります。</p>
+<hr>
+<h2>現世にまつわる諸情報</h2>
+<h3>2003lkを現世で使う方法</h3>
+<ul>
+	<li><a href="https://github.com/jurliyuuri/OS/tree/master/assembler">Haskell版インタプリタ</a>：j.vが作っている最新版。インストール方法の説明を書けていないので、分からなかったら<a href="https://twitter.com/sosoBOTpi">作者</a>に質問するか自力でなんとかするか、↓のWeb版を使うかしてください</li>
+	<li><a href="http://www53.atpages.jp/titlil/temk/2003f-asm-editor/">Web版インタプリタ</a>：Web上で実行できる。ファイル分割や乗算など一部の機能は未実装。</li>
+</ul>
+<h3>リンク集</h3>
+<ul>
+	<li>雑記・考察ログ：<a href="../opcode.html">「オペコードなどについて考察する」</a></li>
+	<li>アセンブリ言語だけの最新の仕様：<a href="../settings.html">設定一覧</a></li>
+	<li>専門用語の一覧：<a href="https://sites.google.com/site/panqateel/yougo">用語集</a></li>
+	<li>Twitterで出た質問：Togetter（<a href="https://togetter.com/li/1151279">part1</a>, <a href="https://togetter.com/li/1153844">part2</a>, <a href="https://togetter.com/li/1156125">part3</a>）</li>
+	<li>ソースコードの例：<a href="../fib_non_recursive.jurli.html">非再帰フィボナッチ</a>と<a href="../fib_recursive.jurli.html">再帰フィボナッチ</a>と<a href="../qsort.jurli.html">quicksort</a>と<a href="../lakormeru.jurli.html">開平</a></li>
+</ul>
+</div>
 <hr>
 <h2>ksi.1 2003'd ferlesylを知る</h2>
 <p>2003lkは、2003f'd lkurferlという名の通り、2003fを動かすために作られた言語です。ということで、まずは2003fを知ることから始めましょう。</p>
-<h3>節1 </h3>
 <p class="ny_jurli">章はksi.だそうだけど節ってどう言うん？スキュにあるんだから理語訳もあるんだろうけど</p>
+<h3>節1 数の表現</h3>
+<p>2003fは計算を行う装置なのですから、当然数を扱うことができます。2003fがどのようにして数を扱うかについて説明していきます。
+<p class="ny_jurli">現世の用語に詳しい人のための1行解説：32bit整数、負数は2の補数表現</p>
+<h3>節2 記憶装置</h3>
+<p>計算をするには数を記憶しなければいけません。2003fには、目的に応じて2種類の記憶装置があります。</p>
+<ul>
+	<li>メモ（firjal）：個数が僅かしかないが、素早く読み書きできる<span class="ny_jurli">レジスタのこと。</span></li>
+	<li>住所箱（setistafar）：<span class="ny_jurli">メモリのこと。</span></li>
+</ul>
 <hr>
 <footer style="text-align:right"><p>phil.2005年2月</p><p class="ny_jurli">…に執筆されたという設定。現世でこの文章を書いているのは西暦2017年の10月。</p><p class="ny_jurli">どうしようかな、ubpl開発以降の文章という設定にしてもいいんだけど。そっちの方が面白いかもな。</p></footer>
 
