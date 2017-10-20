@@ -1,0 +1,333 @@
+UTC+09:00
+----- Today October 20th, 2017 -----
+jekto_vatimeliju [11:04 AM] 
+悠里世界の理語辞書って-r-と-R-、-rg-と-Rg-が別々に載ることになるよなぁと思った
+
+
+[11:04] 
+やっぱりリパーシェで理語を学ぶ環境を立てねばな（ホエリパ書かなきゃ…）
+
+
+sashimiwiki [11:06 AM] 
+うーん
+
+
+[11:06] 
+r/R区別がそもそも必要ない説
+
+
+[11:07] 
+ネイティブも間違えるので
+
+
+jekto_vatimeliju [11:07 AM] 
+辞書の配列上は分かれてるからなぁ
+
+
+sashimiwiki [11:08 AM] 
+なんか母音記号的に学習者向け以外では書き分けないとかにしたい気はする
+
+
+jekto_vatimeliju [11:08 AM] 
+「悠里世界のネイティブ、間違えるの？」
+
+
+[11:08] 
+「現世でもスペイン語のアクセント位置間違えるネイティブ多いぞ」
+
+sashimiwiki [11:10 AM] 
+長母音をVrとして後世に明確化させたときのみ無声r表記にすべきで、それ以外はRで書けばいいなどの意見もあります(xelken)
+
+jekto_vatimeliju [11:11 AM] 
+「ロシア人ネイティブЁのことをЕって書くぞ」
+
+[11:12] 
+ということで、「学習者向け以外では書き分けない」は案としてはアリとは考える
+採用するかどうかはともかく
+
+sashimiwiki [11:14 AM] 
+ネイティブも間違える文法・語法考えるの楽しそう。
+
+jekto_vatimeliju [11:14 AM] 
+ユーゴックのjとxとか？ (edited)
+
+sashimiwiki [11:15 AM] 
+ヤバそう
+
+jekto_vatimeliju [11:15 AM] 
+言われてみれば、文字コードどうしよう
+
+[11:16] 
+ロシア語風にするか
+
+jekto_vatimeliju [11:17 AM] 
+added and commented on this Plain Text snippet
+the use of ⟨ё⟩ was never obligatory in standard Russian orthography. By and large, it is used only in dictionaries and in pedagogical literature intended for children and students of Russian as a second language. Otherwise, ⟨е⟩ is used, and ⟨ё⟩ occurs only when it is necessary to avoid ambiguity (such as to distinguish between все ("everybody") and всё ("everything") when it is not obvious from the context) or in words (principally proper nouns) whose pronunciation may not be familiar to the reader.
+1 Comment
+https://en.wikipedia.org/wiki/Yo_(Cyrillic)
+
+jekto_vatimeliju [11:17 AM] 
+added this Plain Text snippet
+The advent of the computer has had a great influence on the process of substitution ⟨ё⟩ with ⟨е⟩ for a counterintuitive reason: currently, the Russian alphabet contains 33 letters including ⟨ё⟩, and codepage designers usually prefer to omit ⟨ё⟩ so that all Russian letters can be placed into sections of 16 letters (16, like other powers of 2, is often preferred in computing over other numbers). Some examples are pre-Unicode character pages 866 for Microsoft DOS and 1251 for Microsoft Windows. Since in both cases, ⟨ё⟩ was placed outside its alphabetically correct position, it made text sorting more complex. Software developers would then choose to substitute all ⟨ё⟩ letters with ⟨е⟩ at an early stage of text processing to simplify later stages.
+Add Comment
+
+jekto_vatimeliju [11:18 AM] 
+リパーシェは30なので32に収めようという圧力は起きなさそうではあるが
+
+[11:18] 
+えっと有字は…
+
+sashimiwiki [11:18 AM] 
+子供に教える時も使いそうじゃない？だから文字コードにも含まれそう
+
+jekto_vatimeliju [11:19 AM] 
+ロシア語、上記の理由で最初期の文字コードにёが入らなかったので、今では文章中のеをёにするソフトウェアすらあるらしい
+
+sashimiwiki [11:20 AM] 
+㌿―
+
+jekto_vatimeliju [11:20 AM] 
+https://en.wikipedia.org/wiki/Yoficator
+Wikipedia
+Yoficator
+Yoficator or Joficator (Russian: Ёфикатор) is a computer program or extension for a text editor that restores the Cyrillic letter Yo ⟨Ё⟩ in Russian texts in places where the letter Ye ⟨Е⟩ was used instead. The majority of newspapers and publishers use Ye in all contexts, assuming that an educated reader can distinguish which letter is meant. This creates a large number of homographs (but not homophones), and this is the problem the yoficator is intended to fix.
+The problem of choice between Ye and Show more… (9kB)
+
+
+sashimiwiki [11:21 AM] 
+(ot)FAFssや2003fの政治的流れまだ一文字もまとめてないけど待っててね今日中にドラフトを……
+
+jekto_vatimeliju [11:21 AM] 
+ということで、文中のjを点付きxにするソフトがありそう
+
+[11:22] 
+理語の方、正書法改革で揉めたって設定でも良いんじゃない？さっきのxelken含め (edited)
+
+sashimiwiki [11:22 AM] 
+楽しいので採用しよう
+vatimeliju jekto
+理語の方、正書法改革で揉めたって設定でも良いんじゃない？さっきのxelken含め
+Posted in #雑談Today at 11:22 AM
+
+[11:23] 
+政治家「実は文字コードが決まるまで正書法がガバガバだったのである！！！」
+
+jekto_vatimeliju [11:23 AM] 
+派1「発音通りに綴れよ」
+派2「やっぱり伝統がナンバーワン！文脈で読めるやん」
+派3「長母音をVrとして後世に明確化させたときのみ無声r表記にすべきで、それ以外はRで書けばいいなどの意見もあります」
+
+
+[11:24] 
+rとRって理語で何て言うん？
+
+
+[11:24] 
+あ、RはReeか (edited)
+
+
+sashimiwiki [11:24 AM] 
+rer
+
+
+jekto_vatimeliju [11:24 AM] 
+:fistir:
+
+
+
+[11:25] 
+RはRerだとして、rはどうなんだろう
+
+
+sashimiwiki [11:25 AM] 
+rerですよ
+
+
+jekto_vatimeliju [11:25 AM] 
+ですよね（派3を理語に訳すときはどう訳すんですか）
+
+
+sashimiwiki [11:25 AM] 
+それは一応言い方がありましてー
+
+
+jekto_vatimeliju [11:26 AM] 
+ですよね
+
+
+sashimiwiki [11:26 AM] 
+https://sites.google.com/site/skyliautie/a/l
+
+
+[11:26] 
+伝統文字名におけるhrlichとreichatで区別するようです。
+
+
+jekto_vatimeliju [11:26 AM] 
+なるほどなぁ
+
+
+sashimiwiki [11:26 AM] 
+多分前者が/R/、後者が/r/(よく覚えてない)
+
+
+jekto_vatimeliju [11:27 AM] 
+(ot)上記リンクに、未回収の燐字がある。拾いn (edited)
+
+
+sashimiwiki [11:30 AM] 
+FAFss、もろ政治的な案件を独断で決めて大変な事態を起こしたりしてそう。
+
+
+jekto_vatimeliju [11:31 AM] 
+あっそれたのしそう
+
+
+[11:32] 
+「派1が開発チームにいた&外国人は当然派1で学習していたのでその仕様でシステムを作ってしまう。結果、2003fが普及したことにより派1が覇権を握る」
+
+
+[11:32] 
+というのどうでしょう
+
+
+sashimiwiki [11:33 AM] 
+「教育上の字と食い違っていたり、行政文章はまた別の方式で書かれており、結局統一はなされなかったため、ネットスラング的なそれになった」
+がよき
+
+
+jekto_vatimeliju [11:36 AM] 
+「理語で書かれた小説などでは、『Rとrを明確に区別することで話しているのが外国人であることを強調する』という表現技法が生まれた」 (edited)
+
+
+sashimiwiki [11:36 AM] 
+それｆēｉｃｈáｎｇ面白い
+
+
+jekto_vatimeliju [11:36 AM] 
+やったぜ
+
+
+sashimiwiki [11:37 AM] 
+ファイクレオネ世界でのr/R論争、割とあっちの世界の地雷になってるかもね。
+
+
+jekto_vatimeliju [11:37 AM] 
+なってそう
+
+
+jekto_vatimeliju [11:37 AM] 
+フランス語のシルコンフレックス削減とか無限に揉めてた印象 (edited)
+1 reply Today at 11:40 AM View thread
+
+
+sashimiwiki [11:38 AM] 
+広がりができて良きかな
+
+
+jekto_vatimeliju [11:41 AM] 
+意思疎通に齟齬が発生しない分、余計に揉めそう
+
+
+sashimiwiki [11:41 AM] 
+この話opcode.htmlに書く？
+
+
+jekto_vatimeliju [11:42 AM] 
+書きます
+
+
+[11:42] 
+一旦まとめるか
+
+
+[11:42] 
+派1~3に名前振ろうぜ
+
+
+[11:43] 
+3: xelkene'd Rerss (edited)
+
+
+[11:44] 
+(ot)faistader【名詞】枝のR　ファイスタデー
+
+[2015:faista'd rer:枝のR::]
+[文化]
+デュテュスンリパーシェにおける手書き文字におけるrと長音rをI,Tのように書き分けることを言う。
+
+
+[11:44] 
+1: faistader
+
+
+sashimiwiki [11:44 AM] 
+2. etollenel
+
+
+jekto_vatimeliju [11:45 AM] 
+なるほど「伝統的やり方」
+
+
+sashimiwiki [11:45 AM] 
+ja
+
+
+jekto_vatimeliju [11:45 AM] 
+じゃあopcodeに書きます
+
+
+jekto_vatimeliju [11:54 AM] 
+「行政文章はまた別の方式で書かれており」大日本帝国憲法には濁点がなかったりしましたねそういえば
+Fafs falira sashimi
+「教育上の字と食い違っていたり、行政文章はまた別の方式で書かれており、結局統一はなされなかったため、ネットスラング的なそれになった」
+がよき
+Posted in #雑談Today at 11:33 AM
+
+
+[11:57] 
+「教育上の字」と「行政文章」、それぞれどの流派にします？外国人の教育は枝rで確定として
+
+
+sashimiwiki [11:58 AM] 
+教育上のほうが保守的っぽい
+
+
+jekto_vatimeliju [11:58 AM] 
+そもそも枝rが出てきたきっかけは何だったんだろうなぁ
+
+
+[11:58] 
+「教育上のほうが保守的」じゃあetollenelか。
+
+
+[11:59] 
+「行政文章」xelkene'd rer?
+
+sashimiwiki [11:59 AM] 
+かねえ、まあ3が一番保守的なんだが面倒くさいし、行政文章くらいでしか使わなさそう。
+
+
+jekto_vatimeliju [12:01 PM] 
+etollenel「名前負けしてる感すごい」
+xelkene'd rer「反xelken派に絶対使ってもらえなさそうな名前に比べればマシ」
+
+
+sashimiwiki [12:02 PM] 
+楽しい(楽しい)
+
+
+jekto_vatimeliju [12:04 PM] 
+エンジニアとかは合理的なfaistaderを好みそう（偏見）
+
+
+sashimiwiki [12:05 PM] 
+xelken「本当に合理的か……？」
+
+
+[12:05] 
+あれだ、仮名遣いの対立みたいなもんだわこれ
+
+
+jekto_vatimeliju [12:06 PM] 
+それはそう（明治時代にも揉めたらしいですね）（結局伝統が勝った） (edited)
