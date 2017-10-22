@@ -1,0 +1,228 @@
+UTC+09:00
+----- Thursday, October 12th -----
+jekto_vatimeliju [10:57 AM] 
+joined #燐帝字母 along with 17 others.
+
+
+jekto_vatimeliju [10:57 AM] 
+https://twitter.com/ukohank517/status/918293735108067328
+UK. @ukohank517
+教授: セツ。。うーん。。あ、打ったら感じ出てくるんだな。
+僕：　はい、常用漢字です！
+TwitterOct 12th at 10:54 AM
+
+
+[10:57] 
+常用燐字表
+　欲しい！
+
+
+[10:58] 
+ @Mitchara
+しかし上古の諸子百家の連中はあれ他の人が読めると思って書いたんだろうかね。口伝メインで文字は記憶の補助程度で、弟子が如是我聞してくれるのを期待してたんだろうか。あんな仮借まみれで品詞もわからない文読めるかよ。
+Posted in #雑談Sep 12th at 2:25 PM
+
+
+[10:58] 
+ vatimeliju jekto
+↑これめっちゃ燐帝字母でやりたくない？
+Posted in #雑談Sep 12th at 2:27 PM
+
+
+[11:00] 
+あと、文字コードの制定のために燐字が辞書にどう載ってるかを考えなきゃという案件があった
+
+
+nobuyuki1097 [10:47 PM] 
+やばそう
+
+
+qafopwa [11:13 PM] 
+とりあえず字を選出しなきゃ、並べようがないんだよなあ
+
+
+----- Friday, October 13th -----
+jekto_vatimeliju [5:58 AM] 
+今（現世に）ある字全てが常用字【説】 (edited)
+
+sashimiwiki [6:03 AM] 
+https://twitter.com/jclaws_pr/status/837354652198821889
+創作界隈『悠里』広報 @jclaws_pr
+お待たせしました！燐帝字母抜粋です！燐帝字母はリパライン語が話されるファイクレオネにおいてラネーメ語族の話者達に共通して使われる文字で、Mp.5122年にアレス王国（ラネーメ王朝）のアレス・リンによってそれまであった大量の異体字を統一して制定されたものです。（s.y.） https://pbs.twimg.com/media/C57hmEVUoAAWgQc.jpg
+TwitterMar 3rd at 2:31 AM (55kB)
+https://pbs.twimg.com/media/C57hnWgU0AATcdp.jpg (43kB)
+
+
+[6:03] 
+これって何だったんですかね
+@jclaws_pr
+お待たせしました！燐帝字母抜粋です！燐帝字母はリパライン語が話されるファイクレオネにおいてラネーメ語族の話者達に共通して使われる文字で、Mp.5122年にアレス王国（ラネーメ王朝）のアレス・リンによってそれまであった大量の異体字を統一して制定されたものです。（s.y.） https://pbs.twimg.com/media/C57hmEVUoAAWgQc.jpg
+Posted in #燐帝字母Mar 3rd at 2:31 AM (55kB)
+
+
+jekto_vatimeliju [6:04 AM] 
+まあこれが基本にはなるんでしょうなぁ
+
+[6:06] 
+115字か
+
+[6:07] 
+パイグ語の何割ぐらいがこの115字で占められるんだろうか
+
+
+[6:07] 
+Zipfの法則で考えてみるか
+
+
+[6:09] 
+https://en.wikipedia.org/wiki/Zipf%27s_law#cite_note-4
+英語コーパスの半分はトップ135語で占められているそうだ
+Wikipedia
+Zipf's law
+Zipf's law () is an empirical law formulated using mathematical statistics that refers to the fact that many types of data studied in the physical and social sciences can be approximated with a Zipfian distribution, one of a family of related discrete power law probability distributions. The law is named after the American linguist George Kingsley Zipf (1902–1950), who popularized it and sought to explain it (Zipf 1935, 1949), though he did not claim to have originated it. The French stenographer Show more… (155kB)
+
+
+[6:12] 
+Zipfの法則はエスペラントでも成り立つからなぁ
+
+[6:13] 
+中国語でも成り立つそうだ
+http://www.colips.org/journals/volume18/JCLC_2008_V18_N1_04.pdf
+
+[6:15] 
+あーでも1字単位で取るとZipfの法則は成り立たないのか
+
+[6:18] 
+とはいえ、総字数の平方根ぐらいまでなら成り立ちそう
+
+[6:21] 
+http://journals.sagepub.com/doi/pdf/10.1177/016555159402000208
+近似式が載ってる
+journals.sagepub.com
+SAGE Journals: Your gateway to world-class journal research
+Subscription and open access journals from SAGE Publishing, the world's leading independent academic publisher.
+
+jekto_vatimeliju [11:56 AM] 
+https://twitter.com/sosoBOTpi/status/918649414645719040
+.sozysozbot.@hsjoihs @sosoBOTpi
+燐字頻度分布のモデルはだいたい立ったが、やはり具体的な話はえすわいに聞いてみないとだな
+TwitterOct 13th at 10:27 AM
+
+[11:56] 
+https://twitter.com/sosoBOTpi/status/918668879752081408
+.sozysozbot.@hsjoihs @sosoBOTpi
+英語に適用しても問題ないことがわかった
+TwitterOct 13th at 11:45 AM
+
+[11:56] 
+https://twitter.com/sosoBOTpi/status/918671505856200704
+.sozysozbot.@hsjoihs @sosoBOTpi
+基本的に http://aapt.scitation.org/doi/pdf/10.1119/1.16476 を元ネタとしています
+TwitterOct 13th at 11:55 AM
+
+jekto_vatimeliju [11:57 AM] 
+shared this file
+頻度
+File
+Click to open in a web page
+Add Comment
+
+
+----- Sunday, October 15th -----
+jekto_vatimeliju [12:38 AM] 
+https://github.com/jurliyuuri/jurliyuuri.github.io/blob/master/%E7%87%90%E5%AD%97%E5%AD%97%E6%9B%B8%E9%85%8D%E5%88%97.txt
+【設定】燐字字書は点画配列
+GitHub
+jurliyuuri/jurliyuuri.github.io
+Contribute to jurliyuuri.github.io development by creating an account on GitHub.
+ 
+
+jekto_vatimeliju [5:43 AM] 
+パイグ語がどれくらいの字数を要しそうかとかいう感覚がよう分かっとらんのよね
+
+[5:44] 
+ vatimeliju jekto
+パイグ語の何割ぐらいがこの115字で占められるんだろうか
+Posted in #燐帝字母Oct 13th at 6:07 AM
+
+sashimiwiki [5:46 AM] 
+現世で実際の表記として書いていったことが少ないからなあ。
+
+jekto_vatimeliju [5:47 AM] 
+まあ、そうよね
+
+sashimiwiki [5:47 AM] 
+まあ、漢字転写は勿論あるそうなのでs.y.に訊けばええやろ
+
+jekto_vatimeliju [5:47 AM] 
+ですな
+
+[5:48] 
+ちなみに中国語はトップ115字が37.0%を占めるそうだ
+
+sashimiwiki [5:48 AM] 
+ちなみに『燐帝字母』に議論の対象を限るならば、他のラネーメ語族や一部のリパラオネ語族も昔は燐帝字母を使っていたので、パイグ語基準はあまり良くないぞ。 (edited)
+
+jekto_vatimeliju [5:49 AM] 
+・国・地域ごとに文字コードが立ち、後で統合されていった
+・なんかの団体が一気に『燐帝字母』全体の文字コード整備を行った
+
+[5:49] 
+さてどっちか
+
+sashimiwiki [5:51 AM] 
+文字コード整備が必要になるものが作れるようになるのはユエスレオネ時代ちょっと前だろうし、その時点で作っても燐帝字母が入らなさそうと考えると、2003fが初めてなんだろうなと考えた
+
+jekto_vatimeliju [5:52 AM] 
+なるほどなぁ
+
+[5:52] 
+じゃあ「2003fの時にイェスカの元で一気に整理された」とかでもおかしくはないのか
+
+sashimiwiki [5:53 AM] 
+2003f以前の時代の計算機研究開発の進み具合が知りたみって感じだ
+
+jekto_vatimeliju [5:53 AM] 
+確かに
+
+[5:54] 
+最近思ったこと「panqateelと2003fって結構開きがあるのでは？」
+
+[5:54] 
+最初はpanqateelがイェスカの元で開発された設定だったが
+
+sashimiwiki [5:55 AM] 
+姉妹で引き継いだとしても楽しいな。
+
+jekto_vatimeliju [5:55 AM] 
+ふむふむ
+
+[5:56] 
+現世の情報科学史、もうちょい勉強せにゃな
+
+sashimiwiki [5:56 AM] 
+イェスカが2003fを精力的に推進していたから、暗殺後政権を受け持った妹であるユミリアもそのプロジェクトを護ってきた。panqateerlは温室開発(意味不明)
+
+
+jekto_vatimeliju [5:57 AM] 
+(ot)panqatee_r_l、無限に頻発しそう (edited)
+
+
+[5:58] 
+常用語kranteerlがあるわけで
+
+
+sashimiwiki [5:58 AM] 
+panqateerlだと「最初のこと」になっちゃうわ
+
+
+[5:59] 
+panqateelが「最良の方法」であることを思い出した
+
+
+jekto_vatimeliju [6:01 AM] 
+情報科学史、「ファミコンよりもアポロ計画の方が先で、宇宙船に積まれてたコンピュータは当然ファミコン以下のスペック」って話を考えると面白い
+
+
+sashimiwiki [6:02 AM] 
+航空情報処理の分野はまだまだ未発達ってわけやな(いいえ)

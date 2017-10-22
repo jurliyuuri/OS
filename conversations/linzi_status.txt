@@ -1,0 +1,689 @@
+UTC+09:00
+----- Thursday, October 19th -----
+
+
+jekto_vatimeliju [6:10 PM] 
+そうそう、jurliyuuri側で話した話だが、有字のjとxをどうするか (edited)
+
+
+[6:11] 
+https://jurliyuuri.slack.com/archives/C698QT6DQ/p1508469961000003
+個人的にはロシア語案を推している。普段は全部jに相当する文字コードで書いて、明確にしたい時だけ点のついたxで書く
+
+
+[6:12] 
+そもそも2003fの時代ってユーゲ人との接触は乏しいし、燐字は入っても有字は入らんかもな
+
+
+
+----- Yesterday October 21st, 2017 -----
+sashimiwiki [10:09 AM] 
+それは嘘だゾ、PMCFとの接触はすくなくともデュイン戦争後でユーゲ人との接触のほうが早いゾ。ユエスレオネ上の大多数は旧リパラオネ連邦人が占めていたから大多数はリパライン語を話す人々でいせにほのフェリーサみたいなのは少数だゾ、だから燐字もまず初期文字コードに含まれる理由が説明できない。
+vatimeliju jekto
+そもそも2003fの時代ってユーゲ人との接触は乏しいし、燐字は入っても有字は入らんかもな
+Posted in #randomOct 20th at 6:12 PM
+
+
+[10:11] 
+2000年代のユエスレオネ人で日常的に燐字を使っている奴はまず居ないので不要不急で何故追加したのかは謎。燐字も有字も特別扱いはない。
+
+jekto_vatimeliju [10:55 AM] 
+㍂
+
+[10:57] 
+https://jurliyuuri.slack.com/archives/C7H0828TV/p1508014304000007
+
+[10:58] 
+「文字コード整備が必要になるものが作れるようになるのはユエスレオネ時代ちょっと前だろうし、その時点で作っても燐帝字母が入らなさそうと考えると、2003fが初めてなんだろうなと考えた」とあったので「2003fの時にイェスカの元で一気に整理された」とかを考えていたのだが
+
+sashimiwiki [10:59 AM] 
+基礎的な文字コードとして入る要因が分からない。追加的なものになると思う。
+vatimeliju jekto
+「文字コード整備が必要になるものが作れるようになるのはユエスレオネ時代ちょっと前だろうし、その時点で作っても燐帝字母が入らなさそうと考えると、2003fが初めてなんだろうなと考えた」とあったので「2003fの時にイェスカの元で一気に整理された」とかを考えていたのだが
+Posted in #randomYesterday at 10:58 AM
+
+
+jekto_vatimeliju [10:59 AM] 
+ふむふむ、なるほど
+
+[11:02] 
+基礎的な文字コード、実は既に2003f以前にあったのでは？互換性切りたくないだろうし、そもそも2003fを開発するための環境は必要だったわけだし
+
+qafopwa [11:04 AM] 
+PMCF接触前ってユエスレオネだと使われる文字って新古リパーシェくらい？
+
+sashimiwiki [11:07 AM] 
+正書法制定前のそれ
+Fopwa Qa
+PMCF接触前ってユエスレオネだと使われる文字って新古リパーシェくらい？
+Posted in #randomYesterday at 11:04 AM
+
+jekto_vatimeliju [11:07 AM] 
+rで揉めてる時代だからなぁ
+
+[11:11] 
+2003fにおいて、追加的な文字コードをなぜ作ろうとし、燐字や有字が整理されたのか
+
+qafopwa [11:12 AM] 
+PMCF接触前だとラネーメ系の文字って歴史的文字としての燐字しかユエスレオネでは知られてないよなあ。
+
+jekto_vatimeliju [11:13 AM] 
+なるほどなぁ
+
+[11:13] 
+説1: 開発メンバーに外国人が多かった定期 (edited)
+
+qafopwa [11:14 AM] 
+そういえばバート人ってどっからやってきたんだ…？
+
+jekto_vatimeliju [11:14 AM] 
+ふーむ？
+
+Nobuyuki Tokuchi [11:15 AM] 
+phil. 2003にPMCFの発見になってんな．dyin戦争起きてる年
+
+jekto_vatimeliju [11:16 AM] 
+「2003fの開発にはPMCFやハタ王国からも開発者が集った」
+https://sites.google.com/site/riparaincangku/yuesureone-ren-gong-shi-jie-she-ding/li-shi/philerl (edited)
+
+qafopwa [11:16 AM] 
+2003年計画開始だっけ？
+
+jekto_vatimeliju [11:16 AM] 
+特に決めてないぞ
+
+[11:17] 
+2003と言われたから2003にしただけだったはず。opcode見て来る (edited)
+
+Nobuyuki Tokuchi [11:17 AM] 
+案：開発者が大量に欲しいという理由で「そっちの文字も文字コードに入れるから人員として参加者募集」 (edited)
+
+qafopwa [11:17 AM] 
+計画開始だったらむしろ外国人多いことも合理性があるのでは (edited)
+
+jekto_vatimeliju [11:18 AM] 
+https://jurliyuuri.slack.com/archives/C6QL0DKV4/p1504023291000579
+
+[11:19] 
+2003年計画開始、その後PMCF発見、という話か？（上のリンクには2003としか書いていない） (edited)
+
+Nobuyuki Tokuchi [11:19 AM] 
+2003年開始か
+
+[11:19] 
+いや，何月か書いてないからPMCF発見が先かもしれない
+
+jekto_vatimeliju [11:20 AM] 
+なるほど
+
+qafopwa [11:20 AM] 
+2003年開始→PMCF発見→労働力あるやん、雇ったろ　かなあ。
+
+jekto_vatimeliju [11:20 AM] 
+それもアリよね
+
+qafopwa [11:20 AM] 
+言語通じたのか？
+
+jekto_vatimeliju [11:20 AM] 
+確かに
+
+[11:21] 
+労働力と同時に市場が開拓できた以上、当然ローカライズする動機がありますな？
+
+[11:21] 
+となると、諸言語の母語話者が欲しいですな？
+
+[11:21] 
+ Nobuyuki Tokuchi
+案：開発者が大量に欲しいという理由で「そっちの文字も文字コードに入れるから人員として参加者募集」
+Posted in #randomYesterday at 11:17 AM
+
+sashimiwiki [11:21 AM] 
+市場経済じゃないです
+
+jekto_vatimeliju [11:21 AM] 
+思った
+
+Nobuyuki Tokuchi [11:21 AM] 
+「計算機開発・言語監査特別委員会」がfēicháng大事になるな (edited)
+
+
+sashimiwiki [11:23 AM] 
+連邦は特にこの時期は外貨も欲しくないので政治思想に沿わないpmcfへの対応は無視してると考えるのが妥当。
+
+
+jekto_vatimeliju [11:23 AM] 
+ふむふむ
+
+[11:23] 
+じゃあローカライズはFAFssの独断かなぁ
+
+[11:24] 
+「せっかく母語話者いるし訳そうぜ」
+
+sashimiwiki [11:24 AM] 
+そんな勝手なことできるんですかね。
+
+Nobuyuki Tokuchi [11:24 AM] 
+思った．静粛(？)されそう (edited)
+
+sashimiwiki [11:25 AM] 
+ただでさえイェスカ時代で、政府機関なんだが。
+
+jekto_vatimeliju [11:25 AM] 
+確かに
+
+fabon [11:25 AM] 
+粛清
+
+jekto_vatimeliju [11:25 AM] 
+思った
+
+qafopwa [11:25 AM] 
+ローカライズ、かなり後だろうなあ。
+
+Nobuyuki Tokuchi [11:25 AM] 
+(PMCFから何故参加者が来たのか)
+
+jekto_vatimeliju [11:25 AM] 
+確かに、用語がちゃんと整理されるのは後の方になりそう
+
+sashimiwiki [11:26 AM] 
+いや、言うてニ年後には市場経済化しているからまあローカライズはそこでされそうやねって話
+
+jekto_vatimeliju [11:26 AM] 
+なるほど
+
+[11:26] 
+じゃあその時に追加実装か
+
+Nobuyuki Tokuchi [11:26 AM] 
+(2005年って99氏の解説書と同じ時期では？)
+
+jekto_vatimeliju [11:26 AM] 
+確かに
+
+qafopwa [11:27 AM] 
+ところで発見当初のPMCFって理語話せる人いたんですかね？
+
+jekto_vatimeliju [11:28 AM] 
+(ot)まさかOS開発の雇用が半年契約とかなわけないだろうし、市場経済化後でも開発メンバーの言語は多様だろうなぁ
+
+sashimiwiki [11:28 AM] 
+連邦側にアイル語話せる人間は居たやで(いせにほのフェリーサみたいな)
+
+qafopwa [11:29 AM] 
+あー、あの当時だとPMCF共通語ってアイル語やな。ペメセペもないし。
+
+jekto_vatimeliju [11:29 AM] 
+なるほどね
+
+[11:30] 
+じゃあ初期はバート人とリパラオネ人がアイル語で話したりしてたのか（カオスだ）
+
+qafopwa [11:31 AM] 
+アイル語中間言語でリパライン語教えこむって感じかなあ
+
+jekto_vatimeliju [11:31 AM] 
+だろうなぁ
+
+[11:31] 
+アイル語で書かれた理語入門書とかは当時ちゃんとあったのか？
+
+[11:31] 
+急ピッチで誰かが作ったのかもしれんが
+
+qafopwa [11:32 AM] 
+入門書、2003年時点ではないだろうが、翠くんよりはマシ。 (edited)
+
+jekto_vatimeliju [11:32 AM] 
+確かに
+
+sashimiwiki [11:32 AM] 
+よりの合字
+
+qafopwa [11:32 AM] 
+失礼しました。ゟが出てしまいました。
+
+jekto_vatimeliju [11:33 AM] 
+(ot)私の小説、一ミリも書いてないでよかったなぁとなっている
+
+[11:34] 
+(ot)完全に理語で意思疎通させる予定だったので
+
+sashimiwiki [11:34 AM] 
+理語で意思疎通しないんですか
+
+Nobuyuki Tokuchi [11:34 AM] 
+数ヵ月で開発出来るレベルの言語学習者ってやばない？(PMCF側) (edited)
+
+jekto_vatimeliju [11:35 AM] 
+この感じだと、理語は使うだろうけどアイルも混ざるでしょ
+
+[11:35] 
+まあ機械語は機械語だし
+
+sashimiwiki [11:35 AM] 
+外国人開発者ってpmcfだけじゃねえからな？
+
+jekto_vatimeliju [11:36 AM] 
+もちろん。ユーゲ人は理語よね
+
+sashimiwiki [11:36 AM] 
+あとpmcfっつってもヴェフィスやリナエストを忘れてないか。リナエスト人なんかはアイル語喋らんぞ
+
+jekto_vatimeliju [11:36 AM] 
+ふむふむ
+
+Nobuyuki Tokuchi [11:36 AM] 
+ちゃんと把握できてないのでPMCF読み直してきます……
+
+jekto_vatimeliju [11:37 AM] 
+まあ、チームの公用語は理語でしょうなぁ
+
+[11:37] 
+じゃあバート人開発者はアイル語経由で軽く理語仕入れた状態で開発スタートか (edited)
+
+sashimiwiki [11:38 AM] 
+休み時間に研究所の端でアイル語で話す集団と理語ではなす集団で人間関係が分かれそう
+
+jekto_vatimeliju [11:38 AM] 
+分かれそう
+
+qafopwa [11:38 AM] 
+下の世界に残ったリパラオネ人っているの？
+
+jekto_vatimeliju [11:39 AM] 
+そもそも浮き上がったのが2000年と聞いているが、その時ってどうなったんだろう
+
+sashimiwiki [11:39 AM] 
+ヴェフィス人、フラッドシャー人、タウニラウィッリー人、残留ユフィシャール人など
+Fopwa Qa
+下の世界に残ったリパラオネ人っているの？
+Posted in #randomYesterday at 11:38 AM
+
+
+qafopwa [11:39 AM] 
+みんな理語話者じゃないやん…
+
+sashimiwiki [11:39 AM] 
+そもそもユエスレオネがリパラオネ共和国の軍備であったことは:jimei:なので (edited)
+
+jekto_vatimeliju [11:40 AM] 
+(ot):jimei:、作るか
+
+sashimiwiki [11:40 AM] 
+リパラオネ共和国人、旧連邦人が優先されたのは当然なので
+
+jekto_vatimeliju [11:41 AM] 
+(ot)作った
+
+qafopwa [11:41 AM] 
+あの島に引っ越してた理語話者が少数残るのみかな
+
+sashimiwiki [11:42 AM] 
+ちなみにあの島全体的に昔はリナエスト諸島と呼ばれていて旧ラネーメ国と旧リパラオネ共和国、旧クワイエ共和国の係争地だった。
+
+jekto_vatimeliju [11:43 AM] 
+(ot)これまた巨大なopcodeになりそうな予感
+
+[11:46] 
+取りあえず、「ローカライズと、それに伴った文字の大量追加は市場経済化後。燐字整理などもイェスカの死後」は確定でいいか
+
+Nobuyuki Tokuchi [11:46 AM] 
+(ot)opcodeそろそろpart2とかになった方がよいのかもしれない？
+
+jekto_vatimeliju [11:46 AM] 
+(ot)もはやopcodeじゃないからなぁ
+
+qafopwa [11:46 AM] 
+係争地なら少数の理語話者は残りそうね。
+
+Nobuyuki Tokuchi [11:47 AM] 
+とりあえず，初期はリパーシェのみ？
+
+sashimiwiki [11:47 AM] 
+係争地だと残るのか……？
+
+jekto_vatimeliju [11:47 AM] 
+既存のリパーシェコードを転用、じゃないかな
+
+qafopwa [11:48 AM] 
+人混ざってそうじゃない？
+Sashimi Fafs falira
+係争地だと残るのか……？
+Posted in #randomYesterday at 11:47 AM
+
+Xarzni'ar Fixa [11:48 AM] 
+asciiみたいになりそうね
+
+Nobuyuki Tokuchi [11:48 AM] 
+既存のliparxe codeの転用か
+
+jekto_vatimeliju [11:48 AM] 
+デュテュスンと少数の記号だけの入った最も基本的なコード
+
+sashimiwiki [11:48 AM] 
+むしろ実効支配的な感じが……
+Fopwa Qa
+人混ざってそうじゃない？
+Posted in #randomYesterday at 11:48 AM
+
+qafopwa [11:49 AM] 
+正書法がコンピュータの影響受けるのか…
+
+Nobuyuki Tokuchi [11:49 AM] 
+制御文字系統は……？
+
+qafopwa [11:49 AM] 
+あー、たしかに。
+Sashimi Fafs falira
+むしろ実効支配的な感じが……
+Posted in #randomYesterday at 11:48 AM
+
+jekto_vatimeliju [11:49 AM] 
+あれ、デュテュスンって2003より後だっけ
+
+sashimiwiki [11:50 AM] 
+新理字は古理字より前
+
+jekto_vatimeliju [11:50 AM] 
+なるほど
+
+qafopwa [11:50 AM] 
+2003ってr論争中？
+
+jekto_vatimeliju [11:50 AM] 
+中
+
+sashimiwiki [11:51 AM] 
+ではなく、コンピューターで制定するためにやっと議論が開始された感じかも
+Fopwa Qa
+正書法がコンピュータの影響受けるのか…
+Posted in #randomYesterday at 11:49 AM
+
+jekto_vatimeliju [11:51 AM] 
+ありそう
+
+[11:52] 
+結果としては、リパラオネ人の教育現場では1種類のr、外国人の教育現場では2種類のr、役所ではxelkenのr、ということになる
+
+qafopwa [11:52 AM] 
+それまでは2階建てのaとかgみたいな感じやったんかなあ。
+
+sashimiwiki [11:52 AM] 
+そもそもそれまでどの方式でも読めたってことよね。
+
+Nobuyuki Tokuchi [11:53 AM] 
+変体仮名みたいなもんでしょ(違う
+
+jekto_vatimeliju [11:53 AM] 
+現世の戦前の康熙字典体と略字の関係でしょ
+
+qafopwa [11:54 AM] 
+異体字やんね
+
+jekto_vatimeliju [11:54 AM] 
+それが後に文体の差として認識されていくことになり、枝rが外国人を象徴するようにまでなる
+
+Xarzni'ar Fixa [11:55 AM] 
+うーん、半濁点みたいに外国人発だけど浸透していく感じではないのか
+
+jekto_vatimeliju [11:56 AM] 
+あーなるほど
+
+sashimiwiki [11:56 AM] 
+逆もまたおかし (edited)
+
+[11:56] 
+貸さないで
+
+qafopwa [11:56 AM] 
+わかる
+
+jekto_vatimeliju [11:57 AM] 
+枝r、リパラオネ人でも人によっては使ってそう
+
+Nobuyuki Tokuchi [11:57 AM] 
+枝r，発音の強調とかで使いそう(外国人マークとか以外でも)
+
+jekto_vatimeliju [11:57 AM] 
+というか役所は使うからなぁ。xelkenのrで (edited)
+
+sashimiwiki [11:58 AM] 
+そもそもリパライン語話者は方式を基本的に気にしなさそう。歴史的仮名遣ひでも普通に日本人は理解して読めるし
+
+jekto_vatimeliju [11:58 AM] 
+確かに
+
+[11:58] 
+簡体字でノートとる日本語話者もTLに多いし
+
+Xarzni'ar Fixa [11:58 AM] 
+それはフォローによりけり (edited)
+
+qafopwa [11:59 AM] 
+たまにかぐはしき人が出てくるんでしょ
+
+jekto_vatimeliju [11:59 AM] 
+xelken原理主義者だ
+
+[11:59] 
+またはその逆
+
+sashimiwiki [11:59 AM] 
+(ot)xelkenが古理原理主義なのに、その原理主義ってこれもうわかんねえなあ……
+
+Nobuyuki Tokuchi [11:59 AM] 
+あっ(
+Fopwa Qa
+たまにかぐはしき人が出てくるんでしょ
+Posted in #randomYesterday at 11:59 AM
+
+jekto_vatimeliju [12:00 PM] 
+(ot)xelkene'd rerを許さない市m
+
+qafopwa [12:00 PM] 
+xelkene'd rerってどれのことです？
+
+jekto_vatimeliju [12:00 PM] 
+opcode読んで
+
+[12:01] 
+「長母音をVrとして後世に明確化させたときのみ無声r表記にすべきで、それ以外はRで書くべき」という、最も保守的な流派。
+
+qafopwa [12:01 PM] 
+なるほど
+
+jekto_vatimeliju [12:01 PM] 
+例えば、文字名のarとかは代償延長による長音ではないので無声r（今考えた設定） (edited)
+
+[12:03] 
+acirlとかもwax-ci lkurferl由来であって音素/r/には由来しないので多分無声r
+
+sashimiwiki [12:04 PM] 
+aiarとかは有声のrっぽい～
+
+jekto_vatimeliju [12:05 PM] 
+リパラオネ人もいちいち勉強して覚えなきゃいけないだろうなぁ
+
+Nobuyuki Tokuchi [12:05 PM] 
+aiar,aiar,aiaR
+acirl,acirl,acirl
+
+[12:05] 
+なんかいい例が出てこない
+
+jekto_vatimeliju [12:06 PM] 
+krante,kRante,kRante
+
+sashimiwiki [12:06 PM] 
+辞書ごとに語源が食い違って表記ゆれが発生してまた論争に
+
+jekto_vatimeliju [12:06 PM] 
+現世でもあったやつだ
+
+Nobuyuki Tokuchi [12:06 PM] 
+ありそう
+
+sashimiwiki [12:06 PM] 
+ホワイトリバー大先生ofリパライン語居そう
+
+qafopwa [12:06 PM] 
+xelkene'd、歴史的假名遣ひだ。
+
+jekto_vatimeliju [12:07 PM] 
+まあ、学習が面倒だからこそ役所ぐらいでしか残ってないわけだからなぁ
+
+Nobuyuki Tokuchi [12:07 PM] 
+「文字コード制定のために文字論争が起きる事態が発生」
+
+jekto_vatimeliju [12:07 PM] 
+葛飾とか揉めませんでしたっけ
+
+Nobuyuki Tokuchi [12:07 PM] 
+楽しいそう()
+
+qafopwa [12:08 PM] 
+「タイプライターのために漢字廃止論が起きる事態が発生」
+
+[12:08] 
+あ、新JIS案件だ。
+
+Nobuyuki Tokuchi [12:08 PM] 
+文字論争というか記法論争
+
+jekto_vatimeliju [12:08 PM] 
+そうです新JISです
+http://www.city.katsushika.lg.jp/information/1000074/1005533.html
+葛飾区公式サイト
+「葛」の字の不思議
+葛飾区公式サイト
+ 
+
+qafopwa [12:09 PM] 
+騨とか
+
+Nobuyuki Tokuchi [12:09 PM] 
+(ot)那覇市の「那」「覇」の字も本来の字とは少し形が違うらしい
+
+qafopwa [12:10 PM] 
+ot)どの字体だったんだろう
+
+Nobuyuki Tokuchi [12:14 PM] 
+ot)本来、「那」は左側の2本の横線を縦線の右まで突き通し、「覇」は西の下部にある一本線がない形(襾)になる．(日版Wikipediaより
+
+qafopwa [12:16 PM] 
+ええぇ…
+
+[12:16] 
+覇はともかく、那はデザイン差では…
+
+jekto_vatimeliju [12:16 PM] 
+(ot)本来案件だ、緑色圧力氏におこられそう (edited)
+
+Xarzni'ar Fixa [12:17 PM] 
+uploaded this image: na-2.png
+Add Comment
+
+Nobuyuki Tokuchi [12:17 PM] 
+(ot)さあ……？実在「那」「覇」しか使わないしみんな気にしない
+
+[12:18] 
+ところで話がズレましたが元に戻しますか (edited)
+
+sashimiwiki [12:18 PM] 
+皆さんお楽しみのところ申し訳ありませんが
+
+jekto_vatimeliju [12:18 PM] 
+ズレましたなぁ。枝rもそんな感じでしょリパラオネ人にとっては
+
+sashimiwiki [12:18 PM] 
+んまあ気にしない
+
+Nobuyuki Tokuchi [12:19 PM] 
+あれかむしろ外国人の方が気にするパターンか
+
+jekto_vatimeliju [12:19 PM] 
+多分そう。だからこそ明確な区別が外国人の象徴になる
+
+[12:20] 
+思ったこととしては、本によっては全部を枝rで書いてたりしそう。英語の印刷でaとgは普通共に二階建てだし
+
+qafopwa [12:20 PM] 
+k/g f/vh v/fh x/dzは流石に区別しないことはないよなあ。
+
+jekto_vatimeliju [12:20 PM] 
+流石に区別するやろなぁ
+
+[12:20] 
+あ、でも軽いメモとかだと抜くかもね
+
+[12:21] 
+母語話者なら読めるので
+
+sashimiwiki [12:21 PM] 
+碑文体区別しなかったので割と分からんでもないのかもね
+
+qafopwa [12:21 PM] 
+あいつ等の方がr/Rより古いんやろなあ (edited)
+
+jekto_vatimeliju [12:21 PM] 
+（とはいえ、未だに濁点抜いてノートとったことはないが）
+
+Nobuyuki Tokuchi [12:22 PM] 
+濁点は抜くと分かりにくそう
+
+qafopwa [12:22 PM] 
+（まあ平安時代ではないので）
+
+Nobuyuki Tokuchi [12:22 PM] 
+どこまで現代リパラオネ人は書き分けしなくてもいけるのか (edited)
+
+qafopwa [12:23 PM] 
+母音を書かない！ｗ（ダメです）
+
+
+jekto_vatimeliju [12:25 PM] 
+ban missen tonir l'es birleen alefis io
+la harmie'i fasil io lkurfo es yletta.
+snyloder m'es solien, mablaér xelfe mal
+ban missen tonir l'es birleen alefis io
+（該当字がない） (edited)
+
+[12:26] 
+calen'kartなんて語はないしcalen'gartとは読めるだろうよなぁ
+
+[12:27] 
+fkirもないし
+
+[12:29] 
+vhなんて大体ユーゴック借用だし
+
+sashimiwiki [12:33 PM] 
+まあネイティブなら読めそうね
+
+jekto_vatimeliju [12:33 PM] 
+機関紙の頻度表見てくるか
+
+jekto_vatimeliju [12:49 PM] 
+gよりkの方が6倍ぐらい頻度高いし、十分区別できそう
+
+sashimiwiki [12:51 PM] 
+:books:
+
+jekto_vatimeliju [12:52 PM] 
+音素で数えてるからqもkの勘定に入ってしまっているが、それを考慮してもgの頻度の方が有意に低いな
+
+ke_to [3:23 PM] 
+joined #random.
+
+jekto_vatimeliju [4:54 PM] 
+と思ったけど、6倍差でも0.6bitぐらい情報量あるのな。まあ区別できるだろうけど
+
+qafopwa [4:58 PM] 
+:book:
+
+jekto_vatimeliju [5:14 PM] 
+さて、opcodeにしなきゃだな
