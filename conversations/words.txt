@@ -1,0 +1,85 @@
+----- Thursday, September 28th -----
+sashimiwiki [11:21 PM] 
+joined #用語.
+
+
+sashimiwiki [11:21 PM] 
+set the channel purpose: リパライン語における用語を考えるよ
+
+
+Pinned
+sashimiwiki [11:21 PM] 
+hynaumares　エンバグする
+afnaryl　デバッガー(ソフトウェアの)」
+afnaryler　デバッガー(人)
+arsnus　コアダンプ
+arsnuses　コアダンプを吐く
+zalizales　push
+ycax　pop
+artenerfe knloan　異常な値を出力する《要検討》
+tvarlon knloan　デバッグ出力用の関数
+皿を洗う　初期化する
+汚れた皿　未初期化の変数
+皿　変数
+お箸とかフォーク　ポインタ (edited)
+
+
+jekto_vatimeliju [11:21 PM] 
+joined #用語 along with 9 others.
+
+
+jekto_vatimeliju [11:23 PM] 
+食い逃げ、なんか違うのでは
+
+
+[11:23] 
+食い逃げはどちらかと言うとセキュリティ違反系統では
+
+
+[11:23] 
+アクセス制御とか？
+
+[11:23] 
+異常な値を出力する、は「毒」判定だと思う
+
+sashimiwiki [11:23 PM] 
+ハードウェア違反でもよさげ
+
+jekto_vatimeliju [11:24 PM] 
+なるほどな
+
+sashimiwiki [11:24 PM] 
+「違反」ってなんだ？
+
+jekto_vatimeliju [11:24 PM] 
+なんだろう
+
+[11:24] 
+violationですね
+
+
+sashimiwiki [11:27 PM] 
+violationとかどう訳せばいいのか難しいが、「食い逃げ」は「違反」っぽい
+
+
+Nobuyuki Tokuchi [11:33 PM] 
+「皿を洗う」→「初期化する」
+
+Nobuyuki Tokuchi [11:39 PM] 
+「汚れた皿」→「未初期化の変数」
+
+Xarzni'ar Fixa [11:51 PM] 
+皿:=変数かな
+
+
+Nobuyuki Tokuchi [11:52 PM] 
+となると皿の上に乗るものは値とか？
+
+jekto_vatimeliju [11:52 PM] 
+なるほどなぁ
+
+[11:52] 
+じゃあポインタってなんだろう
+
+Nobuyuki Tokuchi [11:53 PM] 
+お箸とかフォークとかみたいな何か
