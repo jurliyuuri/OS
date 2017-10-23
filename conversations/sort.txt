@@ -1,0 +1,44 @@
+UTC+09:00
+----- Tuesday, October 3rd -----
+jekto_vatimeliju [11:47 AM] 
+ソートどうしような。ycaxにしてよいのかどうか
+
+
+sashimiwiki [11:49 AM] 
+ソート、表し方が良く分からないな
+
+
+[11:50] 
+ycaxだと具体性に欠けるくらいだからそれくらいで良いと思うんだけど
+
+
+jekto_vatimeliju [11:50 AM] 
+順序、順列、順番とかで検索かけたが良い単語が見つからなかったんよね
+
+
+sashimiwiki [11:51 AM] 
+並べるって単語がないぞ
+
+
+jekto_vatimeliju [11:51 AM] 
+「順序の整理」とか？
+
+
+[11:51] 
+並べるが無いのか
+
+
+sashimiwiki [11:51 AM] 
+achkarjとかどうかしら？
+
+
+jekto_vatimeliju [12:14 PM] 
+「入れ替える」「置換する」か、んー、どちらかというと文字列検索のreplaceの方に使う単語な気がする
+
+
+sashimiwiki [12:15 PM] 
+微妙かー
+
+
+jekto_vatimeliju [12:15 PM] 
+「入れ替えによる整理」か？
