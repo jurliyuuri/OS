@@ -31,6 +31,7 @@ fullParse' str = do
 
 rl :: String -> Maybe(Rvalue -> Lvalue -> Instruction)
 rl "krz" = Just Krz
+rl "kRz" = Just Krz
 rl "ata" = Just Ata
 rl "nta" = Just Nta
 rl "ada" = Just Ada
@@ -39,7 +40,9 @@ rl "dal" = Just Dal
 rl "dto" = Just Dto
 rl "dtosna" = Just Dtosna
 rl "dro" = Just Dro
+rl "dRo" = Just Dro
 rl "malkrz" = Just MalKrz
+rl "malkRz" = Just MalKrz
 rl _ = Nothing
 
 parseCond :: String -> Maybe Cond
