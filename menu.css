@@ -1,0 +1,27 @@
+.indent{text-indent:2em}
+.double-indent{text-indent:4em}
+#menu{
+	position:fixed;
+	left:-450px;
+	width:400px;
+	top:0px;
+	height:100%;
+	transition-property: left;
+	transition-duration:0.5s;
+	padding:10px;
+	background-color:white;
+	box-shadow:3px 0px 6px;
+	overflow:scroll;
+}
+#menuButton{
+	position:fixed;
+	left:10px;
+	top:10px;
+	transition-property: left;
+	transition-duration:0.5s;
+	font-size:100px;
+	text-shadow:2px 2px 4px black;
+	color:#ddd;
+	font-weight:900;
+	line-height:100px;
+}
