@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-<title>色について</title>
+<title>色空間などについて考察する</title>
 <meta charset="UTF-8">
 <script src="color_demo.js"></script>
 <script src="color_space.js"></script>
@@ -46,7 +46,7 @@ function foo(str){return [
 	parseInt(str.slice(0,2),16),
 	parseInt(str.slice(2,4),16),
 	parseInt(str.slice(4,6),16)];}
-function gen_table(arr){
+function gen_table(arr,output_id){
 var str=`
 <table class="t u" style="font-family: monospace; text-align:right;">
 <thead>
@@ -55,12 +55,13 @@ var str=`
 <tbody>`;
 for(var i=0; i<arr.length; i++){
 	var f = foo(arr[i]);
-	var t = [`<div style="background-color:#`+arr[i]+`">#`+arr[i]+`</div>`,f[0],f[1],f[2],bar(f[0]).toFixed(6),bar(f[1]).toFixed(6),bar(f[2]).toFixed(6)];
+	var t = [`<div style="background-color:#`+arr[i]+`">#`+arr[i]+`</div>`,f[0],f[1],f[2],sRGB2linear(f[0]).toFixed(6),sRGB2linear(f[1]).toFixed(6),sRGB2linear(f[2]).toFixed(6)];
 	str += '<tr><td>' + t.join('</td><td>') + '</td></tr>';
 }
 
 str+="</tbody></table>";
-document.write(str);
+if(output_id){document.getElementById(output_id).innerHTML=str;}else{document.write(str);}
+
 }
 gen_table(arr2);
 </script>
@@ -264,6 +265,126 @@ convert_and_draw(7/8 + 123/1024 ,  5/1024+7/8 , 123/1024 +  5/1024,
 
 
 </script>
+
+<h2>4. 色変換</h2>
+<h3>4-1. タムカラー</h3>
+<p>理語辞書の<a href="http://twoc.ever.jp/twoc/conlang.cgi?search=tamdejix&type=0&agree=0&mode=search&user_id=fafs">tamdejix</a>によると、皇論において重要なイメージカラーであるタムカラーは現世のカラーコードでいうと#005242であるらしい。</p>
+<p>さて、この記事を最後に更新したのが2017年8月20日、つまり3ヶ月前なので、完全に諸々を忘れてしまっている。復習せねば。</p>
+<p>えーっと、</p>
+<pre>
+function jRGBlinear2sRGB(jrl, jgl, jbl)
+{
+	var sr = normalize_sRGB(jrl * 7/8 + jgl *     123/1024 + jbl *      5/1024);
+	var sg = normalize_sRGB(jrl * 11/2048 + jgl * 127/128 + jbl *    5/2048);
+	var sb = normalize_sRGB(jrl * 1/256 + jgl *   1/16 + jbl *  239/256);
+	return [sr,sg,sb];
+}
+</pre>
+<p>これに通したときに[0, 82, 66]が返ってくれば良い。</p>
+<p><code>normalize_sRGB</code>は<code>linear2sRGB</code>を<code>Math.round</code>したものなので、<code>linear2sRGB</code>を通した結果が[-0.5~0.5; 81.5~82.5; 65.5~66.5]であれば良い。</p>
+<p><code>linear2sRGB</code>の逆関数は<code>sRGB2linear</code>なので、
+<pre>
+jrl *     7/8 + jgl * 123/1024 + jbl *  5/1024  = -0.000151763 ~ 0.000151763
+jrl * 11/2048 + jgl *  127/128 + jbl *  5/2048  =  0.083325624 ~ 0.085434486
+jrl *   1/256 + jgl *     1/16 + jbl *  239/256 =  0.053666898 ~ 0.055300801
+</pre>
+<p>さて、これ厳密に解くのめんどいなぁ。とりあえずは普通に[0, 82, 66]で近似するか</p>
+
+<pre>
+jrl *     7/8 + jgl * 123/1024 + jbl *  5/1024  = 0
+jrl * 11/2048 + jgl *  127/128 + jbl *  5/2048  = 0.08437621154414882
+jrl *   1/256 + jgl *     1/16 + jbl *  239/256 = 0.05448027644244237
+</pre>
+
+<p>とりあえず</p>
+<pre>
+(7/8 | 123/1024 | 5/1024
+11/2048 | 127/128 | 5/2048
+1/256 | 1/16 | 239/256)
+</pre>
+の逆行列を求めると、
+<pre>
+(1942272/1698191 | -234536/1698191 | -9545/1698191
+-10496/1698191 | 1713112/1698191 | -4425/1698191
+-7424/1698191 | -113704/1698191 | 1819319/1698191)
+</pre>
+<p>だそうなので、</p>
+<pre>
+jrl = -0.011959357568943422
+jgl =  0.08497561539753895
+jbl =  0.05271673757520321
+</pre>
+<p>という感じである。赤-1.2%、緑8.5%、青5.3%ということか。</p>
+<p>実際これでやると#005242が生成できるので、その点では問題ない。ただ、負の値が入ってしまうのでなぁ</p>
+<p>色調変えずに明るさ上げて再挑戦してみるか。もちろんその前にスクリプト書くけど。</p>
+<p>赤0%、緑8.5%、青6.0%だと#1a5246か。
+<script>
+	gen_table([
+		toHex(jRGBlinear2sRGB(-0.012,0.085,0.053)),
+		toHex(jRGBlinear2sRGB(0,0.085,0.06))
+	]);
+</script>
+
+<script>
+function $gefja()
+{
+	var jrl = document.getElementById("isg").value/100;
+	var jgl = document.getElementById("nkla").value/100;
+	var jbl = document.getElementById("gds").value/100;
+	var hex = toHex(jRGBlinear2sRGB(jrl,jgl,jbl));
+	document.getElementById("njw4").value = hex;
+	gen_table([hex],"jndf")
+}
+
+function $gbfs()
+{
+	var r = parseInt(document.getElementById("thew5").value.slice(0,2),16);
+	var g = parseInt(document.getElementById("thew5").value.slice(2,4),16);
+	var b = parseInt(document.getElementById("thew5").value.slice(4,6),16);
+	var [jrl,jgl,jbl] = sRGB2jRGBlinear(r,g,b);
+	document.getElementById("gsdfvcx").value = jrl*100;
+	document.getElementById("irytr").value = jgl*100;
+	document.getElementById("jerd").value = jbl*100;
+}
+</script>
+<h3>4-2. 変換器</h3>
+
+
+<table><tr><td>
+<label>悠里赤: <input type="number" step="0.01" id="isg">%</label><br>
+<label>悠里緑: <input type="number" step="0.01" id="nkla">%</label><br>
+<label>悠里青: <input type="number" step="0.01" id="gds">%</label><br>
+</td><td><input type="button" value="→" onclick="$gefja()"></td><td>現世RGB: #<input type="text" readonly id="njw4"><br><div id="jndf"></div></td></tr></table>
+<br>
+<table><tr><td>現世RGB: #<input type="text" id="thew5"></td><td><input type="button" value="→" onclick="$gbfs()"></td><td>
+<label>悠里赤: <input type="number" step="0.01" id="gsdfvcx">%</label><br>
+<label>悠里緑: <input type="number" step="0.01" id="irytr">%</label><br>
+<label>悠里青: <input type="number" step="0.01" id="jerd">%</label><br>
+</td></table>
+
+<p>なお、3.で書いた「明るい8色」はそれぞれ（悠里赤、悠里緑、悠里青のパーセンテージで）</p>
+<pre>
+100,  0,  0
+100,100,  0
+  0,100,  0
+  0,100,100
+  0,  0,100
+100,  0,100
+100,100,100
+ 50, 50, 50
+</pre>
+<p>であり、「暗い8色」はそれぞれ</p>
+<pre>
+25, 0, 0   
+25,25, 0   
+ 0,25, 0   
+ 0,25,25
+ 0, 0,25
+25, 0,25
+ 0, 0, 0   
+25,25,25
+</pre>
+
 
 <div id="menu">読み込み中…</div>
 <div id="menuButton" onclick="openClose()">≡</div>

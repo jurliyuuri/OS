@@ -33,3 +33,14 @@ function jRGBlinear2sRGB(jrl, jgl, jbl)
 	var sb = normalize_sRGB(jrl * 1/256 + jgl *   1/16 + jbl *  239/256);
 	return [sr,sg,sb];
 }
+
+function sRGB2jRGBlinear(r,g,b)
+{
+	var rl = sRGB2linear(r);
+	var gl = sRGB2linear(g);
+	var bl = sRGB2linear(b);
+	return [
+		(rl*1942272-gl*234536-bl*9545)/1698191,
+		(-rl*10496+gl*1713112-bl*4425)/1698191,
+		(-rl*7424-gl*113704+bl*1819319)/1698191];
+}
