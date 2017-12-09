@@ -9,13 +9,12 @@ import Execute
 import Linker
 import Messages
 import Types
+import CommonIO
 
-semicolonExtension :: String -> String
-semicolonExtension = unlines . map (takeWhile (/=';')) . lines
-
+{-
 fullExecute :: String -> IO ()
 fullExecute = fullExecute' . return
-
+-}
 fullExecute' :: [String] -> IO ()
 fullExecute' strs = strs `getProgramAndApply` \program ->
  let (boolerh, logs) = execute program in do
@@ -26,9 +25,7 @@ fullExecute' strs = strs `getProgramAndApply` \program ->
 getProgramAndApply :: [String] -> (Program -> IO ()) -> IO ()
 strs `getProgramAndApply` f = mapM fullParse' strs >>>= \ps -> linker ps >>>= f 
 
-(>>>=) :: (Message a) => Either a b -> (b -> IO ()) -> IO () 
-Right b >>>= action = action b
-Left a >>>= _ = hPutStrLn stderr (show' English a)
+
 
 main :: IO ()
 main = do
@@ -66,15 +63,10 @@ main'' paths = do
  strs <- forM paths (fmap semicolonExtension . readFile)
  putStrLn' English $ NormalMessage $ "\nrunning " ++ intercalate ", " paths ++ ":\n"
  fullExecute' strs
-
+{-
 main' :: FilePath -> IO ()
 main' filepath = main'' [filepath]
-
-parse' :: FilePath -> IO ()
-parse' filepath = do
- str <- semicolonExtension <$> readFile filepath
- putStrLn' English $ NormalMessage $ "\nparsing " ++ filepath ++ ":\n"
- fullParse' str >>>= print
+-}
 
 
 demo :: IO ()
