@@ -9,8 +9,15 @@ function openClose(){
 
 var hs=document.querySelectorAll("h2,h3,h4");
 var length=hs.length;
-var menu="";
+var top=document.querySelector("h1");
+var menu="<h2>目次</h2>";
 var id=0;
+
+if(top){
+	top.id="top";
+	menu+='<a href="#top">↑トップに戻る</a>'
+}
+menu+="<hr>";
 
 function anchor(element){return '<a href="#'+element.id+'">'+element.innerText+'</a><br>'}
 
@@ -25,3 +32,4 @@ for(var i=0;i<length;i++){
 	}
 }
 document.getElementById("menu").innerHTML=menu;
+window.addEventListener("load",function(e){location.hash=location.hash;});
