@@ -22,8 +22,8 @@ import Linker
 
 type Error = RuntimeError
 
-error' :: String -> VIO a
-error' str = do
+runtimeError :: String -> VIO a
+runtimeError str = do
  (cpu, mem) <- get
  lift . lift . throwError . RuntimeError str $ "CPU: " ++ show cpu ++ "\nMemory: " ++ show mem
 
@@ -61,7 +61,7 @@ finalize :: VIO Bool
 finalize = do
  a <- getRegister F5
  if a /= initialF5
-  then error' $ "f5 register was not preserved after the call. It should be in " ++ show initialF5 ++ " but is actually in " ++ show a
+  then runtimeError $ "f5 register was not preserved after the call. It should be in " ++ show initialF5 ++ " but is actually in " ++ show a
   else return False
 
 
@@ -167,7 +167,7 @@ getValueFromR (Lab label) = do
  program <- ask
  currentNX <- nx <$> getCPU
  case resolveLabel currentNX program label of
-  Nothing -> error' $ "Undefined label `" ++ unLabel label ++ "`"
+  Nothing -> runtimeError $ "Undefined label `" ++ unLabel label ++ "`"
   Just addr -> return addr
 getValueFromR (L (Re register)) = getRegister register
 getValueFromR (L (RPlusNum register offset)) = do
@@ -200,7 +200,7 @@ updateXXAndGetInstruction = do
     val <- getValueFromR (L (RPlusNum F5 4))
     tell [show val]
     return ret
-   | otherwise -> error' $ "nx has an invalid address " ++ show currentNX
+   | otherwise -> runtimeError $ "nx has an invalid address " ++ show currentNX
   Just (newXX, instruction) -> do
    (cpu, mem) <- get
    put (cpu{xx = newXX}, mem)
