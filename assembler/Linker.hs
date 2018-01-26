@@ -14,7 +14,7 @@ import TentativeLoad
 import qualified Data.Map as M
 import Data.List
 import Control.Monad
--- type ParsedFile = ([(Instruction, [Label])],([KueInfo],[Label]))
+-- type ParsedFile = ([(Instruction, [Label])],Kues_Xoks)
 
 type PageId = Int
 
@@ -27,7 +27,7 @@ linker' pfs = case fromListNoDup $ zipWith assignInts pfs [1..] of
    loadeds' <- M.traverseWithKey loadWithInt dat
    sanitizeKue loadeds'
 
-sanitizeKue :: M.Map PageId (TentativeLoad, ([Label], [Label])) -> Either LinkError Program'
+sanitizeKue :: M.Map PageId (TentativeLoad, Kues_Xoks) -> Either LinkError Program'
 sanitizeKue foo = do
  let pidKues = M.toList $ fmap (\(_,(ks,_)) -> ks) foo
  let kuePid = concatMap (\(a,bs) -> zip bs $ repeat a) pidKues
@@ -36,7 +36,7 @@ sanitizeKue foo = do
   Left labels -> Left $ LinkError $
    "conflict: different files export the same label(s) `" ++ intercalate ", " (map unLabel labels) ++ "“"
 
-loadWithInt :: PageId -> ParsedFile -> Either LinkError (TentativeLoad, ([Label], [Label]))
+loadWithInt :: PageId -> ParsedFile -> Either LinkError (TentativeLoad, Kues_Xoks)
 loadWithInt n (ils, (kues, xoks)) = do
  loaded <- toTentativeLoad (initialAddress + fromIntegral n * maxSize) ils
  -- xoks must not conflict with internal label table

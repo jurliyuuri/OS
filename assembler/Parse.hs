@@ -1,8 +1,8 @@
 {-# OPTIONS -Wall -fno-warn-unused-do-bind #-}
 module Parse
-(fullParse
-,fullParse'
+(fullParse'
 ,ParsedFile
+,Kues_Xoks
 ) where
 import Control.Monad.State
 import Data.Char(isDigit)
@@ -11,13 +11,11 @@ import Data.Maybe
 import Types
 
 type Error = ParseError
-type ParsedFile = ([(Instruction, [Label])],([KueInfo],[Label]))
+type ParsedFile = ([(Instruction, [Label])],Kues_Xoks)
+type Kues_Xoks = ([KueInfo],[XokInfo])
 
 left :: String -> Either ParseError b
 left = Left . ParseError
-
-fullParse :: String -> Either Error [(Instruction, [Label])]
-fullParse = fmap fst . fullParse'
 
 fullParse' :: String -> Either Error ParsedFile
 fullParse' str = do
@@ -81,7 +79,8 @@ normalize [(Nothing,_)] = left "l' must be preceded by an instruction"
 normalize ((Just a,ls):ys) = ((a,ls) :) <$> normalize ys
 
 type KueInfo = Label
-data ParserStat = P {isCI :: Bool, kueList :: [Label], xokList :: [Label]} deriving (Show, Eq, Ord)
+type XokInfo = Label
+data ParserStat = P {isCI :: Bool, kueList :: [KueInfo], xokList :: [XokInfo]} deriving (Show, Eq, Ord)
 
 toI :: [String] -> StateT ParserStat (Either Error) [(Maybe Instruction, [Label])]
 toI [] = return []
