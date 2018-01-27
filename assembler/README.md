@@ -1,11 +1,27 @@
-この記事は[言語実装 Advent Calendar 2017](https://qiita.com/advent-calendar/2017/lang_dev)の18日目の記事です。
+この記事は[言語実装 Advent Calendar 2017](https://qiita.com/advent-calendar/2017/lang_dev)の18日目の記事です。なお、これを書いているのは1月末で、実に1ヶ月以上の滞納です。
 
 # 異世界で使われている設定のアセンブリ言語をHaskellで実装する
 
 
-[「異世界転生したけど日本語が通じなかった」](https://kakuyomu.jp/works/1177354054883808252)とかに出てくる異世界ファイクレオネで使われている設定のアセンブリ言語2003lkを、Haskellを使って実装した話を書いていきます。
+[「異世界転生したけど日本語が通じなかった」](https://kakuyomu.jp/works/1177354054883808252)とかに出てくる異世界ファイクレオネで使われている設定のアセンブリ言語2003lkを、Haskellを使って実装した話を書いていく。
 
 ## 構成
+
+アセンブリ言語でありながら、作ったのはアセンブラではなくインタプリタだったりする。というのも、これを作り始めた当時はまだ機械語の仕様が決まっておらず、アセンブラが作れなかったからである。2018年の目標はアセンブラを作ることである。
+
+|ファイル名 |内容 |依存|
+|:--- |:--- |:--- |
+| [Memory.hs](https://github.com/jurliyuuri/OS/blob/master/assembler/Memory.hs) | 「メモリ」を定義する | なし |
+| [Types.hs](https://github.com/jurliyuuri/OS/blob/master/assembler/Types.hs) | 他ファイルで使う型を定義する | Memory |
+| [Messages.hs](https://github.com/jurliyuuri/OS/blob/master/assembler/Messages.hs) | エラーメッセージ。現状は英語しか出ないが、いつか日本語とかリパライン語にも対応したい | Types |
+| [Parse.hs](https://github.com/jurliyuuri/OS/blob/master/assembler/Parse.hs) | 字句解析・構文解析・意味解析 | Types |
+| [TentativeLoad.hs](https://github.com/jurliyuuri/OS/blob/master/assembler/TentativeLoad.hs) | 「メモリ」（ただしMemory.hsとは異なる）に命令を格納する | Types |
+| [Linker.hs](https://github.com/jurliyuuri/OS/blob/master/assembler/Linker.hs) | リンカ「のようなもの」 | Types, Parse, TentativeLoad |
+| [Execute.hs](https://github.com/jurliyuuri/OS/blob/master/assembler/Execute.hs) | インタプリタ | Types, Memory, Linker |
+| [CommonIO.hs](https://github.com/jurliyuuri/OS/blob/master/assembler/CommonIO.hs) | IO絡みの処理のうち、これから作る予定のアセンブラにも流用できそうな処理 | Parse, Messages, Types |
+| [Main](https://github.com/jurliyuuri/OS/blob/master/assembler/xarzniar.hs) | パーサ・インタプリタ・IOをまとめてMainとする | Parse, Execute, Linker, Messages, Types, CommonIO |
+
+
 
 ## 言語仕様を軽く解説
 詳しい説明は[設定一覧](http://jurliyuuri.com/OS/settings.html)に書いてあるので、以下言語実装の説明に必要最低限な要素だけ解説する。
@@ -18,7 +34,7 @@
 
 ## パーサ
 
-`a=(1+2)*3` みたいな再帰的な構文はないので、わざわざParsecを使うのもオーバーキルかなぁという考えのもと自前実装。コードは[Parse.hs](https://github.com/jurliyuuri/OS/blob/master/assembler/Parse.hs#L127)。とはいえ単純な仕様なので、一気に字句解析・構文解析・意味解析して`Either ParseError ParsedFile`を吐く設計。`ParsedFile`型は
+`a=(1+2)*3` みたいな再帰的な構文はないので、わざわざParsecを使うのもオーバーキルかなぁという考えのもと自前実装。コードは[Parse.hs](https://github.com/jurliyuuri/OS/blob/master/assembler/Parse.hs)。とはいえ単純な仕様なので、一気に字句解析・構文解析・意味解析して`Either ParseError ParsedFile`を吐く設計。`ParsedFile`型は
 ```
 type ParsedFile = ([(Instruction, [Label])],([Label],[Label]))
 ```
