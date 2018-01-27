@@ -14,8 +14,8 @@
 | [Memory.hs](https://github.com/jurliyuuri/OS/blob/master/assembler/Memory.hs) | 「メモリ」を定義する | なし |
 | [Types.hs](https://github.com/jurliyuuri/OS/blob/master/assembler/Types.hs) | 他ファイルで使う型を定義する | Memory |
 | [Messages.hs](https://github.com/jurliyuuri/OS/blob/master/assembler/Messages.hs) | エラーメッセージ。現状は英語しか出ないが、いつか日本語とかリパライン語にも対応したい | Types |
-| [Parse.hs](https://github.com/jurliyuuri/OS/blob/master/assembler/Parse.hs) | 字句解析・構文解析・意味解析 | Types |
-| [TentativeLoad.hs](https://github.com/jurliyuuri/OS/blob/master/assembler/TentativeLoad.hs) | 「メモリ」（ただしMemory.hsとは異なる）に命令を格納する | Types |
+| [Parse.hs](https://github.com/jurliyuuri/OS/blob/master/assembler/Parse.hs) | パーサ（字句解析・構文解析・意味解析） | Types |
+| [TentativeLoad.hs](https://github.com/jurliyuuri/OS/blob/master/assembler/TentativeLoad.hs) | 「メモリ」（ただしMemory.hsとは異なる）に命令を「ロード」する | Types |
 | [Linker.hs](https://github.com/jurliyuuri/OS/blob/master/assembler/Linker.hs) | リンカ「のようなもの」 | Types, Parse, TentativeLoad |
 | [Execute.hs](https://github.com/jurliyuuri/OS/blob/master/assembler/Execute.hs) | インタプリタ | Types, Memory, Linker |
 | [CommonIO.hs](https://github.com/jurliyuuri/OS/blob/master/assembler/CommonIO.hs) | IO絡みの処理のうち、これから作る予定のアセンブラにも流用できそうな処理 | Parse, Messages, Types |
@@ -26,7 +26,6 @@
 ## 言語仕様を軽く解説
 詳しい説明は[設定一覧](http://jurliyuuri.com/OS/settings.html)に書いてあるので、以下言語実装の説明に必要最低限な要素だけ解説する。
 
-### `'c'i`と`'i'c`
 ### ラベル
 ### `kue`と`xok`
 `kue`<sup>[1](#myfootnote1)</sup>がラベルをexportする擬似命令で、`xok`<sup>[2](#myfootnote2)</sup>がラベルをimportする擬似命令である。現状、ファイル分割でできるのはラベルの共有だけなので、逆に`kue`のないファイルの先頭をエントリーポイントとする仕様となっている。
@@ -51,7 +50,8 @@ Haskellには`words`とかいう便利な関数があるので、それを使っ
 
 それぞれの命令がどのような引数を取るのかも予め分かっているため、このタイミングで「即値への代入」などの誤った命令も弾いている。
 
-
+## 「メモリ」
+速度はそんなに求めてない（インタプリタですしおすし）ので、32ビット整数をキーとして8ビット整数を値とした連想配列で管理。「せっかくこんな富豪的プログラミングをしているのだから、それなりに機能性が欲しい」と思ったので、初期化していないメモリから読み取ろうとすると（そんなのは間違いなくバグなので）そのことがデバッグログに記録されるようにした。
 
 ## 脚注
 <a name="myfootnote1">1</a>:リパライン語kinunsares「公開する」由来  
