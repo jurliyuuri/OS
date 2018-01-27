@@ -6,12 +6,14 @@ module Linker
 ,readNX
 ,linker
 ) where
-import Types
-import Parse
-import TentativeLoad
 import qualified Data.Map as M
 import Data.List
 import Control.Monad
+
+import Types
+import Parse
+import TentativeLoad
+
 -- type ParsedFile = ([(Instruction, [Label])],Kues_Xoks)
 
 type PageId = Int

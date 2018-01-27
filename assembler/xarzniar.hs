@@ -11,10 +11,6 @@ import Messages
 import Types
 import CommonIO
 
-{-
-fullExecute :: String -> IO ()
-fullExecute = fullExecute' . return
--}
 fullExecute' :: [String] -> IO ()
 fullExecute' strs = strs `getProgramAndApply` \program ->
  let (boolerh, logs) = execute program in do
@@ -24,7 +20,6 @@ fullExecute' strs = strs `getProgramAndApply` \program ->
 
 getProgramAndApply :: [String] -> (Program -> IO ()) -> IO ()
 strs `getProgramAndApply` f = mapM fullParse' strs >>>= \ps -> linker ps >>>= f 
-
 
 
 main :: IO ()
@@ -63,10 +58,6 @@ main'' paths = do
  strs <- forM paths (fmap semicolonExtension . readFile)
  putStrLn' English $ NormalMessage $ "\nrunning " ++ intercalate ", " paths ++ ":\n"
  fullExecute' strs
-{-
-main' :: FilePath -> IO ()
-main' filepath = main'' [filepath]
--}
 
 
 demo :: IO ()

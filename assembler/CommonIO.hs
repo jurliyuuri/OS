@@ -5,13 +5,8 @@ module CommonIO
 ,(>>>=)
 ) where
 import System.IO
---import System.Environment(getArgs)
---import Control.Monad
---import Data.List
 
 import Parse
---import Execute
---import Linker
 import Messages
 import Types
 
