@@ -94,6 +94,13 @@ dtosna :: Word32 -> Word32 -> Word32
 dtosna x y = fromIntegral $ x' `shift` negate (fromIntegral y)
  where x' = fromIntegral x :: Int32 
 
+set64bitProd :: (Lvalue, Lvalue) -> Word64 ->  VIO ()
+set64bitProd (lh, ll) prod = do
+ let higher = fromIntegral $ prod `shift` (-32) :: Word32
+ let lower = fromIntegral prod :: Word32
+ setValueToL lh higher
+ setValueToL ll lower 
+
 executeInstruction :: Instruction -> VIO ()
 executeInstruction TERMINATE = error "cannot happen"
 executeInstruction (Krz r l) = do 
@@ -111,18 +118,12 @@ executeInstruction (Lat r ll lh) = do
  v1 <- getValueFromR r
  v2 <- getValueFromR (L ll)
  let prod = (fromIntegral v1::Word64) * (fromIntegral v2::Word64)
- let higher = fromIntegral $ prod `shift` (-32) :: Word32
- let lower = fromIntegral prod :: Word32
- setValueToL lh higher
- setValueToL ll lower
+ set64bitProd (lh, ll) prod
 executeInstruction (Latsna r ll lh) = do
  v1 <- getValueFromR r
  v2 <- getValueFromR (L ll)
  let prod = (fromIntegral (fromIntegral v1::Int32)::Word64) * (fromIntegral (fromIntegral v2::Int32)::Word64)
- let higher = fromIntegral $ prod `shift` (-32) :: Word32
- let lower = fromIntegral prod :: Word32
- setValueToL lh higher
- setValueToL ll lower
+ set64bitProd (lh, ll) prod 
 executeInstruction (MalKrz r l) = do
  fl <- getFlag
  when fl $ executeInstruction (Krz r l)
