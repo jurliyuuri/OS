@@ -241,18 +241,18 @@
 <h2>3. その他の構文</h2>
 <table border="1" bordercolor="#888" cellspacing="0" class="qq">
 <thead>
-<tr><td>構文</td><td></td><td>役割</td></tr>
+<tr><td>構文</td><td>語源</td><td>役割</td></tr>
 </thead>
 <tbody>
-<tr><td><code>'c'i</code></td><td style="width:100px;">構文確定</td><td style="max-width:300px;">第一オペランドが-'c格、第二オペランドが-'i格として解釈される。現世の表現で言うと、GNU as的 <code>mov src, dest</code>の語順でなくMASM的 <code>mov dest, src</code>の語順になる。<strong>ただし、比較演算子はひっくり返らない。</strong></td></tr>
-<tr><td><code>'i'c</code></td><td style="width:100px;">構文確定</td><td style="max-width:300px;">第一オペランドが-'i格、第二オペランドが-'c格として解釈される（これがデフォルトの語順である）ように設定する。現世の表現で言うと、MASM的 <code>mov dest, src</code>の語順でなくGNU as的 <code>mov src, dest</code>の語順になる。<strong>ただし、比較演算子はひっくり返らない。</strong></td></tr>
-<tr><td><u>レジスタ名</u><code>@</code></td><td>構文確定</td><td>レジスタに入っている番地のメモリを表す。</td></tr>
-<tr><td><u>レジスタ名</u><code> + </code><u>定数</u><code>@</code></td><td>構文確定</td><td>レジスタに入っている番地に定数を足した番地のメモリを表す。</td></tr>
-<tr><td><u>レジスタ名</u><code> + </code><u>レジスタ名</u><code>@</code></td><td>構文確定</td><td>2つのレジスタに入っている数値を足した番地のメモリを表す。</td></tr>
-<tr><td style="width:250px;"><code>l' </code><u>ラベル名</u>（後ろから修飾）</td><td>構文確定</td><td>直前の命令に対してラベル名を定義する</td></tr>
-<tr><td style="width:250px;"><code>nll </code><u>ラベル名</u>（前から修飾）<br></td><td>構文確定</td><td>直後の命令に対してラベル名を定義する</td></tr></tbody>
-<tr><td style="width:250px;"><code>kue </code><u>ラベル名</u><br></td><td>構文確定</td><td>ラベル名を他のファイルからも見えるようにする</td></tr></tbody>
-<tr><td style="width:250px;"><code>xok </code><u>ラベル名</u><br></td><td>構文確定</td><td>他のファイルで定義されたラベル名を見えるようにする</td></tr></tbody>
+<tr><td><code>'c'i</code></td><td style="width:100px;"></td><td style="max-width:300px;">第一オペランドが-'c格、第二オペランドが-'i格として解釈される。現世の表現で言うと、GNU as的 <code>mov src, dest</code>の語順でなくMASM的 <code>mov dest, src</code>の語順になる。<strong>ただし、比較演算子はひっくり返らない。</strong></td></tr>
+<tr><td><code>'i'c</code></td><td style="width:100px;"></td><td style="max-width:300px;">第一オペランドが-'i格、第二オペランドが-'c格として解釈される（これがデフォルトの語順である）ように設定する。現世の表現で言うと、MASM的 <code>mov dest, src</code>の語順でなくGNU as的 <code>mov src, dest</code>の語順になる。<strong>ただし、比較演算子はひっくり返らない。</strong></td></tr>
+<tr><td><u>レジスタ名</u><code>@</code></td><td></td><td>レジスタに入っている番地のメモリを表す。</td></tr>
+<tr><td><u>レジスタ名</u><code> + </code><u>定数</u><code>@</code></td><td></td><td>レジスタに入っている番地に定数を足した番地のメモリを表す。</td></tr>
+<tr><td><u>レジスタ名</u><code> + </code><u>レジスタ名</u><code>@</code></td><td></td><td>2つのレジスタに入っている数値を足した番地のメモリを表す。</td></tr>
+<tr><td style="width:250px;"><code>l' </code><u>ラベル名</u>（後ろから修飾）</td><td>lex</td><td>直前の命令に対してラベル名を定義する</td></tr>
+<tr><td style="width:250px;"><code>nll </code><u>ラベル名</u>（前から修飾）<br></td><td>ny la lex</td><td>直後の命令に対してラベル名を定義する</td></tr></tbody>
+<tr><td style="width:250px;"><code>kue </code><u>ラベル名</u><br></td><td>kinunsares</td><td>ラベル名を他のファイルからも見えるようにする</td></tr></tbody>
+<tr><td style="width:250px;"><code>xok </code><u>ラベル名</u><br></td><td>xokison</td><td>他のファイルで定義されたラベル名を見えるようにする</td></tr></tbody>
 <!--<tr style="color:#ddd"><td><code>-</code><u>定数</u></td><td>構文未確定</td><td>負の整数。<a style="color:#ddd" href="https://jurliyuuri.slack.com/archives/C6QL0DKV4/p1504358289000016">リパーシェフォントでのU+002Dはマイナスではなくハイフンである</a>ので、現状の構文は誤りである。<a id="dontuse" style="color:red">めんどいので現状では使用しないことに決めた</span></span></td>-->
 </table>
 <ul>
