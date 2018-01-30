@@ -99,11 +99,14 @@ data TentativeLoad = TentativeLoad {
 
 最後に、複数のファイルが同一名のラベルを`kue`していないことを検証したら、`linker`の仕事は終わりである。
 
+## インタプリタ
+
+
 
 
 ## 脚注
-<a name="myfootnote1">1</a>:リパライン語kinunsares「公開する」由来  
-<a name="myfootnote2">2</a>:リパライン語xokison「別の場所で」由来  
+<a name="myfootnote1">1</a>:リパライン語kinunsares「公開する」由来  
+<a name="myfootnote2">2</a>:リパライン語xokison「別の場所で」由来  
 <a name="myfootnote3">3</a>:`initialAddress`は定数値`0x14830000`である。
 
 
