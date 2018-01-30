@@ -88,8 +88,22 @@ data TentativeLoad = TentativeLoad {
 
 という型である。`tentativeAddressTable`のキーである`Word32`はその命令の配置されているアドレス、その後ろの`(Word32, Instruction)`は「直後の命令のアドレス」および「命令本体」である。`labelTable`はラベル名からアドレスを引くための`Map`である。
 
+## リンカ「のようなもの」
+複数ファイルが扱えるようになったのは一旦実装を組み終わった後なので、既に出来上がっていた実装にねじ込む形でリンカ「のようなもの」を実装した。その結果、なかなか妙なことになってしまっている。
+
+`linker`は`[ParsedFile]`を受け取る。`[ParsedFile]`の中で`kue`擬似命令を欠いているファイルはエントリーポイントであるので、それに0番、それ以外には正の整数を振る。もちろん、エントリーポイントが無かったりエントリーポイントが複数あったりしたらその時点で即`LinkError`である。
+
+整数を振られた各`ParsedFile`は`dat :: Data.Map.Map Int ParsedFile`となっており、ここに`Data.Map.traverseWithKey`を適用して`dat`の各要素に`loadWithInt`関数を適用する。
+
+`loadWithInt`関数は`n :: Int`と`(ils, (kues, xoks)) :: ParsedFile`を取って、まず`initialAddress + fromIntegral n * maxSize`の位置<sup>[3](#myfootnote3)</sup>に`ils`を`toTentativeLoad`する。それによってファイル内のlabelTableが作られるので、それが「`kues`にあるラベルはファイル内にあるはずだ」「`xoks`にあるラベルはファイル内にはあってはいけない」の2条件を満たしているか確認する。
+
+最後に、複数のファイルが同一名のラベルを`kue`していないことを検証したら、`linker`の仕事は終わりである。
+
+
+
 ## 脚注
 <a name="myfootnote1">1</a>:リパライン語kinunsares「公開する」由来  
-<a name="myfootnote2">2</a>:リパライン語xokison「別の場所で」由来
+<a name="myfootnote2">2</a>:リパライン語xokison「別の場所で」由来  
+<a name="myfootnote3">3</a>:`initialAddress`は定数値`0x14830000`である。
 
 

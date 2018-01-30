@@ -19,7 +19,7 @@ import TentativeLoad
 type PageId = Int
 
 linker :: [ParsedFile] -> Either LinkError Program
-linker pfs = case fromListNoDup $ zipWith assignInts pfs [1..] of
+linker pfs = case fromListNoDup $ zipWith assignInts [1..] pfs of
  Left _ -> Left $ LinkError "multiple files lack `kue`"
  Right dat -> case M.lookup 0 dat of 
   Nothing -> Left $ LinkError "all files have `kue`"
@@ -51,9 +51,9 @@ loadWithInt n (ils, (kues, xoks)) = do
   "` that is not defined in the file"
  return (loaded, (kues, xoks))
 
-assignInts :: ParsedFile -> PageId -> (PageId, ParsedFile)
-assignInts a@(_, ([], _)) _ = (0, a) -- no kue means main
-assignInts a n = (n, a)
+assignInts :: PageId -> ParsedFile -> (PageId, ParsedFile)
+assignInts _ a@(_, ([], _)) = (0, a) -- no kue means main
+assignInts n a = (n, a)
 
 readNX :: Program -> Word32 -> Maybe (Word32, Instruction)
 readNX Program{loads=pages} currentNX = do
