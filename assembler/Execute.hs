@@ -22,8 +22,8 @@ import Linker
 
 type Error = RuntimeError
 
-error' :: String -> VIO a
-error' str = do
+runtimeError :: String -> VIO a
+runtimeError str = do
  (cpu, mem) <- get
  lift . lift . throwError . RuntimeError str $ "CPU: " ++ show cpu ++ "\nMemory: " ++ show mem
 
@@ -61,7 +61,7 @@ finalize :: VIO Bool
 finalize = do
  a <- getRegister F5
  if a /= initialF5
-  then error' $ "f5 register was not preserved after the call. It should be in " ++ show initialF5 ++ " but is actually in " ++ show a
+  then runtimeError $ "f5 register was not preserved after the call. It should be in " ++ show initialF5 ++ " but is actually in " ++ show a
   else return False
 
 
@@ -94,6 +94,13 @@ dtosna :: Word32 -> Word32 -> Word32
 dtosna x y = fromIntegral $ x' `shift` negate (fromIntegral y)
  where x' = fromIntegral x :: Int32 
 
+set64bitProd :: (Lvalue, Lvalue) -> Word64 ->  VIO ()
+set64bitProd (lh, ll) prod = do
+ let higher = fromIntegral $ prod `shift` (-32) :: Word32
+ let lower = fromIntegral prod :: Word32
+ setValueToL lh higher
+ setValueToL ll lower 
+
 executeInstruction :: Instruction -> VIO ()
 executeInstruction TERMINATE = error "cannot happen"
 executeInstruction (Krz r l) = do 
@@ -111,18 +118,12 @@ executeInstruction (Lat r ll lh) = do
  v1 <- getValueFromR r
  v2 <- getValueFromR (L ll)
  let prod = (fromIntegral v1::Word64) * (fromIntegral v2::Word64)
- let higher = fromIntegral $ prod `shift` (-32) :: Word32
- let lower = fromIntegral prod :: Word32
- setValueToL lh higher
- setValueToL ll lower
+ set64bitProd (lh, ll) prod
 executeInstruction (Latsna r ll lh) = do
  v1 <- getValueFromR r
  v2 <- getValueFromR (L ll)
  let prod = (fromIntegral (fromIntegral v1::Int32)::Word64) * (fromIntegral (fromIntegral v2::Int32)::Word64)
- let higher = fromIntegral $ prod `shift` (-32) :: Word32
- let lower = fromIntegral prod :: Word32
- setValueToL lh higher
- setValueToL ll lower
+ set64bitProd (lh, ll) prod 
 executeInstruction (MalKrz r l) = do
  fl <- getFlag
  when fl $ executeInstruction (Krz r l)
@@ -167,7 +168,7 @@ getValueFromR (Lab label) = do
  program <- ask
  currentNX <- nx <$> getCPU
  case resolveLabel currentNX program label of
-  Nothing -> error' $ "Undefined label `" ++ unLabel label ++ "`"
+  Nothing -> runtimeError $ "Undefined label `" ++ unLabel label ++ "`"
   Just addr -> return addr
 getValueFromR (L (Re register)) = getRegister register
 getValueFromR (L (RPlusNum register offset)) = do
@@ -200,7 +201,7 @@ updateXXAndGetInstruction = do
     val <- getValueFromR (L (RPlusNum F5 4))
     tell [show val]
     return ret
-   | otherwise -> error' $ "nx has an invalid address " ++ show currentNX
+   | otherwise -> runtimeError $ "nx has an invalid address " ++ show currentNX
   Just (newXX, instruction) -> do
    (cpu, mem) <- get
    put (cpu{xx = newXX}, mem)

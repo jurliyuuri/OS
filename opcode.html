@@ -1769,7 +1769,7 @@ l' iska
 
 <h3 id="i45_2">45-2. 燐字、そしてリパーシェ</h3>
 <p>「<a href="http://jurliyuuri.com/praige-zerp/siar_prek.html">パイグ語・古パイグ・燐字などについて考察する</a>」でも書いたが、kpht氏が16x16の燐字フォントを作ってくれた。</p>
-<img src="http://jurliyuuri.com/praige-zerp/Linzi_dot.png" />
+<img src="http://jurliyuuri.com/lin-marn/Linzi_dot.png" />
 <p>とはいえ、文字順を創作しないとなのよなぁ。</p>
 <p>あと、S.Yが16x8のリパーシェフォントを作ってくれた。</p>
 <img src="img/liparxe_bitmap.png" />
@@ -1833,6 +1833,7 @@ l' iska
 <p>よさそう。</p>
 
 <h2 id="i47">47. オペコードなどについて考察する</h2>
+<h3 id="i47_1">47-1. 現状</h3>
 <p>そろそろオペコードやっていきましょうか。</p>
 <p>「データへのアクセスは32bit固定長なのになんで命令は8bit単位なのか」などという突っ込みどころが存在するが、まあ気にせずやっていきましょう。</p>
 <p>とりあえず、前に炭酸ソーダさんが作ってくださった<a href="https://app.simplenote.com/publish/GW9zdn">案</a>を見てみよう。</p>
@@ -1942,6 +1943,9 @@ krz xx f5@
 <p>インタプリタの方をxarzniarと改名し、ladirvirelyl.hsというファイルを新たに作成。</p>
 <p>共通化できそうな処理はCommonIO.hsとして分離し、とりあえず形式だけ合わせたダミーを作成。</p>
 <p>さて、まともなコンパイラとリンカを作らねばなぁ。nヶ月前に書いたコードだからどういう構成になってるのかも読み返さねばだし。</p>
+
+<h3 id="i47_2">47-2. コードリーディング</h3>
+<p>コードを読み返さないことには何も始まらないので、とりあえずコードを読んでいきましょう。ついでに、1ヶ月以上滞納している<a href="https://github.com/jurliyuuri/OS/tree/master/assembler">アドカレ</a>を書きましょう。</p>
 
 <hr>
 <h2>xxx. To do</h2>

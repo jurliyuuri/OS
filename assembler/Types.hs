@@ -42,13 +42,13 @@ toFunc Clo = (==)
 toFunc Xolonys = (>=)
 toFunc Llonys = (>)
 toFunc Niv = (/=)
-toFunc Xtlo = lif (<=)
-toFunc Xylo = lif (<) 
-toFunc Xolo = lif (>=)
-toFunc Llo  = lif (>) 
+toFunc Xtlo = signedCmp (<=)
+toFunc Xylo = signedCmp (<) 
+toFunc Xolo = signedCmp (>=)
+toFunc Llo  = signedCmp (>) 
 
-lif :: (Word32 -> Word32 -> t) -> Word32 -> Word32 -> t
-lif f a b = f (a+0x80000000) (b+0x80000000)
+signedCmp :: (Word32 -> Word32 -> t) -> Word32 -> Word32 -> t
+signedCmp f a b = f (a+0x80000000) (b+0x80000000)
 
 toLabel' :: String -> Maybe Label
 toLabel' str
