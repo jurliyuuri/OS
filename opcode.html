@@ -1947,6 +1947,45 @@ krz xx f5@
 <h3 id="i47_2">47-2. コードリーディング</h3>
 <p>コードを読み返さないことには何も始まらないので、とりあえずコードを読んでいきましょう。ついでに、1ヶ月以上滞納している<a href="https://github.com/jurliyuuri/OS/tree/master/assembler">アドカレ</a>を書きましょう。</p>
 
+<h2 id="i48">48. そろそろやっていこうな</h2>
+<p>1月末にインタプリタ部分以外書いてから<a href="https://github.com/jurliyuuri/OS/blob/master/assembler/README.md">アドカレ</a>を放置したり、そもそもアドカレ以外も全放置している体たらくである。あれ以来やったコミットといえば誤字修正ぐらいしかないだろ。</p>
+
+<h3 id="i48_1">48-1. 「完全に沈黙してる」</h3>
+<blockquote class="twitter-tweet" data-lang="ja"><p lang="ja" dir="ltr">悠里OSプロジェクト完全に沈黙してるし、何で詰まってるんだろう。</p>&mdash; Fafs F. Sashimi@いせにほ書籍化 (@sashimiwiki) <a href="https://twitter.com/sashimiwiki/status/989145627622699008?ref_src=twsrc%5Etfw">2018年4月25日</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<blockquote class="twitter-tweet" data-lang="ja"><p lang="ja" dir="ltr">私がバートとかパイグ将棋とかにハマってOS側の進捗出してないのが主な原因です <a href="https://t.co/djlY0daPCA">https://t.co/djlY0daPCA</a></p>&mdash; .sozysozbot.@hsjoihs@jekto.vatimeliju (@sosoBOTpi) <a href="https://twitter.com/sosoBOTpi/status/989168925484068864?ref_src=twsrc%5Etfw">2018年4月25日</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<blockquote class="twitter-tweet" data-conversation="none" data-lang="ja"><p lang="ja" dir="ltr">一応今Rustとかやってるので一応</p>&mdash; .sozysozbot.@hsjoihs@jekto.vatimeliju (@sosoBOTpi) <a href="https://twitter.com/sosoBOTpi/status/989169282905862144?ref_src=twsrc%5Etfw">2018年4月25日</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<blockquote class="twitter-tweet" data-conversation="none" data-lang="ja"><p lang="ja" dir="ltr">詰まってるというより、やってない</p>&mdash; .sozysozbot.@hsjoihs@jekto.vatimeliju (@sosoBOTpi) <a href="https://twitter.com/sosoBOTpi/status/989169470651355136?ref_src=twsrc%5Etfw">2018年4月25日</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<p>とはいえ、完全に0というわけではなくて、</p>
+<blockquote class="twitter-tweet" data-lang="ja"><p lang="ja" dir="ltr">みなさんオレオレOSやろうな</p>&mdash; 千種夜羽△ (@sksat_tty) <a href="https://twitter.com/sksat_tty/status/985075868530655232?ref_src=twsrc%5Etfw">2018年4月14日</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<blockquote class="twitter-tweet" data-lang="ja"><p lang="ja" dir="ltr">やりたい（やりたいと言っているうちはやらないの法則）（とはいえRustをやり始めたので進捗） <a href="https://t.co/o7jvBQfOoq">https://t.co/o7jvBQfOoq</a></p>&mdash; hsjoihs@数情物化語 (@hsjoihs) <a href="https://twitter.com/hsjoihs/status/985076338150141952?ref_src=twsrc%5Etfw">2018年4月14日</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<blockquote class="twitter-tweet" data-lang="ja"><p lang="ja" dir="ltr">↓RustでOS書けばいいのでは？？？ <a href="https://t.co/kvLwdUy9CD">https://t.co/kvLwdUy9CD</a></p>&mdash; 千種夜羽△ (@sksat_tty) <a href="https://twitter.com/sksat_tty/status/985076821753344000?ref_src=twsrc%5Etfw">2018年4月14日</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<blockquote class="twitter-tweet" data-conversation="none" data-lang="ja"><p lang="ja" dir="ltr">Rust→LLVM→x86とか<br>と<br>Rust→LLVM→2003lk<br>を並列でできたりしたら最高に楽しそうだなぁ、みたいなことは思っています（2003lk用のなんちゃらエンドを自作する苦行が待っているが）</p>&mdash; hsjoihs@数情物化語 (@hsjoihs) <a href="https://twitter.com/hsjoihs/status/985077359983210496?ref_src=twsrc%5Etfw">2018年4月14日</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<blockquote class="twitter-tweet" data-conversation="none" data-lang="ja"><p lang="ja" dir="ltr">あー，なるほど</p>&mdash; 千種夜羽△ (@sksat_tty) <a href="https://twitter.com/sksat_tty/status/985077576388427776?ref_src=twsrc%5Etfw">2018年4月14日</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<blockquote class="twitter-tweet" data-conversation="none" data-lang="ja"><p lang="ja" dir="ltr">2003lk、仕様と「「インタプリタ」」（アセンブリなのにアセンブルせずに直接実行）だけ作って放置してたら、「AtCoder Beginners Selectionを2003lkで実装した」とかいう人が出てきている状況でとても面白いです<a href="https://t.co/xg9gXkvZyE">https://t.co/xg9gXkvZyE</a></p>&mdash; hsjoihs@数情物化語 (@hsjoihs) <a href="https://twitter.com/hsjoihs/status/985078315051450368?ref_src=twsrc%5Etfw">2018年4月14日</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<blockquote class="twitter-tweet" data-conversation="none" data-lang="ja"><p lang="ja" dir="ltr">おおお</p>&mdash; 千種夜羽△ (@sksat_tty) <a href="https://twitter.com/sksat_tty/status/985078434324885508?ref_src=twsrc%5Etfw">2018年4月14日</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<blockquote class="twitter-tweet" data-conversation="none" data-lang="ja"><p lang="ja" dir="ltr">↓ガチプロの図<a href="https://t.co/E4g5sEUhx3">https://t.co/E4g5sEUhx3</a></p>&mdash; hsjoihs@数情物化語 (@hsjoihs) <a href="https://twitter.com/hsjoihs/status/985086914377146368?ref_src=twsrc%5Etfw">2018年4月14日</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<blockquote class="twitter-tweet" data-conversation="none" data-lang="ja"><p lang="ja" dir="ltr">プロハラやめろください</p>&mdash; 炭酸ソーダ (@na2co3_ftw) <a href="https://twitter.com/na2co3_ftw/status/985087084317700096?ref_src=twsrc%5Etfw">2018年4月14日</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<blockquote class="twitter-tweet" data-conversation="none" data-lang="ja"><p lang="ja" dir="ltr">これは期待ですねえ</p>&mdash; 千種夜羽△ (@sksat_tty) <a href="https://twitter.com/sksat_tty/status/985087534987276288?ref_src=twsrc%5Etfw">2018年4月14日</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<p>と、私がRustをやったりしていた。</p>
+
+<h3 id="i48_2">48-2. 他の人々</h3>
+<p>私が沈黙していたn日間、他の人々が色々進捗を出してくださった。ここに書くとページが埋まるので、<a href="https://togetter.com/li/1226319">Togetterにした</a>。本当に皆さんありがとうございます</p>
+
+
 <hr>
 <h2>xxx. To do</h2>
 <h3>xxx-1. 割り算</h3>
