@@ -1,8 +1,7 @@
 .PHONY: c haskell
 
 haskell:
-	ghc xarzniar.hs -o xarzniar-hs -Wall
-	ghc ladirvirelyl.hs -o ladirvirelyl-hs -Wall
+	cd 2003lk && stack build --ghc-options=-Wall
 
 c:
 	gcc main.c parse.c -o main-c
