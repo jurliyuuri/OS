@@ -259,6 +259,25 @@
 	<li><code>+</code>がファイル末尾に来たり、<code>+</code>や<code>@</code>がファイルの先頭に来たりするのは構文エラーである。</li>
 	<li><code>l' </code><u>ラベル名</u>の直前には命令文がなくてはならず、また直前に<code>nll</code>があってはならない。一つの命令文の後ろに複数の<code>l'</code>を置くのは許容され、その場合両方のラベルが命令文を指す。</li>
 	<li><code>nll </code><u>ラベル名</u>の直後には命令文がなくてはならず、また直後に<code>l'</code>があってはならない。一つの命令文の前に複数の<code>nll</code>を置くのは許容され、その場合両方のラベルが命令文を指す。</li>
+	<li><strong>2018/5/26追記:</strong> <code>'c'i</code>や<code>'i'c</code>はアセンブラにオペランド順を指示するだけのディレクティブである。ソースコード上に複数書くことが可能であり、適応範囲は「そこから下、終わりまでか、次にまたオペランド順が指定されるまで」である。以下の炭酸ソーダさんの解釈が正しい。
+		<div class="box">
+			<blockquote class="twitter-tweet" data-lang="ja"><p lang="ja" dir="ltr">2003lkで気になることが。<br>&#39;i&#39;c krz 12 f0 krz 34 f1 krz 0 f2<br>nll lbl ata f0 f1<br>&#39;c&#39;i nac f2 ada f2 1<br>fi f2 0 niv malkrz xx lbl<br>&#39;i&#39;c krz lbl xx<br>こんなループの場合、ataの挙動ってどうなりますかね。<br>見落としてたらすみません。</p>&mdash; Ritchan(りっちゃん) (@aios_ciao) <a href="https://twitter.com/aios_ciao/status/969159069478019072?ref_src=twsrc%5Etfw">2018年3月1日</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<blockquote class="twitter-tweet" data-conversation="none" data-lang="ja"><p lang="ja" dir="ltr">簡単に言えば、&#39;c&#39;iや&#39;i&#39;cってソースにひとつだけ書けるのか、複数書けるのか。<br>複数書けるなら適用範囲はどうなるのか。<br>そこが解ってません。</p>&mdash; Ritchan(りっちゃん) (@aios_ciao) <a href="https://twitter.com/aios_ciao/status/969159669318000640?ref_src=twsrc%5Etfw">2018年3月1日</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<blockquote class="twitter-tweet" data-conversation="none" data-lang="ja"><p lang="ja" dir="ltr">複数書けます。適応範囲は、ソースコード上で、そこから下、終わりまでか、次にまたオペランド順が指定されるまでです。</p>&mdash; 炭酸ソーダ (@na2co3_ftw) <a href="https://twitter.com/na2co3_ftw/status/969160333934837760?ref_src=twsrc%5Etfw">2018年3月1日</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<blockquote class="twitter-tweet" data-conversation="none" data-lang="ja"><p lang="ja" dir="ltr">例の場合だとataは必ず&#39;i&#39;c順ですね</p>&mdash; 炭酸ソーダ (@na2co3_ftw) <a href="https://twitter.com/na2co3_ftw/status/969160480500535297?ref_src=twsrc%5Etfw">2018年3月1日</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<blockquote class="twitter-tweet" data-conversation="none" data-lang="ja"><p lang="ja" dir="ltr">わざとf2で&#39;c&#39;iと&#39;i&#39;cを交互に通るように書いてみました。<br>パラメータの順序はステートメントを初回実行する時に確定するような振る舞いなんですね。</p>&mdash; Ritchan(りっちゃん) (@aios_ciao) <a href="https://twitter.com/aios_ciao/status/969161483769716736?ref_src=twsrc%5Etfw">2018年3月1日</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<blockquote class="twitter-tweet" data-conversation="none" data-lang="ja"><p lang="ja" dir="ltr">アセンブラにオペランド順を指示するだけのディレクティブと考えた方が分かりやすいかなと思います。</p>&mdash; 炭酸ソーダ (@na2co3_ftw) <a href="https://twitter.com/na2co3_ftw/status/969162884772065280?ref_src=twsrc%5Etfw">2018年3月1日</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<blockquote class="twitter-tweet" data-conversation="none" data-lang="ja"><p lang="ja" dir="ltr">その通りです。（たしかにそう明示的に書いておくべきだよなぁ）</p>&mdash; .sozysozbot.@hsjoihs@jekto.vatimeliju (@sosoBOTpi) <a href="https://twitter.com/sosoBOTpi/status/994704764439949314?ref_src=twsrc%5Etfw">2018年5月10日</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+		</div>
+	</li>
 </ul>
 
 <h2>4. 便利なイディオム</h2>
