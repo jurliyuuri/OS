@@ -1,4 +1,4 @@
-この記事は[言語実装 Advent Calendar 2017](https://qiita.com/advent-calendar/2017/lang_dev)の18日目の記事です。なお、これを書いているのは1月末で、実に1ヶ月以上の滞納です。
+この記事は[言語実装 Advent Calendar 2017](https://qiita.com/advent-calendar/2017/lang_dev)の18日目の記事です。 ~~なお、これを書いているのは1月末で、実に1ヶ月以上の滞納です。~~ 現在7月ですが。
 
 # 異世界で使われている設定のアセンブリ言語をHaskellで実装する
 
@@ -109,4 +109,10 @@ data TentativeLoad = TentativeLoad {
 <a name="myfootnote2">2</a>:リパライン語xokison「別の場所で」由来  
 <a name="myfootnote3">3</a>:`initialAddress`は定数値`0x14830000`である。
 
+## テスト方法
 
+```sh
+$ cd 2003lk
+$ stack build --ghc-options=-Wall
+$ stack exec xarzniar-exe
+```
