@@ -1,0 +1,116 @@
+jekto_vatimeliju [02:09]
+https://twitter.com/sosoBOTpi/status/1013339205261332480
+.sozysozbot.@hsjoihs@jekto.vatimeliju@sosoBOTpi
+そういえば、昨日@hikalium 氏とかとオフ会して悠里OSの話とかもしたりしたんよね（なかなか楽しかった）
+Twitter7月1日
+
+ここで、@hikalium 氏と「0x00を文字で埋めてしまって後世が苦しむ様子が見たい」みたいな話になった
+
+sashimiwiki [02:11]
+草
+
+jekto_vatimeliju [02:11]
+ということで0x00をスペースにするというのを考えたんですが如何でしょう
+1. パンチしていないカードというのは白紙であるが、白紙というのはつまりスペース文字で埋まった紙である
+2. スペースより前にアルファベットを置いてしまうと辞書順ソートで困る
+@sashimiwiki アポストロフィはリパーシェより前に置かれてほしいか、それとも後に置かれてほしいか
+
+sashimiwiki [02:17]
+あー
+
+jekto_vatimeliju [02:17]
+前なら di'an → didol → diax → dias、後ならdidol → diax → dias → di'an。本当の辞書はアポストロフィを無視してdidol → diax → di'an → dias と並べるだろうけど、
+単純ソートでは当然そんな芸当はできないので、
+
+sashimiwiki [02:17]
+でも記号ってまとめてあるんじゃないの？
+
+jekto_vatimeliju [02:18]
+ヒント: ASCII
+
+sashimiwiki [02:18]
+全てを理解した
+
+jekto_vatimeliju [02:19]
+最初期だと「リパ30字・スペース・アポストロフィで32なので5bit通信」とかやりそうで、それを拡張していったりしそうよねとか思った
+
+sashimiwiki [02:20]
+多分リパーシェの後じゃないかねえ
+
+jekto_vatimeliju [02:20]
+ふむふむ
+
+sashimiwiki [02:21]
+ちなみにアポストロフィが記号扱いってのは、古理時代にこれが無くて追加された文字ということで説明されるのだけど
+キリル文字の難音記号とかってどうなってるの？
+
+jekto_vatimeliju [02:21]
+えーとですね
+
+sashimiwiki [02:22]
+軟音
+
+jekto_vatimeliju [02:23]
+ёを抜いたのは知ってるんだが、えーと
+ああ普通にъ, ы, ь, э, ю, я か
+
+sashimiwiki [02:24]
+以前キリル文字の文字改革については調べたんだけど、しっかり調べたわけじゃなくてア
+
+jekto_vatimeliju [02:24]
+そりゃそうか、古代教会スラブ語だとこいつら母音だもんな
+
+sashimiwiki [02:25]
+あー確かにそっか
+
+jekto_vatimeliju [02:26]
+この画像をアップロードし、コメントしました: https://en.wikipedia.org/wiki/Yo_(Cyrillic) 
+
+ちなみにこんな話もある
+
+sashimiwiki [02:27]
+えぇ
+
+jekto_vatimeliju [02:28]
+そもそもロシア語母語話者にとって「は」ёの重要性が低いという事情があるらしく（同記事曰く
+"Except for a brief period after World War II, the use of ⟨ё⟩ was never obligatory in standard Russian orthography. By and large, it is used only in dictionaries and in pedagogical literature intended for children and students of Russian as a second language." ）
+
+sashimiwiki [02:29]
+うーん、そもそも文字の並べ方にすら疑念が出てきたぞ
+
+jekto_vatimeliju [02:29]
+ふむふむ
+
+sashimiwiki [02:29]
+2003fが開発された当初、言語翻訳庁は無い
+今ある文字順は言語翻訳庁の作ったものでこのまま文字コードに当てはめるのは疑念があるという
+
+jekto_vatimeliju [02:32]
+なるほどなるほど
+既存のを引き継いだ可能性も十分にある（というか多分引き継ぐ）から、もっと古いかもしれんですな
+
+sashimiwiki [02:35]
+スキュの文法章は文字の説明から入るのだけど、多分一番古い文字順はそれかな
+
+jekto_vatimeliju [02:36]
+なるほど
+
+sashimiwiki [02:36]
+やはり、なにをやるにしても統合言語年表が必要か
+
+jekto_vatimeliju [02:37]
+話者数の推移とかもよく分かっとらんからなぁ
+バート語はなんか三万人ということになっているらしいけど
+
+sashimiwiki [02:39]
+時代にもよるが三万人は流石に少なすぎやろ……（お前が書いたんやで）
+
+jekto_vatimeliju [02:41]
+「んーこれ他言語への文化的影響控えめにしたほうがいい感じだったりする？」とか考えてたりしたからねぇ（「少なすぎる」とお墨付きがたった今得られたので控えめにしないことにするが）
+
+sashimiwiki [02:43]
+いせにほをみれば分かるが主要なラネーメ語の一つだしなあ
+
+jekto_vatimeliju [02:43]
+言われてみればそうである
+「アイスランド語が30万人いてバスク語が66万人いるのになぁ」とか思ってた
