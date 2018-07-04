@@ -107,8 +107,8 @@ nヶ月ブランクが空いたので完全に忘れているんだけど、[Exe
 
 ### 概要
 
-`Execute`モジュールからexportされている関数および定数は`initialHardware`, 
-`execute`, `unwrapWith`, `execOne`の4つである。また、`CPU`が型だけ公開されており、`(CPU, Memory)`に`Hardware`という別名を付けている。
+`Execute`モジュールからexportされている関数は`initialHardware`, 
+`execute`, `unwrapWith`, `execOne`の4つである。また、`CPU`が型だけ公開されており、さらに`(CPU, Memory)`に`Hardware`という別名を付けてそれも公開している。
 
 `CPU`は32ビットのフィールド`f0`・`f1`・`f2`・`f3`・`f5`・`nx`・`xx`と`Bool`型の`flag`を持つ。
 
@@ -193,9 +193,41 @@ data Rvalue = L Lvalue | Pure Word32 | Lab Label deriving (Show, Eq, Ord)
 
 さて、そんなこともなく無事「nxの次のアドレス」と「nxの番地にある命令」を獲得できた場合、「CPU」のxxに「nxの次のアドレス」を入れてやって、`instruction`としてはその「nxの番地にある命令」を返してやればよい。
 
-これで`updateXXAndGetInstruction`は終わりである。
+これで`updateXXAndGetInstruction`の解説は終わりである。
 
 ### execOneの続き
+
+`updateXXAndGetInstruction`を行った結果として手に入れた`instruction`が特殊命令`TERMINATE`だった場合について見ていく。この場合、正しいリターンアドレスには返れているわけだが、呼び出し規約では「いじって良いレジスタは4個 (f0 ~ f3)」となっている（つまり、`f5`は呼び出し前後で変化していてはならない）ので、`f5`の値を確認して`initialF5`と比較し、一致しているなら正常終了（前述の理由で`return False`）、さもなくば実行時エラーである。
+
+これで`execOne`の解説は終わりである。
+
+### execute
+
+`unwrapWith`は、初期`Hardware`と`Program`、そしてVIOアクションを受け取り、`(Either Error (Bool, Hardware), Logs)`を返す関数である。要するに、単にVIOアクションのモナド変換子をほどいてやっているだけの関数である。
+
+`execute`は、VIOアクション`execute'`を解く際に、`initialHardware initialAddress`（nxに定数`initialAddress`が入った初期`Hardware`）と`execute`の引数に受け取った`Program`を用いるプログラムである。ということでVIOアクション`execute'`を見ていこう。
+
+VIOアクション`execute'`の定義は短い。
+
+```haskell
+execute' :: VIO Bool
+execute' = fix execOne
+```
+
+`fix`は、標準ライブラリでこう定義されている。
+
+```haskell
+fix f = f (fix f)
+```
+
+つまり、`fix execOne`は`execOne (fix execOne)`である。
+
+ここで、`execOne`は「命令を1個実行した後に、正常終了も異常終了もしていないなら引数のVIOアクションを呼び出す」という関数なので、`fix execOne`、つまり`execOne (fix execOne)`は、「命令を1個実行した後に、正常終了も異常終了もしていないなら`fix execOne`、つまり自分自身を呼び出す」という関数となる。要するに、終了するまで命令をどんどん処理していってくれるのである。
+
+以上で`unwrapWith`と`execute`の解説は終わりであり、Execute.hsの解説も終わりである。
+
+## Main
+
 **_執筆中_**
 
 
