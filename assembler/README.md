@@ -13,15 +13,15 @@
 
 |ファイル名 |内容 |依存|
 |:--- |:--- |:--- |
-| [Memory.hs](https://github.com/jurliyuuri/OS/blob/master/assembler/Memory.hs) | 「メモリ」を定義する | なし |
-| [Types.hs](https://github.com/jurliyuuri/OS/blob/master/assembler/Types.hs) | 他ファイルで使う型を定義する | Memory |
-| [Messages.hs](https://github.com/jurliyuuri/OS/blob/master/assembler/Messages.hs) | エラーメッセージ。現状は英語しか出ないが、いつか日本語とかリパライン語にも対応したい | Types |
-| [Parse.hs](https://github.com/jurliyuuri/OS/blob/master/assembler/Parse.hs) | パーサ（字句解析・構文解析・意味解析） | Types |
-| [TentativeLoad.hs](https://github.com/jurliyuuri/OS/blob/master/assembler/TentativeLoad.hs) | 「メモリ」（ただしMemory.hsとは異なる）に命令を「ロード」する | Types |
-| [Linker.hs](https://github.com/jurliyuuri/OS/blob/master/assembler/Linker.hs) | リンカ「のようなもの」 | Types, Parse, TentativeLoad |
-| [Execute.hs](https://github.com/jurliyuuri/OS/blob/master/assembler/Execute.hs) | インタプリタ | Types, Memory, Linker |
-| [CommonIO.hs](https://github.com/jurliyuuri/OS/blob/master/assembler/CommonIO.hs) | IO絡みの処理のうち、これから作る予定のアセンブラにも流用できそうな処理 | Parse, Messages, Types |
-| [Main](https://github.com/jurliyuuri/OS/blob/master/assembler/xarzniar.hs) | パーサ・インタプリタ・IOをまとめてMainとする | Parse, Execute, Linker, Messages, Types, CommonIO |
+| [Memory.hs](https://github.com/jurliyuuri/OS/blob/master/assembler/2003lk/src/Memory.hs) | 「メモリ」を定義する | なし |
+| [Types.hs](https://github.com/jurliyuuri/OS/blob/master/assembler/2003lk/src/Types.hs) | 他ファイルで使う型を定義する | Memory |
+| [Messages.hs](https://github.com/jurliyuuri/OS/blob/master/assembler/2003lk/src/Messages.hs) | エラーメッセージ。現状は英語しか出ないが、いつか日本語とかリパライン語にも対応したい | Types |
+| [Parse.hs](https://github.com/jurliyuuri/OS/blob/master/assembler/2003lk/src/Parse.hs) | パーサ（字句解析・構文解析・意味解析） | Types |
+| [TentativeLoad.hs](https://github.com/jurliyuuri/OS/blob/master/assembler/2003lk/src/TentativeLoad.hs) | 「メモリ」（ただしMemory.hsとは異なる）に命令を「ロード」する | Types |
+| [Linker.hs](https://github.com/jurliyuuri/OS/blob/master/assembler/2003lk/src/Linker.hs) | リンカ「のようなもの」 | Types, Parse, TentativeLoad |
+| [Execute.hs](https://github.com/jurliyuuri/OS/blob/master/assembler/2003lk/src/Execute.hs) | インタプリタ | Types, Memory, Linker |
+| [CommonIO.hs](https://github.com/jurliyuuri/OS/blob/master/assembler/2003lk/src/CommonIO.hs) | IO絡みの処理のうち、これから作る予定のアセンブラにも流用できそうな処理 | Parse, Messages, Types |
+| [Main](https://github.com/jurliyuuri/OS/blob/master/assembler/2003lk/app/xarzniar.hs) | パーサ・インタプリタ・IOをまとめてMainとする | Parse, Execute, Linker, Messages, Types, CommonIO |
 
 
 
@@ -45,7 +45,7 @@
 
 ## パーサ
 
-`a=(1+2)*3` みたいな再帰的な構文はないので、わざわざParsecを使うのもオーバーキルかなぁという考えのもと自前実装。コードは[Parse.hs](https://github.com/jurliyuuri/OS/blob/master/assembler/Parse.hs)。とはいえ単純な仕様なので、一気に字句解析・構文解析・意味解析して`Either ParseError ParsedFile`を吐く設計。`ParsedFile`型は
+`a=(1+2)*3` みたいな再帰的な構文はないので、わざわざParsecを使うのもオーバーキルかなぁという考えのもと自前実装。コードは[Parse.hs](https://github.com/jurliyuuri/OS/blob/master/assembler/2003lk/src/Parse.hs)。とはいえ単純な仕様なので、一気に字句解析・構文解析・意味解析して`Either ParseError ParsedFile`を吐く設計。`ParsedFile`型は
 
 ```
 type ParsedFile = ([(Instruction, [Label])],([Label],[Label]))
@@ -103,7 +103,7 @@ data TentativeLoad = TentativeLoad {
 
 ## インタプリタ
 
-nヶ月ブランクが空いたので完全に忘れているんだけど、[Execute.hs](https://github.com/jurliyuuri/OS/blob/master/assembler/Execute.hs)の内容書けば多分良いんよね？やっていく。
+nヶ月ブランクが空いたので完全に忘れているんだけど、[Execute.hs](https://github.com/jurliyuuri/OS/blob/master/assembler/2003lk/src/Execute.hs)の内容書けば多分良いんよね？やっていく。
 
 ### 概要
 
@@ -141,7 +141,7 @@ data Program = Program {
 
 ### 右辺値・左辺値の扱い、そしてラベルの名前解決
 
-`Rvalue`と`Lvalue`は、それぞれ[Types.hs](https://github.com/jurliyuuri/OS/blob/master/assembler/Types.hs)で
+`Rvalue`と`Lvalue`は、それぞれ[Types.hs](https://github.com/jurliyuuri/OS/blob/master/assembler/2003lk/src/Types.hs)で
 
 ```haskell
 data Lvalue = Re Register | RPlusNum Register Word32 | RPlusR Register Register deriving (Show, Eq, Ord)
