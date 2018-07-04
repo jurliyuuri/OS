@@ -114,5 +114,7 @@ data TentativeLoad = TentativeLoad {
 ```sh
 $ cd 2003lk
 $ stack build --ghc-options=-Wall
-$ stack exec xarzniar-exe
+$ stack exec xarzniar-exe  #デモ
+$ stack exec -- xarzniar-exe quicksort #単独で実行
+$ stack exec -- xarzniar-exe -x quicksort #ステップ実行
 ```
