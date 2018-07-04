@@ -226,7 +226,19 @@ fix f = f (fix f)
 
 以上で`unwrapWith`と`execute`の解説は終わりであり、Execute.hsの解説も終わりである。
 
+## CommonIO
+
+定義されている関数は`semicolonExtension`, `parse'`, `(>>>=)`である。
+
+まず`semicolonExtension`である。2003lkには本来存在しない機能であるが、現世のプログラマの助けとなるべく、セミコロンから文末までをコメントとみなして無視する独自拡張がこのインタプリタには実装されている。（実装されるようになった経緯に関しては[こちら](https://togetter.com/li/1243625)にまとめてある。）ということで、その処理をするだけの関数である。ちなみに、2003lkは改行と空白を一切区別しない仕様だが、このセミコロンによるコメントは独自拡張なのでその制約を免れている。
+
+`parse'`はファイルパスを受け取り、ファイルの中身を読んで`semicolonExtension`を通し、ファイル名をメッセージに出力し、パーサに投げて字句解析・構文解析・意味解析を行わせる。
+
+`(>>>=)`はエラー処理のための関数である。
+
 ## Main
+
+まず`main`では、コマンドライン引数がなにもないときは`demo`を実行する。そうでなければ、コマンドライン引数内に`"-x"`のフラグがあるかどうか（ステップ実行かどうか）を見て、あるなら`interactive`を、無いなら`main''`を呼ぶ。
 
 **_執筆中_**
 
@@ -252,4 +264,5 @@ $ stack build --ghc-options=-Wall
 $ stack exec xarzniar-exe  #デモ
 $ stack exec -- xarzniar-exe quicksort #単独で実行
 $ stack exec -- xarzniar-exe -x quicksort #ステップ実行
+$ stack exec -- xarzniar-exe fib_main fib_lib -x #複数ファイル、ステップ実行
 ```
