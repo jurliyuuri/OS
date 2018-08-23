@@ -375,7 +375,19 @@ kRz f0 f3@
 
 <p>と書くことで、<code>ata f3 f2</code>に対して<code>panqa</code>という名前を付けることができます。</p>
 
-<p></p>
+<p>名前を付けた場所に飛んでいくためには、その名前を直接<code>xx</code>に<code>kRz</code>することで実現できます。</p>
+
+<div class="box">
+<pre>
+kRz 3 f2
+kRz panqa xx
+kRz 5 f2
+nll panqa
+fen
+</pre>
+</div>
+
+<p>とすると、最後までたどり着いたときの<code>f2</code>の値は5ではなく3になります。</p>
 
 
 <hr>
