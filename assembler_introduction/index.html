@@ -106,6 +106,19 @@ function hide_ny_jurli()
 </pre>
 </div>
 
+<p>これを実行すると、もともと<code>f0</code>に入っていた値が<code>f1</code>にも<code>f2</code>にも入ります。</p>
+<p>順番を逆にして、</p>
+
+
+<div class="box">
+<pre>
+	kRz f1 f2
+	kRz f0 f1
+</pre>
+</div>
+
+<p>とするとどうなるでしょうか？この場合は先ほどと違い、3つの[メモ](firjal)が全て同じ値になるとは限りません。もともと<code>f1</code>に入っていた値は<code>f2</code>に移り、<code>f1</code>は新しく<code>f0</code>の値で上書きされます。</p>
+
 <hr>
 <footer style="text-align:right"><p>phil.2005年2月</p><p class="ny_jurli">…に執筆されたという設定。現世でこの文章を書いているのは西暦2017年の10月…からずっと放置して2018年の8月。</p><p class="ny_jurli">どうしようかな、ubpl開発以降の文章という設定にしてもいいんだけど。そっちの方が面白いかもな。</p></footer>
 
