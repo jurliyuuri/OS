@@ -77,7 +77,7 @@ function hide_ny_jurli()
 <h3>lexn.3 命令</h3>
 <p>2003fは[命令](xlaiso)を与えられることによって動作します。その命令を記述するための言語が2003lkです。</p>
 <h3>lexn.4 基本動作</h3>
-<p>2003fは、命令を見ながら基本的にはそれを順次実行していきます。それを実現するために、2003fは<code>nx</code>（[今見ているところ](noon xelal)の略）と<code>xx</code>（[xeumon xelal](次に見るところ) の略）という2つのfirjalを持っています。</p>
+<p>2003fは、命令を見ながら基本的にはそれを順次実行していきます。それを実現するために、2003fは<code>nx</code>（[今見ているところ](noon xelal)の略）と<code>xx</code>（[xeumon xelal](次に見るところ) の略）という2つのfirjalを持っています。なお、<code>nx</code>というfirjalは隠されており、我々は直接<code>nx</code>というfirjalに働きかけることはできません。</p>
 <p>2003fの基本動作は単純で、以下の3つの動作をひたすら繰り返します。</p>
 <ol>
 	<li>xxが次の命令を指すようにする</li>
@@ -87,6 +87,24 @@ function hide_ny_jurli()
 <p>これを繰り返していくことで、命令を次々に実行していけることが分かるかと思います。</p>
 <p>このような単純な動作だけで複雑な作業を行わせるにはどうすればいいのでしょう？それについて、これから見ていくことにしましょう。</p>
 
+<hr>
+<h2>ksi.2 基礎的な命令</h2>
+
+<h3>lexn.1 <code>kRz</code>命令</h3>
+<p>最もよく使う命令として、<code>kRz</code>命令があります。これは値を[書き写す](kRantairzarth)命令で、[メモ](firjal)や[住所箱](setistafar)の間で値を書き写す作業を行うことができます。</p>
+
+<p>例えば、<code>kRz f0 f1</code>と書くと、<code>f0</code>[を](-'i)読んで<code>f1</code>[に](-'c)書き写せ、という命令になります。先頭に動詞、次に「[を](-'i)」、最後に「[に](-'c)」を置くのが基本的な書き方です。<span class="ny_jurli">AT&T Syntaxですな</span></p>
+
+<p>（なお、先に「[に](-'c)」が来てその後に「[を](-'i)」が来る言語を話している人のために、先頭に<code>'c'i</code>と書くことでそれ以降の部分を全て「[に](-'c)の後に[を](-'i)」の語順として扱わせることができます。<span class="ny_jurli">Intel Syntaxに慣れているみなさんも一安心</span>もとに戻す場合は<code>'i'c</code>と書きます。混乱を避けるため、この解説では一貫して<code>'c'i</code>の使用を控えます。）</p>
+
+<p>例として、<code>f0</code>の値を<code>f1</code>に複製した後、<code>f1</code>の値を<code>f2</code>に複製する命令列は以下のようになります。</p>
+
+<div class="box">
+<pre>
+	kRz f0 f1
+	kRz f1 f2
+</pre>
+</div>
 
 <hr>
 <footer style="text-align:right"><p>phil.2005年2月</p><p class="ny_jurli">…に執筆されたという設定。現世でこの文章を書いているのは西暦2017年の10月…からずっと放置して2018年の8月。</p><p class="ny_jurli">どうしようかな、ubpl開発以降の文章という設定にしてもいいんだけど。そっちの方が面白いかもな。</p></footer>
