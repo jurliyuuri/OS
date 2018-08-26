@@ -159,6 +159,25 @@
 </tr>
 </tbody>
 </table>
+
+<p><strong>2018年8月28日追記：</strong>シフト命令でシフトするビット数は0~63ビットまでは合法である。64ビット以上は未定義とする。</p>
+<div class="box">
+<blockquote class="twitter-tweet" data-lang="ja"><p lang="ja" dir="ltr"><a href="https://twitter.com/sosoBOTpi?ref_src=twsrc%5Etfw">@sosoBOTpi</a> 2003lkのdto, dro, dtosnaで32ビット以上シフトしたときって0とかになるんでしょうか。シフト量の値をmod 32して扱ったり、32以上のシフトを未定義にしたりする処理系が多いみたいですし、実際論理回路で組むのが面倒なので</p>&mdash; 炭酸ソーダ (@na2co3_ftw) <a href="https://twitter.com/na2co3_ftw/status/941559351524732928?ref_src=twsrc%5Etfw">2017年12月15日</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet" data-conversation="none" data-lang="ja"><p lang="ja" dir="ltr">実装依存にしてしまっていい気もしますが、ぴったり32ビットのシフトって意外と使う気がしないでもないので、どうしたもんかなぁ、とは思っています</p>&mdash; .sozysozbot.@hsjoihs@jekto.vatimeliju (@sosoBOTpi) <a href="https://twitter.com/sosoBOTpi/status/941561125283307520?ref_src=twsrc%5Etfw">2017年12月15日</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<blockquote class="twitter-tweet" data-conversation="none" data-lang="ja"><p lang="ja" dir="ltr">なるほど。32には対応して、33以上は未定義にするのであれば回路もそんなに複雑にはならないですね。(x &amp; 32のビットだけ読んで判断できるので)</p>&mdash; 炭酸ソーダ (@na2co3_ftw) <a href="https://twitter.com/na2co3_ftw/status/941561791963729921?ref_src=twsrc%5Etfw">2017年12月15日</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<blockquote class="twitter-tweet" data-conversation="none" data-lang="ja"><p lang="ja" dir="ltr">となると、「32~63はゼロ、64以上は未定義」とできますね。現世と違って最初は寡占でしたし、最初に採用された仕様がずっと引き継がれても違和感もそんなにありません</p>&mdash; .sozysozbot.@hsjoihs@jekto.vatimeliju (@sosoBOTpi) <a href="https://twitter.com/sosoBOTpi/status/941562447948783617?ref_src=twsrc%5Etfw">2017年12月15日</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<blockquote class="twitter-tweet" data-conversation="none" data-lang="ja"><p lang="ja" dir="ltr">ですねえ(現世での実装が面倒)。あとdtosnaで元の数がマイナスだった場合は-1になりますかね。</p>&mdash; 炭酸ソーダ (@na2co3_ftw) <a href="https://twitter.com/na2co3_ftw/status/941562991748644865?ref_src=twsrc%5Etfw">2017年12月15日</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<blockquote class="twitter-tweet" data-conversation="none" data-lang="ja"><p lang="ja" dir="ltr">ですね。（ちなみにHaskellで書いているのでビットシフトは合理的に動きます、Cの遺産を引きずっていないので）</p>&mdash; .sozysozbot.@hsjoihs@jekto.vatimeliju (@sosoBOTpi) <a href="https://twitter.com/sosoBOTpi/status/941570086036389888?ref_src=twsrc%5Etfw">2017年12月15日</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+</div>
+
 <h3>1-3. 比較命令</h3>
 <p><code>fi</code>の後に値を二つ取り、その二つの大小に応じてフラグを設定する命令。<code>'c'i</code>擬似命令や<code>'i'c</code>擬似命令の影響を受けない。</p>
 <table class="qq" border="1" bordercolor="#888" cellspacing="0">
