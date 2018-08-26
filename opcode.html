@@ -2040,6 +2040,14 @@ krz xx f5@
 <img src="img/relocatable.png" alt="" width="700">
 <img src="img/relocatable2.png" alt="" width="700">
 
+<h2 id="i50">50. <strong style="font-size: 140%">仕様変更：アラインメント制約の追加</strong></h2>
+
+<p>詳しくは<a href="conversations/alignment_log.html">ログ</a>を参照していただきたいが、<a href="settings.html">仕様書</a>に書かれていた「アクセスした番地が4の倍数でなくともエラーは出ない。」という記述を撤回し、「<strong style="font-size: 140%">西暦2018年8月26日仕様変更：32bitを操作する命令に関して、番地に4の倍数以外を指定したときの動作は未定義（何が起きても構わない）</strong>」とする。</p>
+
+<p>また、並行して、前々から作る気であった「8bit/16bitのロード（符号拡張）・ストア命令」を実装することがこれで確定した。なお、unsignedの拡張はビットマスクでできるので、符号拡張だけあれば十分である。</p>
+
+
+
 <hr>
 <h2>xxx. To do</h2>
 <h3>xxx-1. 割り算</h3>
