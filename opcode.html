@@ -2072,6 +2072,14 @@ inj a b b : どの値も変更されない。
 inj a a a : どの値も変更されない。
 </pre>
 
+<h3 id="i50_3">50-4. injの挙動をさらに詳細に</h3>
+
+<p><code>inj なんか f0 f0@</code>としたときに、f0@は旧f0の間接参照だろうか？新f0(=なんか)の間接参照だろうか？</p>
+
+<p>これはさすがに<strong>未定義とする</strong>ことにした。</p>
+
+<p>なお、<code>lat f0 f1@ f1</code>と<code>latsna f0 f1@ f1</code>にも同様の穴が発見されたので、未定義にする。</p>
+
 <hr>
 <h2>xxx. To do</h2>
 <h3>xxx-1. 割り算</h3>
