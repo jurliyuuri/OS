@@ -2080,6 +2080,22 @@ inj a a a : どの値も変更されない。
 
 <p>なお、<code>lat f0 f1@ f1</code>と<code>latsna f0 f1@ f1</code>にも同様の穴が発見されたので、未定義にする。</p>
 
+
+<h2 id="i51">51. malata、そして2003lkは何であるか</h2>
+
+<blockquote class="twitter-tweet" data-lang="ja"><p lang="ja" dir="ltr">2003lk、相対分岐とか相対コールのために、malata (if flag { dst += src }) とかkrzata ( a = b; b += c ) とか欲しいですね。 今ある命令でも頑張れば似たことはできるけど</p>&mdash; 炭酸ソーダ (@na2co3_ftw) <a href="https://twitter.com/na2co3_ftw/status/1025632883724013568?ref_src=twsrc%5Etfw">2018年8月4日</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<img src="conversations/malata1.png" width="900"/>
+<img src="conversations/malata2.png" width="900"/>
+<img src="conversations/malata3.png" width="900"/>
+<img src="conversations/malata4.png" width="900"/>
+<img src="conversations/malata5.png" width="900"/>
+
+<p>メタ的に言うともともと機械語の仕様を定めずに作った言語であるということもあって、2003lkは特定の機械語のビット表現に依存する処理を書かずにプログラムできるような仕様になっている。</p>
+<p>故に、現状では相対分岐とか相対コールのための<code>malata</code>を入れるつもりはない。（ただし、実際の機械語にする段階でアセンブラがmalata相当の命令に翻訳するという実装は大いにアリである。）</p>
+
+<p>「2003lk、機械語と1対1に対応しないのであればアセンブリ言語ではなく低級言語では」というのは実際半分ほどはそうである。とはいえ、「名前解決をアセンブラに手伝ってもらう代物をもアセンブリ言語と呼ぶのだし、これぐらいの仕事をアセンブラがやるのは許容範囲では」「そもそもx86-64のアセンブリ言語上の<code>mov</code>って<a href="http://www.felixcloutier.com/x86/MOV.html">35種類の命令</a>を指すのだし、アセンブリ言語上の特定のイディオムを見抜いてそれ用の機械語に翻訳するのはアセンブラとして普通に許されるのでは」とも思うし、アセンブリ言語と言っていいと思う。</p>
 <hr>
 <h2>xxx. To do</h2>
 <h3>xxx-1. 割り算</h3>
