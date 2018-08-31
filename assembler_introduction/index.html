@@ -501,7 +501,27 @@ malkRz 5 f1
 
 <p>とは書けないので注意しましょう。</p>
 
+<p>また、</p>
 
+<div class="box">
+<pre>
+fi f0 0 clo
+malkRz 5 f1
+</pre>
+</div>
+
+<p>の代わりに</p>
+
+<div class="dubious_box">
+<pre>
+fi f0 0 clo
+kRz 5 f1
+</pre>
+</div>
+
+<p>と書いてしまうと、<code>malkRz</code>と違って<code>kRz</code>は無条件での複製を行う命令なので、これは</p>
+
+<p>「<code>f0</code>は0と等しいだろうか？さてそんなことはどうでもよく、<code>f1</code>に5を入れてくれ」という命令になってしまいます。<strong>とてもありがちな誤りなので、十分注意しましょう</strong>。</p>
 
 <p>さて、まずはこれを使って、<code>f1</code>の値の67倍を<code>f2</code>に入れる命令列を書いてみましょう。</p><p class="ny_jurli">いや、もちろん2003lkには掛け算命令もありますよ</p>
 
