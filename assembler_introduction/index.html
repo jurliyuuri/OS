@@ -450,6 +450,8 @@ fen
 
 <p>とすると、最後までたどり着いたときの<code>f2</code>の値は5ではなく3になります。</p>
 
+<p>なお、ここでは<code>panqa</code>という名前を定義する前に<code>kRz panqa xx</code>と書いていますが、これは許されます。</p>
+
 <p>では、このように書くとどうなるでしょう？</p>
 
 <div class="box">
@@ -479,6 +481,28 @@ malkRz 5 f1
 
 <p>これはつまり「[もし<code>f0</code>が0でなければ、5を<code>f1</code>に複製せよ](fi <code>f0</code> es 0 niv, mal krantairzarth 5'i <code>f1</code>'c.)」という意味です。</p>
 
+<p>逆に、「<code>f0</code>が0である」という場合はどう書くのでしょうか？次のように書きます。</p>
+
+<div class="box">
+<pre>
+fi f0 0 clo
+malkRz 5 f1
+</pre>
+</div>
+
+<p>この<code>clo</code>というのは「[同等だ](ce loler)」の省略です。「[もし<code>f0</code>が0と等しければ、](fi <code>f0</code> es 0 ce loler)」、ということですね。</p>
+
+<div class="error_box">
+<pre>
+fi f0 0
+malkRz 5 f1
+</pre>
+</div>
+
+<p>とは書けないので注意しましょう。</p>
+
+
+
 <p>さて、まずはこれを使って、<code>f1</code>の値の67倍を<code>f2</code>に入れる命令列を書いてみましょう。</p><p class="ny_jurli">いや、もちろん2003lkには掛け算命令もありますよ</p>
 
 <p>もちろん、一番簡単なのは次のように書くことですが、</p>
@@ -504,6 +528,21 @@ ata f1 f2   ata f1 f2
 </div>
 
 <p>これでは面白みがないので、ちゃんと繰り返しを使って書いていきましょう。</p>
+
+<p>例えば、このように書くことができます。</p>
+<div class="box">
+<pre>
+kRz 0 f0
+kRz 0 f1
+nll panqa
+ata f1 f2
+ata 1 f0
+fi f0 67 niv
+malkRz panqa xx
+nll qa
+fen
+</pre>
+</div>
 
 <hr>
 <footer style="text-align:right"><p>phil.2005年2月</p><p class="ny_jurli">…に執筆されたという設定。現世でこの文章を書いているのは西暦2017年の10月…からずっと放置して2018年の8月。</p><p class="ny_jurli">どうしようかな、ubpl開発以降の文章という設定にしてもいいんだけど。そっちの方が面白いかもな。</p></footer>
