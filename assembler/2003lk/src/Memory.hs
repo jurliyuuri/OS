@@ -9,6 +9,7 @@ module Memory
 ,unM
 ,runState,execState,evalState
 ,RightAlign(..)
+,read16Bit
 ) where
 import qualified Data.Map as M
 import Data.Word
@@ -30,6 +31,12 @@ compose (a,b,c,d) = f a 24 + f b 16 + f c 8 + f d 0
  where
   f :: Word8 -> Int -> Word32
   f t i = (fromIntegral t::Word32) `shift` i
+
+compose16 :: (Word8, Word8) -> Word16
+compose16 (c,d) = f c 8 + f d 0
+ where
+  f :: Word8 -> Int -> Word16
+  f t i = (fromIntegral t::Word16) `shift` i
 
 data Memory = Memory {unM :: M.Map Word32 Word8, garbages :: [(Word32,Word8)]} deriving(Eq, Ord)
 
@@ -72,6 +79,11 @@ readByte addr = do
    writeByte addr garbage
    return garbage
 
+read16Bit :: Word32 -> State Memory Word16
+read16Bit addr = do
+ a <- readByte  addr
+ b <- readByte (addr + 1)
+ return $ compose16 (a,b)
 
 
 instance Show Memory where

@@ -139,6 +139,9 @@ executeInstruction (Inj r1 l1 l2) = do
 executeInstruction (Krz8i r l) = do {- load highest 8bit from r; sign-extend; write to l -}
  val1 <- signExtendFrom8 <$> getHighest8bitFromR r
  setValueToL l val1
+executeInstruction (Krz16i r l) = do {- load highest 16bit from r; sign-extend; write to l -}
+ val1 <- signExtendFrom16 <$> getHighest16bitFromR r
+ setValueToL l val1
 
 templ :: (Word32 -> Word32 -> Word32) -> Rvalue -> Lvalue -> VIO ()
 templ func r l = do 
@@ -159,8 +162,18 @@ signExtendFrom8 =
  (fromIntegral :: Int8 -> Int32) .
  (fromIntegral :: Word8 -> Int8)
 
+signExtendFrom16 :: Word16 -> Word32
+signExtendFrom16 =
+ (fromIntegral :: Int32 -> Word32) .
+ (fromIntegral :: Int16 -> Int32) .
+ (fromIntegral :: Word16 -> Int16)
+
+
 getHighest8bit :: Word32 -> Word8
 getHighest8bit a = fromIntegral $ shiftR a (32 - 8)
+
+getHighest16bit :: Word32 -> Word16
+getHighest16bit a = fromIntegral $ shiftR a (32 - 16)
 
 getHighest8bitFromR :: Rvalue -> VIO Word8
 getHighest8bitFromR r@(Pure _) = getHighest8bit <$> getValueFromR r
@@ -173,6 +186,18 @@ getHighest8bitFromR (L (RPlusR r1 r2)) = do
  v1 <- getRegister r1
  v2 <- getRegister r2
  liftMemOp $ readByte (v1 + v2)
+
+getHighest16bitFromR :: Rvalue -> VIO Word16
+getHighest16bitFromR r@(Pure _) = getHighest16bit <$> getValueFromR r
+getHighest16bitFromR r@(Lab _) = getHighest16bit <$> getValueFromR r
+getHighest16bitFromR r@(L (Re _)) = getHighest16bit <$> getValueFromR r
+getHighest16bitFromR (L (RPlusNum register offset)) = do
+ v <- getRegister register
+ liftMemOp $ read16Bit (v + offset)
+getHighest16bitFromR (L (RPlusR r1 r2)) = do
+ v1 <- getRegister r1
+ v2 <- getRegister r2
+ liftMemOp $ read16Bit (v1 + v2)
 
 -- data Lvalue = Re Register | RPlusNum Register Word32 | RPlusR Register Register
 
