@@ -136,6 +136,9 @@ executeInstruction (Inj r1 l1 l2) = do
  val_l1 <- getValueFromR (L l1)
  setValueToL l1 val_r1
  setValueToL l2 val_l1
+executeInstruction (Krz8i r l) = do {- load highest 8bit from r; sign-extend; write to l -}
+ val1 <- signExtendFrom8 <$> getHighest8bitFromR r
+ setValueToL l val1
 
 templ :: (Word32 -> Word32 -> Word32) -> Rvalue -> Lvalue -> VIO ()
 templ func r l = do 
@@ -149,6 +152,27 @@ liftMemOp memOp = do
  let (a, newMem) = memOp `runState` mem
  put (cpu, newMem)
  return a
+
+signExtendFrom8 :: Word8 -> Word32
+signExtendFrom8 =
+ (fromIntegral :: Int32 -> Word32) .
+ (fromIntegral :: Int8 -> Int32) .
+ (fromIntegral :: Word8 -> Int8)
+
+getHighest8bit :: Word32 -> Word8
+getHighest8bit a = fromIntegral $ shiftR a (32 - 8)
+
+getHighest8bitFromR :: Rvalue -> VIO Word8
+getHighest8bitFromR r@(Pure _) = getHighest8bit <$> getValueFromR r
+getHighest8bitFromR r@(Lab _) = getHighest8bit <$> getValueFromR r
+getHighest8bitFromR r@(L (Re _)) = getHighest8bit <$> getValueFromR r
+getHighest8bitFromR (L (RPlusNum register offset)) = do
+ v <- getRegister register
+ liftMemOp $ readByte (v + offset)
+getHighest8bitFromR (L (RPlusR r1 r2)) = do
+ v1 <- getRegister r1
+ v2 <- getRegister r2
+ liftMemOp $ readByte (v1 + v2)
 
 -- data Lvalue = Re Register | RPlusNum Register Word32 | RPlusR Register Register
 

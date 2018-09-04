@@ -41,6 +41,15 @@ rl "dro" = Just Dro
 rl "dRo" = Just Dro
 rl "malkrz" = Just MalKrz
 rl "malkRz" = Just MalKrz
+rl "krz8i" = Just Krz8i
+rl "kRz8i" = Just Krz8i
+rl "krz8c" = Just Krz8c
+rl "kRz8c" = Just Krz8c
+rl "krz16i" = Just Krz16i
+rl "kRz16i" = Just Krz16i
+rl "krz16c" = Just Krz16c
+rl "kRz16c" = Just Krz16c
+
 rl _ = Nothing
 
 parseCond :: String -> Maybe Cond
