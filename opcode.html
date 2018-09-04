@@ -2086,11 +2086,11 @@ inj a a a : どの値も変更されない。
 <blockquote class="twitter-tweet" data-lang="ja"><p lang="ja" dir="ltr">2003lk、相対分岐とか相対コールのために、malata (if flag { dst += src }) とかkrzata ( a = b; b += c ) とか欲しいですね。 今ある命令でも頑張れば似たことはできるけど</p>&mdash; 炭酸ソーダ (@na2co3_ftw) <a href="https://twitter.com/na2co3_ftw/status/1025632883724013568?ref_src=twsrc%5Etfw">2018年8月4日</a></blockquote>
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-<img src="conversations/malata1.png" width="900"/>
-<img src="conversations/malata2.png" width="900"/>
-<img src="conversations/malata3.png" width="900"/>
-<img src="conversations/malata4.png" width="900"/>
-<img src="conversations/malata5.png" width="900"/>
+<img src="conversations/malata1.png" width="900"/><br>
+<img src="conversations/malata2.png" width="900"/><br>
+<img src="conversations/malata3.png" width="900"/><br>
+<img src="conversations/malata4.png" width="900"/><br>
+<img src="conversations/malata5.png" width="900"/><br>
 
 <p>メタ的に言うともともと機械語の仕様を定めずに作った言語であるということもあって、2003lkは特定の機械語のビット表現に依存する処理を書かずにプログラムできるような仕様になっている。</p>
 <p>故に、現状では相対分岐とか相対コールのための<code>malata</code>を入れるつもりはない。（ただし、実際の機械語にする段階でアセンブラがmalata相当の命令に翻訳するという実装は大いにアリである。）</p>
@@ -2103,6 +2103,24 @@ inj a a a : どの値も変更されない。
 
 <img src="conversations/malkrz_idiom.png" width="900"/>
 <p></p>
+
+<h2 id="i53">53. 8bit/16bitのロードとストア</h2>
+
+<p>50-1.のログで述べたように、「8bit/16bit は ロード（符号拡張）・ストア命令」だけをサポートする。</p>
+
+<img src="conversations/8ci_01.png" width="900"/><br>
+<img src="conversations/8ci_02.png" width="900"/><br>
+<img src="conversations/8ci_03.png" width="900"/><br>
+<img src="conversations/8ci_04.png" width="900"/><br>
+<img src="conversations/8ci_05.png" width="900"/><br>
+<img src="conversations/8ci_06.png" width="900"/><br>
+<img src="conversations/8ci_07.png" width="900"/><br>
+<img src="conversations/8ci_08.png" width="900"/><br>
+<img src="conversations/8ci_09.png" width="900"/><br>
+<img src="conversations/8ci_10.png" width="900"/><br>
+<img src="conversations/8ci_11.png" width="900"/>
+
+<p>ということで、<code>kRz8i</code>, <code>kRz16i</code>, <code>kRz8c</code>, <code>kRz16c</code>の4命令が追加されることとなった。足さねば。</p>
 
 <hr>
 <h2>xxx. To do</h2>
