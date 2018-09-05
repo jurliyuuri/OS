@@ -421,5 +421,34 @@ inj a a a : どの値も変更されない。
 </pre>
 </div>
 
+<div class="box">
+<p>f0を8bitの値と見て32bitに符号拡張する</p>
+<pre>
+	'i'c
+	dro 24 f0
+	krz8i f0 f0
+</pre>
+</div>
+
+<p>左シフトして右シフトすれば符号拡張も0拡張もできるが、この方法だと即値を1つ削減できる。</p>
+
+<div class="box">
+<p>f0を16bitの値と見て32bitに符号拡張する</p>
+<pre>
+	'i'c
+	dro 16 f0
+	krz16i f0 f0
+</pre>
+</div>
+
+
+<div class="box">
+<p>16bitと16bitを連結して32bitに  (下位:f0, 上位:f1, 結果:f0)</p>
+<pre>
+	'i'c
+	krz16c f1 f0
+</pre>
+</div>
+
 
 </body>
