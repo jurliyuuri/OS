@@ -264,6 +264,45 @@ inj a a a : どの値も変更されない。
 </tbody>
 </table>
 
+<h3>1-4. 8bit/16bit移動命令</h3>
+
+<table class="qq" border="1" bordercolor="#888" cellspacing="0">
+<tbody>
+<tr>
+<td>&nbsp;命令</td>
+<td>&nbsp;意味</td>
+<td>&nbsp;精密な定義</td>
+</tr>
+<tr>
+<td style="width:65px;height:18px">&nbsp;krz8i または kRz8i</td>
+<td style="width:250px;height:18px">&nbsp;-'iが8bitの複製（8bitロード）</td><td>第1オペランドの指す32bitの値のうち、上位8bitを取って符号拡張して32bitにし、それを第2オペランドに代入。'c'i指定があるときは第2オペランドと第1オペランドの役割が逆転する。</td>
+</tr>
+
+<tr>
+<td style="width:65px;height:18px">&nbsp;krz8c または kRz8c</td>
+<td style="width:250px;height:18px">&nbsp;-'cが8bitの複製（8bitストア）</td><td>第1オペランドの値の下位8bitを、第2オペランドの指す32bitの内上位8bitに代入。'c'i指定があるときは第2オペランドと第1オペランドの役割が逆転する。</td>
+</tr>
+
+<tr>
+<td style="width:65px;height:18px">&nbsp;krz16i または kRz16i</td>
+<td style="width:250px;height:18px">&nbsp;-'iが16bitの複製（16bitロード）</td><td>第1オペランドの指す32bitの値のうち、上位16bitを取って符号拡張して32bitにし、それを第2オペランドに代入。'c'i指定があるときは第2オペランドと第1オペランドの役割が逆転する。</td>
+</tr>
+
+<tr>
+<td style="width:65px;height:18px">&nbsp;krz16c または kRz16c</td>
+<td style="width:250px;height:18px">&nbsp;-'cが16bitの複製（16bitストア）</td><td>第1オペランドの値の下位16bitを、第2オペランドの指す32bitの内上位16bitに代入。'c'i指定があるときは第2オペランドと第1オペランドの役割が逆転する。</td>
+</tr>
+
+
+
+</tbody>
+</table>
+<p>注</p>
+<ul>
+	<li>krz8iの-'iやkrz8cの-'cにメモリを指定するときは、例外的に4の倍数以外の番地を用いても良い。</li>
+	<li>krz16iの-'iやkrz16cの-'cにメモリを指定するときは、例外的に4の倍数以外の番地を用いても良い。ただし、奇数番地を指定したときの動作は未定義である。</li>
+	<li>krz8iやkrz16iの-'iには即値やレジスタを指定することもでき、krz8cやkrz16cの-'cにはレジスタを指定することもできる。ただし、メモリを指定するのが通常の使い方である。</li>
+</ul>
 <h2>2. レジスタ一覧</h2>
 <p>レジスタはリパライン語でfirjalである。</p>
 <table border="1" bordercolor="#888" cellspacing="0" class="qq">
