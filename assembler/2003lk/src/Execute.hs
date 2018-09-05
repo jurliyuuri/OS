@@ -90,6 +90,17 @@ setRegister F3 v = modify $ \(cpu, m) -> (cpu{f3 = v},m)
 setRegister F5 v = modify $ \(cpu, m) -> (cpu{f5 = v},m)
 setRegister XX v = modify $ \(cpu, m) -> (cpu{xx = v},m)
 
+setHigh8bitOfRegister :: Register -> Word8 -> VIO ()
+setHigh8bitOfRegister F0 v = modify $ \(cpu, m) -> (cpu{f0 = modifyHigh8bit v (f0 cpu)},m)
+setHigh8bitOfRegister F1 v = modify $ \(cpu, m) -> (cpu{f1 = modifyHigh8bit v (f1 cpu)},m)
+setHigh8bitOfRegister F2 v = modify $ \(cpu, m) -> (cpu{f2 = modifyHigh8bit v (f2 cpu)},m)
+setHigh8bitOfRegister F3 v = modify $ \(cpu, m) -> (cpu{f3 = modifyHigh8bit v (f3 cpu)},m)
+setHigh8bitOfRegister F5 v = modify $ \(cpu, m) -> (cpu{f5 = modifyHigh8bit v (f5 cpu)},m)
+setHigh8bitOfRegister XX v = modify $ \(cpu, m) -> (cpu{xx = modifyHigh8bit v (xx cpu)},m)
+
+modifyHigh8bit :: Word8 -> Word32 -> Word32
+modifyHigh8bit a b = shiftL (fromIntegral a) (32 - 8) .|. (b .&. 0x00ffffff) 
+
 dtosna :: Word32 -> Word32 -> Word32
 dtosna x y = fromIntegral $ x' `shift` negate (fromIntegral y)
  where x' = fromIntegral x :: Int32 
@@ -142,6 +153,12 @@ executeInstruction (Krz8i r l) = do {- load highest 8bit from r; sign-extend; wr
 executeInstruction (Krz16i r l) = do {- load highest 16bit from r; sign-extend; write to l -}
  val1 <- signExtendFrom16 <$> getHighest16bitFromR r
  setValueToL l val1
+executeInstruction (Krz8c r l) = do {- load from r; truncate to 8bit; write to highest 8bit of l -}
+ val1 <- truncateTo8 <$> getValueFromR r
+ setValueToHighest8bitOfL l val1 
+
+truncateTo8 :: Word32 -> Word8
+truncateTo8 = fromIntegral
 
 templ :: (Word32 -> Word32 -> Word32) -> Rvalue -> Lvalue -> VIO ()
 templ func r l = do 
@@ -210,6 +227,16 @@ setValueToL (RPlusR r1 r2) dat = do
  v1 <- getRegister r1
  v2 <- getRegister r2
  liftMemOp $ writeM (v1 + v2) dat
+
+setValueToHighest8bitOfL :: Lvalue -> Word8 -> VIO ()
+setValueToHighest8bitOfL (RPlusNum register offset) dat = do
+ v <- getRegister register
+ liftMemOp $ writeByte (v + offset) dat
+setValueToHighest8bitOfL (RPlusR r1 r2) dat = do
+ v1 <- getRegister r1
+ v2 <- getRegister r2
+ liftMemOp $ writeByte (v1 + v2) dat
+setValueToHighest8bitOfL (Re reg) dat = setHigh8bitOfRegister reg dat
 
 getValueFromR :: Rvalue -> VIO Word32
 getValueFromR (Pure word32) = return word32
