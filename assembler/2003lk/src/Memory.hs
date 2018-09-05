@@ -10,6 +10,7 @@ module Memory
 ,runState,execState,evalState
 ,RightAlign(..)
 ,read16Bit
+,write16Bit
 ) where
 import qualified Data.Map as M
 import Data.Word
@@ -24,6 +25,11 @@ decompose a =
  (fromIntegral (a `shift` (-24))
  ,fromIntegral (a `shift` (-16))
  ,fromIntegral (a `shift` (- 8))
+ ,fromIntegral a)
+
+decompose16 :: Word16 -> (Word8, Word8)
+decompose16 a = 
+ (fromIntegral (a `shift` (- 8))
  ,fromIntegral a)
 
 compose :: (Word8, Word8, Word8, Word8) -> Word32
@@ -58,6 +64,12 @@ writeByte :: Word32 -> Word8 -> State Memory ()
 writeByte addr dat = do
  Memory m gs <- get
  put $ Memory (M.insert addr dat m) gs 
+
+write16Bit :: Word32 -> Word16 -> State Memory ()
+write16Bit addr dat = do
+ let (a,b) = decompose16 dat
+ writeByte  addr    a
+ writeByte (addr+1) b
 
 readM :: Word32 -> State Memory Word32
 readM addr = do
