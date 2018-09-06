@@ -787,6 +787,96 @@ ata  4  f5
 
 <p>このように、一時的な値の退避という面で<code>f5</code>はとても便利です。しかしながら、<code>f5</code>の一番のポイントは、[指令](cersva)という機構を実現するということにあります。</p>
 
+<p>[指令](cersva)というのは、意味上ひとまとまりである処理に名前を付け、様々な場所から何回も使えるようにする仕組みです。<span class="ny_jurli">ここに公官庁1が入る</span>が<span class="ny_jurli">ここに公官庁2が入る</span>に指令を出したとき、その指令を<span class="ny_jurli">ここに公官庁2が入る</span>が行う最中に<span class="ny_jurli">ここに公官庁3が入る</span>にもう少し小さい指令を出す、ということは日常的にありますが、このようなことも2003fの[指令](cersva)では実現できます。</p>
+<p>では、これを実現するのになぜ<code>f5</code>が必要なのか、<code>f5</code>をどう使うのか、学んでいきましょう。</p>
+
+<p>とても簡単な[指令](cersva)として、<code>f0</code>, <code>f1</code>, <code>f2</code>, <code>f3</code>をゼロにする処理である</p>
+
+<div class="box">
+<pre>
+kRz 0 f0
+kRz 0 f1
+kRz 0 f2
+kRz 0 f3
+</pre>
+</div>
+
+<p>という処理に<code>iumes</code>という名前を付けることを考えましょう。</p>
+
+<p>まず、命令のまとまりに名前を付けるにはどうすればよいでしょう？これは既に学びました。</p>
+
+<div class="box">
+<pre>
+nll iumes
+kRz 0 f0
+kRz 0 f1
+kRz 0 f2
+kRz 0 f3
+</pre>
+</div>
+
+<p>次に、主処理の中で<code>iumes</code>という指令を出すことを考えましょう。<code>xx</code>を明示的に変更しない限り命令列は上から実行されますから、主処理は<code>iumes</code>より上に書いて、</p>
+
+<div class="box">
+<pre>
+（ここに主処理がある）
+kRz iumes xx
+
+nll iumes
+kRz 0 f0
+kRz 0 f1
+kRz 0 f2
+kRz 0 f3
+</pre>
+</div>
+
+<p>というふうに書きたいところです。</p>
+<p>しかし、主処理から<code>iumes</code>という指令を出したら、指令が終わった後には主処理に復帰してそれを続行したいわけです。</p>
+
+<p>では、次のようにすればよいのでしょうか？</p>
+
+<div class="dubious_box">
+<pre>
+（ここに主処理がある）
+kRz iumes xx
+nll snusnijal
+（ここに主処理の続きがある）
+
+nll iumes
+kRz 0 f0
+kRz 0 f1
+kRz 0 f2
+kRz 0 f3
+kRz snusnijal xx
+</pre>
+</div>
+
+<p>いいえ、これでは主処理が終わった後でもう一回<code>iumes</code>を実行してしまいます。ということでこうしましょう。</p>
+
+
+<div class="box">
+<pre>
+（ここに主処理がある）
+kRz iumes xx
+nll snusnijal
+（ここに主処理の続きがある）
+kRz lesback xx
+
+nll iumes
+kRz 0 f0
+kRz 0 f1
+kRz 0 f2
+kRz 0 f3
+kRz snusnijal xx
+
+nll lesback
+fen
+</pre>
+</div>
+
+<p>これで完成でしょうか？</p>
+<p>とりあえず、<code>iumes</code>というまとまりを作ってそれを分離することはできました。しかしこのままでは[指令](cersva)として使うには重大な欠陥があります。</p>
+
 <hr>
 <footer style="text-align:right"><p>phil.2005年2月</p><p class="ny_jurli">…に執筆されたという設定。現世でこの文章を書いているのは西暦2017年の10月…からずっと放置して2018年の8月。</p><p class="ny_jurli">どうしようかな、ubpl開発以降の文章という設定にしてもいいんだけど。そっちの方が面白いかもな。</p></footer>
 
