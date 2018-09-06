@@ -650,7 +650,85 @@ malkRz panqa xx
 <p>というのが正解の一つとなるわけです。</p>
 
 
-<h3>lexn.6 <code>f5</code>と[指令](cersva)</h3>
+<h3>lexn.6 二重移動命令<code>inj</code></h3>
+
+<p><code>f0</code>に入っている値を<code>f1</code>に移し、<code>f1</code>に元々入っていた値は<code>f2</code>に移す、といった処理はどうやって書けばいいでしょうか？</p>
+
+<p>簡単ですね。次のように書けばいいのです。</p>
+
+<div class="box">
+<pre>
+kRz f1 f2
+kRz f0 f1
+</pre>
+</div>
+
+<p>これを一つの命令にまとめた、<code>inj</code>という命令があります。名称は[同時に移す](irzarst ileceonj)を略したもので、2回の<code>kRz</code>を同時に行うことができます。</p>
+
+
+<div class="box">
+<pre>
+inj f0 f1 f2
+</pre>
+</div>
+
+<p>これが特に便利なのは、値を交換したいときです。例えば、<code>f0</code>に入っている値と<code>f1@</code>に入っている値を交換したいとき、次のようには書けません。</p>
+
+
+<div class="dubious_box">
+<pre>
+kRz f0 f1@
+kRz f1@ f0
+</pre>
+</div>
+
+<p>順番を入れ替えて</p>
+
+<div class="dubious_box">
+<pre>
+kRz f0 f1@
+kRz f1@ f0
+</pre>
+</div>
+
+<p>としても、上手くいかないことに変わりはありません。</p>
+
+<p>ということで、この場合は<code>inj</code>の「同時に移す」という性質を使って、</p>
+
+<div class="box">
+<pre>
+inj f0 f1@ f0
+</pre>
+</div>
+
+<p>と書くことで正しく交換できます。</p>
+
+<div class="ny_jurli"> 
+<ol>
+	<li>第二オペランドの値を一時保管する</li>
+	<li>第一オペランドの値を第二オペランドに入れる</li>
+	<li>一時保管した値を第三オペランドに入れる</li>
+</ol>という操作をこの順に行う行為と等価であることが保証されている。</div>
+
+<p>なお、余談ですが、<code>inj</code>が要求する3要素のうち2番目に[メモ](firjal)を使っていて、かつ3番目が[住所箱](setistafar)であるとき、2番目で使っている[メモ](firjal)を住所箱の番地を指すためにも使うと不具合を起こすことがあります。気をつけましょう。例えば、
+
+<div class="error_box">
+<pre>
+inj f0@ f0 f0@
+</pre>
+</div>
+
+<p>は2003lkとしては正しくなくて、<code>f0</code>と<code>f0@</code>を交換したい場合は</p>
+
+<div class="box">
+<pre>
+inj f0 f0@ f0
+</pre>
+</div>
+
+<p>と記載する必要があります。</p>
+
+<h3>lexn.7 <code>f5</code>と[指令](cersva)</h3>
 
 <p>ここまでに<code>f0</code>, <code>f1</code>, <code>f2</code>, <code>f3</code>, <code>xx</code>を使ってきましたが、まだ活用していない[メモ](firjal)として<code>f5</code>があります。これは原理的には他の[メモ](firjal)と完全に対等ですが、慣用的に他のfirjalと異なった使い方をします。<code>f5</code>は通常[住所箱](setistafar)の番地を指し、「この番地より少し小さい番地は自由に使うことができるが、この番地以上は他人の支配下にある」という一種の縄張りを表します。</p>
 
