@@ -9,8 +9,13 @@
 
 .comment{color: green;}
 .box{border: 1px solid blue; padding: 10px; margin: 10px;}
+.box2{border: 1px solid black; padding: 10px; margin: 10px;}
 .error_box{border: 1px solid red; padding: 10px; margin: 10px;}
 .dubious_box{border: 1px solid #aaaa00; padding: 10px; margin: 10px;}
+
+.memory { border-collapse: collapse; }
+.memory td { padding: 10px; }
+.memory tr:first-child td { border: 1px solid black;  }
 
 .cool {
 	width:70%; margin: 0 auto;
