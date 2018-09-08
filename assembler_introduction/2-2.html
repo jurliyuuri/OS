@@ -1,0 +1,142 @@
+<!doctype html>
+<html>
+<head>
+<title>2003lk入門 ― 2-2. [住所箱](setistafar)の操作</title>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../common.css">
+<link rel="stylesheet" href="ny_jurli.css">
+<script src="ny_jurli.js"></script>
+</head>
+<body class="cool">
+<h1>2003lk入門</h1>
+<a href="index.html">トップに戻る</a>
+<div class="ny_jurli">
+	<p>→<input type="button" value="非真理設定を隠す" onclick="hide_ny_jurli()">をクリックすると非真理設定が非表示になります。ページを再読み込みすると戻ります。</p>
+</div>
+<hr>
+<h2>ksi.2 基礎的な命令</h2>
+<h3>lexn.2 [住所箱](setistafar)の操作</h3>
+
+
+<p>個数が少なく直接名前で指定できる[メモ](firjal)と異なり、[住所箱](setistafar)の操作には、名前通り[アドレス](setival)を使います。例えば、3529356308という場所に住んでいる[住所箱](setistafar)から値を取ってきて<code>f1</code>に複製するには、次のように書きます。</p>
+
+<div class="box">
+<pre>
+	kRz 3529356308 f0
+	kRz        f0@ f1
+</pre>
+</div>
+
+<p><code>@</code>が[〜という場所で](io)の略字であることは皆さんご存知かと思われますが、<span class="ny_jurli">注：リパーシェのiとoをくっつけた合字があり、それのASCII代替表示として<code>@</code>を用いる。詳しくは<a href="https://drive.google.com/file/d/1RwtPFMu7-ckelB2WKbdxYQGTAZ8xxQAb/view">「初学者のためのリパライン語」</a>を参照すること。</span>まさに<code>f0</code>という[メモ](firjal)に書いている住所[〜という場所で](io)情報を読んでくる、という意味になるのです。</p>
+
+
+<p>少し分かりにくい箇所なので、図で追いかけていきましょう。まず、最初の<code>kRz 3529356308 f0</code>の結果、firjalはこうなります。</p>
+<div class="machine_state_box">
+<table class="memory">
+<tr>
+	<td>3529356308</td>
+	<td>?</td>
+	<td>?</td>
+	<td>?</td>
+	<td>?</td>
+	<td>?</td>
+</tr>
+<tr>
+	<td class="k">f0</td>
+	<td class="k">f1</td>
+	<td class="k">f2</td>
+	<td class="k">f3</td>
+	<td class="k">f5</td>
+	<td class="k">xx</td>
+</tr>
+</table>
+</div>
+
+<p>その次の<code>kRz        f0@ f1</code>では、<code>f0</code>という[メモ](firjal)に書いている住所[〜という場所で](io)情報を読んでくるので、住所箱が下のようになっているとき、</p>
+
+<div class="machine_state_box">
+<table class="memory">
+<tr>
+	<td>56593777</td>
+	<td>3</td>
+	<td>2718972307</td>
+	<td>3157158970</td>
+</tr>
+<tr>
+	<td class="k">3529356304番地</td>
+	<td class="k">3529356308番地</td>
+	<td class="k">3529356312番地</td>
+	<td class="k">3529356316番地</td>
+</tr>
+</table>
+</div>
+
+<p>読んでくるべき値は3529356308番地に置いてある「3」です。これが<code>f1</code>に複製され、firjalは</p>
+
+<div class="machine_state_box">
+<table class="memory">
+<tr>
+	<td>3529356308</td>
+	<td>3</td>
+	<td>?</td>
+	<td>?</td>
+	<td>?</td>
+	<td>?</td>
+</tr>
+<tr>
+	<td class="k">f0</td>
+	<td class="k">f1</td>
+	<td class="k">f2</td>
+	<td class="k">f3</td>
+	<td class="k">f5</td>
+	<td class="k">xx</td>
+</tr>
+</table>
+</div>
+
+<p>となるのです。</p>
+
+<p><code>f0</code>と<code>f0@</code>で意味が<strong>大きく異なる</strong>ことに細心の注意を払ってください。<code>f0</code>は[メモ](firjal)ですが<code>f0@</code>は[住所箱](setistafar)です。<code>f0</code>を操作しているときは一時的な[メモ](firjal)の操作に過ぎませんが、<code>f0@</code>の操作は[住所箱](setistafar)の操作であって、一歩間違えれば[住所箱](setistafar)に保管されているデータを<strong>どんどん破壊していってしまうかもしれない</strong>ことを肝に銘じておきましょう。</p>
+
+<p>さらに言えば、単独で次のように書いた場合、</p>
+
+<div class="dubious_box">
+<pre>
+	kRz f1 f0@
+</pre>
+</div>
+
+<p>これは<code>f1</code>の値を[住所箱](setistafar)のどこに書き込んでいるのでしょうか？もうお分かりですね、「<strong>分からない</strong>」のです。住所である<code>f0</code>に何が入っているのか<strong>完全に不明</strong>で、<strong>どこか得体の知れない場所</strong>に書き込んでいるのです。これはとても危険なので、<strong>決してやってはいけません</strong>。</p>
+
+<p>ちなみに、先程の</p>
+
+<div class="box">
+<pre>
+	kRz 3529356308 f0
+	kRz        f0@ f1
+</pre>
+</div>
+
+<p>では3529356308という場所を見に行くために一時的に<code>f0</code>を使っていますが、なぜ</p>
+
+<div class="error_box">
+<pre>
+	kRz 3529356308@ f1
+</pre>
+</div>
+
+<p>とは書かないのでしょう？</p>
+
+<p>実は、今後実践していくとだんだん分かってくるように、住所を指定する際に直接数値を書いて場所を指定することは意外に少なく、住所は[メモ](firjal)に書いていることが圧倒的に多いのです。ですから、2003lkでは数値に<code>@</code>を付けるという機能そのものを搭載していないのです。</p>
+
+
+
+
+<hr>
+<a href="./2-1.html">前のページへ</a>&nbsp;&nbsp;&nbsp;<a href="./2-3.html">次のページへ</a>
+<br>
+<br>
+<br>
+
+</body>
+</html>

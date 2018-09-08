@@ -1,0 +1,194 @@
+<!doctype html>
+<html>
+<head>
+<title>2003lk入門 ― 2-3. 足し算・引き算</title>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../common.css">
+<link rel="stylesheet" href="ny_jurli.css">
+<script src="ny_jurli.js"></script>
+</head>
+<body class="cool">
+<h1>2003lk入門</h1>
+<a href="index.html">トップに戻る</a>
+<div class="ny_jurli">
+	<p>→<input type="button" value="非真理設定を隠す" onclick="hide_ny_jurli()">をクリックすると非真理設定が非表示になります。ページを再読み込みすると戻ります。</p>
+</div>
+<hr>
+<h2>ksi.2 基礎的な命令</h2>
+<h3>lexn.3 足し算・引き算</h3>
+
+
+
+
+<p>値を複製する方法は分かりましたが、複製だけやっていてもあまり面白くありません。2003fは計算機なのですから、計算をしてもらわなくてはいけないでしょう。まずは足し算と引き算を行う方法を見ていきましょう。</p>
+
+<p><code>f0</code>を13だけ増やす、つまり、<code>13</code>という数値 [を](-'i) <code>f0</code> [に](-'c) [足す](atakeses)には、次のように書きます。</p>
+
+<div class="box">
+<pre>
+	ata 13 f0
+</pre>
+</div>
+
+
+
+<p>このとき<code>f0</code>にはどんな値が入っているでしょうか？そう、「分からない」のです。もともとの値に比べて13だけ増えていることは確実ですが、[メモ](firjal)にどんな値が入っていたのかが全く分からないので分かりません。「明示的に値を設定していない[メモ](firjal)にはどんな値が入っているのかは一般に分からない」のでしたね。</p>
+
+
+<p><code>f0</code>を37だけ減らす、つまり、<code>37</code>という数値 [を](-'i) <code>f0</code> [から](-'c) [減じる](ny atakeses)には、次のように書きます。</p>
+
+<div class="box">
+<pre>
+	nta 37 f0
+</pre>
+</div>
+
+<p>もちろん、[メモ](firjal)の値を[住所箱](setistafar)に足し合わせることもできます。</p>
+
+<div class="box">
+<pre>
+	ata f0 f1@
+</pre>
+</div>
+
+<p><code>ata 13 f0</code>で13が変更されたりしないのと同じように、この命令で<code>f0</code>の値が変化することはありません。</p>
+
+<p>なお、当然のことですが、数値を変更するような操作は許されません。</p>
+
+<div class="error_box">
+<pre>
+	ata f2 3
+</pre>
+</div>
+
+<p>練習として、住所4242149312にある値と、住所3274190944にある値を読み、それらの和を住所674147896に出力するようなプログラムを書くことを考えてみましょう。↓のように書けば正しく動くでしょうか？</p>
+
+<div class="dubious_box">
+<pre>
+kRz 4242149312 f0
+kRz 3274190944 f1
+ata f0 f1@
+kRz f1@ 674147896
+</pre>
+</div>
+
+<p>いいえ、これでは上手くいきません。まず、3行目で<code>ata f0 f1@</code>とありますが、これでは増分は<code>f0</code>の値、つまり<code>4242149312</code>という数になってしまい、<code>4242149312</code>という住所にある値ではないからです。</p>
+<p>では、こう直せばいいのでしょうか？</p>
+
+<div class="dubious_box">
+<pre>
+kRz 4242149312 f0
+kRz 3274190944 f1
+ata f0@ f1@
+kRz f1@ 674147896
+</pre>
+</div>
+
+<p>いいえ、まだダメです。どこが間違っているか分かりますか？</p>
+<p>そう、これでは「数値を変更する」ような命令になってしまいますので、これまた正しく動きません。では、こうすればよいのでしょうか？</p>
+
+<div class="dubious_box">
+<pre>
+kRz 4242149312 f0
+kRz 3274190944 f1
+ata f0@ f1@
+kRz 674147896 f2
+kRz f1@ f2@
+</pre>
+</div>
+
+<p>これはかなり惜しいところまで行っています。これは先程までの誤ったプログラムと違って、ちゃんと動いてくれます。ただし、思っていたのとは微妙に違う挙動になってしまうのです。さて、何が問題なのでしょう？</p>
+<p>問題は、この操作の過程で<code>f1@</code>の値が変更されてしまうことです。結果の出力先は住所674147896であって、住所3274190944の値をこっそり変更してしまっては困ります。</p>
+<p>では、こう直せば今度こそ大丈夫でしょうか？</p>
+
+<div class="dubious_box">
+<pre>
+kRz 4242149312 f0
+kRz 3274190944 f1
+kRz 674147896 f2
+kRz f1@ f3
+kRz f0@ f2@
+ata f3@ f2@
+</pre>
+</div>
+
+<p>とても惜しい。誤植があります。<code>kRz</code>したのは<code>f3</code>ですが<code>ata</code>しているのは<code>f3@</code>ですね？</p>
+<p>じゃあこうすればいいのでしょうか？</p>
+
+<div class="dubious_box">
+<pre>
+kRz 4242149312 f0
+kRz 3274190944 f1
+kRz 674147896 f2
+kRz f1@ f3@
+kRz f0@ f2@
+ata f3@ f2@
+</pre>
+</div>
+
+<p>これは動きますが、マズいです。<code>f3@</code>は[住所箱](setistafar)（しかもどの住所なのかよくわからない）で、そこを破壊してしまっているからです。</p>
+<p>一時的な保管場所として使いたいのは<code>f3@</code>ではなく<code>f3</code>ですから、こうなります。</p>
+
+
+<div class="box">
+<pre>
+kRz 4242149312 f0
+kRz 3274190944 f1
+kRz 674147896 f2
+kRz f1@ f3
+kRz f0@ f2@
+ata f3 f2@
+</pre>
+</div>
+
+<p>これでやっと正しく動いてくれます。ふぅ。</p>
+
+<p>なお、別解としては、次のような書き方もあります。</p>
+
+<div class="box">
+<pre>
+kRz 674147896 f2
+kRz 0 f2@
+kRz 4242149312 f0
+ata f0@ f2@
+kRz 3274190944 f1
+ata f1@ f2@
+</pre>
+</div>
+
+<p>この方法は、書き換えてやることでレジスタを節約できるという利点もあります。</p>
+
+<div class="box">
+<pre>
+kRz 674147896 f0
+kRz 0 f0@
+kRz 4242149312 f1
+ata f1@ f0@
+kRz 3274190944 f1
+ata f1@ f0@
+</pre>
+</div>
+
+<p>他にも、多少強引ですが「足してしまった分を引けば良い」という考えでこうしてやることもできます。</p>
+
+<div class="box">
+<pre>
+kRz 4242149312 f0
+kRz 3274190944 f1
+kRz 674147896 f2
+ata f0@ f1@
+kRz f1@ f2@
+nta f0@ f1@
+</pre>
+</div>
+
+<p class="ny_jurli">まあ<code>f1@</code>が書き込み不可だった場合に落ちるんですけど、まあ例外機構はまだ無いのでそんなことは気にしない気にしない</p>
+
+<hr>
+<a href="./2-2.html">前のページへ</a>&nbsp;&nbsp;&nbsp;<a href="./2-4.html">次のページへ</a>
+<br>
+<br>
+<br>
+
+</body>
+</html>

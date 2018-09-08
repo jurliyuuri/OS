@@ -1,0 +1,112 @@
+<!doctype html>
+<html>
+<head>
+<title>2003lk入門 ― 2-4. kRz命令の別用途</title>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../common.css">
+<link rel="stylesheet" href="ny_jurli.css">
+<script src="ny_jurli.js"></script>
+</head>
+<body class="cool">
+<h1>2003lk入門</h1>
+<a href="index.html">トップに戻る</a>
+<div class="ny_jurli">
+	<p>→<input type="button" value="非真理設定を隠す" onclick="hide_ny_jurli()">をクリックすると非真理設定が非表示になります。ページを再読み込みすると戻ります。</p>
+</div>
+<hr>
+<h2>ksi.2 基礎的な命令</h2>
+<h3>lexn.4 <code>kRz</code>命令の別用途</h3>
+
+
+
+<p>ここまで、<code>kRz</code>・<code>ata</code>・<code>nta</code>と3種類の命令を学んできましたが、この3つの命令では今のところ数を複製したり足したりすることしかできません。また、足し算を何千回も繰り返すには、足し算命令を何千回を書くしかなさそうです。</p>
+<p>…本当にそうでしょうか？なにか見落としはないでしょうか？もう一度2003fの基本動作を見ていきましょう。</p>
+
+<ol>
+	<li>xxが次の命令を指すようにする</li>
+	<li>nxの指す命令を実行する</li>
+	<li>xxの指す命令をnxも指すようにする</li>
+</ol>
+
+<p>ここで、「2. nxの指す命令を実行する」ことによって<code>xx</code>の値を上書きしたらどうなるでしょうか？「3. xxの指す命令をnxも指すようにする」によりその値が<code>nx</code>に伝播し、次の「1.」で新<code>nx</code>の次を<code>xx</code>が指すようになります。そうして新<code>nx</code>の指す命令が実行されるので、結果としては「上書きされたxxの指す場所に飛んでいって実行することができる」ということになります。</p>
+
+<p>しかし、「上書きされたxxの指す場所に飛んでいく」といっても、飛んでいくべき場所が具体的にどんな数値で表されるのでしょう？今の我々にはそれを知る手段がありません。そのために使うのが <code>nll</code> というものです。</p>
+
+<p><code>nll</code>は「[次に述べるもの](ny la lex)」の略で、直後に名前を書き、その後に命令を書くことで、その命令に名前を付けることができます。</p>
+
+<p>つまり、</p>
+
+<div class="box">
+<pre>
+kRz 3 f2 
+nll polta1
+ata f3 f2
+kRz f0 f3@
+</pre>
+</div>
+
+<p>と書くことで、<code>ata f3 f2</code>に対して<code>panqa</code>という名前を付けることができます。</p>
+
+<p>なお、当然ながら、</p>
+
+<div class="error_box">
+<pre>
+kRz 3 f2 
+nll polta1
+ata f3 f2
+nll polta1
+kRz f0 f3@
+</pre>
+</div>
+
+<p>のように名前が重複することは禁止されていますし、</p>
+
+<div class="error_box">
+<pre>
+kRz 3 f2 
+nll f0
+ata f3 f2
+kRz f0 f3@
+</pre>
+</div>
+
+<p>のように、既にfirjalの名前として使われているものを<code>nll</code>で使うのも禁止されています。</p>
+
+<p>名前を付けた場所に飛んでいくためには、その名前を直接<code>xx</code>に<code>kRz</code>することで実現できます。</p>
+
+<div class="box">
+<pre>
+kRz 3 f2
+kRz polta1 xx
+kRz 5 f2
+nll polta1
+fen
+</pre>
+</div>
+
+<p>とすると、最後までたどり着いたときの<code>f2</code>の値は5ではなく3になります。</p>
+
+<p>なお、ここでは<code>polta1</code>という名前を定義する前に<code>kRz polta1 xx</code>と書いていますが、これは許されます。</p>
+
+<p>では、このように書くとどうなるでしょう？</p>
+
+<div class="box">
+<pre>
+nll polta1
+ata 1 f0
+kRz polta1 xx
+</pre>
+</div>
+
+<p>お分かりですね、永遠に<code>f0</code>に1を足し続け、いつまで経っても抜け出すことができません。</p>
+<p>今まで実現できなかった「繰り返し」ができるようにはなったものの、決して抜け出せないのではそこまで役に立ちません。次は、そのような機構を実現するための方法について学んでいきましょう。</p>
+
+
+<hr>
+<a href="./2-3.html">前のページへ</a>&nbsp;&nbsp;&nbsp;<a href="./2-5.html">次のページへ</a>
+<br>
+<br>
+<br>
+
+</body>
+</html>

@@ -1,0 +1,323 @@
+<!doctype html>
+<html>
+<head>
+<title>2003lk入門 ― 2-7. f5と[指令](cersva)</title>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../common.css">
+<link rel="stylesheet" href="ny_jurli.css">
+<script src="ny_jurli.js"></script>
+</head>
+<body class="cool">
+<h1>2003lk入門</h1>
+<a href="index.html">トップに戻る</a>
+<div class="ny_jurli">
+	<p>→<input type="button" value="非真理設定を隠す" onclick="hide_ny_jurli()">をクリックすると非真理設定が非表示になります。ページを再読み込みすると戻ります。</p>
+</div>
+<hr>
+<h2>ksi.2 基礎的な命令</h2>
+<h3>lexn.7 <code>f5</code>と[指令](cersva)</h3>
+
+
+
+<p>ここまでに<code>f0</code>, <code>f1</code>, <code>f2</code>, <code>f3</code>, <code>xx</code>を使ってきましたが、まだ活用していない[メモ](firjal)として<code>f5</code>があります。これは原理的には他の[メモ](firjal)と完全に対等ですが、慣用的に他のfirjalと異なった使い方をします。<code>f5</code>は通常[住所箱](setistafar)の番地を指し、「この番地より少し小さい番地は自由に使うことができるが、この番地以上は他人の支配下にある」という一種の縄張りを表します。</p>
+
+<style type="text/css">
+.k {white-space: nowrap;}
+.free_mem {background-color: #ddddff;}
+.occupied_mem {background-color: #ddffdd;}
+</style>
+
+<div class="machine_state_box">
+<p><code>f5</code>が23976であるとき</p>
+<table class="memory">
+<tr>
+	<td class="free_mem">自由</td>
+	<td class="free_mem">自由</td>
+	<td class="free_mem">自由</td>
+	<td class="occupied_mem">使用中</td>
+	<td class="occupied_mem">使用中</td>
+	<td class="occupied_mem">使用中</td>
+	<td class="occupied_mem">使用中</td>
+</tr>
+<tr>
+	<td class="k">23964番地</td>
+	<td class="k">23968番地</td>
+	<td class="k">23972番地</td>
+	<td class="k">23976番地</td>
+	<td class="k">23980番地</td>
+	<td class="k">23988番地</td>
+	<td class="k">23992番地</td>
+</tr>
+</table>
+</div>
+
+<p>この仕組みは、様々に活用できます。例えば、今まで少し複雑な処理を書いていて「firjalの数が足りない」と思ったことがあるかと思いますが、そういうときに計算途中の値を<code>f5</code>より少し小さい番地の住所に退避させることで問題を解決することができます。</p>
+
+<p>例えば、だいぶ先になるまで現在の<code>f3</code>の値は使わないな、と感じたときには、</p>
+
+<div class="box">
+<pre>
+nta  4 f5
+kRz f3 f5@
+</pre>
+</div>
+
+<p>と退避しておくことができます。こうすることで、2003fの状態は</p>
+
+<div class="machine_state_box">
+<p><code>f5</code>は23972</p>
+<table class="memory">
+<tr>
+	<td class="free_mem">自由</td>
+	<td class="free_mem">自由</td>
+	<td class="occupied_mem">退避したf3の値</td>
+	<td class="occupied_mem">使用中</td>
+	<td class="occupied_mem">使用中</td>
+	<td class="occupied_mem">使用中</td>
+	<td class="occupied_mem">使用中</td>
+</tr>
+<tr>
+	<td class="k">23964番地</td>
+	<td class="k">23968番地</td>
+	<td class="k">23972番地</td>
+	<td class="k">23976番地</td>
+	<td class="k">23980番地</td>
+	<td class="k">23988番地</td>
+	<td class="k">23992番地</td>
+</tr>
+</table>
+</div>
+
+<p>となるので、後になって必要になったら、</p>
+
+<div class="box">
+<pre>
+kRz f5@ f3
+ata  4  f5 
+</pre>
+</div>
+
+<p>としてやることで値を復活させられます。</p>
+
+<div class="machine_state_box">
+<p><code>f5</code>は23976</p>
+<table class="memory">
+<tr>
+	<td class="free_mem">自由</td>
+	<td class="free_mem">自由</td>
+	<td class="free_mem">退避したf3の値</td>
+	<td class="occupied_mem">使用中</td>
+	<td class="occupied_mem">使用中</td>
+	<td class="occupied_mem">使用中</td>
+	<td class="occupied_mem">使用中</td>
+</tr>
+<tr>
+	<td class="k">23964番地</td>
+	<td class="k">23968番地</td>
+	<td class="k">23972番地</td>
+	<td class="k">23976番地</td>
+	<td class="k">23980番地</td>
+	<td class="k">23988番地</td>
+	<td class="k">23992番地</td>
+</tr>
+</table>
+</div>
+
+<p>こうすると、操作をする前の元の状態に戻っていることを頭に入れましょう。厳密には23972番地の値が変わっていますが、なんせここは元から「自由」とされていたところなので、勝手に変更しても全く構わないのです。</p>
+
+
+<p>このように、一時的な値の退避という面で<code>f5</code>はとても便利です。しかしながら、<code>f5</code>の一番のポイントは、[指令](cersva)という機構を実現するということにあります。</p>
+
+<p>[指令](cersva)というのは、意味上ひとまとまりである処理に名前を付け、様々な場所から何回も使えるようにする仕組みです。[中央省](sysiten karmacist)が[国際協力院](kardzest ispien lefi'alir)に指令を出したとき、その指令を[国際協力院](kardzest ispien lefi'alir)が行う最中に[連邦外交院](kardzest fankasa'd iccesi'aviratust)にもう少し小さい指令を出す、ということは日常的にありますが、このようなことも2003fの[指令](cersva)では実現できます。</p>
+<p>では、これを実現するのになぜ<code>f5</code>が必要なのか、<code>f5</code>をどう使うのか、学んでいきましょう。</p>
+
+<p>とても簡単な[指令](cersva)として、<code>f0</code>, <code>f1</code>, <code>f2</code>, <code>f3</code>をゼロにする処理である</p>
+
+<div class="box">
+<pre>
+kRz 0 f0
+kRz 0 f1
+kRz 0 f2
+kRz 0 f3
+</pre>
+</div>
+
+<p>という処理に<code>iumes</code>という名前を付けることを考えましょう。</p>
+
+<p>まず、命令のまとまりに名前を付けるにはどうすればよいでしょう？これは既に学びました。</p>
+
+<div class="box">
+<pre>
+nll iumes
+kRz 0 f0
+kRz 0 f1
+kRz 0 f2
+kRz 0 f3
+</pre>
+</div>
+
+<p>次に、主処理の中で<code>iumes</code>という指令を出すことを考えましょう。<code>xx</code>を明示的に変更しない限り命令列は上から実行されますから、主処理は<code>iumes</code>より上に書いて、</p>
+
+<div class="box">
+<pre>
+（ここに主処理がある）
+kRz iumes xx
+
+nll iumes
+kRz 0 f0
+kRz 0 f1
+kRz 0 f2
+kRz 0 f3
+</pre>
+</div>
+
+<p>というふうに書きたいところです。</p>
+<p>しかし、主処理から<code>iumes</code>という指令を出したら、指令が終わった後には主処理に復帰してそれを続行したいわけです。</p>
+
+<p>では、次のようにすればよいのでしょうか？</p>
+
+<div class="dubious_box">
+<pre>
+（ここに主処理がある）
+kRz iumes xx
+nll snusnijal
+（ここに主処理の続きがある）
+
+nll iumes
+kRz 0 f0
+kRz 0 f1
+kRz 0 f2
+kRz 0 f3
+kRz snusnijal xx
+</pre>
+</div>
+
+<p>いいえ、これでは主処理が終わった後でもう一回<code>iumes</code>を実行してしまいます。ということでこうしましょう。</p>
+
+
+<div class="box">
+<pre>
+（ここに主処理がある）
+kRz iumes xx
+nll snusnijal
+（ここに主処理の続きがある）
+kRz lesback xx
+
+nll iumes
+kRz 0 f0
+kRz 0 f1
+kRz 0 f2
+kRz 0 f3
+kRz snusnijal xx
+
+nll lesback
+fen
+</pre>
+</div>
+
+<p>これで完成でしょうか？</p>
+<p>とりあえず、<code>iumes</code>というまとまりを作ってそれを分離することはできました。しかしこのままでは[指令](cersva)として使うには重大な欠陥があります。それは何でしょう？</p>
+
+<p>答えは、「これでは再利用できない」ということです。たとえ他の場所で使いたいとしても、<code>snusnijal</code>は一つしかないのです。</p>
+
+<p>つまり、<code>iumes</code>を2回使いたいとして、</p>
+
+<div class="error_box">
+<pre>
+（主処理その1）
+kRz iumes xx
+nll snusnijal
+（主処理その2）
+kRz iumes xx
+nll snusnijal
+（主処理その3）
+kRz lesback xx
+
+nll iumes
+kRz 0 f0
+kRz 0 f1
+kRz 0 f2
+kRz 0 f3
+kRz snusnijal xx
+
+nll lesback
+fen
+</pre>
+</div>
+
+<p>と書いたところでどちらの<code>snusnijal</code>に行けばいいのか分からないのです。</p>
+
+<p>これを解決するために、<code>f5</code>を使います。これを使って「戻るべき場所」を毎回退避しておくことで、<code>iumes</code>が終わった後に正しい場所に戻ることができるのです。</p>
+
+<p>ということで、指令を出した側は「<code>f5</code>を4減らして場所を確保し、<code>f5@</code>に『指令から終わった後に戻るべき命令の場所』を入れておき、命令から戻ったら<code>f5</code>を4増やす」とすればよいでしょう。</p>
+
+<p>それに対応して、指令を受けた側は「<code>f5@</code>には『戻るべき命令の場所』が入っているのだから、一連の処理が終わったら<code>f5@</code>を<code>xx</code>に入れる」とだけすればよいのです。</p>
+
+<p>さて、ではこれを2003lkで書いてみましょう。</p>
+
+<p>例えば、こうなります。</p>
+
+<div class="box">
+<pre>
+（主処理その1）
+nta 4 f5
+kRz 1io f5@
+kRz iumes xx
+nll 1io
+ata 4 f5
+（主処理その2）
+nta 4 f5
+kRz 2io f5@
+kRz iumes xx
+nll 2io
+ata 4 f5
+（主処理その3）
+kRz lesback xx
+
+nll iumes
+kRz 0 f0
+kRz 0 f1
+kRz 0 f2
+kRz 0 f3
+kRz f5@ xx
+
+nll lesback
+fen
+</pre>
+</div>
+
+<p>さて、これで一応一件落着なのですが、毎回</p>
+
+<div class="box">
+<pre>
+nta 4 f5
+kRz 1io f5@
+kRz iumes xx
+nll 1io
+ata 4 f5
+</pre>
+</div>
+
+<p>と書かねばならないのも面倒です。なんとか簡単に書けないでしょうか。</p>
+
+<p>実は、次のように書けます。</p>
+
+<div class="box">
+<pre>
+nta 4 f5
+inj iumes xx f5@
+ata 4 f5
+</pre>
+</div>
+
+<p>こうすると、短くなるだけでなく、毎回名前を付けなくてもよくなります。</p>
+
+
+<hr>
+<a href="./2-6.html">前のページへ</a>&nbsp;&nbsp;&nbsp;<a href="./index.html">次のページへ</a>
+<br>
+<br>
+<br>
+
+</body>
+</html>

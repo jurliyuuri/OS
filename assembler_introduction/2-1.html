@@ -1,0 +1,97 @@
+<!doctype html>
+<html>
+<head>
+<title>2003lk入門 ― 2-1. kRz命令</title>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../common.css">
+<link rel="stylesheet" href="ny_jurli.css">
+<script src="ny_jurli.js"></script>
+</head>
+<body class="cool">
+<h1>2003lk入門</h1>
+<a href="index.html">トップに戻る</a>
+<div class="ny_jurli">
+	<p>→<input type="button" value="非真理設定を隠す" onclick="hide_ny_jurli()">をクリックすると非真理設定が非表示になります。ページを再読み込みすると戻ります。</p>
+</div>
+<hr>
+<h2>ksi.2 基礎的な命令</h2>
+<h3>lexn.1 <code>kRz</code>命令</h3>
+
+<p>最もよく使う命令として、<code>kRz</code>命令があります。これは値を[書き写す](kRantairzarth)命令で、[メモ](firjal)や[住所箱](setistafar)の間で値を書き写す作業を行うことができます。</p>
+
+<p>例えば、<code>kRz f0 f1</code>と書くと、<code>f0</code>[を](-'i)読んで<code>f1</code>[に](-'c)書き写せ、という命令になります。この際、<code>f1</code>は<strong>完全に上書き</strong>され、元の<code>f1</code>の値は失われます。先頭に動詞、次に「[を](-'i)」、最後に「[に](-'c)」を置くのが基本的な書き方です。<span class="ny_jurli">AT&T Syntaxですな</span></p>
+
+<p>（なお、先に「[に](-'c)」が来てその後に「[を](-'i)」が来る言語を話している人のために、先頭に<code>'c'i</code>と書くことでそれ以降の部分を全て「[に](-'c)の後に[を](-'i)」の語順として扱わせることができます。<span class="ny_jurli">Intel Syntaxに慣れているみなさんも一安心</span>もとに戻す場合は<code>'i'c</code>と書きます。混乱を避けるため、この解説では一貫して<code>'c'i</code>の使用を控えます。）</p>
+
+<p>例として、<code>f0</code>の値を<code>f1</code>に複製した後、<code>f1</code>の値を<code>f2</code>に複製する命令列は以下のようになります。</p>
+
+<div class="box">
+<pre>
+	kRz f0 f1
+	kRz f1 f2
+</pre>
+</div>
+
+<p>これを実行すると、もともと<code>f0</code>に入っていた値が<code>f1</code>にも<code>f2</code>にも入ります。</p>
+
+<p>なお、「もともと<code>f0</code>に入っていた値」とは具体的にどんな値なのでしょう？分かりません。これに限らず、明示的に値を設定していない[メモ](firjal)にはどんな値が入っているのかは一般に分かりません。<span class="ny_jurli">現世流に言うなら「未初期化のレジスタにはゴミが入っている」</span></p>
+
+<p>順番を逆にして、</p>
+
+
+<div class="box">
+<pre>
+	kRz f1 f2
+	kRz f0 f1
+</pre>
+</div>
+
+<p>とするとどうなるでしょうか？この場合は先ほどと違い、3つの[メモ](firjal)が全て同じ値になるとは限りません。もともと<code>f1</code>に入っていた値は<code>f2</code>に移り、<code>f1</code>は新しく<code>f0</code>の値で<strong>上書きされ</strong>ます。</p>
+
+<p>また、特定の数値を直接[メモ](firjal)に入れることもできます。</p>
+
+<div class="box">
+<pre>
+	kRz  3 f1
+	kRz f1 f2
+</pre>
+</div>
+
+<p>とすると、まず数値3が<code>f1</code>に入り、次にそれが<code>f2</code>に書き写されます。</p>
+
+<p>もちろん、次のような操作を行うことはできません。</p>
+
+<div class="error_box">
+<pre>
+	kRz f1 2
+</pre>
+</div>
+
+<p>数値「2」は当然記憶装置ではないので、そこに対して値を書き込むことなどできるはずがないからです。</p>
+
+
+<p>ちなみに、</p>
+
+<div class="box">
+<pre>
+	kRz f0 f0
+</pre>
+</div>
+
+<p>のように、書き写し元と書き写し先が同一の[メモ](firjal)を指している場合は、何も起きません。この「何も起きない」ということを明示的に表すために、<code>kRz f0 f0</code>の別名として、[何もしない](fav es niv e'i)を略した<code>fen</code>という名前を使うことができます。</p>
+
+
+<p class="ny_jurli">メモリに関しては、<code>kRz f1@ f1@</code>
+で何も起きない保証はない（メモリが読み取り専用だったり存在しなかったりしたら例外になるでしょう）が、そもそも例外機構自体の仕様が定まっていないし言及しないのが吉</p>
+
+<p>さて、これで[メモ](firjal)を操作することができるようになりましたが、[住所箱](setistafar)を操作したいときにはどうすればよいのでしょうか？次はそれを見ていきましょう。</p>
+
+
+<hr>
+<a href="./2-0.html">前のページへ</a>&nbsp;&nbsp;&nbsp;<a href="./2-2.html">次のページへ</a>
+<br>
+<br>
+<br>
+
+</body>
+</html>

@@ -1,0 +1,210 @@
+<!doctype html>
+<html>
+<head>
+<title>2003lk入門 ― 2-5. fiとmalkRz</title>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../common.css">
+<link rel="stylesheet" href="ny_jurli.css">
+<script src="ny_jurli.js"></script>
+</head>
+<body class="cool">
+<h1>2003lk入門</h1>
+<a href="index.html">トップに戻る</a>
+<div class="ny_jurli">
+	<p>→<input type="button" value="非真理設定を隠す" onclick="hide_ny_jurli()">をクリックすると非真理設定が非表示になります。ページを再読み込みすると戻ります。</p>
+</div>
+<hr>
+<h2>ksi.2 基礎的な命令</h2>
+<h3>lexn.5 <code>fi</code>と<code>malkRz</code></h3>
+
+
+<p>繰り返しから途中で抜けるには、どうすればいいでしょう？</p>
+<p>繰り返しというのは同じ命令列をひたすら実行していくことを指すのですから、そこから抜け出すには「状態に応じて、繰り返しの外に抜け出したり抜け出さなかったりする」ということを記述できる必要があるわけです。そのために用意されている命令が<code>fi</code>と<code>malkRz</code>です。</p>
+
+<p><code>fi</code>と<code>malkRz</code>は組として使う命令で、次のように使います。</p>
+
+<div class="box">
+<pre>
+fi f0 0 niv
+malkRz 5 f1
+</pre>
+</div>
+
+<p>これはつまり「[もし<code>f0</code>が0でなければ、5を<code>f1</code>に複製せよ](fi <code>f0</code> es 0 niv, mal krantairzarth 5'i <code>f1</code>'c.)」という意味です。</p>
+
+<p>逆に、「<code>f0</code>が0である」という場合はどう書くのでしょうか？次のように書きます。</p>
+
+<div class="box">
+<pre>
+fi f0 0 clo
+malkRz 5 f1
+</pre>
+</div>
+
+<p>この<code>clo</code>というのは「[同等だ](ce loler)」の省略です。「[もし<code>f0</code>が0と等しければ、](fi <code>f0</code> es 0 ce loler)」、ということですね。</p>
+
+<div class="error_box">
+<pre>
+fi f0 0
+malkRz 5 f1
+</pre>
+</div>
+
+<p>とは書けないので注意しましょう。</p>
+
+<p>また、</p>
+
+<div class="box">
+<pre>
+fi f0 0 clo
+malkRz 5 f1
+</pre>
+</div>
+
+<p>の代わりに</p>
+
+<div class="dubious_box">
+<pre>
+fi f0 0 clo
+kRz 5 f1
+</pre>
+</div>
+
+<p>と書いてしまうと、<code>malkRz</code>と違って<code>kRz</code>は無条件での複製を行う命令なので、これは</p>
+
+<p>「<code>f0</code>は0と等しいだろうか？さてそんなことはどうでもよく、<code>f1</code>に5を入れてくれ」という命令になってしまいます。<strong>とてもありがちな誤りなので、十分注意しましょう</strong>。</p>
+
+<p>さて、まずはこれを使って、<code>f1</code>の値の67倍を<code>f2</code>に入れる命令列を書いてみましょう。</p><p class="ny_jurli">いや、もちろん2003lkには掛け算命令もありますよ</p>
+
+<p>もちろん、一番簡単なのは次のように書くことですが、</p>
+
+<div class="box">
+<pre>
+kRz 0 f2
+ata f1 f2   ata f1 f2   ata f1 f2   ata f1 f2   ata f1 f2
+ata f1 f2   ata f1 f2   ata f1 f2   ata f1 f2   ata f1 f2
+ata f1 f2   ata f1 f2   ata f1 f2   ata f1 f2   ata f1 f2
+ata f1 f2   ata f1 f2   ata f1 f2   ata f1 f2   ata f1 f2
+ata f1 f2   ata f1 f2   ata f1 f2   ata f1 f2   ata f1 f2
+ata f1 f2   ata f1 f2   ata f1 f2   ata f1 f2   ata f1 f2
+ata f1 f2   ata f1 f2   ata f1 f2   ata f1 f2   ata f1 f2
+ata f1 f2   ata f1 f2   ata f1 f2   ata f1 f2   ata f1 f2
+ata f1 f2   ata f1 f2   ata f1 f2   ata f1 f2   ata f1 f2
+ata f1 f2   ata f1 f2   ata f1 f2   ata f1 f2   ata f1 f2
+ata f1 f2   ata f1 f2   ata f1 f2   ata f1 f2   ata f1 f2
+ata f1 f2   ata f1 f2   ata f1 f2   ata f1 f2   ata f1 f2
+ata f1 f2   ata f1 f2   ata f1 f2   ata f1 f2   ata f1 f2
+ata f1 f2   ata f1 f2
+</pre>
+</div>
+
+<p>これでは面白みがないので、ちゃんと繰り返しを使って書いていきましょう。</p>
+
+<p>例えば、このように書くことができます。</p>
+<div class="box">
+<pre>
+kRz 0 f0
+kRz 0 f2
+nll polta1
+ata f1 f2
+ata 1 f0
+fi f0 67 niv
+malkRz polta1 xx
+</pre>
+</div>
+
+<p>では、これを応用して、次のような実用的な課題を考えてみましょう。</p>
+
+<p>「4187375140番地・4187375144番地・4187375148番地 … と番地を4ずつ増やして見ていって、住所箱のそこの値がf0の値と一致するならばその番地を、f1個探しても見つからなかったら0を、1923108072番地に書き込む。複数見つかった場合は、どの番地を知らせても良い。」</p>
+
+<p>要するに、住所箱を見て、そのお隣さんを次々と調べていって、目的とする値を検索していくという課題です。</p>
+
+<p>さて、このような問題に対していきなり完璧に対応しようとするとうまくいきません。まずは、課題の部分部分を考えるところから始めてみましょう。</p>
+
+<p>まず、「4187375140番地を見て、f0の値と一致するなら1923108072番地に4187375140と書き込む」はどう書けばいいでしょうか？</p>
+
+<div class="box">
+<pre>
+kRz 4187375140 f3
+kRz 1923108072 f2
+fi f3@ f0 clo
+kRz 4187375140 f2@
+</pre>
+</div>
+
+<p>と書くことで実現できます。</p>
+
+<p>ここで、最後の行においても<code>f3</code>には4187375140という値が入ったまま（「4187375140番地の値」<strong>ではない！</strong>）であることに注意すると、次のようにも書けることが分かります。</p>
+
+<div class="box">
+<pre>
+kRz 4187375140 f3
+kRz 1923108072 f2
+fi f3@ f0 clo
+kRz f3 f2@
+</pre>
+</div>
+
+<p>これで第1段階は解決です。次に、この直後に「4187375144番地を見て、f0の値と一致するなら1923108072番地に4187375144と書き込む」という処理を行うには、</p>
+
+<div class="box">
+<pre>
+kRz 4187375140 f3
+kRz 1923108072 f2
+fi f3@ f0 clo
+kRz f3 f2@
+
+kRz 4187375144 f3
+kRz 1923108072 f2
+fi f3@ f0 clo
+kRz f3 f2@
+</pre>
+</div>
+
+<p>と書けばいいわけです。</p>
+
+<p>ここで、5行目の段階では<code>f3</code>には4187375140という値が入ったままであり、<code>f2</code>には1923108072という値が入ったままであることを考えると、このように書けます。</p>
+
+
+<div class="box">
+<pre>
+kRz 4187375140 f3
+kRz 1923108072 f2
+fi f3@ f0 clo
+kRz f3 f2@
+
+ata 4 f3
+fi f3@ f0 clo
+kRz f3 f2@
+</pre>
+</div>
+
+<p class="ny_jurli">ここにちゃんとした説明を入れる。レジスタが足りないのでループカウンタに転用する話とか書きましょうね。</p>
+
+
+<p>最終的に、</p>
+<div class="box">
+<pre>
+kRz 4187375140 f3
+kRz 1923108072 f2
+kRz 0 f2@
+nll polta1
+fi f3@ f0 clo
+kRz f3 f2@
+ata 4 f3
+nta 1 f1
+fi f1 0 niv
+malkRz polta1 xx
+</pre>
+</div>
+
+<p>というのが正解の一つとなるわけです。</p>
+
+<hr>
+<a href="./2-4.html">前のページへ</a>&nbsp;&nbsp;&nbsp;<a href="./2-6.html">次のページへ</a>
+<br>
+<br>
+<br>
+
+</body>
+</html>
