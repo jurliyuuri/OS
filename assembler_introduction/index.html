@@ -906,7 +906,33 @@ kRz f3 f5@
 </pre>
 </div>
 
-<p>と退避しておくことができます。後になって必要になったら、</p>
+<p>と退避しておくことができます。こうすることで、2003fの状態は</p>
+
+<div class="machine_state_box">
+<p><code>f5</code>は23972</p>
+<table class="memory">
+<tr>
+	<td class="free_mem">自由</td>
+	<td class="free_mem">自由</td>
+	<td class="occupied_mem">退避したf3の値</td>
+	<td class="occupied_mem">使用中</td>
+	<td class="occupied_mem">使用中</td>
+	<td class="occupied_mem">使用中</td>
+	<td class="occupied_mem">使用中</td>
+</tr>
+<tr>
+	<td class="k">23964番地</td>
+	<td class="k">23968番地</td>
+	<td class="k">23972番地</td>
+	<td class="k">23976番地</td>
+	<td class="k">23980番地</td>
+	<td class="k">23988番地</td>
+	<td class="k">23992番地</td>
+</tr>
+</table>
+</div>
+
+<p>となるので、後になって必要になったら、</p>
 
 <div class="box">
 <pre>
