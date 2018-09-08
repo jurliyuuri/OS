@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+<head>
+<title>2003lk入門 ― 1-4. 基本動作</title>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../common.css">
+<link rel="stylesheet" href="ny_jurli.css">
+<script src="ny_jurli.js"></script>
+</head>
+<body class="cool">
+<h1>2003lk入門</h1>
+<a href="index.html">トップに戻る</a>
+<div class="ny_jurli">
+	<p>→<input type="button" value="非真理設定を隠す" onclick="hide_ny_jurli()">をクリックすると非真理設定が非表示になります。ページを再読み込みすると戻ります。</p>
+</div>
+<hr>
+<h2>ksi.1 2003'd ferlesylを知る</h2>
+<h3>lexn.4 基本動作</h3>
+
+<p>2003fは、命令を見ながら基本的にはそれを順次実行していきます。それを実現するために、2003fは<code>nx</code>（[今見ているところ](noon xelal)の略）と<code>xx</code>（[xeumon xelal](次に見るところ) の略）という2つのfirjalを持っています。なお、<code>nx</code>というfirjalは隠されており、我々は直接<code>nx</code>というfirjalに働きかけることはできません。</p>
+<p>2003fの基本動作は単純で、以下の3つの動作をひたすら繰り返します。</p>
+<ol>
+	<li>xxが次の命令を指すようにする</li>
+	<li>nxの指す命令を実行する</li>
+	<li>xxの指す命令をnxも指すようにする</li>
+</ol>
+<p>これを繰り返していくことで、命令を次々に実行していけることが分かるかと思います。</p>
+<p>このような単純な動作だけで複雑な作業を行わせるにはどうすればいいのでしょう？それについて、これから見ていくことにしましょう。</p>
+
+
+</body>
+</html>
