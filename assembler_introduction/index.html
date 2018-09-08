@@ -968,6 +968,32 @@ ata  4  f5
 
 <p>としてやることで値を復活させられます。</p>
 
+<div class="machine_state_box">
+<p><code>f5</code>は23976</p>
+<table class="memory">
+<tr>
+	<td class="free_mem">自由</td>
+	<td class="free_mem">自由</td>
+	<td class="free_mem">退避したf3の値</td>
+	<td class="occupied_mem">使用中</td>
+	<td class="occupied_mem">使用中</td>
+	<td class="occupied_mem">使用中</td>
+	<td class="occupied_mem">使用中</td>
+</tr>
+<tr>
+	<td class="k">23964番地</td>
+	<td class="k">23968番地</td>
+	<td class="k">23972番地</td>
+	<td class="k">23976番地</td>
+	<td class="k">23980番地</td>
+	<td class="k">23988番地</td>
+	<td class="k">23992番地</td>
+</tr>
+</table>
+</div>
+
+<p>こうすると、操作をする前の元の状態に戻っていることを頭に入れましょう。厳密には23972番地の値が変わっていますが、なんせここは元から「自由」とされていたところなので、勝手に変更しても全く構わないのです。</p>
+
 
 <p>このように、一時的な値の退避という面で<code>f5</code>はとても便利です。しかしながら、<code>f5</code>の一番のポイントは、[指令](cersva)という機構を実現するということにあります。</p>
 
