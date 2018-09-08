@@ -561,7 +561,7 @@ nta f0@ f1@
 <div class="box">
 <pre>
 kRz 3 f2 
-nll panqa
+nll polta1
 ata f3 f2
 kRz f0 f3@
 </pre>
@@ -574,9 +574,9 @@ kRz f0 f3@
 <div class="error_box">
 <pre>
 kRz 3 f2 
-nll panqa
+nll polta1
 ata f3 f2
-nll panqa
+nll polta1
 kRz f0 f3@
 </pre>
 </div>
@@ -599,24 +599,24 @@ kRz f0 f3@
 <div class="box">
 <pre>
 kRz 3 f2
-kRz panqa xx
+kRz polta1 xx
 kRz 5 f2
-nll panqa
+nll polta1
 fen
 </pre>
 </div>
 
 <p>とすると、最後までたどり着いたときの<code>f2</code>の値は5ではなく3になります。</p>
 
-<p>なお、ここでは<code>panqa</code>という名前を定義する前に<code>kRz panqa xx</code>と書いていますが、これは許されます。</p>
+<p>なお、ここでは<code>polta1</code>という名前を定義する前に<code>kRz polta1 xx</code>と書いていますが、これは許されます。</p>
 
 <p>では、このように書くとどうなるでしょう？</p>
 
 <div class="box">
 <pre>
-nll panqa
+nll polta1
 ata 1 f0
-kRz panqa xx
+kRz polta1 xx
 </pre>
 </div>
 
@@ -712,11 +712,11 @@ ata f1 f2   ata f1 f2
 <pre>
 kRz 0 f0
 kRz 0 f2
-nll panqa
+nll polta1
 ata f1 f2
 ata 1 f0
 fi f0 67 niv
-malkRz panqa xx
+malkRz polta1 xx
 </pre>
 </div>
 
@@ -795,13 +795,13 @@ kRz f3 f2@
 kRz 4187375140 f3
 kRz 1923108072 f2
 kRz 0 f2@
-nll panqa
+nll polta1
 fi f3@ f0 clo
 kRz f3 f2@
 ata 4 f3
 nta 1 f1
 fi f1 0 niv
-malkRz panqa xx
+malkRz polta1 xx
 </pre>
 </div>
 
