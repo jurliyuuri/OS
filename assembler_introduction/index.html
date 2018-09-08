@@ -569,6 +569,31 @@ kRz f0 f3@
 
 <p>と書くことで、<code>ata f3 f2</code>に対して<code>panqa</code>という名前を付けることができます。</p>
 
+<p>なお、当然ながら、</p>
+
+<div class="error_box">
+<pre>
+kRz 3 f2 
+nll panqa
+ata f3 f2
+nll panqa
+kRz f0 f3@
+</pre>
+</div>
+
+<p>のように名前が重複することは禁止されていますし、</p>
+
+<div class="error_box">
+<pre>
+kRz 3 f2 
+nll f0
+ata f3 f2
+kRz f0 f3@
+</pre>
+</div>
+
+<p>のように、既にfirjalの名前として使われているものを<code>nll</code>で使うのも禁止されています。</p>
+
 <p>名前を付けた場所に飛んでいくためには、その名前を直接<code>xx</code>に<code>kRz</code>することで実現できます。</p>
 
 <div class="box">
