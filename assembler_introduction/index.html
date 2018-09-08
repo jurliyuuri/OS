@@ -71,9 +71,53 @@ function hide_ny_jurli()
 	<li>[住所箱](setistafar)：多量のデータを保存できるが、読み書きが遅い<span class="ny_jurli">メモリのこと。</span></li>
 </ul>
 <p>firjalはいくつかありますが、その中でも今回使っていくのは6種類。それぞれに<code>f0</code>, <code>f1</code>, <code>f2</code>, <code>f3</code>, <code>f5</code>, <code>xx</code>という名前が付いています。それぞれのfirjalに、先ほど述べた32個のスイッチ列が入っています。</p>
+<div class="box2">
+<table class="memory">
+<tr>
+	<td>スイッチ列</td>
+	<td>スイッチ列</td>
+	<td>スイッチ列</td>
+	<td>スイッチ列</td>
+	<td>スイッチ列</td>
+	<td>スイッチ列</td>
+</tr>
+<tr>
+	<td class="k">f0</td>
+	<td class="k">f1</td>
+	<td class="k">f2</td>
+	<td class="k">f3</td>
+	<td class="k">f5</td>
+	<td class="k">xx</td>
+</tr>
+</table>
+</div>
 <p>なお、fはfirjalの略です。<code>xx</code>はxeumon xelal（「次に見るところ」）の略称ですが、詳しいことは後述します。</p>
 <p>setistafarは、[住所](sietival)と[箱](stafiort)という語からなっていることからも分かるように、住所のようなものを指定することで、その場所に数を記録することができます。ただし、住所といっても普通の住所とは違ってこれまた数で表すので、[住所](<strong>sie</strong>tival)ではなく[アドレス](<strong>se</strong>tival)と呼びます。</p>
 <p>setivalは0から4294967292までの数で、必ず4で割り切れます。それぞれのsetivalのところにはこれまた32個のスイッチ列があって、そこに数を記録できます。</p>
+
+<div class="box2">
+<table class="memory">
+<tr>
+	<td>スイッチ列</td>
+	<td>スイッチ列</td>
+	<td>スイッチ列</td>
+	<td>スイッチ列</td>
+	<td>スイッチ列</td>
+	<td>スイッチ列</td>
+	<td>スイッチ列</td>
+</tr>
+<tr>
+	<td class="k">39460番地</td>
+	<td class="k">39464番地</td>
+	<td class="k">39468番地</td>
+	<td class="k">39472番地</td>
+	<td class="k">39476番地</td>
+	<td class="k">39480番地</td>
+	<td class="k">39488番地</td>
+</tr>
+</table>
+</div>
+
 <p>[メモ](firjal)はその名前の通り一時的なメモに過ぎないので、計算の過程でどんどん上書きしていって構いません。特に、<code>f0</code>, <code>f1</code>, <code>f2</code>, <code>f3</code>は計算をするときに使うべき[メモ](firjal)です。一方、[住所箱](setistafar)に入れている情報は末永く使う可能性があり、またそもそも読み書きが遅いので、一時的な値を入れたりするのはよくありません。</p>
 <h3>lexn.3 命令</h3>
 <p>2003fは[命令](xlaiso)を与えられることによって動作します。その命令を記述するための言語が2003lkです。</p>
@@ -203,6 +247,73 @@ function hide_ny_jurli()
 </div>
 
 <p><code>@</code>が[〜という場所で](io)の略字であることは皆さんご存知かと思われますが、<span class="ny_jurli">注：リパーシェのiとoをくっつけた合字があり、それのASCII代替表示として<code>@</code>を用いる。詳しくは<a href="https://drive.google.com/file/d/1RwtPFMu7-ckelB2WKbdxYQGTAZ8xxQAb/view">「初学者のためのリパライン語」</a>を参照すること。</span>まさに<code>f0</code>という[メモ](firjal)に書いている住所[〜という場所で](io)情報を読んでくる、という意味になるのです。</p>
+
+
+<p>少し分かりにくい箇所なので、図で追いかけていきましょう。まず、最初の<code>kRz 3529356308 f0</code>の結果、firjalはこうなります。</p>
+<div class="box2">
+<table class="memory">
+<tr>
+	<td>3529356308</td>
+	<td>?</td>
+	<td>?</td>
+	<td>?</td>
+	<td>?</td>
+	<td>?</td>
+</tr>
+<tr>
+	<td class="k">f0</td>
+	<td class="k">f1</td>
+	<td class="k">f2</td>
+	<td class="k">f3</td>
+	<td class="k">f5</td>
+	<td class="k">xx</td>
+</tr>
+</table>
+</div>
+
+<p>その次の<code>kRz        f0@ f1</code>では、<code>f0</code>という[メモ](firjal)に書いている住所[〜という場所で](io)情報を読んでくるので、住所箱が下のようになっているとき、</p>
+
+<div class="box2">
+<table class="memory">
+<tr>
+	<td>56593777</td>
+	<td>3</td>
+	<td>2718972307</td>
+	<td>3157158970</td>
+</tr>
+<tr>
+	<td class="k">3529356304番地</td>
+	<td class="k">3529356308番地</td>
+	<td class="k">3529356312番地</td>
+	<td class="k">3529356316番地</td>
+</tr>
+</table>
+</div>
+
+<p>読んでくるべき値は3529356308番地に置いてある「3」です。これが<code>f1</code>に複製され、firjalは</p>
+
+<div class="box2">
+<table class="memory">
+<tr>
+	<td>3529356308</td>
+	<td>3</td>
+	<td>?</td>
+	<td>?</td>
+	<td>?</td>
+	<td>?</td>
+</tr>
+<tr>
+	<td class="k">f0</td>
+	<td class="k">f1</td>
+	<td class="k">f2</td>
+	<td class="k">f3</td>
+	<td class="k">f5</td>
+	<td class="k">xx</td>
+</tr>
+</table>
+</div>
+
+<p>となるのです。</p>
 
 <p><code>f0</code>と<code>f0@</code>で意味が<strong>大きく異なる</strong>ことに細心の注意を払ってください。<code>f0</code>は[メモ](firjal)ですが<code>f0@</code>は[住所箱](setistafar)です。<code>f0</code>を操作しているときは一時的な[メモ](firjal)の操作に過ぎませんが、<code>f0@</code>の操作は[住所箱](setistafar)の操作であって、一歩間違えれば[住所箱](setistafar)に保管されているデータを<strong>どんどん破壊していってしまうかもしれない</strong>ことを肝に銘じておきましょう。</p>
 
