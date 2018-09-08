@@ -71,7 +71,7 @@ function hide_ny_jurli()
 	<li>[住所箱](setistafar)：多量のデータを保存できるが、読み書きが遅い<span class="ny_jurli">メモリのこと。</span></li>
 </ul>
 <p>firjalはいくつかありますが、その中でも今回使っていくのは6種類。それぞれに<code>f0</code>, <code>f1</code>, <code>f2</code>, <code>f3</code>, <code>f5</code>, <code>xx</code>という名前が付いています。それぞれのfirjalに、先ほど述べた32個のスイッチ列が入っています。</p>
-<div class="box2">
+<div class="machine_state_box">
 <table class="memory">
 <tr>
 	<td>スイッチ列</td>
@@ -95,7 +95,7 @@ function hide_ny_jurli()
 <p>setistafarは、[住所](sietival)と[箱](stafiort)という語からなっていることからも分かるように、住所のようなものを指定することで、その場所に数を記録することができます。ただし、住所といっても普通の住所とは違ってこれまた数で表すので、[住所](<strong>sie</strong>tival)ではなく[アドレス](<strong>se</strong>tival)と呼びます。</p>
 <p>setivalは0から4294967292までの数で、必ず4で割り切れます。それぞれのsetivalのところにはこれまた32個のスイッチ列があって、そこに数を記録できます。</p>
 
-<div class="box2">
+<div class="machine_state_box">
 <table class="memory">
 <tr>
 	<td>スイッチ列</td>
@@ -163,6 +163,28 @@ function hide_ny_jurli()
 
 <p>↑この枠は、記述が2003lkの文法に反しているわけではないが、誤った動作・危険な動作・意図しない動作をしかねないことを意味します。</p>
 
+<div class="machine_state_box">
+<table class="memory">
+<tr>
+	<td>969781</td>
+	<td>1691140026</td>
+	<td>2296088114</td>
+	<td>855978409</td>
+	<td>2141598056</td>
+	<td>3574815992</td>
+</tr>
+<tr>
+	<td class="k">f0</td>
+	<td class="k">f1</td>
+	<td class="k">f2</td>
+	<td class="k">f3</td>
+	<td class="k">f5</td>
+	<td class="k">xx</td>
+</tr>
+</table>
+</div>
+
+<p>↑この枠は、2003lkで操作している最中の2003fの状態を表します。</p>
 
 <h3>lexn.1 <code>kRz</code>命令</h3>
 <p>最もよく使う命令として、<code>kRz</code>命令があります。これは値を[書き写す](kRantairzarth)命令で、[メモ](firjal)や[住所箱](setistafar)の間で値を書き写す作業を行うことができます。</p>
@@ -250,7 +272,7 @@ function hide_ny_jurli()
 
 
 <p>少し分かりにくい箇所なので、図で追いかけていきましょう。まず、最初の<code>kRz 3529356308 f0</code>の結果、firjalはこうなります。</p>
-<div class="box2">
+<div class="machine_state_box">
 <table class="memory">
 <tr>
 	<td>3529356308</td>
@@ -273,7 +295,7 @@ function hide_ny_jurli()
 
 <p>その次の<code>kRz        f0@ f1</code>では、<code>f0</code>という[メモ](firjal)に書いている住所[〜という場所で](io)情報を読んでくるので、住所箱が下のようになっているとき、</p>
 
-<div class="box2">
+<div class="machine_state_box">
 <table class="memory">
 <tr>
 	<td>56593777</td>
@@ -292,7 +314,7 @@ function hide_ny_jurli()
 
 <p>読んでくるべき値は3529356308番地に置いてある「3」です。これが<code>f1</code>に複製され、firjalは</p>
 
-<div class="box2">
+<div class="machine_state_box">
 <table class="memory">
 <tr>
 	<td>3529356308</td>
@@ -849,7 +871,7 @@ inj f0 f0@ f0
 .occupied_mem {background-color: #ddffdd;}
 </style>
 
-<div class="box2">
+<div class="machine_state_box">
 <p><code>f5</code>が23976であるとき</p>
 <table class="memory">
 <tr>
