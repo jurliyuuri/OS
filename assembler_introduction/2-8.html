@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+<head>
+<title>2003lk入門 ― 2-8. 全てを[指令](cersva)に</title>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../common.css">
+<link rel="stylesheet" href="ny_jurli.css">
+<script src="ny_jurli.js"></script>
+</head>
+<body class="cool">
+<h1>2003lk入門</h1>
+<a href="index.html">トップに戻る</a>
+<div class="ny_jurli">
+	<p>→<input type="button" value="非真理設定を隠す" onclick="hide_ny_jurli()">をクリックすると非真理設定が非表示になります。ページを再読み込みすると戻ります。</p>
+</div>
+<hr>
+<h2>ksi.2 基礎的な命令</h2>
+<h3>lexn.8 全てを[指令](cersva)に</h3>
+
+<p>前回の</p>
+
+<div class="box">
+<pre>
+（主処理その1）
+nta 4 f5
+kRz 1io f5@
+kRz iumes xx
+nll 1io
+ata 4 f5
+（主処理その2）
+nta 4 f5
+kRz 2io f5@
+kRz iumes xx
+nll 2io
+ata 4 f5
+（主処理その3）
+kRz lesback xx
+
+nll iumes
+kRz 0 f0
+kRz 0 f1
+kRz 0 f2
+kRz 0 f3
+kRz f5@ xx
+
+nll lesback
+fen
+</pre>
+</div>
+
+<p>では、処理を終わらせるためだけに<code>lesback</code>という場所を末尾に定義していました。しかし、これは不格好です。</p>
+
+<p>そこで、「主処理も[指令](cersva)にすればよいのではなかろうか」という考えを採用してみましょう。<code>kRz f5@ xx</code>と書けば[指令](cersva)を終わらせられるので、</p>
+
+
+<div class="box">
+<pre>
+（主処理その1）
+nta 4 f5
+kRz 1io f5@
+kRz iumes xx
+nll 1io
+ata 4 f5
+（主処理その2）
+nta 4 f5
+kRz 2io f5@
+kRz iumes xx
+nll 2io
+ata 4 f5
+（主処理その3）
+kRz f5@ xx
+
+nll iumes
+kRz 0 f0
+kRz 0 f1
+kRz 0 f2
+kRz 0 f3
+kRz f5@ xx
+
+nll lesback
+fen
+</pre>
+</div>
+
+<p>とすれば、<code>lesback</code>という名前を廃止することができます。また、主処理そのものも[指令](cersva)にするというのは、統一感が出て綺麗です。</p>
+
+<p>ということで、今後書くときには、必ず主処理を[指令](cersva)にしましょう。</p>
+
+<p class="ny_jurli">実は、HaskellインタプリタもWebインタプリタも、主処理が[指令](cersva)になっていることを期待している。Webインタプリタで実験している人は最後に<code>nx has an invalid address</code>などといった赤文字のエラーがこれまで出ていたと思うが、主処理の最後に<code>kRz f5@ xx</code>とすることでこれが取り除けて正常に終了できる。</p>
+
+<hr>
+<a href="./2-7.html">前のページへ</a>&nbsp;&nbsp;&nbsp;<a href="./index.html">次のページへ</a>
+<br>
+<br>
+<br>
+
+</body>
+</html>
