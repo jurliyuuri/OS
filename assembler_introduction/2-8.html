@@ -23,15 +23,11 @@
 <pre>
 （主処理その1）
 nta 4 f5
-kRz 1io f5@
-kRz iumes xx
-nll 1io
+inj iumes xx f5@
 ata 4 f5
 （主処理その2）
 nta 4 f5
-kRz 2io f5@
-kRz iumes xx
-nll 2io
+inj iumes xx f5@
 ata 4 f5
 （主処理その3）
 kRz lesback xx
@@ -57,15 +53,11 @@ fen
 <pre>
 （主処理その1）
 nta 4 f5
-kRz 1io f5@
-kRz iumes xx
-nll 1io
+inj iumes xx f5@
 ata 4 f5
 （主処理その2）
 nta 4 f5
-kRz 2io f5@
-kRz iumes xx
-nll 2io
+inj iumes xx f5@
 ata 4 f5
 （主処理その3）
 kRz f5@ xx
@@ -84,6 +76,74 @@ kRz f5@ xx
 <p>ということで、今後書くときには、必ず主処理を[指令](cersva)にしましょう。</p>
 
 <p class="ny_jurli">実は、HaskellインタプリタもWebインタプリタも、主処理が[指令](cersva)になっていることを期待している。Webインタプリタで実験している人は最後に<code>nx has an invalid address</code>などといった赤文字のエラーがこれまで出ていたと思うが、主処理の最後に<code>kRz f5@ xx</code>とすることでこれが取り除けて正常に終了できる。</p>
+
+<hr>
+
+<p>さて、今までの[指令](cersva)では毎回同じ処理を行っていましたが、微妙に異なる動作をさせたいといったときはどうすればよいでしょうか。</p>
+
+<p>例えば、前回の<code>iumes</code>は</p>
+
+<div class="box">
+<pre>
+nll iumes
+kRz 0 f0
+kRz 0 f1
+kRz 0 f2
+kRz 0 f3
+kRz f5@ xx
+</pre>
+</div>
+
+<p>というものでしたが、「4つのfirjalに0を入れる」だけでなく「4つのfirjalに3を入れる」「4つのfirjalに758を入れる」「4つのfirjalの値に98423を入れる」なども同じ[指令](cersva)で行えるようにしたいとします。そのような[指令](cersva)である<code>vi'artes</code>を書くにはどうすればいいでしょうか。</p>
+
+<p>これに対応するためにも、<code>f5</code>を使います。</p>
+<p>指令を出す側で、</p>
+
+<div class="box">
+<pre>
+nta 4 f5
+inj vi'artes xx f5@
+ata 4 f5
+</pre>
+</div>
+
+<p>ではなく</p>
+
+<div class="box">
+<pre>
+nta 8 f5
+inj vi'artes xx f5@
+ata 8 f5
+</pre>
+</div>
+
+<p>としてやると、<code>f5</code>を余計に減らしているので<code>f5+4@</code>の箇所を自由に活用することができます。そこで、</p>
+
+<div class="box">
+<pre>
+nta 8 f5
+kRz 98423 f5+4@
+inj vi'artes xx f5@
+ata 8 f5
+</pre>
+</div>
+
+<p>とすると、<code>f5+4@</code>を通じて情報を指令を受け取る側に送ることができます。</p>
+
+<p>受け取る方では、</p>
+
+<div class="box">
+<pre>
+nll vi'artes
+kRz f5+4@ f0
+kRz f5+4@ f1
+kRz f5+4@ f2
+kRz f5+4@ f3
+kRz f5@ xx
+</pre>
+</div>
+
+<p>としてやることで目的を達成できるのです。</p>
 
 <hr>
 <a href="./2-7.html">前のページへ</a>&nbsp;&nbsp;&nbsp;<a href="./index.html">次のページへ</a>
