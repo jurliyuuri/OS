@@ -20,3 +20,7 @@
 .cool {
 	width:70%; margin: 0 auto;
 }
+
+.k {white-space: nowrap;}
+.free_mem {background-color: #ddddff;}
+.occupied_mem {background-color: #ddffdd;}
