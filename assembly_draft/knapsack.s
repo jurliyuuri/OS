@@ -11,6 +11,7 @@ rcx : value
 _knapsack:
   pushq %rbp
   movl %edi, %r10d
+  shll $2, %esi
   movq %rcx, %r11
   movl $0, %eax
   pushq %rbx
@@ -25,7 +26,9 @@ _knapsack:
 .L7:
   movl $0, %eax
 .L2:
-  cmpl %eax, %esi
+  movl %eax, %r10d
+  shll $2, %r10d
+  cmpl %r10d, %esi
   jl .L12
   movq %r9, %rcx
   movl (%rcx,%rdx), %ecx
@@ -67,7 +70,6 @@ _knapsack:
 .L9:
   movslq %esi, %rsi
   movq %rsi, %rax
-  shlq $2, %rax
   movl (%rax,%r8), %eax
   addq $696, %rsp
   popq %rbx
