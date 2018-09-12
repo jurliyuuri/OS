@@ -207,7 +207,34 @@ nll nartain   nta 1 f1   kRz polto xx
 </pre>
 </div>
 
-<p>これで完成です。</p>
+<p>これで完成です。なお、実はあと少し削ることができて、</p>
+
+<div class="box">
+<pre>
+kRz 0 f0
+kRz 15 f1
+
+nll polto
+fi f1 0 xylo   malkRz f5@ xx
+
+kRz f0 f2
+dRo 1 f2
+dRo f1 f2
+
+kRz 1 f3
+dRo f1 f3
+dRo f1 f3
+ata f2 f3
+fi f5+4@ f3 xylonys   malkRz nartain xx
+
+kRz 1 f2   dRo f1 f2   ata f2 f0
+nta f3 f5+4@
+
+nll nartain   nta 1 f1   kRz polto xx
+</pre>
+</div>
+
+<p>とできます。</p>
 
 <hr>
 <a href="./3-2.html">前のページへ</a>&nbsp;&nbsp;&nbsp;<!--<a href="./3-4.html">-->次のページへ<!--</a>-->
