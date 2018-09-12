@@ -9,7 +9,7 @@ _knapsack:
   pushq %rbx
   movl $101, %eax
   movl $0, %r9d
-  subq $696, %rsp
+  subq $712, %rsp
   leaq -112(%rsp), %r10
   leaq 292(%rsp), %r8
 .L:
@@ -54,13 +54,17 @@ r9 ;r9d
   subl (%r9,%rdx), %r10d
   movslq %r10d, %r10
   shlq $2, %r10
-  movl (%r9,%r11), %ecx
-  addl (%rbx,%r10), %ecx
-  cmpl %ebp, %ecx
-  cmovl %ebp, %ecx
+  movl (%rbx,%r10), %ecx
+
   movq %rax, %r10
   shlq $2, %r10
+
+  addl (%r9,%r11), %ecx
   movl %ecx, (%r8,%r10)
+/* if ( (%r8,%r10) < ebp) { (%r8,%r10) = ebp; } */
+  cmpl %ebp, (%r8,%r10)
+  jge .L4
+  movl %ebp, (%r8,%r10)
   jmp .L4
 .L3:
   movq %rax, %r10
@@ -80,7 +84,7 @@ r9 ;r9d
 .L9:
   movslq %esi, %rsi
   movl (%rsi,%r8), %eax
-  addq $696, %rsp
+  addq $712, %rsp
   popq %rbx
   popq %rbp
   ret
