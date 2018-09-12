@@ -33,9 +33,11 @@ buffers:
 tmp:
 	r11;r11d
 	r10;r10d
-	r9;r9d
 	r8
 
+loop counters:
+	r9;r9d
+	16(%rsp)
 */
 
 .L7:
