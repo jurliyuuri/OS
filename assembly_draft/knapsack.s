@@ -54,8 +54,7 @@ loop counters:
   movl (%r10), %r10d
   movl %r10d, %r8d
   shll $2, %r8d
-  subl %r9d, %r8d
-  cmpl $0, %r8d
+  cmpl %r9d, %r8d
   jg .L3
 
   movl %r9d, %r8d
