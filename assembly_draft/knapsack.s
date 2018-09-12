@@ -9,15 +9,15 @@ _knapsack:
   pushq %rbx
   movl $101, %eax
   movl $0, %r9d
-  subq $712, %rsp
-  leaq -112(%rsp), %r10
-  leaq 292(%rsp), %r8
+  subq $16, %rsp
+  leaq -808(%rsp), %r10
+  leaq -404(%rsp), %r8
 .L:
   movl $0, (%r10)
   addq $4, %r10
   decq %rax
   jnz .L
-  leaq -112(%rsp), %rbx
+  leaq -808(%rsp), %rbx
 /*
 
 infos:
@@ -84,7 +84,7 @@ r9 ;r9d
 .L9:
   movslq %esi, %rsi
   movl (%rsi,%r8), %eax
-  addq $712, %rsp
+  addq $16, %rsp
   popq %rbx
   popq %rbp
   ret
