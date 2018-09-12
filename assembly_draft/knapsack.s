@@ -58,12 +58,9 @@ loop counters:
   jg .L3
 
   movl %r9d, %r8d
-  shrl $2, %r8d
+  shll $2, %r10d
   subl %r10d, %r8d
-  movl %r8d, %r10d
-
-  movslq %r10d, %r10
-  shlq $2, %r10
+  movslq %r8d, %r10
   addq 8(%rsp), %r10
   movq (%r10), %r10
 
@@ -74,11 +71,9 @@ loop counters:
   movq %r9, %r8
   addq (%rsp), %r8
   movl %r10d, (%r8)
-  movq %r8, %r10
-
-  cmpl %r11d, (%r10)
+  cmpl %r11d, (%r8)
   jge .L4
-  movl %r11d, (%r10)
+  movl %r11d, (%r8)
   jmp .L4
 .L3:
   movq %r9, %r10
