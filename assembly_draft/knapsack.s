@@ -7,6 +7,17 @@ _knapsack:
   shll $2, %esi
   movq %rcx, %r11
   pushq %rbx
+  movl $101, %eax
+  movl $0, %r9d
+  subq $696, %rsp
+  leaq -112(%rsp), %r10
+  leaq 292(%rsp), %r8
+.L:
+  movl $0, (%r10)
+  addq $4, %r10
+  decq %rax
+  jnz .L
+  leaq -112(%rsp), %rbx
 /*
 
 infos:
@@ -26,17 +37,7 @@ rax;eax
 r9 ;r9d
 
 */
-  movl $101, %eax
-  movl $0, %r9d
-  subq $696, %rsp
-  leaq -112(%rsp), %r10
-  leaq 292(%rsp), %r8
-.L:
-  movl $0, (%r10)
-  addq $4, %r10
-  decq %rax
-  jnz .L
-  leaq -112(%rsp), %rbx
+
 .L7:
   movl $0, %eax
 .L2:
@@ -44,15 +45,13 @@ r9 ;r9d
   shll $2, %r10d
   cmpl %r10d, %esi
   jl .L12
-  movq %r9, %rcx
-  movl (%rcx,%rdx), %ecx
   movq %rax, %rbp
   shlq $2, %rbp
   movl (%rbx,%rbp), %ebp
-  cmpl %eax, %ecx
+  cmpl %eax, (%r9,%rdx)
   jg .L3
   movl %eax, %r10d
-  subl %ecx, %r10d
+  subl (%r9,%rdx), %r10d
   movslq %r10d, %r10
   shlq $2, %r10
   movl (%r9,%r11), %ecx
