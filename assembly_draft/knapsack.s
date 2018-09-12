@@ -34,6 +34,7 @@ tmp:
 	r11;r11d
 	r10;r10d
 	r9;r9d
+	r8
 
 */
 
@@ -63,9 +64,9 @@ tmp:
   addq 8(%rsp), %r10
   movq (%r10), %r10
 
-  addq 16(%rsp),%rcx
-  addl (%rcx), %r10d
-  subq 16(%rsp),%rcx
+  movq 16(%rsp), %r8
+  addq %rcx, %r8
+  addl (%r8), %r10d
 
   shlq $2, %r9
   addq (%rsp), %r9
