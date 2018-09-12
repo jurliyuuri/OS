@@ -1,39 +1,42 @@
-/*
 
-rdi : n
-rsi : W
-rdx : weight
-r11 : value
-
-rcx
-rbp
-r10
-rax
-rbx
-r8
-
-*/
 
 .globl	_knapsack 
 _knapsack:
   pushq %rbp
   decl %edi
-  movl %edi, %r10d
   shll $2, %esi
   movq %rcx, %r11
   pushq %rbx
-  movl $101, %ecx
+/*
+
+infos:
+	rdi : n - 1
+	rsi : W * 4
+	rdx : weight
+	r11 : value
+
+buffers:
+	rbx
+	r8
+
+rcx;ecx
+rbp;ebp
+r10;r10d
+rax;eax
+r9 ;r9d
+
+*/
+  movl $101, %eax
   movl $0, %r9d
   subq $696, %rsp
-  leaq -112(%rsp), %rdi
+  leaq -112(%rsp), %r10
   leaq 292(%rsp), %r8
 .L:
-  movl $0, (%rdi)
-  addq $4, %rdi
-  decq %rcx
+  movl $0, (%r10)
+  addq $4, %r10
+  decq %rax
   jnz .L
   leaq -112(%rsp), %rbx
-  movl %r10d, %edi
 .L7:
   movl $0, %eax
 .L2:
@@ -72,15 +75,12 @@ _knapsack:
   shll $2, %r10d
   cmpl %r9d, %r10d
   je .L9
-  movq %rbx, %rax
+  xchg %rbx, %r8
   addq $4, %r9
-  movq %r8, %rbx
-  movq %rax, %r8
   jmp .L7
 .L9:
   movslq %esi, %rsi
-  movq %rsi, %rax
-  movl (%rax,%r8), %eax
+  movl (%rsi,%r8), %eax
   addq $696, %rsp
   popq %rbx
   popq %rbp
