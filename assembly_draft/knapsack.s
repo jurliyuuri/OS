@@ -10,6 +10,7 @@ rbp
 r10
 rax
 rbx
+r8
 
 */
 
@@ -20,7 +21,6 @@ _knapsack:
   movl %edi, %r10d
   shll $2, %esi
   movq %rcx, %r11
-  movl $0, %eax
   pushq %rbx
   movl $101, %ecx
   movl $0, %r9d
@@ -28,7 +28,8 @@ _knapsack:
   leaq -112(%rsp), %rdi
   leaq 292(%rsp), %r8
 .L:
-  stosl
+  movl $0, (%rdi)
+  addq $4, %rdi
   decq %rcx
   jnz .L
   leaq -112(%rsp), %rbx
