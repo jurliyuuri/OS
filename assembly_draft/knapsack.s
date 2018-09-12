@@ -3,7 +3,13 @@
 rdi : n
 rsi : W
 rdx : weight
-rcx : value
+r11 : value
+
+rcx
+rbp
+r10
+rax
+rbx
 
 */
 
@@ -39,10 +45,9 @@ _knapsack:
   jg .L3
   movl %eax, %r10d
   subl %ecx, %r10d
-  movq %r9, %rcx
-  movl (%rcx,%r11), %ecx
   movslq %r10d, %r10
   shlq $2, %r10
+  movl (%r9,%r11), %ecx
   addl (%rbx,%r10), %ecx
   cmpl %ebp, %ecx
   cmovl %ebp, %ecx
