@@ -18,8 +18,8 @@ _knapsack:
   addq $4, %r10
   decq %rax
   jnz .L
-  leaq -808(%rsp), %rbx
-  movq %rbx, 8(%rsp)
+  leaq -808(%rsp), %r10
+  movq %r10, 8(%rsp)
 /*
 
 infos:
@@ -30,7 +30,7 @@ infos:
 
 buffers:
 	(%rsp)
-	rbx
+	8(%rsp)
 
 rcx;ecx
 rbp;ebp
@@ -49,14 +49,16 @@ r9 ;r9d
   jl .L12
   movq %rax, %rbp
   shlq $2, %rbp
-  movl (%rbx,%rbp), %ebp
+  addq 8(%rsp), %rbp
+  movl (%rbp), %ebp
   cmpl %eax, (%r9,%rdx)
   jg .L3
   movl %eax, %r10d
   subl (%r9,%rdx), %r10d
   movslq %r10d, %r10
   shlq $2, %r10
-  movl (%rbx,%r10), %ecx
+  addq 8(%rsp), %r10
+  movl (%r10), %ecx
 
   movq %rax, %r10
   shlq $2, %r10
@@ -82,7 +84,12 @@ r9 ;r9d
   shll $2, %r10d
   cmpl %r9d, %r10d
   je .L9
+
+/* cannot xchg two locations in x86 */
+  movq 8(%rsp), %rbx
   xchg %rbx, (%rsp)
+  movq %rbx, 8(%rsp)
+
   addq $4, %r9
   jmp .L7
 .L9:
