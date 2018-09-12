@@ -54,8 +54,8 @@ tmp:
   cmpl %r9d, %r10d
   jg .L3
 
-// %r10d = %r9d - %r10d
-  negl %r10d
+  notl %r10d
+  addl $1, %r10d
   addl %r9d, %r10d
 
   movslq %r10d, %r10
