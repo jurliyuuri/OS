@@ -5,7 +5,6 @@ _knapsack:
   pushq %rbp
   decl %edi
   shll $2, %esi
-  movq %rcx, %r11
   pushq %rbx
   movl $101, %eax
   subq $24, %rsp
@@ -26,15 +25,16 @@ infos:
 	rdi : n - 1
 	rsi : W * 4
 	rdx : weight
-	r11 : value
+	rcx : value
 
 buffers:
 	(%rsp)
 	8(%rsp)
 
-rbp;ebp
-r10;r10d
-rax;eax
+tmp:
+	rbp;ebp
+	r10;r10d
+	rax;eax
 
 */
 
@@ -64,9 +64,9 @@ rax;eax
   addq 8(%rsp), %r10
   movq (%r10), %r10
 
-  addq 16(%rsp),%r11
-  addl (%r11), %r10d
-  subq 16(%rsp),%r11
+  addq 16(%rsp),%rcx
+  addl (%rcx), %r10d
+  subq 16(%rsp),%rcx
 
   shlq $2, %rax
   addq (%rsp), %rax
