@@ -44,6 +44,349 @@
 
 <p>「名簿の先頭の番地」「名簿の先頭の番地+4」「名簿の先頭の番地+8」…と要素が「要素数」個ある名簿を考え、「番地が増えれば必ず格納されている値も大きくなる」という性質が成り立っているとします。この名簿の中に目的の値があれば<code>f0</code>に1を入れて[指令](cersva)を終了し、目的の値があれば<code>f0</code>に0を入れて[指令](cersva)を終了する、という仕様にしましょう。</p>
 
+<p>とりあえず、終了箇所から考えましょう。</p>
+<div class="box">
+<pre>
+…
+nll molniv
+kRz  0  f0
+kRz f5@ xx
+nll mol
+kRz  1  f0
+kRz f5@ xx
+</pre>
+</div>
+
+<p>こうしておけば、「見つかった」と確定したときに<code>kRz mol xx</code>し、「見つからなかった」と確定したときに<code>kRz molniv xx</code>とすればよくなります。</p>
+
+<p>さて、具体的な探索方法について考えましょう。順番に並んでいる数を探索するとき、以下のような特徴があります。ある位置を見て目的の値より大きかったら、目的の値は（あれば）その位置より小さい番地にしかありえず、ある位置を見て目的の値より小さかったら、目的の値は（あれば）その位置より大きい番地にしかありえないのです。</p>
+
+<p>ということは、「もしあるとしたらこの範囲しかない」というのを2つのfirjalを使って保持し、その中央あたりの値と目的の値を比較していって毎回区間を半分にしていけばよいわけです。</p>
+
+<p>区間をどう保持するかですが、範囲の左端を<code>f1</code>、右端を<code>f3</code>に入れておきましょう。あとで番地を計算するときに便利になるよう、1番目の要素は0、2番目の要素は1といったふうに、1減らして保持しておきましょう。</p>
+
+<p>処理が始まった段階では、左端は0で右端は要素数から1引いたものになります。ということで、その処理を書いていきましょう。</p>
+
+<div class="box">
+<pre>
+nll melfert
+kRz f5  f0
+ata  8  f0
+kRz f0@ f3
+nta  1  f3
+kRz  0  f1
+…
+</pre>
+</div>
+
+<p>ここで、わざわざ手間をかけ<code>f0</code>を作業用に使って要素数の情報を得ていますが、毎回このように書くのは面倒です。<code>f5</code>から8離れた位置にあるということは分かっていますし、定番の処理ですから、なんとか簡単に書けないでしょうか。</p>
+
+<p>実は、次のように書くことができます。</p>
+
+<div class="box">
+<pre>
+nll melfert
+kRz f5+8@ f3
+nta    1  f3
+kRz    0  f1
+…
+</pre>
+</div>
+
+<p>これを使えば、指令に渡された情報を楽に受け取ることができます。</p>
+
+<p>要素数が0以下のときには<code>molniv</code>に飛ぶようにしましょう。<code>f3</code>から1を引いた段階で負かどうかを確認すればいいですね。</p>
+
+<div class="box">
+<pre>
+nll melfert
+kRz f5+8@ f3
+nta    1  f3
+fi    f3   0 xylo   malkRz molniv xx
+kRz    0  f1
+…
+</pre>
+</div>
+
+<p>さて、今度は「範囲の真ん中にある値を読んで、それを目的の値と比較する」という処理を書いていきましょう。</p>
+
+<div class="box">
+<pre>
+…
+kRz f3 f0
+ata f1 f0
+dtosna 1 f0
+
+kRz f0 f2
+dRo  2 f2
+ata f5+12@ f2
+
+fi f2@ f5+4@  clo   malkRz mol xx
+…
+</pre>
+</div>
+
+
+<p>最初の3行で、<code>f1</code>と<code>f3</code>の平均が<code>f0</code>に入ります。次の3行では、<code>f0</code>を<code>f2</code>に複製し、<code>f2</code>を4倍してから名簿の先頭に足し合わせることにより、範囲の中央に対応する番地が得られます。最後に、これを目的の値と比較し、等しかったら<code>mol</code>へと飛びます。
+</p>
+
+<hr>
+
+<p>ここまでのをまとめると、先頭あたりで</p>
+<div class="box">
+<pre>
+nll melfert
+kRz f5+8@ f3
+nta    1  f3
+fi    f3   0 xylo   malkRz molniv xx
+kRz    0  f1
+…
+</pre>
+</div>
+<p>とし、途中で</p>
+<div class="box">
+<pre>
+…
+kRz f3 f0
+ata f1 f0
+dtosna 1 f0
+
+kRz f0 f2
+dRo  2 f2
+ata f5+12@ f2
+
+fi f2@ f5+4@  clo   malkRz mol xx
+…
+</pre>
+</div>
+<p>をし、最後に</p>
+
+<div class="box">
+<pre>
+…
+nll molniv
+kRz  0  f0
+kRz f5@ xx
+nll mol
+kRz  1  f0
+kRz f5@ xx
+</pre>
+</div>
+
+<p>を置く、というのが大まかな流れです。残りを埋めていきましょう。</p>
+
+<p><code>f5+4@</code>と<code>f2@</code>が等しかった場合の処理はもう書きました。それ以外の場合を考えましょう。</p>
+
+<p><code>f2@</code>が目的の値である<code>f5+4@</code>より小さい場合、<code>f0</code>に入っている<code>f1</code>と<code>f3</code>の平均よりも1大きい値が、範囲の新たな下限になります。つまり、<code>f3</code>は変わらず<code>f1</code>だけが変わります。ゆえに、</p>
+
+<div class="box">
+<pre>
+…
+nll xyloler
+kRz f0 f1
+ata 1 f1
+…
+</pre>
+</div>
+
+<p>であり、またこの操作によって<code>f3</code>が<code>f1</code>を下回ってしまった場合、範囲が消えてしまったからには値が見つかるはずが無いので、<code>molniv</code>に飛びましょう。</p>
+
+<div class="box">
+<pre>
+…
+nll xyloler
+kRz f0 f1
+ata 1 f1
+fi f3 f1 xylo   malkRz molniv xx
+…
+</pre>
+</div>
+
+
+<p>そうでなければ、平均値を求める処理に戻ればいいので、</p>
+
+<div class="box">
+<pre>
+…
+nll polto
+kRz f3 f0
+ata f1 f0
+dtosna 1 f0
+
+kRz f0 f2
+dRo  2 f2
+ata f5+12@ f2
+
+fi f2@ f5+4@  clo   malkRz mol xx
+…
+</pre>
+</div>
+
+<p>と名前を付けておいて</p>
+
+<div class="box">
+<pre>
+…
+nll xyloler
+kRz f0 f1
+ata 1 f1
+fi f3 f1 xylo   malkRz molniv xx
+kRz polto xx
+…
+</pre>
+</div>
+
+とすればよいでしょう。
+
+<p>最後に、<code>f2@</code>が目的の値である<code>f5+4@</code>より大きい場合。このときは、
+<code>f0</code>に入っている<code>f1</code>と<code>f3</code>の平均よりも1小さい値が、範囲の新たな上限になります。つまり、<code>f1</code>は変わらず<code>f3</code>だけが変わります。ゆえに、同様に</p>
+
+<div class="box">
+<pre>
+…
+nll leloler
+kRz f0  f3
+nta  1  f3
+fi  f3 f1  xylo   malkRz molniv xx
+kRz polto xx
+</pre>
+</div>
+
+<p>としてやればよいわけです。</p>
+
+<hr>
+
+<p>最後に、今までに書いた断片をまとめましょう。</p>
+
+<div style="border: 1px solid black; padding: 10px; margin: 2px;">
+<p>その1: 冒頭<code>melfert</code></p>
+<div class="box">
+<pre>
+nll melfert
+kRz f5+8@ f3
+nta    1  f3
+fi    f3   0 xylo   malkRz molniv xx
+kRz    0  f1
+…
+</pre>
+</div>
+<p>この断片には最後に<code>kRz polto xx</code>を付ければ完璧です。</p>
+</div>
+
+<div style="border: 1px solid black; padding: 10px; margin: 2px;">
+<p>その2: 平均を求めて探索を行う<code>polto</code></p>
+<div class="box">
+<pre>
+…
+nll polto
+kRz f3 f0
+ata f1 f0
+dtosna 1 f0
+
+kRz f0 f2
+dRo  2 f2
+ata f5+12@ f2
+
+fi f2@ f5+4@  clo   malkRz mol xx
+…
+</pre>
+</div>
+
+<p>後ろに<code>fi f2@ f5+4@ xylo   malkRz xyloler xx</code>と<code>kRz leloler xx</code>を足せばこの断片も完成です。</p>
+</div>
+
+
+<div style="border: 1px solid black; padding: 10px; margin: 2px;">
+<p>その3: 目的の値より小さかった場合の<code>xyloler</code></p>
+<div class="box">
+<pre>
+…
+nll xyloler
+kRz f0 f1
+ata 1 f1
+fi f3 f1 xylo   malkRz molniv xx
+kRz polto xx
+…
+</pre>
+</div>
+<p>これはこのままで完成です。</p>
+</div>
+
+<div style="border: 1px solid black; padding: 10px; margin: 2px;">
+<p>その4: 目的の値より大きかった場合の<code>leloler</code></p>
+<div class="box">
+<pre>
+…
+nll leloler
+kRz f0  f3
+nta  1  f3
+fi  f3 f1  xylo   malkRz molniv xx
+kRz polto xx
+</pre>
+</div>
+<p>これもこのままで完成です。</p>
+</div>
+
+<div style="border: 1px solid black; padding: 10px; margin: 2px;">
+<p>その5: 終わりの処理をする<code>molniv</code>と<code>mol</code></p>
+<div class="box">
+<pre>
+…
+nll molniv
+kRz  0  f0
+kRz f5@ xx
+nll mol
+kRz  1  f0
+kRz f5@ xx
+</pre>
+</div>
+<p>これもこのままで完成です。</p>
+</div>
+
+<p>この5つをまとめると、</p>
+
+<div class="box">
+<pre>
+nll melfert
+kRz f5+8@ f3
+nta    1  f3
+fi    f3   0 xylo   malkRz molniv xx
+kRz    0  f1
+kRz polto xx
+
+nll polto
+kRz f3 f0
+ata f1 f0
+dtosna 1 f0
+kRz f0 f2
+dRo  2 f2
+ata f5+12@ f2
+fi f2@ f5+4@  clo   malkRz mol xx
+fi f2@ f5+4@ xylo   malkRz xyloler xx
+kRz leloler xx
+
+nll xyloler
+kRz f0 f1
+ata 1 f1
+fi f3 f1 xylo   malkRz molniv xx
+kRz polto xx
+
+nll leloler
+kRz f0  f3
+nta  1  f3
+fi  f3 f1  xylo   malkRz molniv xx
+kRz polto xx
+
+nll molniv
+kRz  0  f0
+kRz f5@ xx
+nll mol
+kRz  1  f0
+kRz f5@ xx
+</pre>
+</div>
+
+<p>となり、これで一応完成です。</p>
 
 <hr>
 <a href="./3-0.html">前のページへ</a>&nbsp;&nbsp;&nbsp;<!--<a href="./3-2.html">-->次のページへ<!--</a>-->
