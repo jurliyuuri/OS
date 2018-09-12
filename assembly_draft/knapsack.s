@@ -43,12 +43,14 @@ loop counters:
 .L7:
   movl $0, %r9d
 .L2:
+  shll $2, %r9d
   movl %r9d, %r10d
-  shll $2, %r10d
+  shrl $2, %r9d
   cmpl %r10d, %esi
   jl .L12
+  shll $2, %r9d
   movq %r9, %r11
-  shlq $2, %r11
+  shrl $2, %r9d
   addq 8(%rsp), %r11
   movl (%r11), %r11d
   movq 16(%rsp), %r10
@@ -57,7 +59,10 @@ loop counters:
   cmpl %r9d, %r10d
   jg .L3
 
+  shll $2, %r9d
   movl %r9d, %r8d
+  shrl $2, %r9d
+  shrl $2, %r8d
   subl %r10d, %r8d
   movl %r8d, %r10d
 
@@ -70,8 +75,9 @@ loop counters:
   addq %rcx, %r8
   addl (%r8), %r10d
 
+  shll $2, %r9d
   movq %r9, %r8
-  shlq $2, %r8
+  shrl $2, %r9d
   addq (%rsp), %r8
   movl %r10d, (%r8)
   movq %r8, %r10
@@ -81,12 +87,15 @@ loop counters:
   movl %r11d, (%r10)
   jmp .L4
 .L3:
+  shll $2, %r9d
   movq %r9, %r10
-  shlq $2, %r10
+  shrl $2, %r9d
   addq (%rsp), %r10
   movl %r11d, (%r10)
 .L4:
-  addq $1, %r9
+  shll $2, %r9d
+  addq $4, %r9
+  shrl $2, %r9d
   jmp .L2
 .L12:
   movl %edi, %r10d
