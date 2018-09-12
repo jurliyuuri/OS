@@ -55,9 +55,9 @@ tmp:
   cmpl %r9d, %r10d
   jg .L3
 
-  notl %r10d
-  addl $1, %r10d
-  addl %r9d, %r10d
+  movl %r9d, %r8d
+  subl %r10d, %r8d
+  movl %r8d, %r10d
 
   movslq %r10d, %r10
   shlq $2, %r10
@@ -68,12 +68,11 @@ tmp:
   addq %rcx, %r8
   addl (%r8), %r10d
 
-  shlq $2, %r9
-  addq (%rsp), %r9
-  movl %r10d, (%r9)
-  movq %r9, %r10
-  subq (%rsp), %r9
-  shrq $2, %r9
+  movq %r9, %r8
+  shlq $2, %r8
+  addq (%rsp), %r8
+  movl %r10d, (%r8)
+  movq %r8, %r10
 
   cmpl %r11d, (%r10)
   jge .L4
@@ -85,7 +84,7 @@ tmp:
   addq (%rsp), %r10
   movl %r11d, (%r10)
 .L4:
-  incq %r9
+  addq $1, %r9
   jmp .L2
 .L12:
   movl %edi, %r10d
