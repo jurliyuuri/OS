@@ -32,7 +32,7 @@ buffers:
 	(%rsp)
 	8(%rsp)
 
-rcx;ecx
+    ecx
 rbp;ebp
 r10;r10d
 rax;eax
@@ -63,14 +63,17 @@ rax;eax
   movslq %r10d, %r10
   shlq $2, %r10
   addq 8(%rsp), %r10
-  movl (%r10), %ecx
+  movq (%r10), %r10
+
+# %ecx = %r10 + (16(%rsp) + %r11)
+  addq 16(%rsp),%r11
+  addl (%r11), %r10d
+  subq 16(%rsp),%r11
+  movl %r10d, %ecx
 
   movq %rax, %r10
   shlq $2, %r10
 
-  addq 16(%rsp),%r11
-  addl (%r11), %ecx
-  subq 16(%rsp),%r11
   addq (%rsp), %r10
   movl %ecx, (%r10)
 /* if ( *r10 < ebp) { *r10 = ebp; } */

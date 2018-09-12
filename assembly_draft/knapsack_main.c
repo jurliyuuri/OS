@@ -21,6 +21,13 @@ int main(void)
     printf("%d\n", knapsack(n, W, weight, value));
   }
   {
+    int n = 5;
+    int W = 19;
+    int weight[] = {1, 3, 6, 9, 13};
+    int value[] = {2000, 8400, 17200, 25800, 40000};
+    printf("%d\n", knapsack(n, W, weight, value));
+  }
+  {
     int n = 6;
     int W = 8;
     int weight[] = {2,1,3,2,1,5};
