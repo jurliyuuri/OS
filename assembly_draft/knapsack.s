@@ -16,6 +16,7 @@ rbx
 .globl	_knapsack 
 _knapsack:
   pushq %rbp
+  decl %edi
   movl %edi, %r10d
   shll $2, %esi
   movq %rcx, %r11
@@ -26,9 +27,12 @@ _knapsack:
   subq $696, %rsp
   leaq -112(%rsp), %rdi
   leaq 292(%rsp), %r8
-  rep stosl
+.L:
+  stosl
+  decq %rcx
+  jnz .L
   leaq -112(%rsp), %rbx
-  leal -1(%r10), %edi
+  movl %r10d, %edi
 .L7:
   movl $0, %eax
 .L2:
