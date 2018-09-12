@@ -56,7 +56,12 @@ loop counters:
   movq 16(%rsp), %r10
   addq %rdx, %r10
   movl (%r10), %r10d
-  cmpl %r9d, %r10d
+  movl %r10d, %r8d
+  shll $2, %r8d
+  shll $2, %r9d
+  subl %r9d, %r8d
+  shrl $2, %r9d
+  cmpl $0, %r8d
   jg .L3
 
   shll $2, %r9d
