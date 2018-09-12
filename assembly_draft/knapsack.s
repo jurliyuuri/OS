@@ -29,7 +29,6 @@ _knapsack:
   cmpl %eax, %esi
   jl .L12
   movq %r9, %rcx
-  shlq $2, %rcx
   movl (%rcx,%rdx), %ecx
   movq %rax, %rbp
   shlq $2, %rbp
@@ -38,7 +37,6 @@ _knapsack:
   jg .L3
   subl %ecx, %r10d
   movq %r9, %rcx
-  shlq $2, %rcx
   movl (%rcx,%r11), %ecx
   movslq %r10d, %r10
   shlq $2, %r10
@@ -57,10 +55,12 @@ _knapsack:
   incq %rax
   jmp .L2
 .L12:
-  cmpl %r9d, %edi
+  movl %edi, %r10d
+  shll $2, %r10d
+  cmpl %r9d, %r10d
   je .L9
   movq %rbx, %rax
-  incq %r9
+  addq $4, %r9
   movq %r8, %rbx
   movq %rax, %r8
   jmp .L7
