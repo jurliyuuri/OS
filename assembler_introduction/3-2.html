@@ -1,0 +1,261 @@
+<!doctype html>
+<html>
+<head>
+<title>2003lk入門 ― 3-2. 余談：断片の順序を調節することによる効率化</title>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../common.css">
+<link rel="stylesheet" href="ny_jurli.css">
+<script src="ny_jurli.js"></script>
+</head>
+<body class="cool">
+<h1>2003lk入門</h1>
+<a href="index.html">トップに戻る</a>
+<div class="ny_jurli">
+	<p>→<input type="button" value="非真理設定を隠す" onclick="hide_ny_jurli()">をクリックすると非真理設定が非表示になります。ページを再読み込みすると戻ります。</p>
+</div>
+<hr>
+<h2>ksi.3 実践</h2>
+<h3>lexn.2 余談：断片の順序を調節することによる効率化</h3>
+
+<p>前回書いた</p>
+
+
+<div class="box">
+<pre>
+nll melfert
+kRz f5+8@ f3
+nta    1  f3
+fi    f3   0 xylo   malkRz molniv xx
+kRz    0  f1
+kRz polto xx
+
+nll polto
+kRz f3 f0
+ata f1 f0
+dtosna 1 f0
+kRz f0 f2
+dRo  2 f2
+ata f5+12@ f2
+fi f2@ f5+4@  clo   malkRz mol xx
+fi f2@ f5+4@ xylo   malkRz xyloler xx
+kRz leloler xx
+
+nll xyloler
+kRz f0 f1
+ata 1 f1
+fi f3 f1 xylo   malkRz molniv xx
+kRz polto xx
+
+nll leloler
+kRz f0  f3
+nta  1  f3
+fi  f3 f1  xylo   malkRz molniv xx
+kRz polto xx
+
+nll molniv
+kRz  0  f0
+kRz f5@ xx
+nll mol
+kRz  1  f0
+kRz f5@ xx
+</pre>
+</div>
+
+<p>はこれで一応完成はしていますが、まだ改良の余地があります。というのも、<code>polto</code>で始まる断片と<code>xyloler</code>で始まる断片を入れ替えてやることにより、</p>
+
+<style>
+strong{ text-decoration: underline; }
+</style>
+
+<div class="box">
+<pre>
+nll melfert
+kRz f5+8@ f3
+nta    1  f3
+fi    f3   0 xylo   malkRz molniv xx
+kRz    0  f1
+kRz polto xx
+
+nll xyloler
+kRz f0 f1
+ata 1 f1
+fi f3 f1 xylo   malkRz molniv xx
+<strong>kRz polto xx</strong>
+
+<strong>nll polto</strong>
+kRz f3 f0
+ata f1 f0
+dtosna 1 f0
+kRz f0 f2
+dRo  2 f2
+ata f5+12@ f2
+fi f2@ f5+4@  clo   malkRz mol xx
+fi f2@ f5+4@ xylo   malkRz xyloler xx
+<strong>kRz leloler xx</strong>
+
+<strong>nll leloler</strong>
+kRz f0  f3
+nta  1  f3
+fi  f3 f1  xylo   malkRz molniv xx
+kRz polto xx
+
+nll molniv
+kRz  0  f0
+kRz f5@ xx
+nll mol
+kRz  1  f0
+kRz f5@ xx
+</pre>
+</div>
+
+<p>というように、「次の命令へ飛ぶ」という箇所が2つ作れるからです。2003lkは何もしなくても次の命令に飛んでくれるので、これは省略できて</p>
+
+<div class="box">
+<pre>
+nll melfert
+kRz f5+8@ f3
+nta    1  f3
+fi    f3   0 xylo   malkRz molniv xx
+kRz    0  f1
+kRz polto xx
+
+nll xyloler
+kRz f0 f1
+ata 1 f1
+fi f3 f1 xylo   malkRz molniv xx
+
+nll polto
+kRz f3 f0
+ata f1 f0
+dtosna 1 f0
+kRz f0 f2
+dRo  2 f2
+ata f5+12@ f2
+fi f2@ f5+4@  clo   malkRz mol xx
+fi f2@ f5+4@ xylo   malkRz xyloler xx
+kRz f0  f3
+nta  1  f3
+fi  f3 f1  xylo   malkRz molniv xx
+kRz polto xx
+
+nll molniv
+kRz  0  f0
+kRz f5@ xx
+nll mol
+kRz  1  f0
+kRz f5@ xx
+</pre>
+</div>
+
+<p>と書けます。さらに、最後のmolnivの直前のfiの条件を反転してやることで、</p>
+
+
+<div class="box">
+<pre>
+nll melfert
+kRz f5+8@ f3
+nta    1  f3
+fi    f3   0 xylo   malkRz molniv xx
+kRz    0  f1
+kRz polto xx
+
+nll xyloler
+kRz f0 f1
+ata 1 f1
+fi f3 f1 xylo   malkRz molniv xx
+
+nll polto
+kRz f3 f0
+ata f1 f0
+dtosna 1 f0
+kRz f0 f2
+dRo  2 f2
+ata f5+12@ f2
+fi f2@ f5+4@  clo   malkRz mol xx
+fi f2@ f5+4@ xylo   malkRz xyloler xx
+kRz f0  f3
+nta  1  f3
+fi  f3 f1  xolo   malkRz polto xx
+<strong>kRz molniv xx</strong>
+
+<strong>nll molniv</strong>
+kRz  0  f0
+kRz f5@ xx
+nll mol
+kRz  1  f0
+kRz f5@ xx
+</pre>
+</div>
+
+<p>となり、さらに1命令削ることができます。</p>
+
+<p>最後に、</p>
+
+<div class="box">
+<pre>
+fi f2@ f5+4@  clo   malkRz mol xx
+fi f2@ f5+4@ xylo   malkRz xyloler xx
+</pre>
+</div>
+
+<p>の箇所に着目してみましょう。ここは探索の過程で何回も通る箇所ですが、今回の条件では与えられる名簿に重複がないという条件があるので、「f2@は目的の値と等しい」となる確率は、「f2@は目的の値より小さい」となる確率より低いわけです。ということは、</p>
+
+<div class="box">
+<pre>
+fi f2@ f5+4@ xylo   malkRz xyloler xx
+fi f2@ f5+4@  clo   malkRz mol xx
+</pre>
+</div>
+
+<p>と書いてやれば、より確率の高い「f2@は目的の値より小さい」を先に判定できるので、この判定に合致した際に実行される命令数が2個減ります。代わりに「等しい」ときに実行される命令数が2個増えますが、「等しい」は多くて1回しか満たされない以上、トータルでは得をするというわけです。</p>
+
+<p>以上をまとめて、こうなります。</p>
+
+
+<div class="box">
+<pre>
+nll melfert
+kRz f5+8@ f3
+nta    1  f3
+fi    f3   0 xylo   malkRz molniv xx
+kRz    0  f1
+kRz polto xx
+
+nll xyloler
+kRz f0 f1
+ata 1 f1
+fi f3 f1 xylo   malkRz molniv xx
+
+nll polto
+kRz f3 f0
+ata f1 f0
+dtosna 1 f0
+kRz f0 f2
+dRo  2 f2
+ata f5+12@ f2
+fi f2@ f5+4@ xylo   malkRz xyloler xx
+fi f2@ f5+4@  clo   malkRz mol xx
+kRz f0  f3
+nta  1  f3
+fi  f3 f1  xolo   malkRz polto xx
+
+nll molniv
+kRz  0  f0
+kRz f5@ xx
+nll mol
+kRz  1  f0
+kRz f5@ xx
+</pre>
+</div>
+
+
+<p>正直入門の段階でここまで命令数を減らすことに躍起になる必要はありませんが、このような手法が存在するということだけでも把握していただければ幸いです。</p>
+
+<hr>
+<a href="./3-1.html">前のページへ</a>&nbsp;&nbsp;&nbsp;<!--<a href="./3-3.html">-->次のページへ<!--</a>-->
+<br>
+<br>
+<br>
+
+</body>
+</html>
