@@ -25,7 +25,6 @@ _knapsack:
 .L7:
   movl $0, %eax
 .L2:
-  movl %eax, %r10d
   cmpl %eax, %esi
   jl .L12
   movq %r9, %rcx
@@ -35,6 +34,7 @@ _knapsack:
   movl (%rbx,%rbp), %ebp
   cmpl %eax, %ecx
   jg .L3
+  movl %eax, %r10d
   subl %ecx, %r10d
   movq %r9, %rcx
   movl (%rcx,%r11), %ecx
