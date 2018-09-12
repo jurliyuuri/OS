@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+<head>
+<title>2003lk入門 ― 3-4. 価値最大化のための取捨選択</title>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../common.css">
+<link rel="stylesheet" href="ny_jurli.css">
+<script src="ny_jurli.js"></script>
+</head>
+<body class="cool">
+<h1>2003lk入門</h1>
+<a href="index.html">トップに戻る</a>
+<div class="ny_jurli">
+	<p>→<input type="button" value="非真理設定を隠す" onclick="hide_ny_jurli()">をクリックすると非真理設定が非表示になります。ページを再読み込みすると戻ります。</p>
+</div>
+<hr>
+<h2>ksi.3 実践</h2>
+<h3>lexn.4 価値最大化のための取捨選択</h3>
+
+<p>[約180kg](15 stysien)しか運べない小船の上に、いくつかの品物を載せて運ぶとするとき、最大でどれだけの価値を運べるでしょうか。運ぶ品物の候補は以下の5つです。</p>
+
+<ol>
+	<li>1 stysienで[およそ一万円](2000 ledz)の価値</li>
+	<li>3 stysienで8400 ledzの価値</li>
+	<li>6 stysienで17200 ledzの価値</li>
+	<li>9 stysienで25800 ledzの価値</li>
+	<li>13 stysienで40000 ledzの価値</li>
+</ol>
+
+<p>一見、1 stysienあたり3000 ledz以上の価値がある品物5を乗せるのが合理的にも見えますが、これを載せてしまうと残り2 stysienしか余裕がないため、あとは品物1しか乗せることができず、最終的に運べる価値は42000 ledzとなります。</p>
+
+<p>一方、品物3と品物4を運べば、ちょうど15 stysienで43000 ledzを運ぶことができます。今回の場合、これが最大です。</p>
+
+<p>ということで、小船の積載制限・品物の質量・品物の価値の情報を元に、運べる最大の価値を求める[指令](cersva)を書いていきましょう。情報は次のように与えられるものとします。</p>
+
+<div class="machine_state_box">
+<table class="memory">
+<tr>
+	<td class="free_mem">自由</td>
+	<td class="free_mem">自由</td>
+	<td class="occupied_mem">戻る場所</td>
+	<td class="occupied_mem">小船の積載制限</td>
+	<td class="occupied_mem">品物の価値の一覧の先頭番地</td>
+	<td class="occupied_mem">品物の質量の一覧の先頭番地</td>
+	<td class="occupied_mem">品物の個数</td>
+</tr>
+
+</table>
+</div>
+<p></p>
+
+
+<hr>
+<a href="./3-3.html">前のページへ</a>&nbsp;&nbsp;&nbsp;<!--<a href="./3-4.html">-->次のページへ<!--</a>-->
+<br>
+<br>
+<br>
+
+</body>
+</html>
