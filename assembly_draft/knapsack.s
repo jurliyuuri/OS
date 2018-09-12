@@ -11,13 +11,15 @@ _knapsack:
   movl $0, %r9d
   subq $16, %rsp
   leaq -808(%rsp), %r10
-  leaq -404(%rsp), %r8
+  leaq -404(%rsp), %rbp
+  movq %rbp, (%rsp)
 .L:
   movl $0, (%r10)
   addq $4, %r10
   decq %rax
   jnz .L
   leaq -808(%rsp), %rbx
+  movq %rbx, 8(%rsp)
 /*
 
 infos:
@@ -27,8 +29,8 @@ infos:
 	r11 : value
 
 buffers:
+	(%rsp)
 	rbx
-	r8
 
 rcx;ecx
 rbp;ebp
@@ -60,16 +62,18 @@ r9 ;r9d
   shlq $2, %r10
 
   addl (%r9,%r11), %ecx
-  movl %ecx, (%r8,%r10)
-/* if ( (%r8,%r10) < ebp) { (%r8,%r10) = ebp; } */
-  cmpl %ebp, (%r8,%r10)
+  addq (%rsp), %r10
+  movl %ecx, (%r10)
+/* if ( *r10 < ebp) { *r10 = ebp; } */
+  cmpl %ebp, (%r10)
   jge .L4
-  movl %ebp, (%r8,%r10)
+  movl %ebp, (%r10)
   jmp .L4
 .L3:
   movq %rax, %r10
   shlq $2, %r10
-  movl %ebp, (%r8,%r10)
+  addq (%rsp), %r10
+  movl %ebp, (%r10)
 .L4:
   incq %rax
   jmp .L2
@@ -78,12 +82,14 @@ r9 ;r9d
   shll $2, %r10d
   cmpl %r9d, %r10d
   je .L9
-  xchg %rbx, %r8
+  xchg %rbx, (%rsp)
   addq $4, %r9
   jmp .L7
 .L9:
   movslq %esi, %rsi
-  movl (%rsi,%r8), %eax
+  movq (%rsp), %rax
+  addq %rsi, %rax
+  movl (%rax), %eax
   addq $16, %rsp
   popq %rbx
   popq %rbp
