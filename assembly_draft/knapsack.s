@@ -8,7 +8,6 @@ _knapsack:
   movq %rcx, %r11
   pushq %rbx
   movl $101, %eax
-  movl $0, %r9d
   subq $24, %rsp
   movq $0, 16(%rsp)
   leaq -808(%rsp), %r10
@@ -37,7 +36,6 @@ rcx;ecx
 rbp;ebp
 r10;r10d
 rax;eax
-r9 ;r9d
 
 */
 
@@ -52,11 +50,16 @@ r9 ;r9d
   shlq $2, %rbp
   addq 8(%rsp), %rbp
   movl (%rbp), %ebp
-  movq 16(%rsp), %r9
-  cmpl %eax, (%r9,%rdx)
+  movq 16(%rsp), %r10
+  addq %rdx, %r10
+  movl (%r10), %r10d
+  cmpl %eax, %r10d
   jg .L3
-  movl %eax, %r10d
-  subl (%r9,%rdx), %r10d
+
+// %r10d = %eax - %r10d
+  negl %r10d
+  addl %eax, %r10d
+
   movslq %r10d, %r10
   shlq $2, %r10
   addq 8(%rsp), %r10
@@ -65,8 +68,9 @@ r9 ;r9d
   movq %rax, %r10
   shlq $2, %r10
 
-  movq 16(%rsp), %r9
-  addl (%r9,%r11), %ecx
+  addq 16(%rsp),%r11
+  addl (%r11), %ecx
+  subq 16(%rsp),%r11
   addq (%rsp), %r10
   movl %ecx, (%r10)
 /* if ( *r10 < ebp) { *r10 = ebp; } */
@@ -85,8 +89,7 @@ r9 ;r9d
 .L12:
   movl %edi, %r10d
   shll $2, %r10d
-  movq 16(%rsp), %r9
-  cmpl %r9d, %r10d
+  cmpl 16(%rsp), %r10d
   je .L9
 
 /* cannot xchg two locations in x86 */
