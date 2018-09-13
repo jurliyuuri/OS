@@ -8,16 +8,17 @@ _knapsack:
   movl $201, %r9d
   subq $24, %rsp
   movq $0, 16(%rsp)
-  leaq -1608(%rsp), %r10
-  leaq -804(%rsp), %r11
-  movq %r11, (%rsp)
+  movq %rsp, (%rsp)
+  subq $804, (%rsp)
+  subq $1608, %rsp
 .L:
-  movl $0, (%r10)
-  addq $4, %r10
+  movl $0, (%rsp)
+  addq $4, %rsp
   decq %r9
   jnz .L
-  leaq -1608(%rsp), %r10
-  movq %r10, 8(%rsp)
+  addq $804, %rsp
+  movq %rsp, 8(%rsp)
+  subq $1608, 8(%rsp)
 /*
 
 infos:
