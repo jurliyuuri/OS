@@ -1,0 +1,143 @@
+<link rel="stylesheet" href="common.css">
+<script src="toggle_font.js"></script>
+<body onload="toggle(true)">
+<label><input type="checkbox" checked="checked" onchange="toggle(this.checked)">jietoden liparxeで表示</label>
+
+<!--
+
+  (%rsp) : f5   @ : buf2
+ 8(%rsp) : f5+ 4@ : buf1
+16(%rsp) : f5+ 8@ : loop counter
+         : f5+12@ : return address
+   %rsi  : f5+16@ : W * 4 
+   %rcx  : f5+20@ : value
+   %rdx  : f5+24@ : weight
+   %rdi  : f5+28@ : n - 1
+
+tmp:
+	r11;r11d : f2
+	r10;r10d : f3
+	r8       : f1
+
+loop counters:
+	r9;r9d : f0
+-->
+
+
+<pre class="jietoden">
+'c'i    
+kRz f0 2684354560
+kRz f0@ 1
+kRz f0+4@ 3
+kRz f0+8@ 6
+kRz f0+12@ 9
+kRz f0+16@ 13
+
+kRz f1 2684354760
+kRz f1@ 2000
+kRz f1+4@ 8400
+kRz f1+8@ 17200
+kRz f1+12@ 25800
+kRz f1+16@ 40000
+
+nta f5 4   krz f5@ 5 
+nta f5 4   krz f5@ f0
+nta f5 4   krz f5@ f1
+nta f5 4   krz f5@ 15
+nta f5 4   inj f5@ xx plelajnefes    ata f5 20
+nll jiesesn   fi f0 43000 niv   malkRz xx jiesesn
+krz xx f5@  
+
+
+
+
+'i'c  
+
+nll plelajnefes
+nta 1 f5+16@
+kRz f5+4@ f0
+ata 1 f0 ; W+1
+dRo 2 f5+4@
+kRz f0 f3
+dRo 2 f3 ; (W+1) * sizeof(int32_t)
+
+nta 12 f5
+kRz 0 f5+8@
+kRz f5 f5@
+nta f3 f5@
+nta f3 f5
+nta f3 f5
+
+nll iumes
+kRz 0 f5@
+ata 4 f5
+nta 1 f0
+fi f0 0 niv malkRz iumes xx
+
+
+ata f3 f5
+kRz f5 f5+4@
+nta f3 f5+4@
+nta f3 f5+4@
+
+nll l7
+kRz 0 f0
+nll l2
+kRz f0 f3
+fi f5+16@ f3 xylo   malkRz l12 xx
+kRz f0 f2
+ata f5+4@ f2
+kRz f2@ f2
+kRz f5+8@ f3
+ata f5+24@ f3
+kRz f3@ f3
+kRz f3 f1
+dRo 2 f1
+fi f1 f0 llo   malkRz l3 xx
+
+kRz f0 f1
+dRo 2 f3
+nta f3 f1
+kRz f1 f3
+ata f5+4@ f3
+kRz f3@ f3
+
+kRz f5+8@ f1
+ata f5+20@ f1
+ata f1@ f3
+
+kRz f0 f1
+ata f5@ f1
+kRz f3 f1@
+fi f1@ f2 xylo   malkRz f2 f1@
+kRz l4 xx
+
+nll l3
+kRz f0 f3
+ata f5@ f3
+kRz f2 f3@
+
+nll l4
+ata 4 f0
+kRz l2 xx
+
+
+
+nll l12
+kRz f5+28@ f3
+dRo 2 f3
+fi f5+8@ f3 clo   malkRz l9 xx
+
+inj f5@ f5+4@ f5@
+
+ata 4 f5+8@
+kRz l7 xx
+
+
+nll l9
+kRz f5@ f0
+ata f5+16@ f0
+kRz f0@ f0
+ata 12 f5
+kRz f5@ xx
+</pre>
