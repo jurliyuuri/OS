@@ -6,19 +6,23 @@ _knapsack:
   shll $2, %esi
   pushq %rbx
   movl $201, %r9d
+  movl %r9d, %r10d
+  shll $2, %r10d # 804
   subq $24, %rsp
   movq $0, 16(%rsp)
   movq %rsp, (%rsp)
-  subq $804, (%rsp)
-  subq $1608, %rsp
+  subq %r10, (%rsp)
+  subq %r10, %rsp
+  subq %r10, %rsp
 .L:
   movl $0, (%rsp)
   addq $4, %rsp
   decq %r9
   jnz .L
-  addq $804, %rsp
+  addq %r10, %rsp
   movq %rsp, 8(%rsp)
-  subq $1608, 8(%rsp)
+  subq %r10, 8(%rsp)
+  subq %r10, 8(%rsp)
 /*
 
 infos:
