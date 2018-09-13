@@ -3,11 +3,12 @@
 .globl	_knapsack 
 _knapsack:
   decl %edi
+  movl %esi, %r9d
+  incl %r9d # W+1
   shll $2, %esi
   pushq %rbx
-  movl $201, %r9d
   movl %r9d, %r10d
-  shll $2, %r10d # 804
+  shll $2, %r10d # (W+1) * sizeof(int32_t)
   subq $24, %rsp
   movq $0, 16(%rsp)
   movq %rsp, (%rsp)
