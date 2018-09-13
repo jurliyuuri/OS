@@ -5,18 +5,18 @@ _knapsack:
   decl %edi
   shll $2, %esi
   pushq %rbx
-  movl $101, %r9d
+  movl $201, %r9d
   subq $24, %rsp
   movq $0, 16(%rsp)
-  leaq -808(%rsp), %r10
-  leaq -404(%rsp), %r11
+  leaq -1608(%rsp), %r10
+  leaq -804(%rsp), %r11
   movq %r11, (%rsp)
 .L:
   movl $0, (%r10)
   addq $4, %r10
   decq %r9
   jnz .L
-  leaq -808(%rsp), %r10
+  leaq -1608(%rsp), %r10
   movq %r10, 8(%rsp)
 /*
 

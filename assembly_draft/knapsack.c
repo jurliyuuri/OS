@@ -2,8 +2,8 @@
 
 
 int knapsack(int n, int W, int *weight, int *value) {
-  int buf1_[101] = {0};
-  int buf2_[101];
+  int buf1_[201] = {0};
+  int buf2_[201];
   int *buf1 = buf1_;
   int *buf2 = buf2_;
 
