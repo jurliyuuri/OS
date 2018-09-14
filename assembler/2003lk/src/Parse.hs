@@ -174,7 +174,7 @@ parseRegister "f2" = Right F2
 parseRegister "f3" = Right F3
 parseRegister "f5" = Right F5
 parseRegister "xx" = Right XX
-parseRegister _ = left "no register"
+parseRegister str = left $ "there is no register named `" ++ str ++ "`"
 
 
 parseR :: String -> Either Error Rvalue
