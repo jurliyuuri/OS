@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-<title>2003lk入門 ― 3-3. 余談：断片の順序を調節することによる効率化</title>
+<title>2003lk入門 ― 3-3. 最大の正方形</title>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="../common.css">
 <link rel="stylesheet" href="ny_jurli.css">
@@ -15,241 +15,226 @@
 </div>
 <hr>
 <h2>ksi.3 実践</h2>
-<h3>lexn.3 余談：断片の順序を調節することによる効率化</h3>
+<h3>lexn.3 最大の正方形</h3>
 
-<p>前回書いた</p>
+<p>二等分で検索することの応用範囲は、名簿から名前を探すといったことに限られません。数学的な問題を解く際にも用いることができるのです。</p>
 
+<p>例えば、次のような問題を考えましょう。「同じ大きさの正方形のタイルが17枚あるとする。これで作れる最大の正方形の辺は何枚のタイルからなる？」すぐに分かるように、答えは4です。なぜなら、一辺4の正方形は16枚のタイルで作れますが、一辺5の正方形を作るには25枚のタイルが必要だからです。</p>
+
+<p>ということで、この問題を解く[指令](cersva)を書いていきましょう。情報は次のように与えられるものとします。</p>
+
+<div class="machine_state_box">
+<table class="memory">
+<tr>
+	<td class="free_mem">自由</td>
+	<td class="free_mem">自由</td>
+	<td class="free_mem">自由</td>
+	<td class="occupied_mem">戻る場所</td>
+	<td class="occupied_mem">タイルの枚数</td>
+</tr>
+
+</table>
+</div>
+
+<p>指令が終わったときに<code>f0</code>に入っている数値が答えであるとします。</p>
+
+<p>タイルの枚数は負にはなりませんから、タイルの枚数を表すスイッチ列は[負でない](ny snakxaz)方の解釈をすることとしましょう。そうなると、可能な値は0以上[2の32乗](2-inie-32)未満なので、辺の長さは0以上[2の16乗](2-inie-16)未満となります。</p>
+
+<p>ということで、この上で探索をしていきましょう。まず、0と[2の16乗](2-inie-16)の中央に位置する[2の15乗](2-inie-15)（[2の8乗](2-inie-8)ではないことに注意！）を試してみて、それが予測値として大きすぎるのか小さすぎるのか調べていくのです。とりあえず、<code>f1</code>に数値15を入れ、それを2倍し、<code>f3</code>に数値1を入れ、それを30桁左にずらすことで2の30乗が手に入ります。あ、<code>f1</code>は元に戻しておきましょう。</p>
 
 <div class="box">
 <pre>
-nll melfert
-kRz f5+8@ f3
-nta    1  f3
-fi    f3   0 xylo   malkRz molniv xx
-kRz    0  f1
-kRz polto xx
-
-nll polto
-kRz f3 f0
-ata f1 f0
-dtosna 1 f0
-kRz f0 f2
-dRo  2 f2
-ata f5+12@ f2
-fi f2@ f5+4@  clo   malkRz mol xx
-fi f2@ f5+4@ xylo   malkRz xyloler xx
-kRz leloler xx
-
-nll xyloler
-kRz f0 f1
-ata 1 f1
-fi f3 f1 xylo   malkRz molniv xx
-kRz polto xx
-
-nll leloler
-kRz f0  f3
-nta  1  f3
-fi  f3 f1  xylo   malkRz molniv xx
-kRz polto xx
-
-nll molniv
-kRz  0  f0
-kRz f5@ xx
-nll mol
-kRz  1  f0
-kRz f5@ xx
+kRz 15 f1
+kRz 1 f3
+dRo 1 f1   dRo f1 f3   dto 1 f1
+…
 </pre>
 </div>
 
-<p>はこれで一応完成はしていますが、まだ改良の余地があります。というのも、<code>polto</code>で始まる断片と<code>xyloler</code>で始まる断片を入れ替えてやることにより、</p>
+<p>そのあとは、与えられた枚数と2の30乗を比較します。今回は[負でない](ny snakxaz)方の解釈ですから、「未満」は<code>xylo</code>ではなく<code>xylonys</code>です。</p>
+
+<p>もしタイルの枚数が足りなかったら、f1を減らして再挑戦です。再挑戦で飛ぶ場所は<code>kRz 15 f1</code>より後であるべきでしょう。その場所にはあとで<code>polto</code>という名前をつけてやるとして、</p>
+
+<div class="box">
+<pre>
+…
+fi f5+4@ f3 xylonys   malkRz nartain xx
+…
+nll nartain   nta 1 f1   kRz polto xx
+</pre>
+</div>
+
+<p>となります。</p>
+
+<p>まとめると、現状は</p>
+
+<div class="box">
+<pre>
+kRz 15 f1
+
+nll polto
+kRz 1 f3
+dRo 1 f1   dRo f1 f3   dto 1 f1
+fi f5+4@ f3 xylonys   malkRz nartain xx
+…
+nll nartain   nta 1 f1   kRz polto xx
+</pre>
+</div>
+
+<p>までできていて、あとはタイルの枚数が足りていたときの処理を書けばいいだけです。</p>
+
+<p>おっとその前に、辺の長さが「2の0乗」枚、つまり1枚、と仮定してもなおタイルの枚数が足りない場合を処理しておきましょう。これは、<code>f1</code>が負であるときに<code>f0</code>が0になって処理が終了すればいいのですから、</p>
+
+<div class="box">
+<pre>
+<strong>kRz 0 f0</strong>
+kRz 15 f1
+
+nll polto
+<strong>fi f1 0 xylo   malkRz f5@ xx</strong>
+kRz 1 f3
+dRo 1 f1   dRo f1 f3   dto 1 f1
+fi f5+4@ f3 xylonys   malkRz nartain xx
+…
+nll nartain   nta 1 f1   kRz polto xx
+</pre>
+</div>
+
+<p>とでもしてやればよいでしょう。</p>
+
+<p>さて、では残りの箇所です。足りた場合はどうすればいいでしょうか。</p>
+
+<p>とりあえず、解が2の<code>f1</code>乗以上であることが判明するので、<code>f0</code>に2の<code>f1</code>乗を足し合わせましょう。また、少なくとも<code>f3</code>枚のタイルは<code>f5+4@</code>から確保できることが分かったので、その分を<code>f5+4@</code>から引いてしまいましょう。</p>
+
+<div class="box">
+<pre>
+kRz 0 f0
+kRz 15 f1
+
+nll polto
+fi f1 0 xylo   malkRz f5@ xx
+kRz 1 f3
+dRo 1 f1   dRo f1 f3   dto 1 f1
+fi f5+4@ f3 xylonys   malkRz nartain xx
+
+<strong>kRz 1 f2   dRo f1 f2   ata f2 f0</strong>
+<strong>nta f3 f5+4@</strong>
+
+nll nartain   nta 1 f1   kRz polto xx
+</pre>
+</div>
+
+<p>ここで、<code>f5+4@</code>を勝手に書き換えてしまっていることに違和感を覚える人も多いかもしれません。実際、「タイルの枚数」は上記の図では緑の「使用中」に属する情報ですから、書き換えることは本来あまり行儀よくありません。とはいえ、実際問題としてはこの「タイルの枚数」という情報は受け取る側の[指令](cersva)が専有している情報ですし、あとで自分が困らないのであれば別に書き換えてしまってもそこまで問題は無いのです。</p>
+
+<p><strong>ただし！「戻る場所」を書き換えてしまうと、指令を終わらせて主処理に戻ることができなくなってしまうので、大いに気をつけましょう！</strong></p>
+
+<p>さて、<code>f5+4@</code>を書き換えたあとは、このままだとそのまま<code>f1</code>から1を引く処理に入ります。別に問題ないでしょう。問題はその後です。</p>
+
+<p>予測値を立てて、「少なくともその大きさの正方形は取れる」という処理を行った以上、予測値を増やして次に正方形を取り除く際には、下の図のピンクだけでなく緑も取り除いてやる必要があります。</p>
+
 
 <style>
-strong{ text-decoration: underline; }
+span.green {color: green;}
+span.pink {color: pink;}
 </style>
 
-<div class="box">
-<pre>
-nll melfert
-kRz f5+8@ f3
-nta    1  f3
-fi    f3   0 xylo   malkRz molniv xx
-kRz    0  f1
-kRz polto xx
-
-nll xyloler
-kRz f0 f1
-ata 1 f1
-fi f3 f1 xylo   malkRz molniv xx
-<strong>kRz polto xx</strong>
-
-<strong>nll polto</strong>
-kRz f3 f0
-ata f1 f0
-dtosna 1 f0
-kRz f0 f2
-dRo  2 f2
-ata f5+12@ f2
-fi f2@ f5+4@  clo   malkRz mol xx
-fi f2@ f5+4@ xylo   malkRz xyloler xx
-<strong>kRz leloler xx</strong>
-
-<strong>nll leloler</strong>
-kRz f0  f3
-nta  1  f3
-fi  f3 f1  xylo   malkRz molniv xx
-kRz polto xx
-
-nll molniv
-kRz  0  f0
-kRz f5@ xx
-nll mol
-kRz  1  f0
-kRz f5@ xx
+<pre lang="ja">
+■■■■■■■■<span class="green">■■</span>□
+■■■■■■■■<span class="green">■■</span>□
+■■■■■■■■<span class="green">■■</span>□
+■■■■■■■■<span class="green">■■</span>□
+■■■■■■■■<span class="green">■■</span>□
+■■■■■■■■<span class="green">■■</span>□
+■■■■■■■■<span class="green">■■</span>□
+■■■■■■■■<span class="green">■■</span>□
+<span class="green">■■■■■■■■</span><span class="pink">■■</span>□
+<span class="green">■■■■■■■■</span><span class="pink">■■</span>□
+□□□□□□□□□□□
 </pre>
-</div>
 
-<p>というように、「次の命令へ飛ぶ」という箇所が2つ作れるからです。2003lkは何もしなくても次の命令に飛んでくれるので、これは省略できて</p>
+
+<p>緑の部分の面積は旧予測値と予測値増分の積の2倍なので、当該箇所では「予測値の増分は2の<code>f1</code>乗」「旧予測値はf0」であることを考えると、</p>
+
 
 <div class="box">
 <pre>
-nll melfert
-kRz f5+8@ f3
-nta    1  f3
-fi    f3   0 xylo   malkRz molniv xx
-kRz    0  f1
-kRz polto xx
-
-nll xyloler
-kRz f0 f1
-ata 1 f1
-fi f3 f1 xylo   malkRz molniv xx
+kRz 0 f0
+kRz 15 f1
 
 nll polto
-kRz f3 f0
-ata f1 f0
-dtosna 1 f0
-kRz f0 f2
-dRo  2 f2
-ata f5+12@ f2
-fi f2@ f5+4@  clo   malkRz mol xx
-fi f2@ f5+4@ xylo   malkRz xyloler xx
-kRz f0  f3
-nta  1  f3
-fi  f3 f1  xylo   malkRz molniv xx
-kRz polto xx
+fi f1 0 xylo   malkRz f5@ xx
 
-nll molniv
-kRz  0  f0
-kRz f5@ xx
-nll mol
-kRz  1  f0
-kRz f5@ xx
+<strong>kRz f0 f2</strong>
+<strong>ata 1 f1   dRo f1 f2   nta 1 f1</strong>
+<strong>…</strong>
+
+kRz 1 f3
+dRo 1 f1   dRo f1 f3   dto 1 f1
+fi f5+4@ f3 xylonys   malkRz nartain xx
+
+kRz 1 f2   dRo f1 f2   ata f2 f0
+nta f3 f5+4@
+
+nll nartain   nta 1 f1   kRz polto xx
 </pre>
 </div>
 
-<p>と書けます。さらに、最後のmolnivの直前のfiの条件を反転してやることで、</p>
+<p>とすることで<code>…</code>の箇所では<code>f2</code>に緑の部分の面積が入ります。</p>
+
+<p>あとは、正方形の面積を引くところで緑も引けばよいわけです。</p>
 
 
 <div class="box">
 <pre>
-nll melfert
-kRz f5+8@ f3
-nta    1  f3
-fi    f3   0 xylo   malkRz molniv xx
-kRz    0  f1
-kRz polto xx
-
-nll xyloler
-kRz f0 f1
-ata 1 f1
-fi f3 f1 xylo   malkRz molniv xx
+kRz 0 f0
+kRz 15 f1
 
 nll polto
-kRz f3 f0
-ata f1 f0
-dtosna 1 f0
+fi f1 0 xylo   malkRz f5@ xx
+
 kRz f0 f2
-dRo  2 f2
-ata f5+12@ f2
-fi f2@ f5+4@  clo   malkRz mol xx
-fi f2@ f5+4@ xylo   malkRz xyloler xx
-kRz f0  f3
-nta  1  f3
-fi  f3 f1  xolo   malkRz polto xx
-<strong>kRz molniv xx</strong>
+ata 1 f1   dRo f1 f2   nta 1 f1
 
-<strong>nll molniv</strong>
-kRz  0  f0
-kRz f5@ xx
-nll mol
-kRz  1  f0
-kRz f5@ xx
+kRz 1 f3
+dRo 1 f1   dRo f1 f3   dto 1 f1
+<strong>ata f2 f3</strong>
+fi f5+4@ f3 xylonys   malkRz nartain xx
+
+kRz 1 f2   dRo f1 f2   ata f2 f0
+nta f3 f5+4@
+
+nll nartain   nta 1 f1   kRz polto xx
 </pre>
 </div>
 
-<p>となり、さらに1命令削ることができます。</p>
-
-<p>最後に、</p>
+<p>これで完成です。なお、実はあと少し削ることができて、</p>
 
 <div class="box">
 <pre>
-fi f2@ f5+4@  clo   malkRz mol xx
-fi f2@ f5+4@ xylo   malkRz xyloler xx
-</pre>
-</div>
-
-<p>の箇所に着目してみましょう。ここは探索の過程で何回も通る箇所ですが、今回の条件では与えられる名簿に重複がないという条件があるので、「f2@は目的の値と等しい」となる確率は、「f2@は目的の値より小さい」となる確率より低いわけです。ということは、</p>
-
-<div class="box">
-<pre>
-fi f2@ f5+4@ xylo   malkRz xyloler xx
-fi f2@ f5+4@  clo   malkRz mol xx
-</pre>
-</div>
-
-<p>と書いてやれば、より確率の高い「f2@は目的の値より小さい」を先に判定できるので、この判定に合致した際に実行される命令数が2個減ります。代わりに「等しい」ときに実行される命令数が2個増えますが、「等しい」は多くて1回しか満たされない以上、トータルでは得をするというわけです。</p>
-
-<p>以上をまとめて、こうなります。</p>
-
-
-<div class="box">
-<pre>
-nll melfert
-kRz f5+8@ f3
-nta    1  f3
-fi    f3   0 xylo   malkRz molniv xx
-kRz    0  f1
-kRz polto xx
-
-nll xyloler
-kRz f0 f1
-ata 1 f1
-fi f3 f1 xylo   malkRz molniv xx
+kRz 0 f0
+kRz 15 f1
 
 nll polto
-kRz f3 f0
-ata f1 f0
-dtosna 1 f0
-kRz f0 f2
-dRo  2 f2
-ata f5+12@ f2
-fi f2@ f5+4@ xylo   malkRz xyloler xx
-fi f2@ f5+4@  clo   malkRz mol xx
-kRz f0  f3
-nta  1  f3
-fi  f3 f1  xolo   malkRz polto xx
+fi f1 0 xylo   malkRz f5@ xx
 
-nll molniv
-kRz  0  f0
-kRz f5@ xx
-nll mol
-kRz  1  f0
-kRz f5@ xx
+kRz f0 f2
+dRo 1 f2
+dRo f1 f2
+
+kRz 1 f3
+dRo f1 f3
+dRo f1 f3
+ata f2 f3
+fi f5+4@ f3 xylonys   malkRz nartain xx
+
+kRz 1 f2   dRo f1 f2   ata f2 f0
+nta f3 f5+4@
+
+nll nartain   nta 1 f1   kRz polto xx
 </pre>
 </div>
 
-
-<p>正直入門の段階でここまで命令数を減らすことに躍起になる必要はありませんが、このような手法が存在するということだけでも把握していただければ幸いです。</p>
+<p>とできます。</p>
 
 <hr>
 <a href="./3-2.html">前のページへ</a>&nbsp;&nbsp;&nbsp;<a href="./3-4.html">次のページへ</a>
