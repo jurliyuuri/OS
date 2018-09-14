@@ -150,63 +150,123 @@ fi f0 0 niv   malkRz iumes xx</strong>
 
 <p>さて、下ごしらえが終わったので、主となる処理を書いていきましょう。</p>
 
+<p>基本的構造は次のようになります。</p>
+<p>[内の](<code>ostor</code>)では「q個まで見た表」から「q+1個まで見た表」を作っていきます。nを増やしながら表を埋めていくという方針を前回立てましたが、<code>ostor</code>が始まる直前に<code>f0</code>に0を入れ、マスを埋めながら<code>f0</code>を4ずつ増やしていきます。</p>
+
+<p>[外](<code>tykuv</code>)では、見る品物の個数を1個ずつ増やしていくという方針に合わせて、<code>f5+8@</code>に0を入れ、4ずつ増やしていきます。</p>
+
+
+<div class="box">
+<pre>
+…
+kRz 0 f5+8@
+
 nll tykuv
 kRz 0 f0
-
+	
 nll ostor
-kRz f0 f3
-fi f5+16@ f3 xylo   malkRz tykuvon_stodup xx
-kRz f0 f2
-ata f5+4@ f2
-kRz f2@ f2
-kRz f5+8@ f3
-ata f5+24@ f3
-kRz f3@ f3
-kRz f3 f1
-dRo 2 f1
-fi f1 f0 llo   malkRz lasyk xx
-kRz f0 f1
-dRo 2 f3
-nta f3 f1
-kRz f1 f3
-ata f5+4@ f3
-kRz f3@ f3
-kRz f5+8@ f1
-ata f5+20@ f1
-ata f1@ f3
-kRz f0 f1
-ata f5@ f1
-kRz f3 f1@
-fi f1@ f2 xylo   malkRz f2 f1@
-kRz ostoron_stodup xx
-
-nll lasyk
-kRz f0 f3
-ata f5@ f3
-kRz f2 f3@
-
-nll ostoron_stodup
+fi f5+16@ f0 xylo   malkRz tykuvon_stodup xx
+…
 ata 4 f0
 kRz ostor xx
 
 nll tykuvon_stodup
-kRz f5+28@ f3
+…
+fi f5+8@ … clo   malkRz lesback xx
+inj f5@ f5+4@ f5@
+ata 4 f5+8@
+kRz tykuv xx
+
+nll lesback
+…
+</pre>
+</div>
+
+<hr>
+<!--<p>まずは、今回書き上げる処理が最終的にどれほどの長さになるのかをを見てみましょう。</p>-->
+
+
+<p>最終的にこうなります。</p>
+<div class="box">
+<pre>
+nll plelajnefes
+nta 1 f5+16@
+kRz f5+4@ f0
+ata 1 f0
+dRo 2 f5+4@
+kRz f0 f3
 dRo 2 f3
+nta 12 f5
+kRz f5 f5+4@
+nta f3 f5+4@
+kRz f5+4@ f5@
+nta f3 f5@
+
+nta f3 f5
+nll iumes
+kRz 0 f5@
+ata 4 f5
+nta 1 f0
+fi f0 0 niv   malkRz iumes xx
+	
+kRz 0 f5+8@
+	
+nll tykuv
+kRz 0 f0
+	
+nll ostor
+fi f5+16@ f0 xylo   malkRz tykuvon_stodup xx
+	kRz f0 f2
+	ata f5+4@ f2
+	kRz f2@ f2
+	kRz f5+8@ f3
+	ata f5+24@ f3
+	kRz f3@ f3
+	kRz f3 f1
+	dRo 2 f1
+	fi f1 f0 llo   malkRz lasyk xx
+	kRz f0 f1
+	dRo 2 f3
+	nta f3 f1
+	kRz f1 f3
+	ata f5+4@ f3
+	kRz f3@ f3
+	kRz f5+8@ f1
+	ata f5+20@ f1
+	ata f1@ f3
+	kRz f0 f1
+	ata f5@ f1
+	kRz f3 f1@
+	fi f1@ f2 xylo   malkRz f2 f1@
+	kRz ostoron_stodup xx
+	
+	nll lasyk
+	kRz f0 f3
+	ata f5@ f3
+	kRz f2 f3@
+	
+	nll ostoron_stodup
+ata 4 f0
+kRz ostor xx
+	
+nll tykuvon_stodup
+	kRz f5+28@ f3
+	dRo 2 f3
 fi f5+8@ f3 clo   malkRz lesback xx
 inj f5@ f5+4@ f5@
 ata 4 f5+8@
 kRz tykuv xx
 
 nll lesback
-kRz f5@ f0
-ata f5+16@ f0
-kRz f0@ f0
-ata 12 f5
-kRz f5@ xx
+	kRz f5@ f0
+	ata f5+16@ f0
+	kRz f0@ f0
+	ata 12 f5
+	kRz f5@ xx
 </pre>
 </div>
-
-<p>3-3. が28命令、3-4. が19命令であることを考えると、今回の67命令というのは非常に長く感じられるかと思います。</p>
+<!--
+<p>3-3. が28命令、3-4. が19命令であることを考えると、今回の67命令というのは非常に長く感じられるかと思います。</p> -->
 <hr>
 <a href="./3-5.html">前のページへ</a>&nbsp;&nbsp;&nbsp;<!--<a href="./3-7.html">-->次のページへ<!--</a>-->
 <br>
