@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-<title>2003lk入門 ― 3-2. 余談：断片の順序を調節することによる効率化</title>
+<title>2003lk入門 ― 3-2. 二等分による効率的な検索</title>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="../common.css">
 <link rel="stylesheet" href="ny_jurli.css">
@@ -15,10 +15,334 @@
 </div>
 <hr>
 <h2>ksi.3 実践</h2>
-<h3>lexn.2 余談：断片の順序を調節することによる効率化</h3>
+<h3>lexn.2 二等分による効率的な検索</h3>
 
-<p>前回書いた</p>
 
+
+<p><a href="./2-5.html">ksi.2のlexn.5</a>では、値を探索する処理を書きました。端から順に値を見ていき、一致すれば終了、という方法を取りました。</p>
+
+<p>しかし、我々の日常で物を探索するとき、常にこのような方法が取られているでしょうか？必ずしもそうではありません。</p>
+
+<p>500人ほどが記載されている名簿があるとしましょう。この名簿に特定の人の名前が載っているかどうかを調べるのに、わざわざ端から見ていくというのでは大変です。このとき、辞書順<span class="ny_jurli">この時代の辞書順って何なんでしょうね。</span>に名前が並んだ名簿なら、端から見ていくことなく効率的に探すことができます。</p>
+
+<p>ということで、このような探索をする<code>melfert</code>という[指令](cersva)を書いていきましょう。なお、諸情報は次のように与えられているものとします。</p>
+
+<div class="machine_state_box">
+<table class="memory">
+<tr>
+	<td class="free_mem">自由</td>
+	<td class="free_mem">自由</td>
+	<td class="occupied_mem">戻る場所</td>
+	<td class="occupied_mem">目的の値</td>
+	<td class="occupied_mem">要素数</td>
+	<td class="occupied_mem">名簿の先頭の番地</td>
+</tr>
+
+</table>
+</div>
+
+<p>「名簿の先頭の番地」「名簿の先頭の番地+4」「名簿の先頭の番地+8」…と要素が「要素数」個ある名簿を考え、「番地が増えれば必ず格納されている値も大きくなる」という性質が成り立っているとします。この名簿の中に目的の値があれば<code>f0</code>に1を入れて[指令](cersva)を終了し、目的の値があれば<code>f0</code>に0を入れて[指令](cersva)を終了する、という仕様にしましょう。</p>
+
+<p>とりあえず、終了箇所から考えましょう。</p>
+<div class="box">
+<pre>
+…
+nll molniv
+kRz  0  f0
+kRz f5@ xx
+nll mol
+kRz  1  f0
+kRz f5@ xx
+</pre>
+</div>
+
+<p>こうしておけば、「見つかった」と確定したときに<code>kRz mol xx</code>し、「見つからなかった」と確定したときに<code>kRz molniv xx</code>とすればよくなります。</p>
+
+<p>さて、具体的な探索方法について考えましょう。順番に並んでいる数を探索するとき、以下のような特徴があります。ある位置を見て目的の値より大きかったら、目的の値は（あれば）その位置より小さい番地にしかありえず、ある位置を見て目的の値より小さかったら、目的の値は（あれば）その位置より大きい番地にしかありえないのです。</p>
+
+<p>ということは、「もしあるとしたらこの範囲しかない」というのを2つのfirjalを使って保持し、その中央あたりの値と目的の値を比較していって毎回区間を半分にしていけばよいわけです。</p>
+
+<p>区間をどう保持するかですが、範囲の左端を<code>f1</code>、右端を<code>f3</code>に入れておきましょう。あとで番地を計算するときに便利になるよう、1番目の要素は0、2番目の要素は1といったふうに、1減らして保持しておきましょう。</p>
+
+<p>処理が始まった段階では、左端は0で右端は要素数から1引いたものになります。ということで、その処理を書いていきましょう。</p>
+
+<div class="box">
+<pre>
+nll melfert
+kRz f5  f0
+ata  8  f0
+kRz f0@ f3
+nta  1  f3
+kRz  0  f1
+…
+</pre>
+</div>
+
+<p>ここで、わざわざ手間をかけ<code>f0</code>を作業用に使って要素数の情報を得ていますが、毎回このように書くのは面倒です。<code>f5</code>から8離れた位置にあるということは分かっていますし、定番の処理ですから、なんとか簡単に書けないでしょうか。</p>
+
+<p>実は、次のように書くことができます。</p>
+
+<div class="box">
+<pre>
+nll melfert
+kRz f5+8@ f3
+nta    1  f3
+kRz    0  f1
+…
+</pre>
+</div>
+
+<p>これを使えば、指令に渡された情報を楽に受け取ることができます。</p>
+
+<p>要素数が0以下のときには<code>molniv</code>に飛ぶようにしましょう。<code>f3</code>から1を引いた段階で負かどうかを確認すればいいですね。</p>
+
+<div class="box">
+<pre>
+nll melfert
+kRz f5+8@ f3
+nta    1  f3
+fi    f3   0 xylo   malkRz molniv xx
+kRz    0  f1
+…
+</pre>
+</div>
+
+<p>さて、今度は「範囲の真ん中にある値を読んで、それを目的の値と比較する」という処理を書いていきましょう。</p>
+
+<div class="box">
+<pre>
+…
+kRz f3 f0
+ata f1 f0
+dtosna 1 f0
+
+kRz f0 f2
+dRo  2 f2
+ata f5+12@ f2
+
+fi f2@ f5+4@  clo   malkRz mol xx
+…
+</pre>
+</div>
+
+
+<p>最初の3行で、<code>f1</code>と<code>f3</code>の平均が<code>f0</code>に入ります。次の3行では、<code>f0</code>を<code>f2</code>に複製し、<code>f2</code>を4倍してから名簿の先頭に足し合わせることにより、範囲の中央に対応する番地が得られます。最後に、これを目的の値と比較し、等しかったら<code>mol</code>へと飛びます。
+</p>
+
+<hr>
+
+<p>ここまでのをまとめると、先頭あたりで</p>
+<div class="box">
+<pre>
+nll melfert
+kRz f5+8@ f3
+nta    1  f3
+fi    f3   0 xylo   malkRz molniv xx
+kRz    0  f1
+…
+</pre>
+</div>
+<p>とし、途中で</p>
+<div class="box">
+<pre>
+…
+kRz f3 f0
+ata f1 f0
+dtosna 1 f0
+
+kRz f0 f2
+dRo  2 f2
+ata f5+12@ f2
+
+fi f2@ f5+4@  clo   malkRz mol xx
+…
+</pre>
+</div>
+<p>をし、最後に</p>
+
+<div class="box">
+<pre>
+…
+nll molniv
+kRz  0  f0
+kRz f5@ xx
+nll mol
+kRz  1  f0
+kRz f5@ xx
+</pre>
+</div>
+
+<p>を置く、というのが大まかな流れです。残りを埋めていきましょう。</p>
+
+<p><code>f5+4@</code>と<code>f2@</code>が等しかった場合の処理はもう書きました。それ以外の場合を考えましょう。</p>
+
+<p><code>f2@</code>が目的の値である<code>f5+4@</code>より小さい場合、<code>f0</code>に入っている<code>f1</code>と<code>f3</code>の平均よりも1大きい値が、範囲の新たな下限になります。つまり、<code>f3</code>は変わらず<code>f1</code>だけが変わります。ゆえに、</p>
+
+<div class="box">
+<pre>
+…
+nll xyloler
+kRz f0 f1
+ata 1 f1
+…
+</pre>
+</div>
+
+<p>であり、またこの操作によって<code>f3</code>が<code>f1</code>を下回ってしまった場合、範囲が消えてしまったからには値が見つかるはずが無いので、<code>molniv</code>に飛びましょう。</p>
+
+<div class="box">
+<pre>
+…
+nll xyloler
+kRz f0 f1
+ata 1 f1
+fi f3 f1 xylo   malkRz molniv xx
+…
+</pre>
+</div>
+
+
+<p>そうでなければ、平均値を求める処理に戻ればいいので、</p>
+
+<div class="box">
+<pre>
+…
+nll polto
+kRz f3 f0
+ata f1 f0
+dtosna 1 f0
+
+kRz f0 f2
+dRo  2 f2
+ata f5+12@ f2
+
+fi f2@ f5+4@  clo   malkRz mol xx
+…
+</pre>
+</div>
+
+<p>と名前を付けておいて</p>
+
+<div class="box">
+<pre>
+…
+nll xyloler
+kRz f0 f1
+ata 1 f1
+fi f3 f1 xylo   malkRz molniv xx
+kRz polto xx
+…
+</pre>
+</div>
+
+とすればよいでしょう。
+
+<p>最後に、<code>f2@</code>が目的の値である<code>f5+4@</code>より大きい場合。このときは、
+<code>f0</code>に入っている<code>f1</code>と<code>f3</code>の平均よりも1小さい値が、範囲の新たな上限になります。つまり、<code>f1</code>は変わらず<code>f3</code>だけが変わります。ゆえに、同様に</p>
+
+<div class="box">
+<pre>
+…
+nll leloler
+kRz f0  f3
+nta  1  f3
+fi  f3 f1  xylo   malkRz molniv xx
+kRz polto xx
+</pre>
+</div>
+
+<p>としてやればよいわけです。</p>
+
+<hr>
+
+<p>最後に、今までに書いた断片をまとめましょう。</p>
+
+<div style="border: 1px solid black; padding: 10px; margin: 2px;">
+<p>その1: 冒頭<code>melfert</code></p>
+<div class="box">
+<pre>
+nll melfert
+kRz f5+8@ f3
+nta    1  f3
+fi    f3   0 xylo   malkRz molniv xx
+kRz    0  f1
+…
+</pre>
+</div>
+<p>この断片には最後に<code>kRz polto xx</code>を付ければ完璧です。</p>
+</div>
+
+<div style="border: 1px solid black; padding: 10px; margin: 2px;">
+<p>その2: 平均を求めて探索を行う<code>polto</code></p>
+<div class="box">
+<pre>
+…
+nll polto
+kRz f3 f0
+ata f1 f0
+dtosna 1 f0
+
+kRz f0 f2
+dRo  2 f2
+ata f5+12@ f2
+
+fi f2@ f5+4@  clo   malkRz mol xx
+…
+</pre>
+</div>
+
+<p>後ろに<code>fi f2@ f5+4@ xylo   malkRz xyloler xx</code>と<code>kRz leloler xx</code>を足せばこの断片も完成です。</p>
+</div>
+
+
+<div style="border: 1px solid black; padding: 10px; margin: 2px;">
+<p>その3: 目的の値より小さかった場合の<code>xyloler</code></p>
+<div class="box">
+<pre>
+…
+nll xyloler
+kRz f0 f1
+ata 1 f1
+fi f3 f1 xylo   malkRz molniv xx
+kRz polto xx
+…
+</pre>
+</div>
+<p>これはこのままで完成です。</p>
+</div>
+
+<div style="border: 1px solid black; padding: 10px; margin: 2px;">
+<p>その4: 目的の値より大きかった場合の<code>leloler</code></p>
+<div class="box">
+<pre>
+…
+nll leloler
+kRz f0  f3
+nta  1  f3
+fi  f3 f1  xylo   malkRz molniv xx
+kRz polto xx
+</pre>
+</div>
+<p>これもこのままで完成です。</p>
+</div>
+
+<div style="border: 1px solid black; padding: 10px; margin: 2px;">
+<p>その5: 終わりの処理をする<code>molniv</code>と<code>mol</code></p>
+<div class="box">
+<pre>
+…
+nll molniv
+kRz  0  f0
+kRz f5@ xx
+nll mol
+kRz  1  f0
+kRz f5@ xx
+</pre>
+</div>
+<p>これもこのままで完成です。</p>
+</div>
+
+<p>この5つをまとめると、</p>
 
 <div class="box">
 <pre>
@@ -61,195 +385,7 @@ kRz f5@ xx
 </pre>
 </div>
 
-<p>はこれで一応完成はしていますが、まだ改良の余地があります。というのも、<code>polto</code>で始まる断片と<code>xyloler</code>で始まる断片を入れ替えてやることにより、</p>
-
-<style>
-strong{ text-decoration: underline; }
-</style>
-
-<div class="box">
-<pre>
-nll melfert
-kRz f5+8@ f3
-nta    1  f3
-fi    f3   0 xylo   malkRz molniv xx
-kRz    0  f1
-kRz polto xx
-
-nll xyloler
-kRz f0 f1
-ata 1 f1
-fi f3 f1 xylo   malkRz molniv xx
-<strong>kRz polto xx</strong>
-
-<strong>nll polto</strong>
-kRz f3 f0
-ata f1 f0
-dtosna 1 f0
-kRz f0 f2
-dRo  2 f2
-ata f5+12@ f2
-fi f2@ f5+4@  clo   malkRz mol xx
-fi f2@ f5+4@ xylo   malkRz xyloler xx
-<strong>kRz leloler xx</strong>
-
-<strong>nll leloler</strong>
-kRz f0  f3
-nta  1  f3
-fi  f3 f1  xylo   malkRz molniv xx
-kRz polto xx
-
-nll molniv
-kRz  0  f0
-kRz f5@ xx
-nll mol
-kRz  1  f0
-kRz f5@ xx
-</pre>
-</div>
-
-<p>というように、「次の命令へ飛ぶ」という箇所が2つ作れるからです。2003lkは何もしなくても次の命令に飛んでくれるので、これは省略できて</p>
-
-<div class="box">
-<pre>
-nll melfert
-kRz f5+8@ f3
-nta    1  f3
-fi    f3   0 xylo   malkRz molniv xx
-kRz    0  f1
-kRz polto xx
-
-nll xyloler
-kRz f0 f1
-ata 1 f1
-fi f3 f1 xylo   malkRz molniv xx
-
-nll polto
-kRz f3 f0
-ata f1 f0
-dtosna 1 f0
-kRz f0 f2
-dRo  2 f2
-ata f5+12@ f2
-fi f2@ f5+4@  clo   malkRz mol xx
-fi f2@ f5+4@ xylo   malkRz xyloler xx
-kRz f0  f3
-nta  1  f3
-fi  f3 f1  xylo   malkRz molniv xx
-kRz polto xx
-
-nll molniv
-kRz  0  f0
-kRz f5@ xx
-nll mol
-kRz  1  f0
-kRz f5@ xx
-</pre>
-</div>
-
-<p>と書けます。さらに、最後のmolnivの直前のfiの条件を反転してやることで、</p>
-
-
-<div class="box">
-<pre>
-nll melfert
-kRz f5+8@ f3
-nta    1  f3
-fi    f3   0 xylo   malkRz molniv xx
-kRz    0  f1
-kRz polto xx
-
-nll xyloler
-kRz f0 f1
-ata 1 f1
-fi f3 f1 xylo   malkRz molniv xx
-
-nll polto
-kRz f3 f0
-ata f1 f0
-dtosna 1 f0
-kRz f0 f2
-dRo  2 f2
-ata f5+12@ f2
-fi f2@ f5+4@  clo   malkRz mol xx
-fi f2@ f5+4@ xylo   malkRz xyloler xx
-kRz f0  f3
-nta  1  f3
-fi  f3 f1  xolo   malkRz polto xx
-<strong>kRz molniv xx</strong>
-
-<strong>nll molniv</strong>
-kRz  0  f0
-kRz f5@ xx
-nll mol
-kRz  1  f0
-kRz f5@ xx
-</pre>
-</div>
-
-<p>となり、さらに1命令削ることができます。</p>
-
-<p>最後に、</p>
-
-<div class="box">
-<pre>
-fi f2@ f5+4@  clo   malkRz mol xx
-fi f2@ f5+4@ xylo   malkRz xyloler xx
-</pre>
-</div>
-
-<p>の箇所に着目してみましょう。ここは探索の過程で何回も通る箇所ですが、今回の条件では与えられる名簿に重複がないという条件があるので、「f2@は目的の値と等しい」となる確率は、「f2@は目的の値より小さい」となる確率より低いわけです。ということは、</p>
-
-<div class="box">
-<pre>
-fi f2@ f5+4@ xylo   malkRz xyloler xx
-fi f2@ f5+4@  clo   malkRz mol xx
-</pre>
-</div>
-
-<p>と書いてやれば、より確率の高い「f2@は目的の値より小さい」を先に判定できるので、この判定に合致した際に実行される命令数が2個減ります。代わりに「等しい」ときに実行される命令数が2個増えますが、「等しい」は多くて1回しか満たされない以上、トータルでは得をするというわけです。</p>
-
-<p>以上をまとめて、こうなります。</p>
-
-
-<div class="box">
-<pre>
-nll melfert
-kRz f5+8@ f3
-nta    1  f3
-fi    f3   0 xylo   malkRz molniv xx
-kRz    0  f1
-kRz polto xx
-
-nll xyloler
-kRz f0 f1
-ata 1 f1
-fi f3 f1 xylo   malkRz molniv xx
-
-nll polto
-kRz f3 f0
-ata f1 f0
-dtosna 1 f0
-kRz f0 f2
-dRo  2 f2
-ata f5+12@ f2
-fi f2@ f5+4@ xylo   malkRz xyloler xx
-fi f2@ f5+4@  clo   malkRz mol xx
-kRz f0  f3
-nta  1  f3
-fi  f3 f1  xolo   malkRz polto xx
-
-nll molniv
-kRz  0  f0
-kRz f5@ xx
-nll mol
-kRz  1  f0
-kRz f5@ xx
-</pre>
-</div>
-
-
-<p>正直入門の段階でここまで命令数を減らすことに躍起になる必要はありませんが、このような手法が存在するということだけでも把握していただければ幸いです。</p>
+<p>となり、これで一応完成です。</p>
 
 <hr>
 <a href="./3-1.html">前のページへ</a>&nbsp;&nbsp;&nbsp;<a href="./3-3.html">次のページへ</a>
