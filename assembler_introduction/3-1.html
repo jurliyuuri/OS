@@ -19,6 +19,137 @@
 
 <p>前回は、数の大小を比較したり数を半分にしたりする方法を学びました。実践編であるksi.3では、今まで学んできた諸命令を元に実践的な処理を書いていきましょう。</p>
 
+<p>まずは、簡単な処理として、最大値を求める[指令](cersva)を書いていきましょう。「先頭の番地」「先頭の番地+4」「先頭の番地+8」…と要素が「要素数」個ある一覧表を考え、この中の最大値を<code>f0</code>に入れて終了する、という仕様にしましょう。なお、諸情報は次のように与えられているものとします。</p>
+
+<div class="machine_state_box">
+<table class="memory">
+<tr>
+	<td class="free_mem">自由</td>
+	<td class="free_mem">自由</td>
+	<td class="occupied_mem">戻る場所</td>
+	<td class="occupied_mem">数の一覧の先頭番地</td>
+	<td class="occupied_mem">要素数</td>
+</tr>
+</table>
+</div>
+
+<p>なお、最大値を求める以上、要素数は0より大きいものとします。</p>
+
+<hr>
+
+<div>まずは、先頭番地と要素数を[メモ](firjal)に入れましょう。</p>
+
+<div class="box">
+<pre>
+nll lesloler
+kRz f5  f0
+ata  4  f0
+krz f0@ f1
+ata  4  f0
+kRz f0@ f2
+…
+</pre>
+</div>
+
+<p>ここで、わざわざ手間をかけ<code>f0</code>を作業用に使って要素数や先頭番地の情報を得ていますが、毎回このように書くのは面倒です。<code>f5</code>から4だったり8だったり離れた位置にあるということは分かっていますし、定番の処理ですから、なんとか簡単に書けないでしょうか。</p>
+
+<p>実は、次のように書くことができます。</p>
+
+<div class="box">
+<pre>
+nll lesloler
+krz f5+8@ f2
+krz f5+4@ f1
+…
+</pre>
+</div>
+
+<p>これを使えば、指令に渡された情報を楽に受け取ることができます。</p>
+
+<hr>
+
+<p>さて、要素数が<code>f2</code>に入り、先頭番地が<code>f1</code>に入ったので、処理を考えていきましょう。</p>
+
+<p>まずは、最も単純な場合、つまり、要素数が1の場合を考えましょう。このときは、先頭番地にある値を<code>f0</code>に入れ、即座に終了すればいいので、</p>
+
+<div class="box">
+<pre>
+nll lesloler
+krz f5+8@ f2
+krz f5+4@ f1
+<strong>krz f1@ f0
+fi f2 1 clo   malkrz f5@ xx</strong>
+…
+</pre>
+</div>
+
+<p>となります。さて、要素数が1より大きかった場合ですが、とりあえず次の要素を見るべく<code>f1</code>に4を足しましょう。</p>
+
+<div class="box">
+<pre>
+nll lesloler
+krz f5+8@ f2
+krz f5+4@ f1
+krz f1@ f0
+fi f2 1 clo   malkrz f5@ xx
+<strong>ata 4 f1</strong>
+…
+</pre>
+</div>
+
+<p>新しい要素と<code>f0</code>を比較し、新しい要素のほうが大きければf0を更新します。</p>
+
+
+
+<div class="box">
+<pre>
+nll lesloler
+krz f5+8@ f2
+krz f5+4@ f1
+krz f1@ f0
+fi f2 1 clo   malkrz f5@ xx
+ata 4 f1
+<strong>fi f1@ f0 llo   malkrz f1@ f0</strong>
+…
+</pre>
+</div>
+
+<p>最後に、<code>f2</code>の値を1減らし、要素数と1を比較するところに飛べば完成です。</p>
+
+<div class="box">
+<pre>
+nll lesloler
+krz f5+8@ f2
+krz f5+4@ f1
+krz f1@ f0
+
+<strong>nll mak</strong>
+fi f2 1 clo   malkrz f5@ xx
+ata 4 f1
+fi f1@ f0 llo   malkrz f1@ f0
+<strong>nta 1 f2
+krz mak xx</strong>
+</pre>
+</div>
+
+
+<p>なお、<code>nta 1 f2</code>の位置を変えて、このように書くこともできます。</p>
+
+<div class="box">
+<pre>
+nll lesloler
+krz f5+8@ f2
+krz f5+4@ f1
+krz f1@ f0
+nll mak
+nta 1 f2
+fi f2 0 clo   malkrz f5@ xx
+ata 4 f1
+fi f1@ f0 llo   malkrz f1@ f0
+krz mak xx
+</pre>
+</div>
+
 <hr>
 <a href="./3-0.html">前のページへ</a>&nbsp;&nbsp;&nbsp;<a href="./3-2.html">次のページへ</a>
 <br>
