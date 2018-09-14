@@ -17,34 +17,138 @@
 <h2>ksi.3 実践</h2>
 <h3>lexn.6 価値最大化のための取捨選択（実装）</h3>
 
-<p>まずは、今回書き上げる処理が最終的にどれほどの長さになるのかをを見てみましょう。</p>
+<p>予め断っておきますが、今回はかなり長くなります。</p>
+
+<hr>
+
+<p>まず、与えられた情報を加工したり、作業用の領域を確保することから始めましょう。</p>
+
+<p>最初に与えられた情報はこうですが、</p>
+
+<div class="machine_state_box">
+<table class="memory">
+<tr>
+	<td class="free_mem">自由</td>
+	<td class="free_mem">自由</td>
+	<td class="occupied_mem">戻る場所</td>
+	<td class="occupied_mem">積載制限</td>
+	<td class="occupied_mem">価値一覧</td>
+	<td class="occupied_mem">質量一覧</td>
+	<td class="occupied_mem">品物の個数</td>
+</tr>
+<tr>
+	<td ></td>
+	<td ></td>
+	<td>f5@</td>
+	<td>f5+4@</td>
+	<td>f5+8@</td>
+	<td>f5+12@</td>
+	<td>f5+16@</td>
+</tr>
+
+</table>
+</div>
+
+<p>f5より小さい番地に、前回言及した作業用の一覧表（0から積載制限まであれば十分なので、長さは積載制限+1）を2つ確保し、さらに[メモ](firjal)の不足を補うために作業領域をさらに3つ確保します。</p>
+
+<p>最終的に、[住所箱](setistafar)を次のように使っていくことを目標とします。また、一覧表1を0で埋める作業もこの段階でやっておきましょう。</p>
+
+<div class="machine_state_box">
+<table class="memory">
+<tr>
+	<td class="free_mem">一覧表2</td>
+	<td class="free_mem">…</td>
+	<td class="free_mem">一覧表2</td>
+	<td class="free_mem">一覧表1</td>
+	<td class="free_mem">…</td>
+	<td class="free_mem">一覧表1</td>
+	<td class="occupied_mem">領域3</td>
+	<td class="occupied_mem">領域2</td>
+	<td class="occupied_mem">領域1</td>
+	<td class="occupied_mem">戻る場所</td>
+	<td class="occupied_mem">積載制限</td>
+	<td class="occupied_mem">価値一覧</td>
+	<td class="occupied_mem">質量一覧</td>
+	<td class="occupied_mem">品物の個数</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td>f5@</td>
+	<td>f5+4@</td>
+	<td>f5+8@</td>
+	<td>f5+12@</td>
+	<td>f5+16@</td>
+	<td>f5+20@</td>
+	<td>f5+24@</td>
+	<td>f5+28@</td>
+</tr>
+
+</table>
+</div>
+
+<p>まず、積載制限+1を<code>f0</code>に入れ、それの4倍を<code>f3</code>に入れます。</p>
+
+<div class="box">
+<pre>
+<strong>nll plelajnefes
+kRz f5+4@ f0
+ata 1 f0
+kRz f0 f3
+dRo 2 f3</strong>
+…
+</pre>
+</div>
+
+<p>次に、3つの作業領域を確保するために<code>f5</code>を12減らし、領域3には一覧表2の先頭番地を入れ、領域2には一覧表1の先頭番地を入れます。</p>
 
 <div class="box">
 <pre>
 nll plelajnefes
-nta 1 f5+16@
 kRz f5+4@ f0
 ata 1 f0
-dRo 2 f5+4@
+kRz f0 f3
+dRo 2 f3
+<strong>nta 12 f5
+kRz f5 f5+4@
+nta f3 f5+4@
+kRz f5+4@ f5@
+nta f3 f5@</strong>
+…
+</pre>
+</div>
+
+<p>そうしたら、一覧表1を先頭から0で埋めていきます。「積載制限+1」が既に<code>f0</code>に入っているので、これを減らしていけばちょうど一覧表1の全体が0で埋まります。</p>
+
+<div class="box">
+<pre>
+nll plelajnefes
+kRz f5+4@ f0
+ata 1 f0
 kRz f0 f3
 dRo 2 f3
 nta 12 f5
-kRz 0 f5+8@
-kRz f5 f5@
+kRz f5 f5+4@
+nta f3 f5+4@
+kRz f5+4@ f5@
 nta f3 f5@
-nta f3 f5
-nta f3 f5
 
+<strong>nta f3 f5
 nll iumes
 kRz 0 f5@
 ata 4 f5
 nta 1 f0
-fi f0 0 niv   malkRz iumes xx
+fi f0 0 niv   malkRz iumes xx</strong>
+</pre>
+</div>
 
-ata f3 f5
-kRz f5 f5+4@
-nta f3 f5+4@
-nta f3 f5+4@
+<hr>
+
+<p>さて、下ごしらえが終わったので、主となる処理を書いていきましょう。</p>
 
 nll tykuv
 kRz 0 f0
