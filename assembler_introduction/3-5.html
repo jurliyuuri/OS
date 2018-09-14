@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-<title>2003lk入門 ― 3-5. 価値最大化のための取捨選択（実装）</title>
+<title>2003lk入門 ― 3-5. 価値最大化のための取捨選択（方針）</title>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="../common.css">
 <link rel="stylesheet" href="ny_jurli.css">
@@ -15,95 +15,124 @@
 </div>
 <hr>
 <h2>ksi.3 実践</h2>
-<h3>lexn.5 価値最大化のための取捨選択（実装）</h3>
+<h3>lexn.5 価値最大化のための取捨選択（方針）</h3>
 
-<p>まずは、今回書き上げる処理が最終的にどれほどの長さになるのかをを見てみましょう。</p>
+<p>[約180kg](15 stysien)しか運べない小船の上に、いくつかの品物を載せて運ぶとするとき、最大でどれだけの価値を運べるでしょうか。運ぶ品物の候補は以下の5つです。</p>
 
-<div class="box">
-<pre>
-nll plelajnefes
-nta 1 f5+16@
-kRz f5+4@ f0
-ata 1 f0
-dRo 2 f5+4@
-kRz f0 f3
-dRo 2 f3
-nta 12 f5
-kRz 0 f5+8@
-kRz f5 f5@
-nta f3 f5@
-nta f3 f5
-nta f3 f5
+<ol>
+	<li>1 stysienで[およそ一万円](2000 ledz)の価値</li>
+	<li>3 stysienで8400 ledzの価値</li>
+	<li>6 stysienで17200 ledzの価値</li>
+	<li>9 stysienで25800 ledzの価値</li>
+	<li>13 stysienで40000 ledzの価値</li>
+</ol>
 
-nll iumes
-kRz 0 f5@
-ata 4 f5
-nta 1 f0
-fi f0 0 niv   malkRz iumes xx
-ata f3 f5
-kRz f5 f5+4@
-nta f3 f5+4@
-nta f3 f5+4@
+<p>一見、1 stysienあたり3000 ledz以上の価値がある品物5を乗せるのが合理的にも見えますが、これを載せてしまうと残り2 stysienしか余裕がないため、あとは品物1しか乗せることができず、最終的に運べる価値は42000 ledzとなります。</p>
 
-nll tykuv
-kRz 0 f0
+<p>一方、品物3と品物4を運べば、ちょうど15 stysienで43000 ledzを運ぶことができます。今回の場合、これが最大です。</p>
 
-nll ostor
-kRz f0 f3
-fi f5+16@ f3 xylo   malkRz tykuvon_stodup xx
-kRz f0 f2
-ata f5+4@ f2
-kRz f2@ f2
-kRz f5+8@ f3
-ata f5+24@ f3
-kRz f3@ f3
-kRz f3 f1
-dRo 2 f1
-fi f1 f0 llo   malkRz lasyk xx
-kRz f0 f1
-dRo 2 f3
-nta f3 f1
-kRz f1 f3
-ata f5+4@ f3
-kRz f3@ f3
-kRz f5+8@ f1
-ata f5+20@ f1
-ata f1@ f3
-kRz f0 f1
-ata f5@ f1
-kRz f3 f1@
-fi f1@ f2 xylo   malkRz f2 f1@
-kRz ostoron_stodup xx
+<p>ということで、小船の積載制限・品物の質量・品物の価値の情報を元に、運べる最大の価値を求める[指令](cersva)を書いていきましょう。情報は次のように与えられるものとします。</p>
 
-nll lasyk
-kRz f0 f3
-ata f5@ f3
-kRz f2 f3@
+<div class="machine_state_box">
+<table class="memory">
+<tr>
+	<td class="free_mem">自由</td>
+	<td class="free_mem">自由</td>
+	<td class="occupied_mem">戻る場所</td>
+	<td class="occupied_mem">小船の積載制限</td>
+	<td class="occupied_mem">品物の価値の一覧の先頭番地</td>
+	<td class="occupied_mem">品物の質量の一覧の先頭番地</td>
+	<td class="occupied_mem">品物の個数</td>
+</tr>
 
-nll ostoron_stodup
-ata 4 f0
-kRz ostor xx
-
-nll tykuvon_stodup
-kRz f5+28@ f3
-dRo 2 f3
-fi f5+8@ f3 clo   malkRz lesback xx
-inj f5@ f5+4@ f5@
-ata 4 f5+8@
-kRz tykuv xx
-
-nll lesback
-kRz f5@ f0
-ata f5+16@ f0
-kRz f0@ f0
-ata 12 f5
-kRz f5@ xx
-</pre>
+</table>
 </div>
 
-<p>3-2. が28命令、3-3. が19命令であることを考えると、今回の67命令というのは非常に長く感じられるかと思います。</p>
+
+<p>なんせ小船ですので、積載制限は200 stysienより小さいものとします。また、単独で積載制限を超える品物も無ければ、質量のない品物も無いものとします。故に品物は多くとも200個です。</p>
+
 <hr>
-<a href="./3-4.html">前のページへ</a>&nbsp;&nbsp;&nbsp;<!--<a href="./3-6.html">-->次のページへ<!--</a>-->
+
+<p>さて、今回は、処理を書く前に方針を立てましょう。最初に思いつくのは「それぞれの品物について『選ぶか選ばないか』全ての場合を試し、それぞれについて積載制限を満たしているかどうか確認し、その中で最大を選ぶ」というものかもしれませんが、実はこれだとかなり時間が掛かってしまいます。品物が1個増えるだけで処理時間が倍増してしまうからです。</p>
+
+<p class="ny_jurli">西暦2018年現在で「10^9 ≒ 2^30ぐらいがループで回して数秒で終わる上限」とか言われているので、現代の高速な環境上で回したとしても品物が50個だと10日規模、55個だと年単位の時間が掛かってしまう。</p>
+
+<p>そこで、次のような方針を立てましょう。</p>
+
+<ol>
+	<li>品物の一覧のうち、最初のq個<span class="ny_jurli">未知数を表すときはリパライン語では普通qを使う。辞書<a href="http://twoc.ever.jp/twoc/conlang.cgi?search=anaxkaidzern&type=0&agree=1&mode=search&user_id=fafs">anaxkaidzern</a>を参照のこと。</span>だけを見る。
+	<li>その条件のもと、「積載量がn<span class="ny_jurli">nisninesnej「重量」かnisninosnej「質量」</span>を超えないように品物を選んだときの、価値の最大値」がそれぞれのnについて分かる一覧表を作っておく</li>
+	</li>
+	<li>その表を元に、q+1番目の品物も候補に入れたときの「積載量がnを超えないように品物を選んだときの、価値の最大値」の一覧表を作る</li>
+	<li>これを繰り返し、全部の品物が候補に入ったら終了</li>
+</ol>
+
+<p>こうすれば、0から200までの201通りのnについての一覧を作る作業を、品物の個数の回数だけ行うだけで十分なので、圧倒的な効率と速度が得られます。</p>
+
+<p>さて、さらに具体化していきましょう。</p>
+
+<p>まず、何も品物を選んでいない状態に関しては簡単です。何も選んでいない以上、価値は当然0なので、価値の最大値も0です。ということで、0で全部埋めたものが一覧表です。</p>
+
+<p>次に、「q個まで見た表」から「q+1個まで見た表」を作る方法を考えていきましょう。</p>
+
+<p>まずは具体例から見ていきましょう。先程の例で、最初の4つまで見たときの表はこうなります。</p>
+
+<pre>
+旧い表：
+n	価値
+0	0
+1	2000
+2	2000
+3	8400
+4	10400
+5	10400
+6	17200
+7	19200
+8	19200
+9	25800
+10	27800
+11	27800
+12	34200
+13	36200
+14	36200
+15	43000
+</pre>
+
+<p>ここに、5つ目の「13 stysienで40000 ledzの価値」の商品を足したときの一覧表を作っていきます。
+<p>まず、nが0以上13未満であるときは、5つ目の商品が活躍できるはずがありませんから、新しい表は古い表の値を複製すればいいだけです。</p>
+
+<pre>
+新しい表：
+n	価値
+0	0
+1	2000
+2	2000
+3	8400
+4	10400
+5	10400
+6	17200
+7	19200
+8	19200
+9	25800
+10	27800
+11	27800
+12	34200
+…
+</pre>
+
+<p>一方、nが13以上のときには、5番目の品物を「選ぶか」「選ばないか」という選択肢が生まれます。</p>
+
+<p>具体的には、新しい表のn=13は「旧い表のn=0に新商品の価値40000 ledzを足したもの」と「旧い表のn=13」の比較になります。この場合は、前者の価値が40000 ledzで後者の価値が36200 ledzなので、新商品を選ぶほうが得です。</p>
+
+<p>一方、新しい表のn=15は、「旧い表のn=2に新商品の価値を足したもの」と「旧い表のn=15」の比較になり、今回は前者が42000 ledz、後者が43000 ledzとなるので、新商品を選ばないほうが得です。</p>
+
+
+
+<p>さて、ということで方針は立ちました。処理を書いていきましょう。</p>
+
+
+<hr>
+<a href="./3-4.html">前のページへ</a>&nbsp;&nbsp;&nbsp;<a href="./3-6.html">次のページへ</a>
 <br>
 <br>
 <br>
