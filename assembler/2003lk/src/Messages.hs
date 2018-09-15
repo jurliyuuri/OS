@@ -2,8 +2,6 @@
 module Messages
 (Message(..)
 ,LangInfo(..)
-,putStrLn'
-,toString
 ) where
 import Types
 
@@ -35,10 +33,6 @@ instance Message NormalMessage where
  show' English (NormalMessage str) = str
  show' Lineparine (NormalMessage _) = dummy2
 
-putStrLn' :: LangInfo -> NormalMessage -> IO ()
-putStrLn' English (NormalMessage a) = putStrLn a
-putStrLn' Lineparine (NormalMessage _) = putStrLn dummy2
 
-toString :: LangInfo -> NormalMessage -> String
-toString English (NormalMessage a) = a
-toString Lineparine (NormalMessage _) = dummy2
+
+

@@ -21,7 +21,7 @@ main'' :: [FilePath] -> IO ()
 main'' paths = do
  mapM_ parse' paths
  strs <- forM paths (fmap semicolonExtension . readFile)
- putStrLn' English $ NormalMessage $ "\ncompiling " ++ intercalate ", " paths ++ ":\n"
+ putStrLn $ show' English $ NormalMessage $ "\ncompiling " ++ intercalate ", " paths ++ ":\n"
  fullCompile' strs
 
 fullCompile' :: [String] -> IO ()

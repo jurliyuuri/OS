@@ -17,7 +17,7 @@ semicolonExtension = unlines . map (takeWhile (/=';')) . lines
 parse' :: FilePath -> IO ()
 parse' filepath = do
  str <- semicolonExtension <$> readFile filepath
- putStrLn' English $ NormalMessage $ "\nparsing " ++ filepath ++ ":\n"
+ putStrLn $ show' English $ NormalMessage $ "\nparsing " ++ filepath ++ ":\n"
  fullParse' str >>>= print
 
 (>>>=) :: (Message a) => Either a b -> (b -> IO ()) -> IO () 

@@ -14,7 +14,7 @@ import CommonIO
 fullExecute' :: [String] -> IO ()
 fullExecute' strs = strs `getProgramAndApply` \program ->
  let (boolerh, logs) = execute program in do
-  putStr $ toString English $ NormalMessage "Logs: "
+  putStr $ show' English $ NormalMessage "Logs: "
   print logs
   boolerh >>>= \(False, hardware) -> print hardware
 
@@ -32,31 +32,31 @@ main = do
    | otherwise -> main'' a
 
 interactive :: [String] -> IO ()
-interactive [] = hPutStrLn stderr $ toString English $ NormalMessage "Give filepath."
+interactive [] = hPutStrLn stderr $ show' English $ NormalMessage "Give filepath."
 interactive paths = do
  strs <- forM paths (fmap semicolonExtension . readFile)
- putStrLn' English $ NormalMessage $ "\npreparing step-by-step execution for " ++ intercalate ", " paths ++ ":\n"
+ putStrLn $ show' English $ NormalMessage $ "\npreparing step-by-step execution for " ++ intercalate ", " paths ++ ":\n"
  strs `getProgramAndApply` \program -> stepByStep (initialHardware initialAddress, program)
 
 stepByStep :: (Hardware, Program) -> IO ()
 stepByStep (hw, program) = do
- putStrLn' English $ NormalMessage "Press Enter to continue"
+ putStrLn $ show' English $ NormalMessage "Press Enter to continue"
  _ <- getLine
  let (boolerh, logs) = unwrapWith (hw, program) (execOne(return True)) in do
-  putStr $ toString English $ NormalMessage "Logs: "
+  putStr $ show' English $ NormalMessage "Logs: "
   print logs
   boolerh >>>= \(isContinuing, newHW) -> do
    print newHW
    if isContinuing 
     then stepByStep (newHW, program)
-    else putStrLn' English $ NormalMessage "Execution correctly terminated."
+    else putStrLn $ show' English $ NormalMessage "Execution correctly terminated."
 
 
 main'' :: [FilePath] -> IO ()
 main'' paths = do
  mapM_ parse' paths
  strs <- forM paths (fmap semicolonExtension . readFile)
- putStrLn' English $ NormalMessage $ "\nrunning " ++ intercalate ", " paths ++ ":\n"
+ putStrLn $ show' English $ NormalMessage $ "\nrunning " ++ intercalate ", " paths ++ ":\n"
  fullExecute' strs
 
 
