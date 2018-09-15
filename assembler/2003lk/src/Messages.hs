@@ -13,7 +13,7 @@ class Message a where
  show' :: LangInfo -> a -> String
 
 instance Message LinkError where
- show' English (LinkError str) = "LinkError: " ++ str
+ show' English (LinkError (Eng str)) = "LinkError: " ++ str
 
 instance Message ParseError where
  show' English (ParseError str) = "ParseError: " ++ str
