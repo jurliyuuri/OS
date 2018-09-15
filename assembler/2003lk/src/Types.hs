@@ -37,7 +37,7 @@ newtype LpaString = Lpa String deriving(Eq, Ord)
 
 newtype ParseError = ParseError String deriving(Eq, Ord)
 data RuntimeError = RuntimeError String String deriving(Eq, Ord)
-newtype LinkError = LinkError EngString deriving(Eq, Ord)
+data LinkError = LinkError EngString LpaString deriving(Eq, Ord)
 newtype NormalMessage = NormalMessage String deriving(Eq, Ord)
 
 toFunc :: Cond -> (Word32 -> Word32 -> Bool)

@@ -20,9 +20,9 @@ type PageId = Int
 
 linker :: [ParsedFile] -> Either LinkError Program
 linker pfs = case fromListNoDup $ zipWith assignInts [1..] pfs of
- Left _ -> Left $ LinkError (Eng "multiple files lack `kue`")
+ Left _ -> Left $ LinkError (Eng "multiple files lack `kue`") (Lpa "chertifess mol niv mels `kue`")
  Right dat -> case M.lookup 0 dat of 
-  Nothing -> Left $ LinkError (Eng "all files have `kue`")
+  Nothing -> Left $ LinkError (Eng "all files have `kue`") (Lpa "als chertif laxn `kue`")
   _ -> do
    loadeds' <- M.traverseWithKey loadWithInt dat
    sanitizeKue loadeds'
@@ -33,22 +33,27 @@ sanitizeKue foo = do
  let kuePid = concatMap (\(a,bs) -> zip bs $ repeat a) pidKues
  case fromListNoDup kuePid of
   Right dat -> return $ Program foo dat
-  Left labels -> Left $ LinkError (Eng $
-   "conflict: different files export the same label(s) `" ++ intercalate ", " (map unLabel labels) ++ "`")
+  Left labels -> let info = "`" ++ intercalate ", " (map unLabel labels) ++ "`" in Left $ LinkError (Eng $
+   "conflict: different files export the same label(s) " ++ info)
+   (Lpa $ "sliejseso: cuturlo eustira'd chertifess feat daliu'd firsykaloa " ++ info)
 
 loadWithInt :: PageId -> ParsedFile -> Either LinkError (TentativeLoad, Kues_Xoks)
 loadWithInt n (ils, (kues, xoks)) = do
  loaded <- toTentativeLoad (initialAddress + fromIntegral n * maxSize) ils
  -- xoks must not conflict with internal label table
  let xokConflicts = filter (`M.member` labelTable loaded) xoks
+ let info = intercalate ", " (map unLabel xokConflicts)
  unless (null xokConflicts) $ Left $ LinkError (Eng $ 
-   "conflict: cannot import label(s) `" ++ intercalate ", " (map unLabel xokConflicts) ++ 
-   "` that is already defined in the file")
+   "conflict: cannot import label(s) `" ++ info ++ 
+   "` that is already defined in the file") (Lpa $ "sliejseso: elx mouteo niv cene firsykaloa `" ++ 
+    info ++ "`. la lex veles snojo xelvinj fal chertifestan.")
  -- kues must come from internal label table 
  let kueWithoutEvidence = filter (`M.notMember` labelTable loaded) kues
+ let info2 = intercalate ", " (map unLabel kueWithoutEvidence)
  unless (null kueWithoutEvidence) $ Left $ LinkError (Eng $
-  "cannot export label(s) `" ++ intercalate ", " (map unLabel kueWithoutEvidence) ++
-  "` that is not defined in the file")
+  "cannot export label(s) `" ++ info2 ++
+  "` that is not defined in the file") (Lpa $ "cene niv cuturl firsykaloa `" 
+  ++ info2 ++  "`. la lex niv veles snojo fal chertifestan.")
  return (loaded, (kues, xoks))
 
 assignInts :: PageId -> ParsedFile -> (PageId, ParsedFile)

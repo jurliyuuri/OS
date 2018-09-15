@@ -17,8 +17,8 @@ class Message a where
  show' :: LangInfo -> a -> String
 
 instance Message LinkError where
- show' English (LinkError (Eng str)) = "LinkError: " ++ str
- show' Lineparine (LinkError (Eng _)) = "nixo melsrolfeno: " ++ dummy1
+ show' English (LinkError (Eng str) (Lpa _)) = "LinkError: " ++ str
+ show' Lineparine (LinkError (Eng _) (Lpa str)) = "nixo melsrolfeno: " ++ str
 
 
 instance Message ParseError where

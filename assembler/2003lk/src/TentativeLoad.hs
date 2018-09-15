@@ -26,10 +26,10 @@ toTentativeLoad initAddress arr = do
  unless (null arr) $ 
   let (_, (finalAddress, _)) = last raw1 in 
    when (finalAddress >= initAddress + maxSize) $
-    Left $ LinkError (Eng "size limit of a single file was exceeded")
+    Left $ LinkError (Eng "size limit of a single file was exceeded") (Lpa "panqa'd chertifen xerfo es sach'arrefoien fai jurkenel'd snojostan")
  case fromListNoDup list of
   Right ltable -> return TentativeLoad {tentativeAddressTable = M.fromList raw1, labelTable = ltable}
-  Left labels -> Left $ LinkError (Eng $ "duplicating local label(s): " ++ intercalate ", " (map unLabel labels))
+  Left labels -> let info = intercalate ", " (map unLabel labels) in Left $ LinkError (Eng $ "duplicate local label(s): " ++ info) (Lpa $ "xanalen firsykaloa'st sliejseso: " ++ info)
  
  where 
   (raw1, raw2) = unzip $ zipWith3 f ts (tail ts) arr
