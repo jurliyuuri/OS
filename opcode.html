@@ -2138,21 +2138,34 @@ inj a a a : どの値も変更されない。
 <p>na2co3「じゃあ対応するかあ」</p>
 <p>j.v「こっちも明記しておきます」</p>
 
+<h2 id="i56">56. 入門書</h2>
+
+<p>ずっと前から「2003'd ferlesylでプログラミングを学ぶっていう資料欲しいよね。えすわい本人もやってみたいって言ってるし、書いてみるか」と書いていたのを、やっと実行に移している。</p>
+
+<p>とりあえず、現状DPのコードは書けているので、それの解説を書かねば。</p>
+
+<p>入門書は<a href="./assembler_introduction/index.html">こちら</a>。</p>
+
+<h2 id="i57">57. エラーメッセージの理語化</h2>
+
+<p>Haskell interpreterについて、「エラーメッセージの理語化：ラッパは被せたので、訳すとかしていかねば」とか言われていた。<a href="http://lineparine.blogspot.com/2018/09/haskell2003lk.html">訳してもらった</a>ので足していきたい。</p>
+
+<p>その過程で「kueの動作が良く分からない」と言われた。<a href="opcode.html#i32_0">opcodeの32-0.</a>に書いたように、複数のファイルが渡された場合、<code>kue</code>が無いファイルがmainみたいな扱いになって先頭から実行されるんよね。つまり、<code>kue</code>が無いファイルはただ1つ存在する必要がある。</p>
+
+<p>あ、このことsettingsに書いてないじゃん。書いた。</p>
+
 <hr>
 <h2>xxx. To do</h2>
 <h3>xxx-1. 割り算</h3>
 <p>ゼロ割りどうしよう。商を不定値、余りを入力にするとか？あと、負の数がらみをどうするか</p>
 
-<h3>xxx-2. 入門書</h3>
-<p>2003'd ferlesylでプログラミングを学ぶっていう資料欲しいよね。えすわい本人もやってみたいって言ってるし、書いてみるか。</p>
 <h3>xxx-4. 呼び出し規約</h3>
 <p>アセンブリ言語側で32bit呼び出し規約を表現する方法を作りたいよね</p>
 <h3>xxx-5. malloc</h3>
 <p>malloc欲しい。</p>
 <h3>xxx-7. マクロ</h3>
 <p>マクロ欲しい。</p>
-<h3>xxx-8. エラーメッセージの理語化</h3>
-<p>ラッパは被せたので、訳すとかしていかねば</p>
+
 <h3>xxx-9. 造語</h3>
 <blockquote class="twitter-tweet" data-lang="ja"><p lang="ja" dir="ltr">造語(確認)依頼<br>・値<br>・即値<br>・間接参照<br>・ディスプレイスメント(変位量)<br>・オフセット<br>・符号拡張<br>・ゼロ拡張<br>・データ幅<br>・16bit値の通称<br>・MSB,LSB(BはBitおよびByte)<br>・エンディアン<br>・リトルエンディアン<br>・ビッグエンディアン<br>・アドレス空間<br>・リニアな<br>・実効アドレス</p>&mdash; Ritchan(りっちゃん) (@aios_ciao) <a href="https://twitter.com/aios_ciao/status/956898112013967360?ref_src=twsrc%5Etfw">2018年1月26日</a></blockquote>
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
