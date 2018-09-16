@@ -165,7 +165,55 @@ nll tykuv
 kRz 0 f0
 	
 nll ostor
-fi f5+16@ f0 xylo   malkRz tykuvon_stodup xx
+fi … f0 xylo   malkRz tykuvon_stodup xx
+…
+ata 4 f0
+kRz ostor xx
+
+nll tykuvon_stodup
+…
+fi f5+8@ … clo   malkRz lesback xx
+inj f5@ f5+4@ f5@
+ata 4 f5+8@
+kRz tykuv xx
+
+nll lesback
+…
+</pre>
+</div>
+
+<p>指令の頭で<code>f5+16@</code>を4倍しておくことで、<code>ostor</code>を終了して<code>tykuvon_stodup</code>に飛ぶための条件として<code>f5+16@</code>との比較を用いることができるようになります。</p>
+
+
+
+<div class="box">
+<pre>
+nll plelajnefes
+kRz f5+4@ f0
+ata 1 f0
+kRz f0 f3
+dRo 2 f3
+nta 12 f5
+<strong>dRo 2 f5+16@</strong>
+kRz f5 f5+4@
+nta f3 f5+4@
+kRz f5+4@ f5@
+nta f3 f5@
+
+nta f3 f5
+nll iumes
+kRz 0 f5@
+ata 4 f5
+nta 1 f0
+fi f0 0 niv   malkRz iumes xx
+
+kRz 0 f5+8@
+
+nll tykuv
+kRz 0 f0
+	
+nll ostor
+fi <strong>f5+16@</strong> f0 xylo   malkRz tykuvon_stodup xx
 …
 ata 4 f0
 kRz ostor xx
@@ -196,10 +244,10 @@ nll plelajnefes
 nta 1 f5+16@
 kRz f5+4@ f0
 ata 1 f0
-dRo 2 f5+4@
 kRz f0 f3
 dRo 2 f3
 nta 12 f5
+dRo 2 f5+16@
 kRz f5 f5+4@
 nta f3 f5+4@
 kRz f5+4@ f5@
