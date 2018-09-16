@@ -105,7 +105,7 @@ parseLat ::
   -> String
   -> StateT ParserStat (Either Error) (Rvalue, Lvalue, Lvalue)
 parseLat x y z = do
-  isCI_ <- isCI <$> get
+  isCI_ <- gets isCI
   r <-
     lift $
     if isCI_
@@ -137,7 +137,7 @@ toI ("nac":x:xs) = do
   return $ (Just $ Dal (Pure 0) a, []) : rest
 toI (str:x:y:zs)
   | isJust $ rl str = do
-    isCI_ <- isCI <$> get
+    isCI_ <- gets isCI
     i <-
       lift $
       if isCI_
@@ -167,7 +167,7 @@ toI ("fi":x:y:z:bs)
     rest <- toI bs
     return $ (Just $ Fi a b (fromJust $ parseCond z), []) : rest
 toI ("inj":x:y:z:bs) = do
-  isCI_ <- isCI <$> get
+  isCI_ <- gets isCI
   a <-
     lift $
     if isCI_

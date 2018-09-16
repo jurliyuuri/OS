@@ -77,7 +77,7 @@ finalize = do
     else return False
 
 getCPU :: VIO CPU
-getCPU = fst <$> get
+getCPU = gets fst
 
 getRegister :: Register -> VIO Word32
 getRegister F0 = f0 <$> getCPU
