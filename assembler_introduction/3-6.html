@@ -268,8 +268,226 @@ fi f5+8@ <strong>f5+28@</strong> clo   malkRz lesback xx
 
 <hr>
 
-<h1>執筆中</h1>
+<p>さて、基本的な骨組みもできたことですし、あとは細かい部分を埋めていくだけです。</p>
 
+<p>まずは最後の部分から。<code>f5@</code>には新しい表の先頭番地が入っているので、それと積載制限の4倍である<code>f5+16@</code>との和の番地を見ることで、新しい表の積載制限番目を見ることができます。それが答えなので、<code>f0</code>に入れ、<code>f5</code>を元の位置に戻して<code>kRz f5@ xx</code>します。</p>
+
+<div class="box">
+<pre>
+nll lesback
+kRz f5@ f0
+ata f5+16@ f0
+kRz f0@ f0
+ata 12 f5
+kRz f5@ xx
+</pre>
+</div>
+
+<p>さあ、あとは表を埋める処理を書けば完成です。</p>
+
+<ul>
+	<li>nの値が小さすぎれば追加された商品は活躍できない</li>
+	<li>nの値が十分なら、追加した商品が活躍できるかもしれないし、できないかもしれない</li>
+</ul>
+
+<p>を順当に2003lkに落とし込んで行きましょう。</p>
+
+<p>f0がnの4倍なので、まずは旧い表の番地（<code>f5+4@</code>）にf0を足し、<code>@</code>することで旧い表のnでの値が入ります。</p>
+
+<div class="box">
+<pre>
+nll ostor
+fi f5+16@ f0 xylo   malkRz tykuvon_stodup xx
+<strong>kRz f0 f2
+ata f5+4@ f2
+kRz f2@ f2</strong>
+…
+ata 4 f0
+kRz ostor xx
+</pre>
+</div>
+
+<p>その後は、<code>f5+8@</code>に入っている「何番目の品物を見ているか」という情報（ただし1引いて4倍した値が入っている）を質量一覧の先頭番地<code>f5+24@</code>に足し、<code>@</code>することで品物の質量が手に入ります。それを<code>f3</code>に入れておきます。</p>
+
+
+<div class="box">
+<pre>
+nll ostor
+fi f5+16@ f0 xylo   malkRz tykuvon_stodup xx
+kRz f0 f2
+ata f5+4@ f2
+kRz f2@ f2
+<strong>kRz f5+8@ f3
+ata f5+24@ f3
+kRz f3@ f3</strong>
+…
+ata 4 f0
+kRz ostor xx
+</pre>
+</div>
+
+<p>nが十分小さいときは、それ以上の判断は要らず、新しい表の番地（<code>f5@</code>）に<code>f0</code>を足して<code>@</code>して<code>f2</code>（旧い表のnでの値）を複製すればよいです。</p>
+
+<div class="box">
+<pre>
+nll ostor
+fi f5+16@ f0 xylo   malkRz tykuvon_stodup xx
+kRz f0 f2
+ata f5+4@ f2
+kRz f2@ f2
+kRz f5+8@ f3
+ata f5+24@ f3
+kRz f3@ f3
+<strong>kRz f3 f1
+dRo 2 f1
+fi f1 f0 llo   malkRz lasyk xx</strong>
+…
+<strong>nll lasyk
+kRz f0 f3
+ata f5@ f3
+kRz f2 f3@</strong>
+ata 4 f0
+kRz ostor xx
+</pre>
+</div>
+
+<p>さて、あとは比較が必要な場合を処理するだけです。少しややこしいので、具体例に立ち戻って考えてみましょう。</p>
+
+<p>新商品が13 styで40000 ledzのとき、新しい表のn=13は「旧い表のn=0に新商品の価値40000 ledzを足したもの」と「旧い表のn=13」の比較になり、新しい表のn=15は、「旧い表のn=2に新商品の価値を足したもの」と「旧い表のn=15」の比較になるのでした。</p>
+
+<p>とりあえず、旧い表のn=「<code>f0</code>の4分の1であるnから品物の質量<code>f3</code>を引いた値」を見にいきましょう。表を見に行く際に足す番地はどうせ4倍されるので、<code>f0</code>から<code>f3</code>の4倍を引いた値を手に入れ、</p>
+
+<div class="box">
+<pre>
+nll ostor
+fi f5+16@ f0 xylo   malkRz tykuvon_stodup xx
+kRz f0 f2
+ata f5+4@ f2
+kRz f2@ f2
+kRz f5+8@ f3
+ata f5+24@ f3
+kRz f3@ f3
+kRz f3 f1
+dRo 2 f1
+fi f1 f0 llo   malkRz lasyk xx
+<strong>kRz f0 f1
+dRo 2 f3
+nta f3 f1</strong>
+…
+nll lasyk
+kRz f0 f3
+ata f5@ f3
+kRz f2 f3@
+ata 4 f0
+kRz ostor xx
+</pre>
+</div>
+
+<p>旧い表の番地（<code>f5+4@</code>）とそれを足して<code>@</code>した値を<code>f3</code>に入れておきます。</p>
+
+<div class="box">
+<pre>
+nll ostor
+fi f5+16@ f0 xylo   malkRz tykuvon_stodup xx
+kRz f0 f2
+ata f5+4@ f2
+kRz f2@ f2
+kRz f5+8@ f3
+ata f5+24@ f3
+kRz f3@ f3
+kRz f3 f1
+dRo 2 f1
+fi f1 f0 llo   malkRz lasyk xx
+kRz f0 f1
+dRo 2 f3
+nta f3 f1
+<strong>kRz f1 f3
+ata f5+4@ f3
+kRz f3@ f3</strong>
+…
+nll lasyk
+kRz f0 f3
+ata f5@ f3
+kRz f2 f3@
+ata 4 f0
+kRz ostor xx
+</pre>
+</div>
+
+<p><code>f5+8@</code>に入っている「何番目の品物を見ているか」という情報（ただし1引いて4倍した値が入っている）を<code>f5+20@</code>に入っている価値一覧の先頭番地に足し合わせ、<code>@</code>することで品物の価値を<code>f3</code>に<strong>足し合わせ</strong>ます。これで片方の候補の値が手に入ります。</p>
+
+
+<div class="box">
+<pre>
+nll ostor
+fi f5+16@ f0 xylo   malkRz tykuvon_stodup xx
+kRz f0 f2
+ata f5+4@ f2
+kRz f2@ f2
+kRz f5+8@ f3
+ata f5+24@ f3
+kRz f3@ f3
+kRz f3 f1
+dRo 2 f1
+fi f1 f0 llo   malkRz lasyk xx
+kRz f0 f1
+dRo 2 f3
+nta f3 f1
+kRz f1 f3
+ata f5+4@ f3
+kRz f3@ f3
+<strong>kRz f5+8@ f1
+ata f5+20@ f1
+ata f1@ f3</strong>
+…
+nll lasyk
+kRz f0 f3
+ata f5@ f3
+kRz f2 f3@
+ata 4 f0
+kRz ostor xx
+</pre>
+</div>
+
+<p>あとは、<code>f0</code>と<code>f5@</code>の和の<code>@</code>（新しい表のn番目）に<code>f3</code>（新商品を採用したときの最大価値）を入れ、かなり前にセットした<code>f2</code>（旧い表のnでの値）と比較、<code>f2</code>の方が大きかったら新しい表のn番目には<code>f2</code>を入れます。そして<code>lasyk</code>の後の代入処理は飛ばします。</p>
+
+<div class="box">
+<pre>
+nll ostor
+fi f5+16@ f0 xylo   malkRz tykuvon_stodup xx
+kRz f0 f2
+ata f5+4@ f2
+kRz f2@ f2
+kRz f5+8@ f3
+ata f5+24@ f3
+kRz f3@ f3
+kRz f3 f1
+dRo 2 f1
+fi f1 f0 llo   malkRz lasyk xx
+kRz f0 f1
+dRo 2 f3
+nta f3 f1
+kRz f1 f3
+ata f5+4@ f3
+kRz f3@ f3
+kRz f5+8@ f1
+ata f5+20@ f1
+ata f1@ f3
+<strong>kRz f0 f1
+ata f5@ f1
+kRz f3 f1@
+fi f1@ f2 xylo   malkRz f2 f1@
+kRz ostoron_stodup xx
+</strong>
+nll lasyk
+kRz f0 f3
+ata f5@ f3
+kRz f2 f3@
+<strong>nll ostoron_stodup</strong>
+ata 4 f0
+kRz ostor xx
+</pre>
+</div>
 
 <hr>
 
@@ -304,36 +522,36 @@ kRz 0 f0
 	
 nll ostor
 fi f5+16@ f0 xylo   malkRz tykuvon_stodup xx
-	kRz f0 f2
-	ata f5+4@ f2
-	kRz f2@ f2
-	kRz f5+8@ f3
-	ata f5+24@ f3
-	kRz f3@ f3
-	kRz f3 f1
-	dRo 2 f1
-	fi f1 f0 llo   malkRz lasyk xx
-	kRz f0 f1
-	dRo 2 f3
-	nta f3 f1
-	kRz f1 f3
-	ata f5+4@ f3
-	kRz f3@ f3
-	kRz f5+8@ f1
-	ata f5+20@ f1
-	ata f1@ f3
-	kRz f0 f1
-	ata f5@ f1
-	kRz f3 f1@
-	fi f1@ f2 xylo   malkRz f2 f1@
-	kRz ostoron_stodup xx
+kRz f0 f2
+ata f5+4@ f2
+kRz f2@ f2
+kRz f5+8@ f3
+ata f5+24@ f3
+kRz f3@ f3
+kRz f3 f1
+dRo 2 f1
+fi f1 f0 llo   malkRz lasyk xx
+kRz f0 f1
+dRo 2 f3
+nta f3 f1
+kRz f1 f3
+ata f5+4@ f3
+kRz f3@ f3
+kRz f5+8@ f1
+ata f5+20@ f1
+ata f1@ f3
+kRz f0 f1
+ata f5@ f1
+kRz f3 f1@
+fi f1@ f2 xylo   malkRz f2 f1@
+kRz ostoron_stodup xx
 	
-	nll lasyk
-	kRz f0 f3
-	ata f5@ f3
-	kRz f2 f3@
+nll lasyk
+kRz f0 f3
+ata f5@ f3
+kRz f2 f3@
 	
-	nll ostoron_stodup
+nll ostoron_stodup
 ata 4 f0
 kRz ostor xx
 	
@@ -344,11 +562,11 @@ ata 4 f5+8@
 kRz tykuv xx
 
 nll lesback
-	kRz f5@ f0
-	ata f5+16@ f0
-	kRz f0@ f0
-	ata 12 f5
-	kRz f5@ xx
+kRz f5@ f0
+ata f5+16@ f0
+kRz f0@ f0
+ata 12 f5
+kRz f5@ xx
 </pre>
 </div>
 <!--
