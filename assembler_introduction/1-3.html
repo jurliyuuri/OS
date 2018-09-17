@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-<title>2003lk入門 ― 1-3. 命令</title>
+<title>2003lk入門 ― 1-3. 基本動作</title>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="../common.css">
 <link rel="stylesheet" href="ny_jurli.css">
@@ -15,12 +15,25 @@
 </div>
 <hr>
 <h2>ksi.1 2003'd ferlesylを知る</h2>
-<h3>lexn.3 命令</h3>
+<h3>lexn.3 基本動作</h3>
 
 <p>2003fは[命令](xlaiso)を与えられることによって動作します。その命令を記述するための言語が2003lkです。</p>
 
+<p>2003fは、命令を見ながら基本的にはそれを順次実行していきます。それを実現するために、2003fは<code>nx</code>（[今見ているところ](noon xelal)の略）と<code>xx</code>（[xeumon xelal](次に見るところ) の略）という2つのfirjalを持っています。なお、<code>nx</code>というfirjalは隠されており、我々は直接<code>nx</code>というfirjalに働きかけることはできません。</p>
+<p>2003fの基本動作は単純で、以下の3つの動作をひたすら繰り返します。</p>
+<ol>
+	<li>xxが次の命令を指すようにする</li>
+	<li>nxの指す命令を実行する</li>
+	<li>xxの指す命令をnxも指すようにする</li>
+</ol>
+<p>これを繰り返していくことで、命令を次々に実行していけることが分かるかと思います。</p>
+<p>このような単純な動作だけで複雑な作業を行わせるにはどうすればいいのでしょう？それについて、これから見ていくことにしましょう。</p>
+
+<p>なお、2003lkで記述するものの中には、2003fが直接実行する[命令](xlaiso)ではないものもあります。そういったものは[擬似命令](xlaiso'd xalergerl)と呼ばれます。
+</p>
+
 <hr>
-<a href="./1-2.html">前のページへ</a>&nbsp;&nbsp;&nbsp;<a href="./1-4.html">次のページへ</a>
+<a href="./1-2.html">前のページへ</a>&nbsp;&nbsp;&nbsp;<a href="./index.html">次のページへ</a>
 <br>
 <br>
 <br>
