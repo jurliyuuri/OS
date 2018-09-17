@@ -122,16 +122,34 @@ nta f3 f5@</strong>
 </pre>
 </div>
 
+<p>以後「f5+12@」などと言った場合は、12引いた方の新しいf5で言及したいので、12引く場所をずらしておきます。</p>
+
+<div class="box">
+<pre>
+nll plelajnefes
+<strong>nta 12 f5</strong>
+kRz <strong>f5+16@</strong> f0
+ata 1 f0
+kRz f0 f3
+dRo 2 f3
+kRz f5 f5+4@
+nta f3 f5+4@
+kRz f5+4@ f5@
+nta f3 f5@
+…
+</pre>
+</div>
+
 <p>そうしたら、一覧表1を先頭から0で埋めていきます。「積載制限+1」が既に<code>f0</code>に入っているので、これを減らしていけばちょうど一覧表1の全体が0で埋まります。</p>
 
 <div class="box">
 <pre>
 nll plelajnefes
-kRz f5+4@ f0
+nta 12 f5
+kRz f5+16@ f0
 ata 1 f0
 kRz f0 f3
 dRo 2 f3
-nta 12 f5
 kRz f5 f5+4@
 nta f3 f5+4@
 kRz f5+4@ f5@
@@ -153,8 +171,9 @@ fi f0 0 niv   malkRz iumes xx</strong>
 <p>基本的構造は次のようになります。</p>
 <p>[内の](<code>ostor</code>)では「q個まで見た表」から「q+1個まで見た表」を作っていきます。nを増やしながら表を埋めていくという方針を前回立てましたが、<code>ostor</code>が始まる直前に<code>f0</code>に0を入れ、マスを埋めながら<code>f0</code>を4ずつ増やしていきます。</p>
 
-<p>[外](<code>tykuv</code>)では、見る品物の個数を1個ずつ増やしていくという方針に合わせて、<code>f5+8@</code>に0を入れ、4ずつ増やしていきます。</p>
+<p>[外](<code>tykuv</code>)では、見る品物の個数を1個ずつ増やしていくという方針に合わせて、領域1である<code>f5+8@</code>に0を入れ、4ずつ増やしていきます。さらに、領域3と領域2に入っている値を入れ替えることで、「新しい表」と「旧い表」の立場を交換し、次の処理に進みます。</p>
 
+<p>ここでともに4ずつ増やしていっているのは、後で要素にアクセスするのを楽にするためです。</p>
 
 <div class="box">
 <pre>
@@ -171,7 +190,6 @@ ata 4 f0
 kRz ostor xx
 
 nll tykuvon_stodup
-…
 fi f5+8@ … clo   malkRz lesback xx
 inj f5@ f5+4@ f5@
 ata 4 f5+8@
@@ -182,18 +200,16 @@ nll lesback
 </pre>
 </div>
 
-<p>指令の頭で<code>f5+16@</code>を4倍しておくことで、<code>ostor</code>を終了して<code>tykuvon_stodup</code>に飛ぶための条件として<code>f5+16@</code>との比較を用いることができるようになります。</p>
-
-
+<p>指令の頭で積載制限である<code>f5+16@</code>を4倍しておくことで、<code>ostor</code>を終了して<code>tykuvon_stodup</code>に飛ぶための条件として<code>f5+16@</code>との比較を用いることができるようになります。</p>
 
 <div class="box">
 <pre>
 nll plelajnefes
-kRz f5+4@ f0
+nta 12 f5
+kRz f5+16@ f0
 ata 1 f0
 kRz f0 f3
 dRo 2 f3
-nta 12 f5
 <strong>dRo 2 f5+16@</strong>
 kRz f5 f5+4@
 nta f3 f5+4@
@@ -219,7 +235,6 @@ ata 4 f0
 kRz ostor xx
 
 nll tykuvon_stodup
-…
 fi f5+8@ … clo   malkRz lesback xx
 inj f5@ f5+4@ f5@
 ata 4 f5+8@
@@ -227,6 +242,27 @@ kRz tykuv xx
 
 nll lesback
 …
+</pre>
+</div>
+
+<p><code>lesback</code>に向かうための条件は、領域1であるf5+8@が、品物の数-1の4倍に等しくなることです。これまた比較が楽になるよう、予めf5+28@から1を引いて4倍しておきます。</p>
+
+<div class="box">
+<pre>
+nll plelajnefes
+nta 12 f5
+<strong>nta 1 f5+28@
+dRo 2 f5+28@</strong>
+kRz f5+16@ f0
+ata 1 f0
+kRz f0 f3
+dRo 2 f3
+…
+…
+…
+…
+nll tykuvon_stodup
+fi f5+8@ <strong>f5+28@</strong> clo   malkRz lesback xx
 </pre>
 </div>
 
@@ -241,12 +277,13 @@ nll lesback
 <div class="box">
 <pre>
 nll plelajnefes
-nta 1 f5+16@
-kRz f5+4@ f0
+nta 12 f5
+nta 1 f5+28@
+dRo 2 f5+28@
+kRz f5+16@ f0
 ata 1 f0
 kRz f0 f3
 dRo 2 f3
-nta 12 f5
 dRo 2 f5+16@
 kRz f5 f5+4@
 nta f3 f5+4@
@@ -301,9 +338,7 @@ ata 4 f0
 kRz ostor xx
 	
 nll tykuvon_stodup
-	kRz f5+28@ f3
-	dRo 2 f3
-fi f5+8@ f3 clo   malkRz lesback xx
+fi f5+8@ f5+28@ clo   malkRz lesback xx
 inj f5@ f5+4@ f5@
 ata 4 f5+8@
 kRz tykuv xx
