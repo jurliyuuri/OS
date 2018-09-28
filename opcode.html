@@ -2264,6 +2264,26 @@ inj a a a : どの値も変更されない。
 
 <p>ということで暗黙のうちに存在を確定させていたのだった。ということで明記する。</p>
 
+<h2 id="i60">60. <code>fasal</code>について</h2>
+
+<p><a href="#i46">46.</a>にこんなことを書いた。</p>
+
+<div class="box">
+<p>ログは<a href="conversations/entry_point.txt">こちら</a>。
+エントリーポイントを明示するラベルはなく、ファイルの途中から始めたいときには<code>krz _fasal xx</code>とでも書いて<code>_fasal</code>から処理を始めたのだろう。なお、fasalはそのまま「始まる地点　先頭」という意味のリパライン語である。</p>
+<p>但し、時代が後の方になってくると、先頭から始まっているコードであっても<code>krz _fasal xx</code>と<code>nll _fasal</code>をとりあえず書いておく、ということが起きたりしそうだ（独立した関数になっていた方が色々扱いやすいもんな、順番入れ換えられるし）。で、そうなってくるとわざわざ毎回<code>krz _fasal xx</code>を書くのが面倒になる。よって、<code>_fasal</code>というラベル名を環境側で特別視し、何もしなくても先頭に勝手に<code>krz _fasal xx</code>が入るようになる。そうすると、最終的には<code>_fasal</code>が事実上のエントリーポイントとして見なされることになり、「実は勝手に<code>krz _fasal xx</code>が挿入されている」というのは雑学みたいな扱いになる。</p>
+
+<p>よさそう。</p>
+</div>
+
+<p>これに対してtkc氏が「そういえば， <code>_fasal</code> でいいんですかね． <code>_</code> としていいんですかね？(現世感あるけどこれは設定的に問題無いのかと思った) 
+
+(これ分からんのでtinkaは_fasalからfasalに変更しようと思っている．)」と述べた。</p>
+
+<p>私の感想『<code>_fasal</code> も <code>fasal</code> も現状はまだただの名前ですからねぇ。「後世では、処理系に特殊扱いされるので <code>_fasal</code> <code>fasal</code> <code>'fasal</code> どれでもいい」「どうせ一つのファイルに2種類混在させるやついないやろ」』『「<code>_fasal</code> というラベルがあれば、エントリーポイントを持つファイルの冒頭に勝手に <code>krz _fasal xx</code> が挿入される」というだけの機能なので、「処理系が<code>_fasal</code> <code>fasal</code> <code>'fasal</code> は特殊扱いして、勝手に冒頭にラベルを入れる」でええやろ、という』</p>
+
+<p>そもそもあくまでボイラープレートを回避するためのものにすぎないのでねぇ。</p>
+
 <hr>
 <h2>xxx. To do</h2>
 <h3>xxx-1. 割り算</h3>
