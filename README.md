@@ -6,6 +6,11 @@
 - [オペコードなどについて考察する](http://jurliyuuri.com/OS/opcode.html)
 - [機械語がらみの設定一覧](http://jurliyuuri.com/OS/settings.html)
 
+## 用語の設定とか
+- [悠里世界OSプロジェクト - 用語集](https://sites.google.com/site/panqateel/yougo)
+- [計算機科学者と宗教学者のお話](http://lineparine.blogspot.com/2017/10/blog-post_23.html)
+- [Haskell版2003lkインタプリタ エラーメッセージ翻訳ログ](http://lineparine.blogspot.com/2018/09/haskell2003lk.html)
+
 
 
 A project to make an emulator of an OS used in the constructed world of [jurliyuuri](http://jurliyuuri.com/OS)
