@@ -9,6 +9,7 @@
 ## 用語の設定とか
 - [悠里世界OSプロジェクト - 用語集](https://sites.google.com/site/panqateel/yougo)
 - [計算機科学者と宗教学者のお話](http://lineparine.blogspot.com/2017/10/blog-post_23.html)
+- [20180128造語](http://lineparine.blogspot.com/2018/01/20180128.html)
 - [Haskell版2003lkインタプリタ エラーメッセージ翻訳ログ](http://lineparine.blogspot.com/2018/09/haskell2003lk.html)
 
 
