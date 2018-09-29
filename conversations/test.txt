@@ -1,0 +1,40 @@
+
+hsjoihs 2018/09/18
+1010
+1001
+→ 共に1になっているlysolがある。OK。
+
+0110
+1000
+→ 共に1になっているlysolがない。NG。
+
+という性質のことをlysolisi'anaschみたいに呼べたりしますかね
+lysol'i celatiso とか es snosticevol とかも考えたのだが
+ちなみに現世だと「TEST命令」とかいう名前だったりすることが多い
+
+omasanori 2018/09/18
+lysol'i celatiso / es snosticevol、1が「そう」だということは明示されていないのが気になりましたが、考えてみたらtestも一体何をtestするのか名前から全く分かりませんね……
+
+Fafs sashimi 2018/09/18
+それってANDなんですかね？
+もし、ANDと同一視していいならadalanaschとか言っちゃ駄目なのかなあ
+lysolisi'anasch 「ビット間の性質」
+lysol'i celatiso　「ビット共有」→性質であることを明示したいので、celatisenasch lysolとかが良い。
+es snosticevol　「同性質状態である」→分かりやすいけどomasanori氏が言う通りNAND出力の1も含むように見える
+
+omasanori 2018/09/18
+ANDを取って、その結果に応じてフラグを立てる（ANDの結果そのものは保存しない）命令ですね
+「ANDを取った結果が0でない性」
+
+Fafs sashimi 2018/09/18
+konpanarvadalanaschとか長すぎるしなあ
+
+hsjoihs 2018/09/18
+testぐらい雑でも許される（誰によって？）が、まあきれいに言えるなら言いたいよねという
+
+hsjoihs 2018/09/18
+fi f1(格接辞) f2(格接辞) 動詞 みたいな形で言えると他の分岐構文に合わせられて綺麗ではある
+
+Fafs sashimi 2018/09/18
+lysol-ar-pan-olとかはどうだろう
+pitresol panとかでもいいのかなあ
