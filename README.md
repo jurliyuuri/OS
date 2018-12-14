@@ -4,6 +4,7 @@
 - [公式サイト](https://sites.google.com/site/panqateel/home)  
 <!-- - [デモ](http://jurliyuuri.com/OS/main.html) (almost deprecated) -->
 - [オペコードなどについて考察する](http://jurliyuuri.com/OS/opcode.html)
+- [denseなオペコード『を』考察する](http://jurliyuuri.com/OS/dense_opcode.html)
 - [機械語がらみの設定一覧](http://jurliyuuri.com/OS/settings.html)
 
 ## 用語の設定とか
