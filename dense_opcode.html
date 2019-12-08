@@ -448,6 +448,114 @@ f5+696@	0
 <p>ということで符号なし7bitか8bit。じゃあ符号なし8bitでええやん。</p>
 <p>なるほどなぁ。</p>
 
+<hr>
+
+<p>以降は<a href="https://adventar.org/calendars/4508">悠里・大宇宙界隈 Advent Calendar 2019</a>の9日目の記事です。</p>
+
+<h2 id="i3">3. 実際のオペコード</h2>
+
+<p>実はオペコード自体は考えていたのだが公開していないまま一年が経ってしまった。ウケる。</p>
+
+<p>説明を書いているとさらに公開が遅れるのでもう最低限の説明で出してしまおう。これで如何にして現状の全命令がカバーできているかを考えるのは読者への課題とする。</p>
+
+<div style="border: 1px solid blue; padding: 5px; margin: 5px;">
+  <p>凡例</p>
+  <ul>
+    <li>V: 値。
+      <ul>
+        <li>I: 即値。Vである。
+          <ul>
+            <li>N: nearな即値。Iである。</li>
+            <li>F: farな即値。Iである。</li>
+            <li>B: 8bitの値。Iである。</li>
+          </ul>
+        </li>
+        <li>L: 左辺値。Vである。</li>
+      </ul>
+    </li>
+    <li>C+S: 3bitコード + 5bit値。</li>
+  </ul>
+</div>
+
+<table cellpadding="3" cellspacing="0" border="1" style="margin: 5px">
+    <tr><td>引数       </td><td>上＼下</td><td>0</td><td>1</td><td>2</td><td>3</td></tr>
+    <tr><td>()         </td><td>0.00</td><td>f0++;</td><td>f1++;</td><td>f2++;</td><td>f3++;</td></tr>
+    <tr><td>()         </td><td>0.01</td><td>f0--;</td><td>f1--;</td><td>f2--;</td><td>f3--;</td></tr>
+    <tr><td>()         </td><td>0.10</td><td>f0 = ~f0;</td><td>f1 = ~f1;</td><td>f2 = ~f2;</td><td>f3 = ~f3;</td></tr>
+    <tr><td>()         </td><td>0.11</td><td>f0 = 0;</td><td>f1 = 0;</td><td>f2 = 0;</td><td>f3 = 0;</td></tr>
+    <tr><td>()         </td><td>1.00</td><td>flag = (f0 == 0);</td><td>flag = (f1 == 0);</td><td>flag = (f2 == 0);</td><td>flag = (f3 == 0);</td></tr>
+    <tr><td>()         </td><td>1.01</td><td>flag = (f0 != 0);</td><td>flag = (f1 != 0);</td><td>flag = (f2 != 0);</td><td>flag = (f3 != 0);</td></tr>
+    <tr><td>()         </td><td>1.10</td><td>f0 = *f5; f5 += 4;</td><td>f1 = *f5; f5 += 4;</td><td>f2 = *f5; f5 += 4;</td><td>f3 = *f5; f5 += 4;</td></tr>
+    <tr><td>()         </td><td>1.11</td><td>f0 = f5;</td><td>f1 = f5;</td><td>f2 = f5;</td><td>f3 = f5;</td></tr>
+    <tr><td>(L0)       </td><td>2.00</td><td>L0++;</td><td>L0--;</td><td>L0 = ~L0;</td><td>L0 = 0;</td></tr>
+    <tr><td>(L0)       </td><td>2.01</td><td>flag = (L0 == 0);</td><td>flag = (L0 != 0);</td><td>L0 = *f5; f5 += 4;</td><td>?</td></tr>
+    <tr><td>(B0)       </td><td>2.10</td><td>xx += B0;</td><td>xx -= B0;</td><td>if(flag) xx += B0;</td><td>if(flag) xx -= B0;</td></tr>
+    <tr><td>(V0)       </td><td>2.11</td><td>f0 = *V0;</td><td>f1 = *V0;</td><td>f2 = *V0;</td><td>f3 = *V0;</td></tr>
+    <tr><td>(V0)       </td><td>3.0</td><td>xx += V0;</td><td>xx -= V0;</td><td>if(flag) xx += V0;</td><td>if(flag) xx -= V0;</td><td>f5 += V0;</td><td>f5 -= V0;</td><td>f5 -= 4; *f5 = V0;</td><td>inj V0 xx f5@</td></tr>
+    <tr><td>()         </td><td>3.10</td><td>xx = *f5;</td><td>?</td><td>?</td><td>?</td></tr>
+    <tr><td>(V0)       </td><td>3.11</td><td>f0 = xx + V0;</td><td>f1 = xx + V0;</td><td>f2 = xx + V0;</td><td>f3 = xx + V0;</td></tr>
+    <tr><td>(L0,V1)    </td><td>4.00</td><td>lat V1 f0 L0</td><td>lat V1 f1 L0</td><td>lat V1 f2 L0</td><td>lat V1 f3 L0</td></tr>
+    <tr><td>(L0,V1)    </td><td>4.01</td><td>latsna V1 f0 L0</td><td>latsna V1 f1 L0</td><td>latsna V1 f2 L0</td><td>latsna V1 f3 L0</td></tr>
+    <tr><td>(L0,V1)    </td><td>4.10</td><td>inj V1 f0 L0</td><td>inj V1 f1 L0</td><td>inj V1 f2 L0</td><td>inj V1 f3 L0</td></tr>
+    <tr><td>(L0,L1,V2) </td><td>4.11</td><td>lat V2 L1 L0</td><td>latsna V2 L1 L0</td><td>inj V2 L1 L0</td><td>?</td></tr>
+    <tr><td>           </td><td>5.00</td><td>?</td><td>?</td><td>?</td><td>?</td></tr>
+    <tr><td>           </td><td>5.01</td><td>?</td><td>?</td><td>?</td><td>?</td></tr>
+    <tr><td>           </td><td>5.10</td><td>?</td><td>?</td><td>?</td><td>?</td></tr>
+    <tr><td>           </td><td>5.11</td><td>?</td><td>?</td><td>?</td><td>?</td></tr>
+    <tr><td>           </td><td>6.00</td><td>?</td><td>?</td><td>?</td><td>?</td></tr>
+    <tr><td>        </td><td>6.01</td><td>?</td><td>?</td><td>?</td><td>?</td></tr>
+    <tr><td>(B0)       </td><td>6.10</td><td>f0 = (int8_t) B0;</td><td> f1 = (int8_t) B0;</td><td> f2 = (int8_t) B0;</td><td> f3 = (int8_t) B0;</td></tr>
+    <tr><td>(B0,L1)    </td><td>6.11</td><td>L1 = (int8_t) B0;</td><td>?</td><td>?</td><td>?</td></tr>
+    <tr><td>(C+S0)     </td><td>7.00; C=000</td><td>f0 &amp;lt;&lt;= S0;</td><td>f1 &lt;&lt;= S0;</td><td>f2 &lt;&lt;= S0;</td><td>f3 &lt;&lt;= S0;</td></tr>
+    <tr><td>(C+S0)     </td><td>7.00; C=001</td><td>f0 >>>= S0;</td><td>f1 >>>= S0;</td><td>f2 >>>= S0;</td><td>f3 >>>= S0;</td></tr>
+    <tr><td>(C+S0)     </td><td>7.00; C=010</td><td>f0 >>= S0;</td><td>f1 >>= S0;</td><td>f2 >>= S0;</td><td>f3 >>= S0;</td></tr>
+    <tr><td>(C+S0)     </td><td>7.00; C=011</td><td>flag = (0 == ((1 &lt;&lt; S0) &amp; f0));</td><td>flag = (0 == ((1 &lt;&lt; S0) &amp; f1));</td><td>flag = (0 == ((1 &lt;&lt; S0) &amp; f2));</td><td>flag = (0 == ((1 &lt;&lt; S0) &amp; f3));</td></tr>
+    <tr><td>(C+S0)     </td><td>7.00; C=100</td><td>flag = (0 != ((1 &lt;&lt; S0) &amp; f0));</td><td>flag = (0 != ((1 &lt;&lt; S0) &amp; f1));</td><td>flag = (0 != ((1 &lt;&lt; S0) &amp; f2));</td><td>flag = (0 != ((1 &lt;&lt; S0) &amp; f3));</td></tr>
+    <tr><td>(C+S0)     </td><td>7.00; C=101</td><td>f5 += 4 * S0;</td><td>?</td><td>?</td><td>?</td></tr>
+    <tr><td>(C+S0)     </td><td>7.00; C=110</td><td>f5 -= 4 * S0; </td><td>?</td><td>?</td><td>?</td></tr>
+    <tr><td>(C+S0)     </td><td>7.00; C=111</td><td>f0 = *(f5 + 4 * S0);</td><td>f1 = *(f5 + 4 * S0);</td><td>f2 = *(f5 + 4 * S0);</td><td>f3 = *(f5 + 4 * S0);</td></tr>
+    <tr><td>(C+S0,L1)  </td><td>7.01; C=000</td><td>L1 &lt;&lt;= S0;</td><td>?</td><td>?</td><td>?</td></tr>
+    <tr><td>(C+S0,L1)  </td><td>7.01; C=001</td><td>L1 >>>= S0;</td><td>?</td><td>?</td><td>?</td></tr>
+    <tr><td>(C+S0,L1)  </td><td>7.01; C=010</td><td>L1 >>= S0;</td><td>?</td><td>?</td><td>?</td></tr>
+    <tr><td>(C+S0,L1)  </td><td>7.01; C=011</td><td>flag = (0 == ((1 &lt;&lt; S0) &amp; L1));</td><td>?</td><td>?</td><td>?</td></tr>
+    <tr><td>(C+S0,L1)  </td><td>7.01; C=100</td><td>flag = (0 != ((1 &lt;&lt; S0) &amp; L1));</td><td>?</td><td>?</td><td>?</td></tr>
+    <tr><td>(C+S0,V1)  </td><td>7.01; C=101</td><td>*(f5 + 4 * S0) = f0;</td><td>*(f5 + 4 * S0) = f1;</td><td>*(f5 + 4 * S0) = f2;</td><td>*(f5 + 4 * S0) = f3;</td></tr>
+    <tr><td>(C+S0,V1)  </td><td>7.01; C=110</td><td>*(f5 + 4 * S0) = V1;</td><td>?</td><td>?</td><td>?</td></tr>
+    <tr><td>(C+S0,B1)  </td><td>7.01; C=111</td><td>?</td><td>?</td><td>?</td><td>?</td></tr>
+    <tr><td>(V0,V1)    </td><td>7.1</td><td>flag = (uint32_t)V0 >= (uint32_t)V1;</td><td>flag = (uint32_t)V0 &lt; (uint32_t)V1;</td><td>flag = (V0 == V1);</td><td>flag = (V0 != V1);</td><td>flag = (int32_t)V0 >= (int32_t)V1;</td><td>flag = (int32_t)V0 &lt; (int32_t)V1;</td><td>flag = (0 == (V0 &amp; V1));</td><td>flag = (0 != (V0 &amp; V1));</td></tr>
+    <tr><td>(V0)       </td><td>8.00</td><td>f0 += V0;</td><td>f1 += V0;</td><td>f2 += V0;</td><td>f3 += V0;</td></tr>
+    <tr><td>(V0)       </td><td>8.01</td><td>f0 -= V0;</td><td>f1 -= V0;</td><td>f2 -= V0;</td><td>f3 -= V0;</td></tr>
+    <tr><td>(V0)       </td><td>8.10</td><td>lat V0 f0 f0</td><td>lat V0 f1 f1</td><td>lat V0 f2 f2</td><td>lat V0 f3 f3</td></tr>
+    <tr><td>(V0)       </td><td>8.11</td><td>f0 &amp;= V0;</td><td>f1 &amp;= V0;</td><td>f2 &amp;= V0;</td><td>f3 &amp;= V0;</td></tr>
+    <tr><td>(V0)       </td><td>9.00</td><td>f0 |= V0;</td><td>f1 |= V0;</td><td>f2 |= V0;</td><td>f3 |= V0;</td></tr>
+    <tr><td>(V0)       </td><td>9.01</td><td>f0 = ~(f0 ^ V0);</td><td>f1 = ~(f1 ^ V0);</td><td>f2 = ~(f2 ^ V0);</td><td>f3 = ~(f3 ^ V0);</td></tr>
+    <tr><td>(V0)       </td><td>9.10</td><td>f0 &lt;&lt;= V0;</td><td>f1 &lt;&lt;= V0;</td><td>f2 &lt;&lt;= V0;</td><td>f3 &lt;&lt;= V0</td></tr>
+    <tr><td>(V0)       </td><td>9.11</td><td>f0 >>>= V0;</td><td>f1 >>>= V0;</td><td>f2 >>>= V0;</td><td>f3 >>>= V0</td></tr>
+    <tr><td>(V0)       </td><td>A.00</td><td>f0 >>= V0;</td><td>f1 >>= V0;</td><td>f2 >>= V0;</td><td>f3 >>= V0</td></tr>
+    <tr><td>(V0)       </td><td>A.01</td><td>f0 = V0;</td><td>f1 = V0;</td><td>f2 = V0;</td><td>f3 = V0;</td></tr>
+    <tr><td>(V0)       </td><td>A.10</td><td>if (flag) f0 = V0;</td><td>if (flag) f1 = V0;</td><td>if (flag) f2 = V0;</td><td>if (flag) f3 = V0;</td></tr>
+    <tr><td>(L0)       </td><td>A.11</td><td>(f0, L0) = (L0, f0);</td><td>(f1, L0) = (L0, f1);</td><td>(f2, L0) = (L0, f2);</td><td>(f3, L0) = (L0, f3);</td></tr>
+    <tr><td>(V0)       </td><td>B.00</td><td>f0 = V0 >> 24;</td><td>f1 = V0 >> 24;</td><td>f2 = V0 >> 24;</td><td>f3 = V0 >> 24;</td></tr>
+    <tr><td>(V0)       </td><td>B.01</td><td>f0 = (f0 &amp; 0x00ffffff) | (V0 &lt;&lt; 24);</td><td>f1 = (f1 &amp; 0x00ffffff) | (V0 &lt;&lt; 24);</td><td>f2 = (f2 &amp; 0x00ffffff) | (V0 &lt;&lt; 24);</td><td>f3 = (f3 &amp; 0x00ffffff) | (V0 &lt;&lt; 24);</td></tr>
+    <tr><td>(V0)       </td><td>B.10</td><td>f0 = V0 >> 16;</td><td>f1 = V0 >> 16;</td><td>f2 = V0 >> 16;</td><td>f3 = V0 >> 16;</td></tr>
+    <tr><td>(V0)       </td><td>B.11</td><td>f0 = (f0 &amp; 0x0000ffff) | (V0 &lt;&lt; 16);</td><td>f1 = (f1 &amp; 0x0000ffff) | (V0 &lt;&lt; 16);</td><td>f2 = (f2 &amp; 0x0000ffff) | (V0 &lt;&lt; 16);</td><td>f3 = (f3 &amp; 0x0000ffff) | (V0 &lt;&lt; 16);</td></tr>
+    <tr><td>(V0,L1)    </td><td>C.00</td><td>L1 += V0;</td><td>?</td><td>?</td><td>?</td></tr>
+    <tr><td>(V0,L1)    </td><td>C.01</td><td>L1 -= V0;</td><td>?</td><td>?</td><td>?</td></tr>
+    <tr><td>(V0,L1)    </td><td>C.10</td><td>lat V0 L1 L1</td><td>?</td><td>?</td><td>?</td></tr>
+    <tr><td>(V0,L1)    </td><td>C.11</td><td>L1 &amp;= V0;</td><td>?</td><td>?</td><td>?</td></tr>
+    <tr><td>(V0,L1)    </td><td>D.00</td><td>L1 |= V0;</td><td>?</td><td>?</td><td>?</td></tr>
+    <tr><td>(V0,L1)    </td><td>D.01</td><td>L1 = ~(L1 ^ V0);</td><td>?</td><td>?</td><td>?</td></tr>
+    <tr><td>(V0,L1)    </td><td>D.10</td><td>L1 &lt;&lt;= V0;</td><td>?</td><td>?</td><td>?</td></tr>
+    <tr><td>(V0,L1)    </td><td>D.11</td><td>L1 >>>= V0;</td><td>?</td><td>?</td><td>?</td></tr>
+    <tr><td>(V0,L1)    </td><td>E.00</td><td>L1 >>= V0;</td><td>?</td><td>?</td><td>?</td></tr>
+    <tr><td>(V0,L1)    </td><td>E.01</td><td>L1 = V0;</td><td>?</td><td>?</td><td>?</td></tr>
+    <tr><td>(V0,L1)    </td><td>E.10</td><td>if (flag) L1 = V0;</td><td>?</td><td>?</td><td>?</td></tr>
+    <tr><td>(L0,L1)    </td><td>E.11</td><td>(L1, L0) = (L0, L1);</td><td>?</td><td>?</td><td>?</td></tr>
+    <tr><td>(V0,L1)    </td><td>F.00</td><td>L1 = V0 >> 24;</td><td>?</td><td>?</td><td>?</td></tr>
+    <tr><td>(V0,L1)    </td><td>F.01</td><td>L1 = (L1 &amp; 0x00ffffff) | (V0 &lt;&lt; 24);</td><td>?</td><td>?</td><td>?</td></tr>
+    <tr><td>(V0,L1)    </td><td>F.10</td><td>L1 = V0 >> 16;</td><td>?</td><td>?</td><td>?</td></tr>
+    <tr><td>(V0,L1)    </td><td>F.11</td><td>L1 = (L1 &amp; 0x0000ffff) | (V0 &lt;&lt; 16);</td><td>?</td><td>?</td><td>?</td></tr>
+</table>
 
 
 </body>
