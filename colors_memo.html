@@ -15,6 +15,7 @@
 </head>
 <body class="cool">
 <h1>色空間などについて考察する</h1>
+<div style="text-decoration: line-through;">
 <h2>1. 基本色の設定</h2>
 <p>ごにょごにょすることで、以下の基本色を得た。</p>
 <p class="small">視覚の仕組み自体に大きな差はないので、RGBを用いて表現しようとすること自体は自然である。ただし、そのとき基本色として使われる色が完全に一致しているというのは不自然なので、ごにょごにょをした。</p>
@@ -99,7 +100,7 @@ S^(-1) = (0.050927 | 1.00109 | 0.0420176
 0.0141312 | -0.0738991 | 0.997763
 -0.995009 | 0.125551 | 0.00631831)
 </pre>
-<p>固有値はともかく固有ベクトルがひどいなぁ。とりあえずSを{{1/8,0,-1},{1,-1/24,1/20},{1/15,1,1/60}}、Jを{{39/40,0,0},{0,93/100,0},{0,0,87/100}}と有理数近似して再合成<a href="https://www.wolframalpha.com/input/?i=%7B%7B1%2F8,0,-1%7D,%7B1,-1%2F24,1%2F20%7D,%7B1%2F15,1,1%2F60%7D%7D+%7B%7B39%2F40,0,0%7D,%7B0,93%2F100,0%7D,%7B0,0,87%2F100%7D%7D+inverse(%7B%7B1%2F8,0,-1%7D,%7B1,-1%2F24,1%2F20%7D,%7B1%2F15,1,1%2F60%7D%7D+)">すると</a>
+<p>固有値はともかく固有ベクトルがひどいなぁ。とりあえずSを{{1/8,0,-1},{1,-1/24,1/20},{1/15,1,1/60}}、Jを{{39/40,0,0},{0,93/100,0},{0,0,87/100}}と有理数近似して再合成<a href="https://www.wolframalpha.com/input/?i=%7B%7B1%2F8,0,-1%7D,%7B1,-1%2F24,1%2F20%7D,%7B1%2F15,1,1%2F60%7D%7D+%7B%7B39%2F40,0,0%7D,%7B0,93%2F100,0%7D,%7B0,0,87%2F100%7D%7D+inverse(%7B%7B1%2F8,0,-1%7D,%7B1,-1%2F24,1%2F20%7D,%7B1%2F15,1,1%2F60%7D%7D+)">すると</a></p>
 <pre>
 (674761/775000 | 252/19375 | 21/38750
 2539/484375 | 377511/387500 | 357/193750
@@ -152,7 +153,7 @@ convert_and_draw(106/121 , 72/605 , 3/605,
 	})
 </script>
 </div>
-<p>を適当な桁数で打ち切って、また<b>v<sub>1</sub></b>+<b>v<sub>2</sub></b>+<b>v<sub>3</sub></b>=<sup>t</sup>(1,1,1)でなければならないことを考えると
+<p>を適当な桁数で打ち切って、また<b>v<sub>1</sub></b>+<b>v<sub>2</sub></b>+<b>v<sub>3</sub></b>=<sup>t</sup>(1,1,1)でなければならないことを考えると</p>
 <pre>
 (7/8 | 123/1024 | 5/1024
 11/2048 | 127/128 | 5/2048
@@ -189,12 +190,12 @@ convert_and_draw(7/8 + 123/1024 ,  5/1024+7/8 , 123/1024 +  5/1024,
 <p>ということで<a href="http://www.color-hex.com/">やってみた</a></p>
 <table class="t">
 <tr><td></td><td>H</td><td>S</td><td>V</td></tr>
-<tr><td><div style="background-color:#f0100d">#f0100d</div></td><td>1°<td>95°<td>94°</tr>
-<tr><td><div style="background-color:#feff49">#feff49</div></td><td>60°<td>71°<td>100°</tr>
-<tr><td><div style="background-color:#61fe47">#61fe47</div></td><td>111°<td>72°<td>100°</tr>
-<tr><td><div style="background-color:#63feff">#63feff</div></td><td>180°<td>61°<td>100°</tr>
-<tr><td><div style="background-color:#0f08f7">#0f08f7</div></td><td>242°<td>97°<td>97°</tr>
-<tr><td><div style="background-color:#f116f8">#f116f8</div></td><td>298°<td>91°<td>97°</tr>
+<tr><td><div style="background-color:#f0100d">#f0100d</div></td><td>1°</td><td>95°</td><td>94°</td></tr>
+<tr><td><div style="background-color:#feff49">#feff49</div></td><td>60°</td><td>71°</td><td>100°</td></tr>
+<tr><td><div style="background-color:#61fe47">#61fe47</div></td><td>111°</td><td>72°</td><td>100°</td></tr>
+<tr><td><div style="background-color:#63feff">#63feff</div></td><td>180°</td><td>61°</td><td>100°</td></tr>
+<tr><td><div style="background-color:#0f08f7">#0f08f7</div></td><td>242°</td><td>97°</td><td>97°</td></tr>
+<tr><td><div style="background-color:#f116f8">#f116f8</div></td><td>298°</td><td>91°</td><td>97°</td></tr>
 </table>
 <p>少なくとも色相環には綺麗に載ってくれるやん（くれるやん）（わーい）</p>
 
@@ -248,7 +249,7 @@ function jRGBlinear2sRGB(jrl, jgl, jbl)
 </pre>
 <p>これに通したときに[0, 82, 66]が返ってくれば良い。</p>
 <p><code>normalize_sRGB</code>は<code>linear2sRGB</code>を<code>Math.round</code>したものなので、<code>linear2sRGB</code>を通した結果が[-0.5~0.5; 81.5~82.5; 65.5~66.5]であれば良い。</p>
-<p><code>linear2sRGB</code>の逆関数は<code>sRGB2linear</code>なので、
+<p><code>linear2sRGB</code>の逆関数は<code>sRGB2linear</code>なので、</p>
 <pre>
 jrl *     7/8 + jgl * 123/1024 + jbl *  5/1024  = -0.000151763 ~ 0.000151763
 jrl * 11/2048 + jgl *  127/128 + jbl *  5/2048  =  0.083325624 ~ 0.085434486
@@ -283,7 +284,7 @@ jbl =  0.05271673757520321
 <p>という感じである。赤-1.2%、緑8.5%、青5.3%ということか。</p>
 <p>実際これでやると#005242が生成できるので、その点では問題ない。ただ、負の値が入ってしまうのでなぁ</p>
 <p>色調変えずに明るさ上げて再挑戦してみるか。もちろんその前にスクリプト書くけど。</p>
-<p>赤0%、緑8.5%、青6.0%だと#1a5246か。
+<p>赤0%、緑8.5%、青6.0%だと#1a5246か。</p>
 <script>
 	gen_table([
 		toHex(jRGBlinear2sRGB(-0.012,0.085,0.053)),
@@ -303,7 +304,7 @@ jbl =  0.05271673757520321
 <label>悠里赤: <input type="number" step="0.01" id="gsdfvcx">%</label><br>
 <label>悠里緑: <input type="number" step="0.01" id="irytr">%</label><br>
 <label>悠里青: <input type="number" step="0.01" id="jerd">%</label><br>
-</td></table>
+</td></tr></table>
 
 <p>なお、3.で書いた「明るい8色」はそれぞれ（悠里赤、悠里緑、悠里青のパーセンテージで）</p>
 <pre>
@@ -327,6 +328,24 @@ jbl =  0.05271673757520321
  0, 0, 0   
 25,25,25
 </pre>
+</div>
+
+<h2>4. 全消し</h2>
+<p>この文章最後に書いてから（2017/08/20）もう3年が経とうとしている（2020/07/18）。その間に私の色空間についての知識は多少なりとも改善し、（↓とかわりと楽しめた。あと授業とかも取った。）</p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/xAoljeRJ3lU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<p>さらに言えば色方面についてはその後<strong>一切の</strong>派生創作も生まれず、完全に埋もれて放置していた。</p>
+
+<p>とまあ筆者本人もほぼ完全に忘れていたメモ（ファイル名がcolors_memo.html）を、<a href="https://twitter.com/yukata_yu">ゆかたゆさん</a>に発掘された結果、画像処理で修論書いた<a href="https://twitter.com/lunatic_star">るなすたさん</a>の目にこの駄文が留まることになり、問題しか無いこのファイルに具体的な指摘を頂くことができた。とてもありがたい。</p>
+
+<p>曰く、</p>
+
+<blockquote>
+Mathematical. Transform to. Munsell あたりは概論として読んでおいて損はないかなと。XYZ 色空間から、人間の感覚的な色距離と3次元空間のユークリッド距離が等しくなる色空間、マンセル色空間にマッピングする論文だけど。(s)RGB 色空間やガンマ補正を加えた XYZ 色空間や、それらからの線形変換で得られる空間は、結構、人間の色覚に対して歪んでいるというあたりの直観を得られるといいかなというお気持ちです。読んだのもう10年以上前だけど、確かざっくり色空間の歴史とかも既存研究として並んでた記憶。マンセル色空間にも種類があってーみたいな話も出てくるので。
+</blockquote>
+
+<p>とのことである。私jekto.vatimelijuとしても「この駄文、書くだけ書いて一切派生を生やしていないので全文に&lt;s&gt;掛けて書き直すの全然アリなんだよな」と思っていたところなので、とりあえず全文にtext-decoration: line-throughを適用した。</p>
 
 
 <div id="menu">読み込み中…</div>
