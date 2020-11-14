@@ -50,5 +50,7 @@ pub enum Opcode {
     Krz8c(Operand, Operand),
     Krz16i(Operand, Operand),
     Krz16c(Operand, Operand),
+
+    Naen(String), // ny aftlaten - raw code
 }
 
