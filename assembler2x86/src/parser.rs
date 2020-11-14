@@ -22,7 +22,7 @@ pub enum Token {
     Dal,
     Dto,
     Dro,
-    Drosna,
+    Dtosna,
 
     Fi,
     Xtlo,
@@ -41,20 +41,24 @@ pub enum Token {
     Krz16i,
     Krz16c,
 
+    Imm(i32),
+    Label(String),
     Reg(i32),
     Mem(i32),
+    Meml(String),
     Memi(i32, i32),
+    Memil(i32, String),
     Memr(i32, i32),
 
     L,
     Nll,
 
-    Imm(i32),
-    Name(String),
     Comment(String),
+    Operand(String), // TODO 消せ
 }
 
 pub fn parse(prog: String) -> Result<Vec<Opcode>, String> {
-    token::tokenize(prog);
-    Ok(Vec::new())
+    let tokens = token::tokenize(prog);
+    let mut parser = syntax::Parser::new();
+    Ok(parser.parse(tokens))
 }

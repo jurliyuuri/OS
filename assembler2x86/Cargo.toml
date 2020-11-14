@@ -3,7 +3,9 @@ name = "assembler2x86"
 version = "0.1.0"
 authors = ["lemon"]
 edition = "2018"
+description = "convert extended 2003lk programs to x86"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+clap = "2.33.3"
