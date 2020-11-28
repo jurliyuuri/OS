@@ -6,7 +6,7 @@ use std::fs::{self, File};
 use std::io::Write;
 
 use clap::Arg;
-use mnemonic::Opcode;
+use mnemonic::Instruction;
 
 pub mod mnemonic;
 mod parser;
@@ -22,9 +22,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     
     let matches = app.get_matches();
 
-    let mode = matches.value_of("arch").unwrap();
+    let mode = matches.value_of("architecture").unwrap();
 
-    let mut ops: Vec<Opcode> = Vec::new();
+    let mut ops: Vec<Instruction> = Vec::new();
     if let Some(o) = matches.values_of("files") {
         for file in o {
             let content = fs::read_to_string(file)?;

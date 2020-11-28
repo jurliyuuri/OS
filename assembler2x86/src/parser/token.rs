@@ -16,7 +16,7 @@ pub fn tokenize(prog: String) -> Vec<Token> {
                     "malkrz" => Token::Malkrz,
                     "malkRz" => Token::Malkrz,
                     "fen" => Token::Fen,
-                    "Inj" => Token::Inj,
+                    "inj" => Token::Inj,
 
                     "ata" => Token::Ata,
                     "nta" => Token::Nta,
@@ -52,14 +52,27 @@ pub fn tokenize(prog: String) -> Vec<Token> {
                     "l'" => Token::L,
                     "nll" => Token::Nll,
 
-                    _ => Token::Operand(String::from(tokstr)),
+                    _ => {
+                        if String::from(tokstr).ends_with("@") {
+                            let mut s = String::from(tokstr);
+                            let s: String = s.drain(..s.len()-1).collect();
+                            if let Some(_) = s.find("+") {
+                                let mut ss = s.split("+");
+                                Token::Mem2(String::from(ss.next().unwrap()), String::from(ss.next().unwrap()))
+                            } else {
+                                Token::Mem(s)
+                            }
+                        } else {
+                            Token::Imm(String::from(tokstr))
+                        }
+                    },
                 };
                 tokens.push(token);
             }
 
             let comment: Vec<String> = line.map(|s| String::from(s)).collect();
             let comment = comment.join(";");
-            tokens.push(Token::Comment(comment));
+            if comment.as_str() != "" {tokens.push(Token::Comment(comment));}
         }
     }
     tokens

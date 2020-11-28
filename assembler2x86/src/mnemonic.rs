@@ -1,3 +1,13 @@
+pub struct Instruction {
+    pub op: Opcode,
+    pub label: Option<Label>,
+}
+
+pub enum Label {
+    Num(i32),
+    Name(String),
+}
+
 pub enum Register {
     F0,
     F1,
@@ -7,13 +17,14 @@ pub enum Register {
     F5,
     F6,
     XX,
+    Imm(i32),
+    Label(String),
 }
 
 pub enum Operand {
     Reg(Register),
     Mem(Register),
-    Memi(Register, i32),
-    Memr(Register, Register),
+    Mem2(Register, Register),
 }
 
 pub enum Opcode {
@@ -33,7 +44,7 @@ pub enum Opcode {
     Dal(Operand, Operand),
     Dto(Operand, Operand),
     Dro(Operand, Operand),
-    Drosna(Operand, Operand),
+    Dtosna(Operand, Operand),
 
     Fixtlo(Operand, Operand),
     Fixylo(Operand, Operand),

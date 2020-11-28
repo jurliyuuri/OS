@@ -1,5 +1,5 @@
-use super::Opcode::{self, *};
+use super::Instruction;
 
-pub fn generate(ops: Vec<Opcode>) -> String {
+pub fn generate(ops: Vec<Instruction>) -> String {
     String::from("Hoge")
 }

@@ -2,6 +2,7 @@ use super::mnemonic::*;
 mod token;
 mod syntax;
 
+#[derive(Debug)]
 pub enum Token {
     Ic,
     Ci,
@@ -41,24 +42,20 @@ pub enum Token {
     Krz16i,
     Krz16c,
 
-    Imm(i32),
-    Label(String),
-    Reg(i32),
-    Mem(i32),
-    Meml(String),
-    Memi(i32, i32),
-    Memil(i32, String),
-    Memr(i32, i32),
+    Imm(String),
+    Mem(String),
+    Mem2(String, String),
 
     L,
     Nll,
 
     Comment(String),
-    Operand(String), // TODO 消せ
 }
 
-pub fn parse(prog: String) -> Result<Vec<Opcode>, String> {
+pub fn parse(prog: String) -> Result<Vec<Instruction>, String> {
     let tokens = token::tokenize(prog);
-    let mut parser = syntax::Parser::new();
-    Ok(parser.parse(tokens))
+    let mut result: Vec<Instruction> = Vec::new();
+    let mut parser = syntax::Parser::new(tokens, &mut result);
+    parser.parse()?;
+    Ok(result)
 }
